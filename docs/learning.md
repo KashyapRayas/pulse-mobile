@@ -256,10 +256,10 @@ bundle drops from 8.6 MB to 6.6 MB.
 
 ## App icon and splash: PNGs rendered from `assets/brand`
 
-The icons and the splash image are SVG sources in `assets/brand`, the web's mark geometry (pulse `public/icons/icon-maskable.svg`), rendered once to 1024 px PNGs in `assets/images` with `rsvg-convert` (Homebrew librsvg) and committed:
+The icons and the splash images are SVG sources in `assets/brand`, drawn from the mark's geometry (`markPath` in `src/ui/brand.tsx`: a frame with the wordmark's heartbeat through it). They are rendered once to 1024 px PNGs in `assets/images` with `rsvg-convert` (Homebrew librsvg) or any SVG renderer, and committed. The launcher icons are flattened to RGB, with no alpha channel. `splash-icon-dark` is the splash's dark-scheme image:
 
 ```sh
-for n in icon icon-tinted android-icon-foreground android-icon-monochrome splash-icon; do
+for n in icon icon-tinted android-icon-foreground android-icon-monochrome splash-icon splash-icon-dark; do
   rsvg-convert -w 1024 -h 1024 assets/brand/$n.svg -o assets/images/$n.png
 done
 ```
@@ -947,3 +947,17 @@ The accelerometer comes from `expo-sensors` (SDK 57's Expo module) rather than a
 
 References: [SDK 57 Accelerometer](https://docs.expo.dev/versions/v57.0.0/sdk/accelerometer/), [Android sensor rate limiting](https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview#sensors-rate-limiting).
 
+
+## A fork build beside the original (`app.config.js`)
+
+Expo reads `app.json` and then, when present, `app.config.js`, which receives that config and returns the one Expo uses
+([app config](https://docs.expo.dev/versions/v57.0.0/config/app/)). Pulse keeps every setting in `app.json` and uses
+`app.config.js` for one switch only: with `APP_VARIANT=fork` the Android package becomes `in.portlabs.pulse.fork` (the
+name stays "Pulse"), so a fork's build installs beside the original instead of over it (Android keys an app, its
+data and its Health Connect grants on the package). Config plugins read the package from the resolved config, so the
+app shortcuts follow it. The `pulse://` scheme stays shared, so a link that is not addressed to a package may ask
+which app to open while both are installed.
+
+```sh
+APP_VARIANT=fork npx expo prebuild --platform android --clean && cd android && ./gradlew assembleRelease
+```
