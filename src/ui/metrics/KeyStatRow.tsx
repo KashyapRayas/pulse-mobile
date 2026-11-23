@@ -171,7 +171,7 @@ function Tile({ p, c }: { p: KeyStatRowProps; c: Computed }) {
             <SkeletonText className="w-24" lh={12} fs={10} />
           )}
         </View>
-        <View className="items-start gap-2">
+        <View className="gap-2">
           {c.loading ? (
             <>
               <View className="w-10">
@@ -212,7 +212,7 @@ function Tile({ p, c }: { p: KeyStatRowProps; c: Computed }) {
         <View className="shrink-0 items-end gap-1">
           <Text className={CAPTION}>{p.chip ? "Your range" : (p.averageLabel ?? "30-day avg")}</Text>
           {p.chip ? (
-            <StatusChip tone={p.chip.tone} className={TILE_CHIP} textClassName="text-label">
+            <StatusChip tone={p.chip.tone} className={cn(TILE_CHIP, "self-end")} textClassName="text-label">
               {p.chip.text}
             </StatusChip>
           ) : (

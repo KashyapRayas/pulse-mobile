@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View } from "react-native";
 import { Check, CircleAlert, Triangle, TriangleAlert, type LucideIcon } from "lucide-react-native";
 import { CHIP_TONE_CLASS, type ChipTone, type DeltaDir, type Tone } from "@/lib/bands";
@@ -41,14 +42,35 @@ export function StatusChip({ tone, children, delta, className, textClassName }: 
   const bg = classes.find((k) => k.startsWith("bg-"));
   const text = classes.find((k) => k.startsWith("text-")) ?? "";
   const glyph = CHIP_ICON[tone];
+  const [room, setRoom] = useState<number | null>(null);
+  // What the text may use of the room: the chip's sides (px-2, or the caller's px-*), then the mark and its 6 px gap.
+  const sides = 8 * Number(/(?:^|\s)px-(\d+(?:\.\d+)?)(?:\s|$)/.exec(className ?? "")?.[1] ?? 2);
+  const markWidth = delta ? (delta === "flat" ? 6 : 8) + 6 : glyph ? (/\btext-label\b/.test(textClassName ?? "") ? 12 : 14) + 6 : 0;
   // The mark sits on the first line (LineIcon), 6 px from the text, so a chip that wraps in a narrow tile keeps it beside
   // the first line rather than floating between the two.
-  const step = /\btext-label\b/.test(textClassName ?? "") ? "label" : "caption";
+  const step = /\btext-label\b/.test(textClassName ?? "") ? "label" : /\btext-meta\b/.test(textClassName ?? "") ? "meta" : "caption";
   const mark = delta ? <DeltaMark dir={delta} tone="neutral" color={text.slice(5) as TokenName} /> : glyph && <Icon icon={glyph} size={step === "label" ? 12 : 14} tone={text.slice(5) as TokenName} strokeWidth={2.5} />;
+  // The chip hugs its text but never outgrows its column, wrapping to two lines at most. A percentage or flex-shrink
+  // limit is not enough on Android: text in a shrinking row is measured once, at its one-line width, and drawn that way
+  // past the chip. So the row around the chip (which takes the column's width, a column stretches it, and carries the
+  // caller's placement: self-*, margins) reports its width; the chip takes it as a px maxWidth, and the text that less
+  // the chip's padding and mark, so Android measures the text wrapped to fit.
+  // The row always spans its column (self-stretch), so it measures the room and not the chip; the caller's alignment
+  // (self-center, self-end) becomes the row's justify, its margins stay on the row. In a horizontal parent the row
+  // centres the chip vertically, as that parent's items-center did.
+  const parts = (className ?? "").split(/\s+/).filter(Boolean);
+  const place = parts.filter((k) => /^-?(?:self|m[trblxy]?)-/.test(k));
+  const inner = parts.filter((k) => !place.includes(k)).join(" ");
+  const justify = place.includes("self-center") ? "justify-center" : place.includes("self-end") ? "justify-end" : "justify-start";
+  const margins = place.filter((k) => !k.startsWith("self-")).join(" ");
   return (
-    <View className={cn("min-h-6 max-w-full flex-row items-start gap-1.5 self-start rounded-md px-2 py-1", bg, className)}>
-      {!!mark && <LineIcon step={step}>{mark}</LineIcon>}
-      <Text className={cn("shrink text-caption font-bold tabular-nums", text, textClassName)}>{children}</Text>
+    <View className={cn("max-w-full flex-row items-center self-stretch", justify, margins)} onLayout={(e) => setRoom(e.nativeEvent.layout.width)}>
+      <View className={cn("min-h-6 flex-row items-start gap-1.5 rounded-md px-2 py-1", bg, inner)} style={room ? { maxWidth: room } : undefined}>
+        {!!mark && <LineIcon step={step}>{mark}</LineIcon>}
+        <Text numberOfLines={2} className={cn("shrink text-caption font-bold tabular-nums", text, textClassName)} style={room ? { maxWidth: Math.max(0, room - sides - markWidth + 1) } : undefined}>
+          {children}
+        </Text>
+      </View>
     </View>
   );
 }
