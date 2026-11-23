@@ -28,6 +28,10 @@ import { hrChartOf, zoneNote, zoneRows } from "./strain";
 import { trainingEffectVM } from "./training";
 import type { ActivityCostVM, ActivityKind, ActivityVM, KeyStat, ZoneRow } from "./types";
 
+/** 2-minute heart-rate recovery bands, bpm: at or below LOW is abnormal (Shetler 2001); GOOD is a tunable upper band. */
+export const HRR2_LOW = 22;
+export const HRR2_GOOD = 40;
+
 /** Activity `/activity/[id]` (spec §7.4); null for an unknown id. */
 export async function getActivity(id: string, ctx: QueryCtx): Promise<ActivityVM | null> {
   const e = (await ctx.store.allExercises()).find((x) => x.id === id);
@@ -72,11 +76,13 @@ export async function getActivity(id: string, ctx: QueryCtx): Promise<ActivityVM
   ];
 
   // Heart-rate recovery on the Pulse engine: the largest drop within 2 minutes after the workout (null below zone 4).
-  const hrr60 = a?.engine?.hrr?.drop;
+  // Banded on the 2-minute standard: 22 bpm or less is abnormal (Shetler 2001); Cole's 12 bpm cut is for 1 minute.
+  // "Good" from 40 bpm is a tunable upper band, not a published cut.
+  const hrr2 = a?.engine?.hrr?.drop;
   const hrr: ActivityVM["hrr"] =
-    hrr60 == null
+    hrr2 == null
       ? none("insufficient_hr_data")
-      : ok(hrr60 >= 20 ? { value: hrr60, tone: "optimal", label: i18n.t("strain:hrrWord.good") } : hrr60 >= 12 ? { value: hrr60, tone: "neutral", label: i18n.t("strain:hrrWord.typical") } : { value: hrr60, tone: "warning", label: i18n.t("strain:hrrWord.low") });
+      : ok(hrr2 >= HRR2_GOOD ? { value: hrr2, tone: "optimal", label: i18n.t("strain:hrrWord.good") } : hrr2 > HRR2_LOW ? { value: hrr2, tone: "neutral", label: i18n.t("strain:hrrWord.typical") } : { value: hrr2, tone: "warning", label: i18n.t("strain:hrrWord.low") });
 
   return {
     id,

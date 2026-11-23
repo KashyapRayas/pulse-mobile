@@ -335,7 +335,7 @@
     "noHrBand": "Pulseira não usada, então não há frequência cardíaca, zonas nem Strain para esta atividade.",
     "noHrData": "Poucos dados de frequência cardíaca para mostrar frequência cardíaca, zonas ou Strain desta atividade.",
     "hrrNone": "Dados de frequência cardíaca insuficientes depois do treino.",
-    "hrrNote": "Queda nos primeiros 60 segundos depois que você parou. Acima de 20 é típico para adultos em forma."
+    "hrrNote": "A maior queda em até 2 minutos depois de parar. 22 bpm ou menos é baixa; acima de 22 é típico."
   },
   "live": {
     "title": "Treino ao vivo",

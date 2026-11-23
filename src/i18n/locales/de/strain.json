@@ -321,7 +321,7 @@
     "noHrBand": "Band nicht getragen, deshalb gibt es für diese Aktivität keine Herzfrequenz, Zonen oder Strain.",
     "noHrData": "Zu wenige Herzfrequenzdaten, um Herzfrequenz, Zonen oder Strain für diese Aktivität zu zeigen.",
     "hrrNone": "Nicht genug Herzfrequenzdaten nach dem Workout.",
-    "hrrNote": "Abfall in den ersten 60 Sekunden nach dem Stopp. Über 20 ist bei fitten Erwachsenen typisch."
+    "hrrNote": "Der größte Abfall innerhalb von 2 Minuten nach dem Stopp. 22 bpm oder weniger ist niedrig, darüber typisch."
   },
   "live": {
     "title": "Live-Workout",

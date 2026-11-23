@@ -349,7 +349,7 @@
     "noHrBand": "Opaska nie była noszona, więc nie ma tętna, stref ani Strain dla tej aktywności.",
     "noHrData": "Za mało danych o tętnie, by pokazać tętno, strefy lub Strain dla tej aktywności.",
     "hrrNone": "Za mało danych o tętnie po treningu.",
-    "hrrNote": "Spadek w pierwszych 60 sekundach po zatrzymaniu się. Powyżej 20 jest typowe dla sprawnych dorosłych."
+    "hrrNote": "Największy spadek w ciągu 2 minut od zatrzymania. 22 bpm lub mniej to mało; powyżej 22 to typowo."
   },
   "live": {
     "title": "Trening na żywo",

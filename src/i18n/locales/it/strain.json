@@ -335,7 +335,7 @@
     "noHrBand": "Il braccialetto non era indossato, quindi per questa attività non ci sono frequenza cardiaca, zone o Strain.",
     "noHrData": "Troppo pochi dati di frequenza cardiaca per mostrare frequenza cardiaca, zone o Strain di questa attività.",
     "hrrNone": "Dati di frequenza cardiaca insufficienti dopo l’allenamento.",
-    "hrrNote": "Calo nei primi 60 secondi dopo che ti sei fermato. Sopra 20 è nella norma per gli adulti allenati."
+    "hrrNote": "Il calo maggiore entro 2 minuti dallo stop. 22 bpm o meno è basso; sopra 22 è nella norma."
   },
   "live": {
     "title": "Allenamento live",

@@ -15,7 +15,7 @@ import { DEFAULT_SLEEP_GOAL_HOURS, POOLING } from "@/core/engine/days";
 import { awakeSeconds, type Drain, energyBand, energyStep, WARMUP_DAYS } from "@/core/engine/energyBank";
 import { mean, popStats, roundHalfAway } from "@/core/engine/math";
 import { paceOf, pulseAge, type PulseAgeDay, references } from "@/core/engine/pulseAge";
-import { recovery, type RecoveryResult } from "@/core/engine/recovery";
+import { lnAgg, recovery, type RecoveryResult } from "@/core/engine/recovery";
 import {
   hasStages,
   hrDip,
@@ -189,7 +189,19 @@ export function scoreEngineRecovery(f: Fold, d: Day, sleep: EngineSleep): Recove
   const rhr = d.rhr;
   const resp = d.dm?.respBpm ?? null;
   const temp = tempDelta(d);
-  const r = recovery({ hrv, hrvBase: base.hrv, rhr, rhrBase: base.rhr, sleepScore: sleep.score, resp, respBase: base.resp, temp, tempBase: base.temp });
+  // HRV is scored as ln(ms) against the nights' ln values (recovery.ts); base.hrv stays in ms for the screens.
+  const hrvLnBase = baseline(e.aggs.map((x) => lnAgg(x.restingHRV)), POOLING.restingHRV);
+  const r = recovery({
+    hrv: hrv != null && hrv > 0 ? Math.log(hrv) : null,
+    hrvBase: hrvLnBase,
+    rhr,
+    rhrBase: base.rhr,
+    sleepScore: sleep.score,
+    resp,
+    respBase: base.resp,
+    temp,
+    tempBase: base.temp,
+  });
   const today = daysBetween("1970-01-01", d.day);
   const first = e.recoveryFirst ?? today;
   const ok = r.value != null && calibrated(first, today, e.recoveryDays + 1, RECOVERY_CALIBRATION_DAYS);

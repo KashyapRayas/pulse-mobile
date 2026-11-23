@@ -42,13 +42,22 @@ describe("pulseAge", () => {
     expect(r.present).toBe(9);
     expect(r.confidence).toBe(1);
   });
-  it("renormalizes over the factors present (fix 9)", () => {
+  it("a missing factor counts zero: no scaling to nine", () => {
     // Five factors, one of them (resting HR 10 bpm high) worth 10·ln(e^0.12) = 1.2 years; the rest at reference.
     const d = day({ sleepHours: 7.5, sri: 70, steps: 8000, restingHr: refs.restingHr + 10, zone13Min: refs.zone13 / 7 });
     const r = pulseAge({ age: 35, sex: "male", days: Array(28).fill(d), vo2: [], leanPct: [] })!;
     expect(r.present).toBe(5);
-    // The source would have added 1.2 years; scaled to nine factors it is 1.2 · 9/5.
-    expect(r.deltaYears).toBeCloseTo((1.2 * 9) / 5, 3);
+    // Scaling to nine factors would have made it 1.2 · 9/5 = 2.16 years.
+    expect(r.deltaYears).toBeCloseTo(1.2, 3);
+  });
+  it("strength never logged in the window is unknown, not zero minutes", () => {
+    const base = { sleepHours: 7.5, sri: 70, steps: 8000, restingHr: refs.restingHr, zone13Min: refs.zone13 / 7, zone45Min: refs.zone45 / 7 };
+    const none = pulseAge({ age: 35, sex: "male", days: Array(28).fill(day({ ...base, strengthMin: 0 })), vo2: [], leanPct: [] })!;
+    expect(none.factors.find((f) => f.key === "strength")!.years).toBeNull();
+    expect(none.deltaYears).toBeCloseTo(0, 3);
+    // One logged 20-minute session brings it back (5 min a week, under the ~10 min reference), the other days counting 0.
+    const once = pulseAge({ age: 35, sex: "male", days: [...Array(27).fill(day({ ...base, strengthMin: 0 })), day({ ...base, strengthMin: 20 })], vo2: [], leanPct: [] })!;
+    expect(once.factors.find((f) => f.key === "strength")!.years).toBeGreaterThan(0);
   });
   it("shows nothing below five factors", () => {
     expect(pulseAge({ age: 35, sex: "male", days: Array(28).fill(day({ sleepHours: 7, sri: 80, steps: 9000, restingHr: 60 })), vo2: [], leanPct: [] })).toBeNull();

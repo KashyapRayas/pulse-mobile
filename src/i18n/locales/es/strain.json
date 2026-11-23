@@ -335,7 +335,7 @@
     "noHrBand": "No llevabas la pulsera, así que no hay frecuencia cardíaca, zonas ni Strain para esta actividad.",
     "noHrData": "Hay muy pocos datos de frecuencia cardíaca para mostrar frecuencia cardíaca, zonas o Strain de esta actividad.",
     "hrrNone": "No hay suficientes datos de frecuencia cardíaca después del entrenamiento.",
-    "hrrNote": "Descenso en los primeros 60 segundos tras parar. Más de 20 es típico en adultos en forma."
+    "hrrNote": "La mayor bajada en los 2 minutos tras parar. 22 ppm o menos es baja; más de 22 es lo típico."
   },
   "live": {
     "title": "Entrenamiento en vivo",

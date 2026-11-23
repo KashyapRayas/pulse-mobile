@@ -321,7 +321,7 @@
     "noHrBand": "Band not worn, so there's no heart rate, zones or strain for this activity.",
     "noHrData": "Too little heart-rate data to show heart rate, zones or strain for this activity.",
     "hrrNone": "Not enough heart-rate data after the workout.",
-    "hrrNote": "Drop in the first 60 seconds after you stopped. Above 20 is typical for fit adults."
+    "hrrNote": "The biggest drop within 2 minutes of stopping. 22 bpm or less is low; above 22 is typical."
   },
   "live": {
     "title": "Live workout",

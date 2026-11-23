@@ -335,7 +335,7 @@
     "noHrBand": "Bracelet non porté, donc pas de fréquence cardiaque, de zones ni de Strain pour cette activité.",
     "noHrData": "Trop peu de données de fréquence cardiaque pour afficher fréquence cardiaque, zones ou Strain pour cette activité.",
     "hrrNone": "Pas assez de données de fréquence cardiaque après la séance.",
-    "hrrNote": "Baisse durant les 60 premières secondes après l’arrêt. Plus de 20 est typique chez un adulte en forme."
+    "hrrNote": "La plus forte baisse dans les 2 minutes après l’arrêt. 22 bpm ou moins, c’est faible ; au-delà, c’est typique."
   },
   "live": {
     "title": "Séance en direct",
