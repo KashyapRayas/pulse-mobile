@@ -68,7 +68,7 @@ export function SpanHeads({ spans, x, x0, x1, y0, iconOnly }: { spans?: ChartSpa
         return (
           <View key={`${s.kind}-${s.start}`} pointerEvents="none" style={{ position: "absolute", left, top: y0 - 15, flexDirection: "row", alignItems: "center", gap: 3 }}>
             {width >= 11 && <Icon icon={Glyph} size={11} tone={s.kind === "workout" ? "strain" : "sleep"} strokeWidth={2.25} />}
-            {named && <Text className="text-[11px] font-semibold leading-[11px] text-foreground-secondary" numberOfLines={1}>{s.label}</Text>}
+            {named && <Text className="text-label font-semibold text-foreground-secondary" numberOfLines={1}>{s.label}</Text>}
           </View>
         );
       })}
@@ -104,7 +104,7 @@ export function ZoneStripLabels({ strips, css }: { strips: ReturnType<typeof zon
     <>
       {strips.map((s) =>
         s.height >= 11 ? (
-          <ChartLabel key={s.zone} x={s.x + 11} y={s.top + s.height / 2} anchor="start" w={20} className="text-[10px] font-bold" color={css(s.color)}>{`Z${s.zone}`}</ChartLabel>
+          <ChartLabel key={s.zone} x={s.x + 11} y={s.top + s.height / 2} anchor="start" w={20} className="text-label font-bold" color={css(s.color)}>{`Z${s.zone}`}</ChartLabel>
         ) : null,
       )}
     </>

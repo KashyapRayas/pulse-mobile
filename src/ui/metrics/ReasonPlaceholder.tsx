@@ -26,7 +26,7 @@ export function ReasonPlaceholder({ reason, nightsLeft, size, copy, className }:
     return (
       <View className={cn("flex-row items-center gap-1.5", className)}>
         {glyph && <Icon icon={glyph} size={14} tone="muted-foreground" />}
-        <Text className="shrink text-xs font-medium leading-4 text-muted-foreground">{long}</Text>
+        <Text className="shrink text-caption font-medium text-muted-foreground">{long}</Text>
       </View>
     );
 
@@ -35,14 +35,14 @@ export function ReasonPlaceholder({ reason, nightsLeft, size, copy, className }:
       <View className={cn("items-center gap-2 py-6", className)}>
         {glyph && <Icon icon={glyph} size={20} tone="muted-foreground" />}
         {/* max-w-[36ch] on the web */}
-        <Text className="max-w-72 text-center text-[15px] leading-[22px] text-foreground-secondary">{long}</Text>
+        <Text className="max-w-72 text-center text-body text-foreground-secondary">{long}</Text>
       </View>
     );
 
   return (
     <View className={cn("items-center gap-2", className)}>
       {glyph && <Icon icon={glyph} size={24} tone="foreground-secondary" />}
-      <Text className="max-w-40 text-center text-base font-semibold leading-[22px] text-foreground-secondary" numberOfLines={2}>
+      <Text className="max-w-40 text-center text-body font-semibold text-foreground-secondary" numberOfLines={2}>
         {r.code === "no_data" ? i18n.t("reasons:noData.long") : r.short}
       </Text>
     </View>

@@ -485,5 +485,9 @@
     "bootDatabase": "Não foi possível abrir o banco de dados: {{error}}",
     "profileTitle": "Perfil"
   },
-  "trainingLoad": "Training Load"
+  "trainingLoad": "Training Load",
+  "prose": {
+    "more": "Mais",
+    "less": "Menos"
+  }
 }

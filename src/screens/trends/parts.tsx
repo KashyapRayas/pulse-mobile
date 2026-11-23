@@ -102,12 +102,12 @@ export function HistoryChartSkeleton() {
       <View className="flex-row gap-0.5 rounded-lg bg-muted p-0.5">
         {RANGES.map((r) => (
           <View key={r} className="h-10 flex-1 items-center justify-center rounded-md px-3">
-            <Text className="font-numeric text-[13px] font-bold text-muted-foreground/60">{rangeLabel(r)}</Text>
+            <Text className="font-numeric text-meta font-bold text-muted-foreground/60">{rangeLabel(r)}</Text>
           </View>
         ))}
       </View>
       <View>
-        <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-muted-foreground">{t("average")}</Text>
+        <Text className="text-caption font-medium tracking-normal text-muted-foreground">{t("average")}</Text>
         <SkeletonText className="w-14" fs={28} lh={32} />
         <Skeleton className="mt-1 h-6 w-28" />
       </View>
@@ -133,8 +133,8 @@ function History({ points, ...p }: HistoryChartProps & { points: HistoryPoint[] 
   return (
     <View className="min-w-0 gap-3">
       <View>
-        <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-muted-foreground">{t("average")}</Text>
-        <ValueUnit value={formatValue(p.format, frame.average)} unit={p.unit} className="font-numeric text-[28px] font-bold leading-8" />
+        <Text className="text-caption font-medium tracking-normal text-muted-foreground">{t("average")}</Text>
+        <ValueUnit value={formatValue(p.format, frame.average)} unit={p.unit} className="font-numeric text-display font-bold leading-8" />
         {delta !== null && (
           <View className="mt-1 flex-row">
             <StatusChip tone={tone === "good" ? "optimal" : tone === "bad" ? "warning" : "neutral"} delta={delta > 0 ? "up" : delta < 0 ? "down" : "flat"}>

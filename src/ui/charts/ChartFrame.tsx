@@ -119,7 +119,7 @@ export function ChartLabel({ x, y, children, anchor = "middle", className, w = T
     <Text
       pointerEvents="none"
       numberOfLines={lines}
-      className={cn("font-numeric text-xs font-medium leading-4 tabular-nums text-muted-foreground", className)}
+      className={cn("font-numeric text-caption font-medium tabular-nums text-muted-foreground", className)}
       style={{ position: "absolute", left, top: top ? y : y - LH / 2, width: w, textAlign: anchor === "middle" ? "center" : anchor === "end" ? "right" : "left", ...(color ? { color } : null), ...(halo ? { textShadowColor: halo, textShadowRadius: 3, textShadowOffset: { width: 0, height: 0 } } : null) }}
     >
       {children}
@@ -144,7 +144,7 @@ export function Pill({ x, y, text, fill, color, anchor = "start" }: { x: number;
   const left = anchor === "middle" ? x - w / 2 : x;
   return (
     <View pointerEvents="none" style={{ position: "absolute", left, top: y - 9, width: w, height: 18, borderRadius: 9, backgroundColor: fill ?? c.secondary, alignItems: "center", justifyContent: "center" }}>
-      <Text numberOfLines={1} className="text-[11px] font-bold leading-[14px]" style={{ color: color ?? c["foreground-secondary"] }}>
+      <Text numberOfLines={1} className="text-label font-bold" style={{ color: color ?? c["foreground-secondary"] }}>
         {text}
       </Text>
     </View>
@@ -228,8 +228,8 @@ export function TooltipCard({ x, width, title, children }: { x: number; width: n
   const [w, setW] = useState(0);
   const left = Math.min(Math.max(x - w / 2, 0), Math.max(0, width - w));
   return (
-    <Panel pointerEvents="none" onLayout={(e) => setW(e.nativeEvent.layout.width)} className="absolute top-0 gap-1 rounded-xl px-2.5 py-2" style={{ left, opacity: w ? 1 : 0 }}>
-      {!!title && <Text className="text-xs font-medium leading-4 text-muted-foreground">{title}</Text>}
+    <Panel pointerEvents="none" onLayout={(e) => setW(e.nativeEvent.layout.width)} className="absolute top-0 gap-1 rounded-xl px-3 py-2" style={{ left, opacity: w ? 1 : 0 }}>
+      {!!title && <Text className="text-caption font-medium text-muted-foreground">{title}</Text>}
       {children}
     </Panel>
   );
@@ -240,7 +240,7 @@ export function TooltipLine({ color, children }: { color?: string; children: Rea
   return (
     <View className="flex-row items-center gap-2">
       {!!color && <View className="h-3 w-1 rounded-xs" style={{ backgroundColor: color }} />}
-      <Text className="font-numeric text-xs font-medium leading-4 tabular-nums text-foreground">{children}</Text>
+      <Text className="font-numeric text-caption font-medium tabular-nums text-foreground">{children}</Text>
     </View>
   );
 }

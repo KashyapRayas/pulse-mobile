@@ -11,14 +11,15 @@ import type { PlanKey } from "@/queries/weeklyPlan";
 import { cn } from "@/ui/cn";
 import { Hatch } from "@/ui/Hatch";
 import { Icon } from "@/ui/Icon";
-import { CAPTION, DeltaMark, LABEL } from "@/ui/metrics/primitives";
+import { CAPTION, DeltaMark } from "@/ui/metrics/primitives";
 import type { Palette } from "@/ui/palette";
 import { Press } from "@/ui/Press";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
+import { TYPE } from "@/ui/type";
 
 /** The count beside a card's title ("3 of 7 done"), a quiet caption in the header. */
-export const ASIDE = "font-numeric text-[13px] font-bold tabular-nums text-foreground-secondary";
+export const ASIDE = "font-numeric text-meta font-bold tabular-nums text-foreground-secondary";
 
 /** Left inset that lines a block up under a row's label (20 px icon + 12 px gap). */
 export const UNDER_LABEL = "ml-8";
@@ -64,15 +65,15 @@ export function GoalRowShell({ icon, label, caption, value, of, muted, mark, spo
       <View className="size-5 shrink-0 items-center justify-center">
         <Icon icon={icon} size={20} tone="muted-foreground" />
       </View>
-      <View className="min-w-0 flex-1">
-        <Text className={LABEL} numberOfLines={1}>{label}</Text>
-        {!!caption && <Text className={cn(CAPTION, "mt-0.5")}>{caption}</Text>}
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className={TYPE.rowTitle} numberOfLines={1}>{label}</Text>
+        {!!caption && <Text className={cn(CAPTION, "mt-1")}>{caption}</Text>}
         {children}
       </View>
       <View className="shrink-0 flex-row gap-2">
         <View className="items-end">
-          <Text className={cn("font-numeric text-xl font-bold leading-6 tabular-nums", muted && "text-muted-foreground")}>{value}</Text>
-          <Text className="font-numeric text-[13px] font-medium leading-4 tabular-nums text-muted-foreground">{of}</Text>
+          <Text className={cn("font-numeric text-value font-bold leading-6 tabular-nums", muted && "text-muted-foreground")}>{value}</Text>
+          <Text className="font-numeric text-meta font-medium tabular-nums text-muted-foreground">{of}</Text>
         </View>
         <View className="h-6 w-2 items-center justify-center">{mark && <DeltaMark dir={mark.dir} tone={mark.tone} />}</View>
       </View>
@@ -103,7 +104,7 @@ export function WeekColumns({ cols, current, label, className }: { cols: WeekCol
     <View accessible accessibilityLabel={label} className={cn("flex-row", className)}>
       {cols.map((col) => (
         <View key={col.day} className="flex-1 items-center gap-1">
-          <Text className={cn("text-[10px] font-semibold leading-3 text-muted-foreground", col.day === current && "text-foreground")}>{t(`weekdayLetter.${DAYS[weekday(col.day)]}`)}</Text>
+          <Text className={cn("text-label font-semibold text-muted-foreground", col.day === current && "text-foreground")}>{t(`weekdayLetter.${DAYS[weekday(col.day)]}`)}</Text>
           <View className={cn("size-2 rounded-full", col.met ? "bg-foreground-secondary" : "border border-border")} />
         </View>
       ))}

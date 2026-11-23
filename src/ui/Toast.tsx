@@ -7,12 +7,13 @@ import { useEffect, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
 import { CircleCheck, OctagonX } from "lucide-react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useBottomClearance } from "./shells/layout";
 import { haptic } from "./haptics";
 import { Icon } from "./Icon";
 import { usePanelStyle } from "./Panel";
 import { Text } from "./Text";
 import { DURATION } from "./motion";
+import { LineIcon } from "./LineIcon";
 
 type Kind = "success" | "error";
 type Current = { id: number; kind: Kind; text: string } | null;
@@ -47,7 +48,8 @@ export const toast = {
 export function ToastHost() {
   const t = useSyncExternalStore(subscribe, () => current);
   const panel = usePanelStyle({ ring: null, shadow: "toast" });
-  const bottom = useSafeAreaInsets().bottom + 16;
+  // Just above the floating tab bar, where Linear shows its toast (LN11).
+  const bottom = useBottomClearance() - 12;
   // One message at a time: each replaces the last, and clears itself after 4 s.
   useEffect(() => {
     if (!t) return;
@@ -69,11 +71,11 @@ export function ToastHost() {
         exiting={FadeOutDown.duration(DURATION.fast)}
         accessibilityRole="alert"
         accessibilityLiveRegion="polite"
-        className="w-full flex-row items-center gap-1.5 self-center rounded-lg border border-border bg-popover p-4"
+        className="max-w-full flex-row items-start gap-2 self-center rounded-2xl border border-border bg-popover py-3 pl-3 pr-4"
         style={panel}
       >
-        <Icon icon={t.kind === "success" ? CircleCheck : OctagonX} size={16} tone="popover-foreground" strokeWidth={2} />
-        <Text className="shrink text-[13px] font-medium leading-[19.5px] text-popover-foreground">{t.text}</Text>
+        <LineIcon step="meta"><Icon icon={t.kind === "success" ? CircleCheck : OctagonX} size={18} tone={t.kind === "success" ? "optimal-text" : "recovery-red-text"} strokeWidth={2} /></LineIcon>
+        <Text className="shrink text-meta font-medium text-popover-foreground">{t.text}</Text>
       </Animated.View>
     </View>
   );

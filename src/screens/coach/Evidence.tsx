@@ -21,8 +21,9 @@ import { KeyStatRow } from "@/ui/metrics/KeyStatRow";
 import { MiniRing, type MiniRingVariant } from "@/ui/metrics/MiniRing";
 import { Sparkline } from "@/ui/metrics/Sparkline";
 import { zoneBars } from "@/screens/_lib/view";
+import { LineIcon } from "@/ui/LineIcon";
 
-const NOTE = "text-[13px] leading-5 text-muted-foreground";
+const NOTE = "text-meta text-muted-foreground";
 
 function metric(m: { value: number | null; reason?: string | null; provisional?: boolean }): Metric<number> {
   return { value: m.value, reason: m.value === null ? normalizeReason(m.reason) : null, provisional: m.provisional ?? false } as Metric<number>;
@@ -31,9 +32,9 @@ function metric(m: { value: number | null; reason?: string | null; provisional?:
 function BasedOn({ href, children }: { href: string; children: string }) {
   const { t } = useTranslation("coach");
   return (
-    <Press accessibilityRole="link" onPress={() => push(href)} className="min-h-10 flex-row items-center gap-1.5 self-start">
-      <Text className="text-xs leading-4 text-coach-text">{t("evidence.basedOn", { what: children })}</Text>
-      <Icon icon={ArrowUpRight} size={14} tone="coach-text" />
+    <Press accessibilityRole="link" onPress={() => push(href)} className="min-h-10 flex-row items-start gap-1.5 self-start py-2">
+      <Text className="text-caption text-coach-text">{t("evidence.basedOn", { what: children })}</Text>
+      <LineIcon step="caption"><Icon icon={ArrowUpRight} size={14} tone="coach-text" /></LineIcon>
     </Press>
   );
 }
@@ -41,7 +42,7 @@ function BasedOn({ href, children }: { href: string; children: string }) {
 function EvidenceCard({ title, children }: { title: string; children: ReactNode }) {
   return (
     <Card className="px-4 py-3">
-      <Text className="mb-1 text-xs font-semibold text-foreground-secondary">{title}</Text>
+      <Text className="mb-1 text-caption font-semibold text-foreground-secondary">{title}</Text>
       {children}
     </Card>
   );
@@ -53,8 +54,8 @@ function Ring({ label, variant, m, unit }: { label: string; variant: MiniRingVar
   return (
     <View className="flex-1 items-center gap-1 rounded-md bg-secondary p-3">
       <MiniRing variant={variant} value={m.value} />
-      <Text className={cn("font-numeric font-bold", m.value === null ? "text-sm text-foreground-secondary" : "text-xl")}>{m.value === null ? reasonCopy(m.reason).short : `${m.value}${unit ?? ""}`}</Text>
-      <Text className="text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{label}</Text>
+      <Text className={cn("font-numeric font-bold", m.value === null ? "text-meta text-foreground-secondary" : "text-value")}>{m.value === null ? reasonCopy(m.reason).short : `${m.value}${unit ?? ""}`}</Text>
+      <Text className="text-caption font-medium tracking-normal text-muted-foreground">{label}</Text>
     </View>
   );
 }
@@ -72,11 +73,11 @@ export function DayCard({ d }: { d: DayDigest }) {
       </View>
       {moved.length > 0 && (
         <View className="px-2 pb-1.5 pt-3">
-          <Text className="text-xs font-medium text-muted-foreground">{t("evidence.moved")}</Text>
+          <Text className="text-caption font-medium text-muted-foreground">{t("evidence.moved")}</Text>
           {moved.map((c, i) => (
             <View key={c.label} className={cn("flex-row items-center justify-between gap-3 py-1.5", i > 0 && "border-t border-border")}>
-              <Text className="text-sm text-foreground-secondary">{c.label}</Text>
-              <Text className={cn("font-numeric text-sm font-semibold", c.points! > 0 ? "text-recovery-green" : "text-recovery-red-text")}>
+              <Text className="text-meta text-foreground-secondary">{c.label}</Text>
+              <Text className={cn("font-numeric text-meta font-semibold", c.points! > 0 ? "text-recovery-green" : "text-recovery-red-text")}>
                 {t("evidence.points", { value: `${c.points! > 0 ? "+" : "−"}${Math.abs(c.points!)}` })}
               </Text>
             </View>
@@ -146,7 +147,7 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
           ) : (
             <Text className={NOTE}>{t("evidence.noWorkouts")}</Text>
           )}
-          {d.total > 5 && <Text className={cn(NOTE, "mt-2 text-xs")}>{t("evidence.showing", { total: d.total })}</Text>}
+          {d.total > 5 && <Text className={cn(NOTE, "mt-2 text-caption")}>{t("evidence.showing", { total: d.total })}</Text>}
         </EvidenceCard>
         <BasedOn href="/activities">{t("evidence.recordedTitle", { start: d.start, end: d.end })}</BasedOn>
       </View>
@@ -173,12 +174,12 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
     return (
       <View className="gap-2">
         <EvidenceCard title={t("evidence.habitsTitle", { outcome: d.outcome })}>
-          <Text className="text-xs leading-4 text-muted-foreground">{t("evidence.habitsNote")}</Text>
+          <Text className="text-caption text-muted-foreground">{t("evidence.habitsNote")}</Text>
           {d.effects.slice(0, 3).map((v) => (
             <View key={v.behaviour}>
               <KeyStatRow variant="row" label={v.behaviour} metric={metric({ value: v.delta })} unit={d.unit} format="signed1" direction="none" caption={t("evidence.withWithout", { yes: v.yesDays, no: v.noDays })} />
               {v.confidenceInterval && (
-                <Text className="pb-2 text-xs leading-4 text-muted-foreground">
+                <Text className="pb-2 text-caption text-muted-foreground">
                   {t(v.effect === "none" ? "evidence.intervalNone" : "evidence.interval", { from: localeFixed(v.confidenceInterval[0], 1), to: localeFixed(v.confidenceInterval[1], 1), unit: unitLabel(d.unit) })}
                 </Text>
               )}

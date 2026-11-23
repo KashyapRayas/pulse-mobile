@@ -2,6 +2,7 @@ import { Pressable, View } from "react-native";
 import { cn } from "./cn";
 import { haptic } from "./haptics";
 import { Text } from "./Text";
+import { TYPE } from "./type";
 
 /** One segment (the web's SEGMENT_ITEM): 40 px, 8 px corners; the chosen one adds SEGMENT_ON. Add the width and padding. */
 export const SEGMENT = "h-10 items-center justify-center rounded-md";
@@ -19,7 +20,7 @@ export function Segmented<T extends string>({
   onChange,
   fill,
   label,
-  textClassName = "font-numeric text-[13px] font-bold",
+  textClassName = `${TYPE.tab} tabular-nums`,
 }: {
   value: T;
   options: readonly { value: T; label: string; accessibilityLabel?: string }[];

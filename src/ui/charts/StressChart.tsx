@@ -120,7 +120,7 @@ export function StressChart({ data, variant }: StressChartProps) {
       </View>
     ) : (
       <View className="h-11 justify-center">
-        <Text className="text-xs font-medium leading-4 text-muted-foreground">{i18n.t("ui:stress.emptySpark")}</Text>
+        <Text className="text-caption font-medium text-muted-foreground">{i18n.t("ui:stress.emptySpark")}</Text>
       </View>
     );
   return (

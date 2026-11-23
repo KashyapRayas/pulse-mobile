@@ -25,7 +25,7 @@ const VARIANT: Record<Variant, { box?: string; fill?: string; text: string }> = 
   "outline-pill": { text: "text-foreground" },
 };
 const SIZE: Record<Size, { box: string; fill: string; text: string }> = {
-  touch: { box: "h-11 gap-2 rounded-xl px-4", fill: "rounded-[11px]", text: "text-[13px] font-bold uppercase tracking-[0.1em]" },
+  touch: { box: "h-11 gap-2 rounded-xl px-4", fill: "rounded-[11px]", text: "text-meta font-medium tracking-normal" },
   "icon-touch": { box: "size-11 rounded-full", fill: "rounded-full", text: "" },
 };
 

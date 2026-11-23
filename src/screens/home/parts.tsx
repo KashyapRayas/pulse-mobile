@@ -15,7 +15,7 @@ export function CardButtonContent({ icon, label, compact = false }: { icon: Luci
   return (
     <>
       <Icon icon={icon} size={compact ? 17 : 20} tone="foreground" strokeWidth={2} />
-      <Text numberOfLines={1} className={compact ? "shrink text-[12px] font-bold uppercase leading-4 tracking-[0.06em]" : "text-[13px] font-bold uppercase leading-4 tracking-[0.1em]"}>{label}</Text>
+      <Text numberOfLines={1} className={compact ? "shrink text-caption font-medium tracking-normal" : "text-meta font-medium tracking-normal"}>{label}</Text>
     </>
   );
 }

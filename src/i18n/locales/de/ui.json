@@ -477,5 +477,9 @@
     "bootDatabase": "Die Datenbank konnte nicht geöffnet werden: {{error}}",
     "profileTitle": "Profil"
   },
-  "trainingLoad": "Training Load"
+  "trainingLoad": "Training Load",
+  "prose": {
+    "more": "Mehr",
+    "less": "Weniger"
+  }
 }

@@ -10,7 +10,7 @@ export function Slow() {
   return (
     <>
       <Icon icon={Turtle} size={16} tone="foreground-secondary" strokeWidth={1.75} />
-      <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("pace.slow")}</Text>
+      <Text className="text-body text-foreground-secondary">{t("pace.slow")}</Text>
     </>
   );
 }
@@ -18,7 +18,7 @@ export function Fast() {
   const { t } = useTranslation("health");
   return (
     <>
-      <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("pace.fast")}</Text>
+      <Text className="text-body text-foreground-secondary">{t("pace.fast")}</Text>
       <Icon icon={Rabbit} size={16} tone="foreground-secondary" strokeWidth={1.75} />
     </>
   );

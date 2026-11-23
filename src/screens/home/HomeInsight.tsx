@@ -77,8 +77,8 @@ export function HomeInsight({ day, items: all }: { day: string; items: HomeInsig
   return (
     <View accessibilityLabel={t("insights.label")} className={several ? "pb-2" : undefined}>
       {several && <View accessibilityElementsHidden className="absolute inset-x-5 bottom-0 h-8 rounded-b-2xl bg-card-peek" />}
-      {/* The reference app's card: text inset 20 px, the counter pill 8 px from the top and right corner (spec §11 F6). */}
-      <View className={`${CARD_CLASS} p-5 pr-12`} style={shadow}>
+      {/* Text inset 16 px as every card (the 4 px grid, docs/design/linear-mobile.md), the counter pill 8 px from the top and right corner (spec §11 F6). */}
+      <View className={`${CARD_CLASS} p-4 pr-12`} style={shadow}>
         <CardFill />
         <View style={{ minHeight: tallest }}>
           {items.map((it, k) => (
@@ -88,9 +88,9 @@ export function HomeInsight({ day, items: all }: { day: string; items: HomeInsig
               onHeight={(h) => setHeights((hs) => (hs[k] === h ? hs : Object.assign([...hs], { [k]: h })))}
               label={several ? t("insights.position", { n: k + 1, total: n }) : undefined}
             >
-              <View className="gap-0.5">
-                <Text className="text-base font-medium leading-[22px]">{it.title}</Text>
-                <Text className="text-[15px] leading-5 text-foreground-body">{it.body}</Text>
+              <View className="gap-1">
+                <Text className="text-body font-semibold">{it.title}</Text>
+                <Text className="text-meta text-foreground-secondary">{it.body}</Text>
               </View>
             </Slide>
           ))}
@@ -104,7 +104,7 @@ export function HomeInsight({ day, items: all }: { day: string; items: HomeInsig
           className="absolute right-2 top-2 h-12 w-6 items-center justify-center gap-1 rounded-lg bg-fill-hover"
         >
           <Icon icon={Check} size={16} tone="foreground" strokeWidth={2.25} />
-          <Text className="font-numeric text-[13px] font-semibold leading-4 tabular-nums text-foreground-secondary">{n}</Text>
+          <Text className="font-numeric text-meta font-semibold tabular-nums text-foreground-secondary">{n}</Text>
         </Press>
       </View>
     </View>

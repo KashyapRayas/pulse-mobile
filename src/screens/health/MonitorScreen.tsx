@@ -85,11 +85,11 @@ function Count({ count }: { count: MonitorVM["count"] }) {
     <View className="items-center gap-3 py-4">
       {/* One sentence for a screen reader; the parts below are hidden from it. */}
       <View accessible accessibilityLabel={v ? t("monitor.countAria", { inRange: v.inRange, total: v.total }) : t("monitor.countUnavailable", { reason: reason!.long })} className="items-center gap-3">
-        <Text accessibilityElementsHidden className={cn("font-numeric text-[64px] font-bold leading-[64px] tracking-[-0.01em] tabular-nums", !v && "text-muted-foreground")}>
+        <Text accessibilityElementsHidden className={cn("font-numeric text-giant font-bold leading-[64px] tracking-[-0.01em] tabular-nums", !v && "text-muted-foreground")}>
           {v ? v.inRange : "--"}
-          <Text className="text-[35px] text-foreground-secondary">/{v?.total ?? 5}</Text>
+          <Text className="text-display text-foreground-secondary">/{v?.total ?? 5}</Text>
         </Text>
-        <Text accessibilityElementsHidden className="text-xs font-bold uppercase leading-4 tracking-[0.1em]">
+        <Text accessibilityElementsHidden className="text-caption font-medium tracking-normal">
           {t("monitor.metricsWithin")}
         </Text>
       </View>
@@ -98,7 +98,7 @@ function Count({ count }: { count: MonitorVM["count"] }) {
           {t(chip.key)}
         </StatusChip>
       )}
-      {reason && <Text className="max-w-72 text-center text-xs font-medium leading-4 text-muted-foreground">{reason.long}</Text>}
+      {reason && <Text className="max-w-72 text-center text-caption font-medium text-muted-foreground">{reason.long}</Text>}
     </View>
   );
 }
@@ -114,8 +114,8 @@ function IllnessAlert() {
           <Icon icon={CircleAlert} size={20} tone="recovery-red-text" strokeWidth={1.75} />
         </View>
         <View className="min-w-0 flex-1 gap-0.5">
-          <Text className="text-base font-semibold leading-[22px]">{t("monitor.illnessTitle")}</Text>
-          <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("monitor.illnessBody")}</Text>
+          <Text className="text-body font-semibold">{t("monitor.illnessTitle")}</Text>
+          <Text className="text-body text-foreground-secondary">{t("monitor.illnessBody")}</Text>
         </View>
       </View>
     </Card>
@@ -183,7 +183,7 @@ function MonitorLoading() {
       hero={
         <View accessibilityElementsHidden className="items-center gap-3 py-4">
           <SkeletonText lh={64} fs={64} className="w-[83px]" />
-          <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em]">{t("monitor.metricsWithin")}</Text>
+          <Text className="text-caption font-medium tracking-normal">{t("monitor.metricsWithin")}</Text>
           <Skeleton className="h-6 w-28 rounded-md" />
         </View>
       }

@@ -21,34 +21,30 @@ import { MenuPanel, useMenu } from "@/ui/Menu";
 import type { Box } from "@/ui/menuPlace";
 import { DURATION } from "@/ui/motion";
 import { BAR_CORNERS } from "@/ui/radius";
+import { FIELD_ERROR, FIELD_HINT, FieldLabel } from "@/ui/Field";
 
-/** Body copy under a heading (web: max-w-[65ch] text-[15px] leading-[22px] text-foreground-secondary). */
-export const BODY = "text-[15px] leading-[22px] text-foreground-secondary";
-/** One settings row: label left, value right, 52 px tall (web ROW, ROW_LABEL, ROW_VALUE). */
-export const ROW = "min-h-13 flex-row items-center justify-between gap-3 py-2";
-export const ROW_LABEL = "text-[15px] leading-[22px]";
-export const ROW_VALUE = "shrink text-right text-[15px] leading-[22px] text-foreground-secondary tabular-nums";
-export const HINT = "text-[13px] leading-[18px] text-muted-foreground";
-const LABEL = "text-xs font-bold uppercase leading-4 tracking-[0.1em] text-foreground-secondary";
-const ERROR = "text-[13px] font-medium leading-[18px] text-recovery-red-text";
+/** Body copy under a heading (web: max-w-[65ch] text-body leading-[22px] text-foreground-secondary). */
+export const BODY = "text-body text-foreground-secondary";
+/** One settings row: 52 px at least, 12 px above and below its text (Linear's settings rows), its label and hint 4 px apart. */
+export const ROW = "min-h-13 flex-row items-center justify-between gap-3 py-3";
+export const ROW_LABEL = "text-body";
+export const ROW_VALUE = "shrink text-right text-body text-foreground-secondary tabular-nums";
+export const HINT = FIELD_HINT;
 
 /** A hairline between rows (the web's `divide-y divide-border`) for rows of automatic height, where the border adds its 1 px. */
 export const Divider = ({ className }: { className?: string }) => <View className={cn("h-px bg-border", className)} />;
 /** The same rule as the top border of a row with a minimum height (ROW): the web's min-h includes the border, so the row stays 52 px. */
 export const ROW_RULE = "border-t border-border";
 
-/** A form field: caps label (with "Optional"), the control, then its error or its hint (web ProfileForm `Field`). */
+/** A form field: its label (with "Optional" at the same size), the control, then its error or its hint (src/ui/Field.tsx). */
 export function Field({ label, hint, error, optional, children }: { label: string; hint: string; error?: string; optional?: boolean; children: ReactNode }) {
   const { t } = useTranslation("settings");
   return (
     <View className="gap-2">
-      <Text className={LABEL}>
-        {label}
-        {optional && <Text className="ml-2 text-[15px] font-medium normal-case tracking-normal text-muted-foreground">{"  "}{t("form.optional")}</Text>}
-      </Text>
+      <FieldLabel label={label} qualifier={optional ? t("form.optional") : undefined} />
       {children}
       {error ? (
-        <Text accessibilityLiveRegion="polite" className={ERROR}>
+        <Text accessibilityLiveRegion="polite" className={FIELD_ERROR}>
           {error}
         </Text>
       ) : (
@@ -67,16 +63,16 @@ export const FIELD_BOX = "h-13 rounded-xl bg-field";
 export const FIELD_BOX_COMPACT = "h-11 rounded-xl bg-field";
 
 const FIELDS = {
-  /** Profile fields (web FIELD): h-13 rounded-xl bg-field px-4 text-[17px]. */
-  field: { box: FIELD_BOX, input: "px-4 text-[17px]" },
-  /** The behaviour search (web: h-12 rounded-xl bg-foreground/[0.06] pl-11 text-base). */
-  search: { box: "h-12 rounded-xl border border-input bg-fill-faint", input: "px-4 text-base" },
-  /** The web's plain Input (shadcn: h-11 rounded-lg border border-input, dark:bg-input/30 px-2.5 text-base). */
-  input: { box: "h-11 rounded-lg border border-input dark:bg-input/30", input: "px-2.5 text-base" },
+  /** Profile fields (web FIELD): h-13 rounded-xl bg-field px-4 text-heading. */
+  field: { box: FIELD_BOX, input: "px-4 text-heading" },
+  /** The behaviour search (web: h-12 rounded-xl bg-foreground/[0.06] pl-11 text-body). */
+  search: { box: "h-12 rounded-xl border border-input bg-fill-faint", input: "px-4 text-body" },
+  /** The web's plain Input (shadcn: h-11 rounded-lg border border-input, dark:bg-input/30 px-3 text-body). */
+  input: { box: "h-11 rounded-lg border border-input dark:bg-input/30", input: "px-3 text-body" },
   /** A number at the end of a settings row (Goals): the plain Input at 36 px, its digits right-aligned. */
-  number: { box: "h-9 rounded-lg border border-input dark:bg-input/30", input: "px-2 text-right text-[15px] tabular-nums" },
+  number: { box: "h-9 rounded-lg border border-input dark:bg-input/30", input: "px-2 text-right text-body tabular-nums" },
   /** Profile fields in the Edit profile sheet: 44 px and 15 px type, nearer the web's sheet forms than onboarding's. */
-  compact: { box: FIELD_BOX_COMPACT, input: "px-3.5 text-[15px]" },
+  compact: { box: FIELD_BOX_COMPACT, input: "px-4 text-body" },
 } as const;
 const BORDERED: readonly (keyof typeof FIELDS)[] = ["input", "number"];
 /** A multiline field (Coach's About you): the variant's box, grown from four lines to fit, the text from the top left. The
@@ -144,7 +140,7 @@ export function RadioSegments<T extends string>({ value, options, onChange, labe
             className={cn("h-11 flex-1 flex-row items-center justify-center gap-2 rounded-lg", on && "bg-foreground")}
           >
             {icon && <Icon icon={icon} size={16} tone={on ? "background" : "foreground-secondary"} strokeWidth={2} />}
-            <Text className={cn("text-[15px] font-semibold", on ? "text-background" : "text-foreground-secondary")}>{text}</Text>
+            <Text className={cn("text-body font-semibold", on ? "text-background" : "text-foreground-secondary")}>{text}</Text>
           </Press>
         );
       })}
@@ -173,8 +169,8 @@ export function ChoiceMenu<T extends string>({ anchor, close, value, options, on
           className="min-h-12 flex-row items-center gap-3 rounded-xl px-3 py-2"
         >
           {o.icon && <Icon icon={o.icon} size={18} tone="foreground-secondary" strokeWidth={1.75} />}
-          <View className="min-w-0 flex-1">
-            <Text className="text-[15px] font-medium leading-5">{o.label}</Text>
+          <View className="min-w-0 flex-1 gap-1">
+            <Text className="text-body font-medium">{o.label}</Text>
             {!!o.detail && <Text className={HINT}>{o.detail}</Text>}
           </View>
           {o.value === value && <Icon icon={Check} size={16} tone="foreground" strokeWidth={2.25} />}
@@ -209,7 +205,7 @@ export function SelectRow<T extends string>({ label, value, options, onChange, r
 export function SwitchRow({ label, hint, value, onChange, disabled, rule = true }: { label: string; hint?: string; value: boolean; onChange: (v: boolean) => void; disabled?: boolean; rule?: boolean }) {
   return (
     <View className={cn(ROW, rule && ROW_RULE, disabled && "opacity-disabled")}>
-      <View className="min-w-0 flex-1">
+      <View className="min-w-0 flex-1 gap-1">
         <Text className={ROW_LABEL}>{label}</Text>
         {!!hint && <Text className={HINT}>{hint}</Text>}
       </View>
@@ -234,7 +230,7 @@ export function SmallButton({ label, accessibilityLabel, onPress, icon, solid, c
       className={cn("h-9 flex-row items-center justify-center gap-1.5 rounded-full px-3", solid && "bg-primary px-5", className)}
     >
       {icon && <Icon icon={icon} size={14} tone={solid ? "primary-foreground" : "foreground-secondary"} strokeWidth={2} />}
-      <Text className={cn("text-[13px] font-semibold", solid ? "text-primary-foreground" : "text-foreground-secondary")}>{label}</Text>
+      <Text className={cn("text-meta font-semibold", solid ? "text-primary-foreground" : "text-foreground-secondary")}>{label}</Text>
     </Press>
   );
 }
@@ -318,13 +314,13 @@ export function ConfirmDialog({
         <Pressable accessible={false} onPress={() => {}} className="w-full max-w-sm overflow-hidden rounded-xl bg-popover" style={panel}>
           <View className="gap-4 p-4">
             <View className="gap-2">
-              <Text accessibilityRole="header" className="text-base font-medium leading-[16px]">
+              <Text accessibilityRole="header" className="text-body font-medium">
                 {title}
               </Text>
-              <Text className="text-sm leading-5 text-muted-foreground">{description}</Text>
+              <Text className="text-meta text-muted-foreground">{description}</Text>
             </View>
             {!!error && (
-              <Text accessibilityRole="alert" className="text-xs font-medium leading-4 text-recovery-red-text">
+              <Text accessibilityRole="alert" className="text-caption font-medium text-recovery-red-text">
                 {error}
               </Text>
             )}

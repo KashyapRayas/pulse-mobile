@@ -13,8 +13,8 @@ import { Press } from "@/ui/Press";
 import { Text } from "@/ui/Text";
 import { BODY, Field, HINT, TextField } from "@/screens/settings/controls";
 
-const HEADING = "text-[22px] font-bold leading-7 text-foreground";
-const ERROR = "text-[13px] leading-[18px] text-recovery-red-text";
+const HEADING = "text-title font-bold leading-7 text-foreground";
+const ERROR = "text-meta text-recovery-red-text";
 
 const BULLETS = ["consentSend", "consentTerms", "consentLocal", "consentAccuracy"] as const;
 
@@ -29,8 +29,8 @@ export function Consent() {
       <View className="gap-3">
         {BULLETS.map((b) => (
           <View key={b} className="flex-row">
-            <Text className="w-5 text-[15px] leading-[22px] text-coach-text">•</Text>
-            <Text className="flex-1 text-[15px] leading-[22px] text-foreground">{t(`setup.${b}`)}</Text>
+            <Text className="w-5 text-body text-coach-text">•</Text>
+            <Text className="flex-1 text-body text-foreground">{t(`setup.${b}`)}</Text>
           </View>
         ))}
       </View>
@@ -93,7 +93,7 @@ export function ConnectProvider({ current, onSaved }: { current: CoachSetup; onS
               onPress={() => pick(x.id)}
               className={cn("h-10 justify-center rounded-full border px-4", on ? "border-coach/60 bg-secondary" : "border-border")}
             >
-              <Text className={cn("text-[14px] font-semibold", on ? "text-foreground" : "text-foreground-secondary")}>{x.label}</Text>
+              <Text className={cn("text-meta font-semibold", on ? "text-foreground" : "text-foreground-secondary")}>{x.label}</Text>
             </Press>
           );
         })}
@@ -107,7 +107,7 @@ export function ConnectProvider({ current, onSaved }: { current: CoachSetup; onS
         <TextField accessibilityLabel={t("setup.keyLabel")} value={key} onChangeText={setKey} secureTextEntry autoCapitalize="none" autoCorrect={false} spellCheck={false} maxLength={500} placeholder={current.last4 && current.provider === provider ? `••••${current.last4}` : t("setup.keyPlaceholder")} />
       </Field>
       {!!p.keyUrl && (
-        <Text accessibilityRole="link" onPress={() => void Linking.openURL(p.keyUrl!).catch(() => {})} className="-mt-3 text-[13px] font-semibold text-coach-text">
+        <Text accessibilityRole="link" onPress={() => void Linking.openURL(p.keyUrl!).catch(() => {})} className="-mt-3 text-meta font-semibold text-coach-text">
           {t("setup.getKey", { provider: p.label })}
         </Text>
       )}

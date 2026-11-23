@@ -41,12 +41,12 @@ function LiveHero() {
         <ValueUnit
           value={bpm === null ? MISSING : String(bpm)}
           unit="bpm"
-          className="font-numeric text-[64px] font-bold leading-[64px] tracking-[-0.02em]"
-          unitClassName="text-xl font-semibold leading-7 text-foreground-secondary"
+          className="font-numeric text-giant font-bold leading-[64px] tracking-[-0.02em]"
+          unitClassName="text-value font-semibold leading-7 text-foreground-secondary"
         />
       </View>
       <LivePill name={live.device?.name ?? null} lost={lost} className="self-center" />
-      {live.contact === false && <Text className="text-[13px] font-medium leading-[18px] text-recovery-red-text">{t("live.noContact")}</Text>}
+      {live.contact === false && <Text className="text-meta font-medium text-recovery-red-text">{t("live.noContact")}</Text>}
       <LiveTrace history={live.history} />
       {!!hrv && <Text className={CAPTION}>{hrv}</Text>}
       <StopLiveButton onPress={() => void live.disconnect()} className="mt-1" />

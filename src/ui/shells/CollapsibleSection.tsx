@@ -7,6 +7,7 @@ import { haptic } from "../haptics";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 import { DURATION } from "../motion";
+import { TYPE } from "../type";
 
 export type CollapsibleSectionProps = {
   /** Stable id: the section's key (the web keeps its open state in a cookie under it). */
@@ -42,7 +43,7 @@ export function CollapsibleSection({ id, title, defaultOpen = true, action, clas
           }}
           className="-mx-2 -my-1.5 min-h-11 flex-row items-center gap-2 rounded-lg px-2"
         >
-          <Text accessibilityRole="header" className="text-[22px] font-semibold leading-7 tracking-[-0.01em]">
+          <Text accessibilityRole="header" className={TYPE.section}>
             {title}
           </Text>
           <Animated.View style={chevron}>

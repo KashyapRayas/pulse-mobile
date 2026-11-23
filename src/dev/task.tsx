@@ -7,7 +7,7 @@ import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { goBack } from "@/ui/navigate";
 
-const BODY = "text-[15px] leading-[22px] text-foreground-secondary";
+const BODY = "text-body text-foreground-secondary";
 
 /**
  * The kit's task page demo: /dev/task (and an optional title). Has a text field to check that the keyboard does not
@@ -39,7 +39,7 @@ export default function SheetDemo() {
           placeholder="Type here to try the keyboard"
           placeholderTextColor={c["muted-foreground"]}
           multiline
-          className="min-h-24 rounded-xl bg-secondary px-4 py-3 text-[15px] leading-[22px] text-foreground"
+          className="min-h-24 rounded-xl bg-secondary px-4 py-3 text-body text-foreground"
           textAlignVertical="top"
         />
       </View>

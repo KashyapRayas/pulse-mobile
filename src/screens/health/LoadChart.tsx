@@ -88,17 +88,17 @@ export function LoadChart({ load }: { load: FitnessVM["load"] }) {
                   {/* In the plot's order: the bars, then the two lines. */}
                   {a.tsb !== null && (
                     <TooltipLine color={a.tsb < 0 ? c.warning : c["chart-2"]}>
-                      <Text className="font-numeric text-xs font-medium leading-4 text-muted-foreground">{LABELS.tsb}</Text> {formatValue("signedInt", a.tsb)}
+                      <Text className="font-numeric text-caption font-medium text-muted-foreground">{LABELS.tsb}</Text> {formatValue("signedInt", a.tsb)}
                     </TooltipLine>
                   )}
                   {a.ctl !== null && (
                     <TooltipLine color={c["chart-1"]}>
-                      <Text className="font-numeric text-xs font-medium leading-4 text-muted-foreground">{LABELS.ctl}</Text> {formatValue("int", a.ctl)}
+                      <Text className="font-numeric text-caption font-medium text-muted-foreground">{LABELS.ctl}</Text> {formatValue("int", a.ctl)}
                     </TooltipLine>
                   )}
                   {a.atl !== null && (
                     <TooltipLine color={c["chart-4"]}>
-                      <Text className="font-numeric text-xs font-medium leading-4 text-muted-foreground">{LABELS.atl}</Text> {formatValue("int", a.atl)}
+                      <Text className="font-numeric text-caption font-medium text-muted-foreground">{LABELS.atl}</Text> {formatValue("int", a.atl)}
                     </TooltipLine>
                   )}
                 </TooltipCard>
@@ -119,8 +119,8 @@ export function LoadChart({ load }: { load: FitnessVM["load"] }) {
           ).map(([k, mark, v]) => (
             <View key={k} className="flex-row items-center gap-1.5">
               {mark}
-              <Text className="text-xs font-medium leading-4 text-muted-foreground">{LABELS[k]}</Text>
-              <Text className="font-numeric text-xs font-semibold leading-4 tabular-nums text-foreground-secondary">{v}</Text>
+              <Text className="text-caption font-medium text-muted-foreground">{LABELS[k]}</Text>
+              <Text className="font-numeric text-caption font-semibold tabular-nums text-foreground-secondary">{v}</Text>
             </View>
           ))}
         </View>

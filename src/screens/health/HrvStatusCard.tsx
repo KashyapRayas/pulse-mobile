@@ -1,7 +1,6 @@
 // HRV Status (version 19), from halo src/screens/health/HrvStatusCard.tsx (its fields and copy) drawn with Pulse's kit:
 // the 7-day average of overnight HRV against your usual range, and the last 4 weeks' nights as bars against that range
 // in one Skia canvas. On Health and on Recovery; it loads its own query, so neither page's query changes.
-import type { ReactNode } from "react";
 import { View } from "react-native";
 import { RoundedRect } from "@shopify/react-native-skia";
 import { useTranslation } from "react-i18next";
@@ -17,14 +16,11 @@ import { MetricState } from "@/ui/shells/MetricState";
 import { SectionShell } from "@/ui/shells/SectionShell";
 import type { InfoContent } from "@/ui/shells/InfoButton";
 import { Skeleton } from "@/ui/Skeleton";
+import { P } from "@/ui/Prose";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { Hero, LINE, SOURCE_NOTE, StatRow } from "../strain/TrainingCards";
 import { useScreen } from "../useScreen";
-
-function P({ children }: { children: ReactNode }) {
-  return <Text className="text-[15px] leading-[22px] text-foreground-body">{children}</Text>;
-}
 
 // Getters: the card's text resolves when it opens, in the language then in use.
 export const HRV_STATUS_INFO: InfoContent = {

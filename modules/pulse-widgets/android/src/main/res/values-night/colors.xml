@@ -1,21 +1,21 @@
 <!-- Pulse tokens (src/ui/palette.ts DARK; scripts/widgets.test.ts keeps them equal). -->
 <resources>
-  <color name="pulse_widget_bg_top">#1d2529</color>
-  <color name="pulse_widget_bg">#101518</color>
-  <color name="pulse_widget_card_top">#272a2d</color>
-  <color name="pulse_widget_card">#232629</color>
-  <color name="pulse_widget_card_edge">#0fffffff</color>
-  <color name="pulse_widget_fg">#ffffff</color>
-  <color name="pulse_widget_secondary">#babac0</color>
-  <color name="pulse_widget_muted">#a9aeb3</color>
-  <color name="pulse_widget_track">#33383c</color>
-  <color name="pulse_widget_warning_text">#ffa722</color>
-  <color name="pulse_widget_green">#16ec06</color>
-  <color name="pulse_widget_yellow">#ffde00</color>
-  <color name="pulse_widget_red">#ff0026</color>
-  <color name="pulse_widget_strain">#0093e7</color>
-  <color name="pulse_widget_sleep">#7ba1bb</color>
-  <color name="pulse_widget_optimal">#00f19f</color>
-  <color name="pulse_widget_warning">#ffa722</color>
-  <color name="pulse_widget_blue">#67aee6</color>
+  <color name="pulse_widget_bg_top">#0f1011</color>
+  <color name="pulse_widget_bg">#0f1011</color>
+  <color name="pulse_widget_card_top">#151619</color>
+  <color name="pulse_widget_card">#151619</color>
+  <color name="pulse_widget_card_edge">#14ffffff</color>
+  <color name="pulse_widget_fg">#f7f8f8</color>
+  <color name="pulse_widget_secondary">#d0d6e0</color>
+  <color name="pulse_widget_muted">#8a8f98</color>
+  <color name="pulse_widget_track">#232428</color>
+  <color name="pulse_widget_warning_text">#f2994a</color>
+  <color name="pulse_widget_green">#4cb782</color>
+  <color name="pulse_widget_yellow">#f2c94c</color>
+  <color name="pulse_widget_red">#eb5757</color>
+  <color name="pulse_widget_strain">#4ea7fc</color>
+  <color name="pulse_widget_sleep">#8f9ab8</color>
+  <color name="pulse_widget_optimal">#4cb782</color>
+  <color name="pulse_widget_warning">#f2994a</color>
+  <color name="pulse_widget_blue">#68a8f2</color>
 </resources>

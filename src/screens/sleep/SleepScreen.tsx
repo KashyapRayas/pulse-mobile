@@ -17,7 +17,7 @@ import { cn } from "@/ui/cn";
 import { Card, INSET_ROW } from "@/ui/Card";
 import { InsightCard } from "@/ui/metrics/InsightCard";
 import { KeyStatRow } from "@/ui/metrics/KeyStatRow";
-import { CAPTION, LABEL } from "@/ui/metrics/primitives";
+import { CAPTION } from "@/ui/metrics/primitives";
 import { ReasonPlaceholder } from "@/ui/metrics/ReasonPlaceholder";
 import { ScoreDial } from "@/ui/metrics/ScoreDial";
 import { SleepStages } from "@/ui/metrics/SleepStages";
@@ -33,6 +33,7 @@ import { cardInfoFor } from "./cardInfoFor";
 import { HoursVsNeed, SleepConsistency, SleepEfficiency } from "./SleepCards";
 import { WeeklyTrends } from "../trends/WeeklyTrends";
 import { SLEEP_BODY_SKELETON, SleepSkeleton } from "./SleepSkeleton";
+import { TYPE } from "@/ui/type";
 
 /** Weekly Trends, in the reference app's order (sleep-28..34). */
 const WEEKLY: readonly TrendViewKey[] = ["sleep", "hours", "hours_need", "restorative", "consistency", "time_in_bed", "efficiency"];
@@ -111,7 +112,7 @@ function Sleep({ vm, weekly, timeZone }: { vm: SleepPageVM; weekly: TrendViewVM[
               {STATUS_LEGEND.map(([swatch, word]) => (
                 <View key={word} className="flex-row items-center gap-1.5">
                   <View accessibilityElementsHidden className={cn("h-1 w-4 rounded-sm", swatch)} />
-                  <Text className="text-xs font-medium leading-4 text-foreground-secondary">{t(`status.${word}`)}</Text>
+                  <Text className="text-caption font-medium text-foreground-secondary">{t(`status.${word}`)}</Text>
                 </View>
               ))}
             </View>
@@ -152,11 +153,11 @@ function Planner({ vm, timeZone }: { vm: Pick<SleepVM, "planner">; timeZone: str
   const plan = m.value;
   const row = (label: string, caption: string, time: string) => (
     <View key={label} className="min-h-[52px] flex-row items-center gap-3 py-2">
-      <View className="min-w-0 flex-1">
-        <Text className={cn(LABEL, "truncate")}>{label}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className={cn(TYPE.rowTitle, "truncate")}>{label}</Text>
         <Text className={cn(CAPTION, "mt-0.5 truncate")}>{caption}</Text>
       </View>
-      <Text className="font-numeric text-xl font-bold leading-6 tabular-nums">{time}</Text>
+      <Text className="font-numeric text-value font-bold leading-6 tabular-nums">{time}</Text>
     </View>
   );
   const rows = [...plan.plans.map((q) => row(t(`planner.plan.${q.key === "get_by" ? "getBy" : q.key}`), t("planner.shareOfNeed", { pct: Math.round(q.share * 100) }), clock(q.bedtimeAt, timeZone))), row(t("planner.typicalWake"), t(plan.weekdayWake ? "planner.weekdayWake" : "planner.weekendWake"), clock(plan.wakeAt, timeZone))];

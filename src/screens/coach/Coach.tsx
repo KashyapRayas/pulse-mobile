@@ -57,7 +57,7 @@ function Caption({ live, children }: { live?: boolean; children: string }) {
   return (
     <View className="min-h-6 flex-row items-center gap-2" accessibilityLiveRegion={live ? "polite" : "none"}>
       <View className={cn("size-1.5 rounded-full bg-coach", live && "animate-pulse")} />
-      <Text className="text-[13px] leading-[18px] text-muted-foreground">{children}</Text>
+      <Text className="text-meta text-muted-foreground">{children}</Text>
     </View>
   );
 }
@@ -85,7 +85,7 @@ function Pill({ label, onPress, disabled, primary, icon }: { label: string; onPr
   return (
     <Press accessibilityRole="button" onPress={onPress} disabled={disabled} className={cn("h-10 flex-row items-center gap-1.5 rounded-full px-4", primary ? "bg-primary" : "bg-secondary", disabled && "opacity-45")}>
       {icon}
-      <Text className={cn("text-[13px] font-semibold", primary ? "text-primary-foreground" : "text-foreground")}>{label}</Text>
+      <Text className={cn("text-meta font-semibold", primary ? "text-primary-foreground" : "text-foreground")}>{label}</Text>
     </Press>
   );
 }
@@ -106,7 +106,7 @@ function UserMessage({ m, busy, onEdit }: { m: UIMessage; busy: boolean; onEdit:
           maxLength={2000}
           accessibilityLabel={t("chat.editLabel")}
           cursorColor={c.coach}
-          className="max-h-60 min-h-11 rounded-2xl bg-secondary px-4 py-3 text-[15px] leading-6 text-foreground"
+          className="max-h-60 min-h-11 rounded-2xl bg-secondary px-4 py-3 text-body text-foreground"
         />
         <View className="flex-row justify-end gap-2">
           <Pill label={t("actions.cancel", { ns: "common" })} onPress={() => setDraft(null)} />
@@ -125,11 +125,11 @@ function UserMessage({ m, busy, onEdit }: { m: UIMessage; busy: boolean; onEdit:
     );
   return (
     <View className="items-end pl-8">
-      <Text selectable className="max-w-full rounded-2xl bg-secondary px-4 py-3 text-[15px] leading-6 text-foreground">
+      <Text selectable className="max-w-full rounded-2xl bg-secondary px-4 py-3 text-body text-foreground">
         {text}
       </Text>
       <Press accessibilityRole="button" accessibilityLabel={t("chat.editMessage")} disabled={busy} onPress={() => setDraft(text)} activeScale={0.96} className={cn("min-h-10 min-w-10 items-center justify-center px-2", busy && "opacity-30")}>
-        <Text className="text-xs leading-4 text-muted-foreground">{t("chat.editMessage")}</Text>
+        <Text className="text-caption text-muted-foreground">{t("chat.editMessage")}</Text>
       </Press>
     </View>
   );
@@ -158,24 +158,24 @@ function Empty({ providerLabel, suggestions, today, onAsk }: { providerLabel: st
   return (
     <View className="flex-1 items-center justify-center py-8">
       <CoachMark size={48} />
-      <Text accessibilityRole="header" className="mt-5 text-center text-[22px] font-bold leading-7">
+      <Text accessibilityRole="header" className="mt-5 text-center text-title font-bold leading-7">
         {t("chat.emptyTitle")}
       </Text>
-      <Text className="mt-2 max-w-[360px] text-center text-[15px] leading-[22px] text-foreground-secondary">
+      <Text className="mt-2 max-w-[360px] text-center text-body text-foreground-secondary">
         {t("chat.emptyBody", { provider: providerLabel })}
       </Text>
       <View className="mt-8 w-full gap-2">
         {suggestions.map((s) => (
           <Press key={s.key} accessibilityRole="button" onPress={() => onAsk(s.text)} className="min-h-14 flex-row items-center gap-3 rounded-2xl border border-border px-4 py-3">
             <Icon icon={SUGGESTION_ICONS[s.key]} size={20} tone="coach-text" />
-            <Text className="flex-1 text-[15px] leading-5 text-foreground">{s.text}</Text>
+            <Text className="flex-1 text-body text-foreground">{s.text}</Text>
             <Icon icon={ChevronRight} size={16} tone="muted-foreground" />
           </Press>
         ))}
       </View>
       <Press accessibilityRole="button" onPress={() => push(`/checkin?d=${today}`)} className="mt-3 h-10 flex-row items-center gap-2 rounded-full px-4">
         <Icon icon={NotebookPen} size={16} tone="foreground-secondary" />
-        <Text className="text-[14px] font-medium text-foreground-secondary">{t("chat.checkIn")}</Text>
+        <Text className="text-meta font-medium text-foreground-secondary">{t("chat.checkIn")}</Text>
       </Press>
     </View>
   );
@@ -265,7 +265,7 @@ export function Coach({ id, initial, prefill, auto, activity, providerLabel, sug
         )}
         {!!error && (
           <View accessibilityRole="alert" className="mt-6 flex-row items-center gap-3 rounded-xl border border-recovery-red/25 bg-recovery-red/12 py-2 pl-4 pr-2">
-            <Text className="flex-1 py-1 text-[14px] leading-5 text-foreground">{error}</Text>
+            <Text className="flex-1 py-1 text-meta text-foreground">{error}</Text>
             <Pill label={t("chat.retry")} disabled={busy} onPress={() => again()} icon={<Icon icon={RotateCcw} size={16} />} />
           </View>
         )}
@@ -285,7 +285,7 @@ export function Coach({ id, initial, prefill, auto, activity, providerLabel, sug
             returnKeyType="send"
             onSubmitEditing={() => send(input)}
             cursorColor={c.coach}
-            className="max-h-40 min-h-11 flex-1 py-2.5 pl-3.5 text-[16px] leading-6 text-foreground"
+            className="max-h-40 min-h-11 flex-1 py-3 pl-4 text-body text-foreground"
           />
           {busy ? (
             <Press accessibilityRole="button" accessibilityLabel={t("chat.stop")} onPress={() => void stop()} className="size-11 items-center justify-center rounded-full bg-secondary">

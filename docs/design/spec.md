@@ -3025,6 +3025,27 @@ Open items for U17 (not design changes): `src/lib/header-state.ts` with its unit
 
 ---
 
+**Linear restyle (LN), 2026-11-23.** The look moves from the pulse PWA's (the reference app's) to Linear's (linear.app),
+as the web app's spec §11 LN rows record. Layout, kit and every metric state are unchanged.
+
+| # | Was | Now |
+|---|---|---|
+| LN1 | Slate grounds and lifted cards; white actions | Flat near-black (`#0f1011`) or near-white grounds, cards with a 1 px hairline (`card-shadow`), indigo actions and focus (`#5e6ad2`) |
+| LN2 | The reference app's saturated data colours | Linear's status hues (green `#4cb782`, yellow `#f2c94c`, red `#eb5757`, blue `#4ea7fc`, orange `#f2994a`), deepened in light; widget and workout-notification colours follow (`colors.xml`) |
+| LN3 | Figtree text, Barlow numerals; caps labels at 0.1em tracking | Inter for both, numerals in tabular figures and never bolder than semibold; labels in sentence case at medium weight |
+| LN4 | Radii 8 / 10 / 12 / 16 / 24 / 28; floating chrome 22 | Linear's 4 / 6 / 8 / 10 / 12 / 16; floating chrome 16 |
+| LN5 | 29 font sizes (arbitrary `text-[Npx]` and Tailwind's) | Ten named steps: label 11, caption 12, meta 13, body 15, heading 17, value 20, title 22, display 30, hero 40, giant 64 (`docs/design/linear-mobile.md`); section titles and detail titles at body 15 semibold |
+| LN6 | Long paragraphs shown whole | `<Prose>`: the first sentence, then **More** for the rest; short text shown whole |
+| LN7 | 10 and 14 px paddings and gaps; card insets 16 or 20 | The 4 px grid (2 and 6 px for hairline offsets only); card insets 16 |
+| LN8 | Glass controls shrink on press; the tab lens slides on a timing | Glass controls lift on a spring; the lens glides on a spring; a scroll-edge fade under the floating bar |
+| LN9 | Centred 12 px tab-root titles; bare back, close and info icons | Left-aligned 22 px bold tab-root titles; back, close and info in 40 px glass circles (`HeaderButton`) |
+| LN10 | 62 px squircle tab bar with labels and a gradient lens; squircle check-in action | 56 px glass capsule of icons with a flat pill; round check-in action |
+| LN11 | Full-width toast at the screen's foot | Compact pill above the tab bar with a status-tinted icon |
+| LN12 | Rows 15, secondary 13, labels 11-12; 421 hand-set line heights; onboarding choices of three shapes | Linear's measured phone sizes: rows and body 16, nav 17, secondary 14, labels 12, screen titles 24; each step sets its line height; onboarding choices are full-width 48 px buttons, 8 px apart |
+| LN13 | Card titles 13 under 16 px content; three group-label styles; five row styles; two form Fields; one card per settings row | Type roles (`src/ui/type.ts`): card title 16 semibold, one group label, one row title and second line, one field label (`src/ui/Field.tsx`); grouped lists with inset hairlines |
+| LN14 | Chip icons centred on two-line text, 4 px from it; tiles of uneven height; titles and hints touching | `LineIcon` puts an icon on its text's first line; the chip gap is 6 px; tiles in a row stretch to equal height with top-aligned values; a 4 px gap between a title and its hint; settings rows 12 px above and below |
+| LN15 | Two filled pills in teal and blue, unrelated to the monoline wordmark | A frame with the wordmark's beat, in its stroke and corners (square top-left like the P), mono; every icon and the splash rendered from `markPath` |
+
 ## 12. Inferred decisions and coverage gaps
 
 ### 12.1 Inferred (no reference shows it; flag to the user)

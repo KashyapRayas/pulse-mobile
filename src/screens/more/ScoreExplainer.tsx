@@ -14,6 +14,7 @@ import { BODY, Divider } from "../settings/controls";
 import { SCORE_DOCS, type HowSection } from "./howItWorksContent";
 import { push } from "@/ui/navigate";
 import { Press } from "@/ui/Press";
+import { TYPE } from "@/ui/type";
 
 /** A detail this short sits beside its term ("HRV  55%"); a sentence goes under it. */
 const SHORT = 24;
@@ -32,9 +33,9 @@ function Section({ s }: { s: HowSection }) {
             {s.rows.map((r, i) => (
               <View key={r.term}>
                 {i > 0 && <Divider />}
-                <View className={cn("py-2.5", r.detail.length <= SHORT ? "flex-row items-baseline justify-between gap-3" : "gap-0.5")}>
-                  <Text className="shrink text-[15px] font-semibold leading-[22px]">{r.term}</Text>
-                  <Text className={cn("text-[15px] leading-[22px] text-foreground-secondary", r.detail.length <= SHORT && "shrink-0 text-right tabular-nums")}>{r.detail}</Text>
+                <View className={cn("py-3", r.detail.length <= SHORT ? "flex-row items-baseline justify-between gap-3" : "gap-0.5")}>
+                  <Text className={cn("shrink font-medium", TYPE.rowTitle)}>{r.term}</Text>
+                  <Text className={cn("text-body text-foreground-secondary", r.detail.length <= SHORT && "shrink-0 text-right tabular-nums")}>{r.detail}</Text>
                 </View>
               </View>
             ))}
@@ -64,7 +65,7 @@ export function ScoreExplainerScreen() {
       subtitle={t("screen.subtitle")}
       primary={
         <View className="w-full gap-4">
-          <Text className="text-[17px] leading-6">{doc.summary}</Text>
+          <Text className="text-heading">{doc.summary}</Text>
           {!!doc.href && (
             <Button variant="secondary" onPress={() => doc.href && push(doc.href)}>
               {t("screen.open", { name: doc.name })}
@@ -77,14 +78,14 @@ export function ScoreExplainerScreen() {
       ))}
       footer={
         <View className="gap-4">
-          <Text className="text-xs font-medium leading-4 text-muted-foreground">{t("screen.disclaimer")}</Text>
+          <Text className="text-caption font-medium text-muted-foreground">{t("screen.disclaimer")}</Text>
           <View accessibilityLabel={t("screen.otherScores")} className="flex-row gap-2">
             {prev ? (
               <Press activeScale={0.96} accessibilityRole="link" onPress={() => router.replace(`/more/how-it-works/${prev.slug}` as never)} className={STEP}>
                 <Icon icon={ChevronLeft} size={20} tone="muted-foreground" strokeWidth={1.75} />
                 <View className="min-w-0">
-                  <Text className="text-xs font-medium leading-4 text-muted-foreground">{t("screen.previous")}</Text>
-                  <Text className="text-[15px] font-semibold leading-[22px]">{prev.name}</Text>
+                  <Text className="text-caption font-medium text-muted-foreground">{t("screen.previous")}</Text>
+                  <Text className="text-body font-semibold">{prev.name}</Text>
                 </View>
               </Press>
             ) : (
@@ -93,8 +94,8 @@ export function ScoreExplainerScreen() {
             {next && (
               <Press activeScale={0.96} accessibilityRole="link" onPress={() => router.replace(`/more/how-it-works/${next.slug}` as never)} className={cn(STEP, "justify-end")}>
                 <View className="min-w-0 items-end">
-                  <Text className="text-xs font-medium leading-4 text-muted-foreground">{t("screen.next")}</Text>
-                  <Text className="text-right text-[15px] font-semibold leading-[22px]">{next.name}</Text>
+                  <Text className="text-caption font-medium text-muted-foreground">{t("screen.next")}</Text>
+                  <Text className="text-right text-body font-semibold">{next.name}</Text>
                 </View>
                 <Icon icon={ChevronRight} size={20} tone="muted-foreground" strokeWidth={1.75} />
               </Press>

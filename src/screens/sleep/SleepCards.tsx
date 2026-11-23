@@ -20,10 +20,11 @@ import { ReasonPlaceholder } from "@/ui/metrics/ReasonPlaceholder";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { INSET_ROW } from "@/ui/Card";
+import { TYPE } from "@/ui/type";
 
 const BAR = "h-3.5 rounded-[3px]";
 const signed = (min: number, sign: "+" | "−") => `${sign}${hmm(Math.abs(min))}`;
-const NUM_LG = "font-numeric text-lg font-bold leading-6 tabular-nums";
+const NUM_LG = "font-numeric text-heading font-bold tabular-nums";
 
 /** WHOOP's card headline: the percentage large with its arrow against the prior 30 nights, and their mean under it. */
 function Headline({ value, stat, down = false }: { value: number; stat?: Pick<KeyStat, "average" | "sd">; down?: boolean }) {
@@ -33,11 +34,11 @@ function Headline({ value, stat, down = false }: { value: number; stat?: Pick<Ke
   return (
     <View>
       <View className="flex-row items-center gap-1.5">
-        <Text className="font-numeric text-4xl font-bold leading-10 tracking-[-0.01em] tabular-nums">{Math.round(value)}%</Text>
+        <Text className="font-numeric text-hero font-bold leading-10 tracking-[-0.01em] tabular-nums">{Math.round(value)}%</Text>
         {t && <DeltaMark dir={t.dir} tone={t.tone} />}
       </View>
       {avg !== null && (
-        <Text accessibilityLabel={tr("need.priorAverage", { value: Math.round(avg) })} className="font-numeric text-[13px] font-medium leading-4 tabular-nums text-muted-foreground">
+        <Text accessibilityLabel={tr("need.priorAverage", { value: Math.round(avg) })} className="font-numeric text-meta font-medium tabular-nums text-muted-foreground">
           {Math.round(avg)}%
         </Text>
       )}
@@ -52,8 +53,8 @@ function Legend({ rows }: { rows: { swatch: string; label: string; value: string
       {rows.map((r) => (
         <View key={r.label} accessible accessibilityLabel={`${r.label} ${r.value}`} className="flex-row items-center gap-3">
           <View accessibilityElementsHidden className={cn("size-3 shrink-0 rounded-[3px]", r.swatch)} />
-          <Text className="flex-1 text-[13px] font-medium leading-4 text-foreground-secondary">{r.label}</Text>
-          <Text className="font-numeric text-[13px] font-semibold leading-4 tabular-nums">{r.value}</Text>
+          <Text className="flex-1 text-meta font-medium text-foreground-secondary">{r.label}</Text>
+          <Text className="font-numeric text-meta font-semibold tabular-nums">{r.value}</Text>
         </View>
       ))}
     </View>
@@ -187,13 +188,13 @@ export function SleepConsistency({ vm }: { vm: Pick<SleepVM, "consistency" | "su
         {/* shrink: at 320 px the legend wraps beside the headline, as on the web. */}
         <View className="shrink flex-row items-center gap-2 pb-px">
           <View accessibilityElementsHidden className="w-5 border-t-[1.5px] border-dashed border-foreground/55" />
-          <Text className="text-[13px] font-medium leading-4 text-foreground-secondary">{tr("consistency.optimal")}</Text>
+          <Text className="text-meta font-medium text-foreground-secondary">{tr("consistency.optimal")}</Text>
         </View>
       </View>
       <View accessible accessibilityRole="image" accessibilityLabel={last ? tr("consistency.ariaLast", { bed: at(last.bed), wake: at(last.wake) }) : tr("consistency.aria")} className="mt-4 flex-row gap-3">
         <View accessibilityElementsHidden className="w-10 shrink-0" style={{ height: PLOT_H }}>
           {ticks.map((t) => (
-            <Text key={t} className="absolute right-0 font-numeric text-[12px] font-semibold leading-3 tabular-nums text-muted-foreground" style={{ top: yOf(t) - 6 }}>
+            <Text key={t} className="absolute right-0 font-numeric text-caption font-semibold tabular-nums text-muted-foreground" style={{ top: yOf(t) - 6 }}>
               {at(t)}
             </Text>
           ))}
@@ -226,17 +227,17 @@ export function SleepConsistency({ vm }: { vm: Pick<SleepVM, "consistency" | "su
             {last && (
               <View pointerEvents="none" className="absolute inset-y-0 right-0" style={{ width: "20%" }}>
                 <View className="absolute inset-x-0 items-center" style={{ top: yOf(Math.min(last.bed, last.typicalBed ?? last.bed)) - 20 }}>
-                  <Text className="font-numeric text-[13px] font-bold leading-4 tabular-nums text-sleep">{at(last.bed)}</Text>
+                  <Text className="font-numeric text-meta font-bold tabular-nums text-sleep">{at(last.bed)}</Text>
                 </View>
                 <View className="absolute inset-x-0 items-center" style={{ top: yOf(Math.max(last.wake, last.typicalWake ?? last.wake)) + 4 }}>
-                  <Text className="font-numeric text-[13px] font-bold leading-4 tabular-nums text-sleep">{at(last.wake)}</Text>
+                  <Text className="font-numeric text-meta font-bold tabular-nums text-sleep">{at(last.wake)}</Text>
                 </View>
               </View>
             )}
           </View>
           <View accessibilityElementsHidden className="mt-2 flex-row">
             {cons.nights.map((n, i) => (
-              <Text key={i} className={cn("flex-1 text-center text-[13px] font-medium leading-4", i === 4 ? "font-bold text-foreground" : "text-muted-foreground")}>
+              <Text key={i} className={cn("flex-1 text-center text-meta font-medium", i === 4 ? "font-bold text-foreground" : "text-muted-foreground")}>
                 {n?.label ?? "·"}
               </Text>
             ))}
@@ -282,8 +283,8 @@ export function SleepEfficiency({ vm }: { vm: Pick<SleepExtras, "efficiency"> })
       </View>
       <View className="mt-4 flex-row items-center gap-3 border-t border-border pt-4">
         <View accessibilityElementsHidden className="size-3.5 shrink-0 rounded-[3px] bg-foreground/80" />
-        <Text className={cn(LABEL, "flex-1")}>{t("efficiency.wakeEvents")}</Text>
-        <Text className="font-numeric text-xl font-bold leading-6 tabular-nums">{e.wakeEvents ?? "--"}</Text>
+        <Text className={cn(TYPE.rowTitle, "flex-1")}>{t("efficiency.wakeEvents")}</Text>
+        <Text className="font-numeric text-value font-bold leading-6 tabular-nums">{e.wakeEvents ?? "--"}</Text>
       </View>
     </View>
   );

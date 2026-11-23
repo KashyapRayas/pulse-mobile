@@ -34,8 +34,8 @@ export function DoneScreen({ title, body, onDone }: { title: string; body: strin
       </Animated.View>
       <Animated.View entering={FadeIn.delay(100).duration(DURATION.enter)}>
         <View className="items-center gap-2">
-          <Text className="text-xl font-bold uppercase leading-7 tracking-[0.1em]">{title}</Text>
-          <Text className="text-center text-[15px] leading-[22px] text-muted-foreground">{body}</Text>
+          <Text className="text-value font-medium leading-7 tracking-normal">{title}</Text>
+          <Text className="text-center text-body text-muted-foreground">{body}</Text>
         </View>
       </Animated.View>
     </View>

@@ -24,22 +24,22 @@ export function UpdateCard() {
   return (
     <Card className="mb-6 gap-1 px-4">
       <Text className={LABEL}>{t("update.available")}</Text>
-      <Text className="text-[13px] leading-[18px] text-foreground-secondary">{t("update.body", { version: u.version })}</Text>
+      <Text className="text-meta text-foreground-secondary">{t("update.body", { version: u.version })}</Text>
       {progress !== null ? (
-        <Text accessibilityLiveRegion="polite" className="mt-2 min-h-11 py-3 text-[15px] font-semibold leading-5 tabular-nums">
+        <Text accessibilityLiveRegion="polite" className="mt-2 min-h-11 py-3 text-body font-semibold tabular-nums">
           {t("update.downloading", { percent: Math.round(progress * 100) })}
         </Text>
       ) : (
         <View className="mt-2 min-h-11 flex-row items-center gap-6">
           <Press activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t("update.toVersion", { version: u.version })} onPress={update} className="min-h-11 flex-row items-center gap-2">
             <Icon icon={ArrowDownToLine} size={18} tone="foreground" strokeWidth={1.75} />
-            <Text className="text-[15px] font-semibold leading-5">{t("update.update")}</Text>
+            <Text className="text-body font-semibold">{t("update.update")}</Text>
           </Press>
           <Press activeOpacity={0.7} accessibilityRole="link" onPress={() => void Linking.openURL(u.page).catch(() => {})} className="min-h-11 justify-center">
-            <Text className="text-[15px] leading-5 text-foreground-secondary">{t("update.whatsNew")}</Text>
+            <Text className="text-body text-foreground-secondary">{t("update.whatsNew")}</Text>
           </Press>
           <Press activeOpacity={0.7} accessibilityRole="button" onPress={putOffUpdate} className="ml-auto min-h-11 justify-center">
-            <Text className="text-[15px] leading-5 text-muted-foreground">{t("update.later")}</Text>
+            <Text className="text-body text-muted-foreground">{t("update.later")}</Text>
           </Press>
         </View>
       )}

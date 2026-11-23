@@ -45,18 +45,18 @@ export default function ImpactPage() {
     <TaskPage title={item.label}>
       <View className="gap-4 pt-2">
         <View>
-          <Text className={cn("font-numeric text-4xl font-bold leading-10 tracking-[-0.01em] tabular-nums", tone)}>{fx(item.delta)}</Text>
-          <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("app.nextDay", { word: WORD[metric] })}</Text>
+          <Text className={cn("font-numeric text-hero font-bold leading-10 tracking-[-0.01em] tabular-nums", tone)}>{fx(item.delta)}</Text>
+          <Text className="text-body text-foreground-secondary">{t("app.nextDay", { word: WORD[metric] })}</Text>
         </View>
         <View>
           {rows.map(([k, v], i) => (
             <View key={k} className={cn("min-h-11 flex-row items-center justify-between gap-3 border-border", i > 0 && "border-t")}>
-              <Text className="text-[15px] leading-[22px] text-foreground-secondary">{k}</Text>
-              <Text className="font-numeric text-[15px] font-semibold leading-[22px] tabular-nums">{v}</Text>
+              <Text className="text-body text-foreground-secondary">{k}</Text>
+              <Text className="font-numeric text-body font-semibold tabular-nums">{v}</Text>
             </View>
           ))}
         </View>
-        <Text className="text-xs font-medium leading-4 text-muted-foreground">{FOOTER}</Text>
+        <Text className="text-caption font-medium text-muted-foreground">{FOOTER}</Text>
       </View>
     </TaskPage>
   );

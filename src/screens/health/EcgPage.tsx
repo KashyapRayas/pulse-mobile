@@ -7,6 +7,7 @@ import { getMonitor } from "@/queries/health";
 import { StatusChip, ValueUnit, CAPTION } from "@/ui/metrics/primitives";
 import { EmptyState } from "@/ui/shells/EmptyState";
 import { TaskPage } from "@/ui/shells/TaskPage";
+import { Prose } from "@/ui/Prose";
 import { Text } from "@/ui/Text";
 import { useScreen } from "../useScreen";
 import { bpm, rhythmDisclaimer } from "./HeartRhythm";
@@ -23,13 +24,13 @@ export function EcgPage() {
       {shown && (
         <View className="gap-4">
           <View className="items-start gap-2">
-            <ValueUnit value={bpm(shown)} unit={t("rhythm.bpmAvg")} className="font-numeric text-4xl font-bold leading-10 tracking-[-0.01em]" />
+            <ValueUnit value={bpm(shown)} unit={t("rhythm.bpmAvg")} className="font-numeric text-hero font-bold leading-10 tracking-[-0.01em]" />
             <StatusChip tone={shown.tone}>{shown.label}</StatusChip>
           </View>
-          <Text className="text-[15px] leading-[22px] tabular-nums text-foreground-secondary">
+          <Text className="text-body tabular-nums text-foreground-secondary">
             {t("rhythm.pageAt", { day: formatDay(shown.day, DAY.long), time: shown.time })}
           </Text>
-          <Text className="text-[15px] leading-[22px]">{shown.explanation}</Text>
+          <Prose>{shown.explanation}</Prose>
           <Text className={CAPTION}>{rhythmDisclaimer()}</Text>
         </View>
       )}

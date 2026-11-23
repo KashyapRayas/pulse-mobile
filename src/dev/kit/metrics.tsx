@@ -221,7 +221,7 @@ export default function KitMetrics() {
                 {fx.contributors.map(({ key, ...ct }) => <ContributorRow key={key} variant="recovery" icon={statIcon(key)} {...ct} />)}
                 <ContributorRow.Skeleton />
               </Divided>
-              <View className={cn(INSET_ROW, "my-3 py-2")}><Text className="text-xs font-medium leading-4 text-foreground-secondary">Dot: today. Shaded: your normal range.</Text></View>
+              <View className={cn(INSET_ROW, "my-3 py-2")}><Text className="text-caption font-medium text-foreground-secondary">Dot: today. Shaded: your normal range.</Text></View>
             </Card>
           </Frame>
           <Frame name="healthspan, selectable (opens a sheet)"><Card className="gap-0 px-4 py-1"><HealthspanList /></Card></Frame>
@@ -254,8 +254,8 @@ export default function KitMetrics() {
         <Entry name="TickScale" file="src/ui/metrics/TickScale.tsx" use="Healthspan's Pace of Aging and Strain's training load (marker), Home's Energy Bank (meter)." props={["variant: marker | meter", "label, metric, min, max, format, unit", "bands (marker)", "ends, leading, trailing", "describe"]}>
           <Frame name="marker: Pace of Aging">
             <TickScale variant="marker" label="Pace of Aging" metric={fx.ok(0.8)} min={-1} max={3} format="decimal1" unit="x" describe="aging slower than your 6-month average" ends={["−1.0x", "1.0x", "3.0x"]}
-              leading={<><Icon icon={Turtle} size={16} tone="foreground-secondary" strokeWidth={1.75} /><Text className="text-[15px] leading-[22px] text-foreground-secondary">Slow</Text></>}
-              trailing={<><Text className="text-[15px] leading-[22px] text-foreground-secondary">Fast</Text><Icon icon={Rabbit} size={16} tone="foreground-secondary" strokeWidth={1.75} /></>} />
+              leading={<><Icon icon={Turtle} size={16} tone="foreground-secondary" strokeWidth={1.75} /><Text className="text-body text-foreground-secondary">Slow</Text></>}
+              trailing={<><Text className="text-body text-foreground-secondary">Fast</Text><Icon icon={Rabbit} size={16} tone="foreground-secondary" strokeWidth={1.75} /></>} />
           </Frame>
           <Frame name="marker with bands (ACWR), provisional">
             <TickScale variant="marker" label="Training load" metric={fx.ok(1.12, { provisional: true })} min={0} max={2} format="decimal2" bands={[{ from: 0.8, to: 1.3, tone: "optimal" }, { from: 1.5, to: 2, tone: "warning" }]} ends={["0.0", "1.0", "2.0"]} />

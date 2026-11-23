@@ -21,8 +21,8 @@ export function ScreenError({ error, retry }: ErrorBoundaryProps) {
   return (
     <View accessibilityRole="alert" className="flex-1 items-center justify-center gap-3 bg-background px-8">
       <Icon icon={CircleAlert} size={28} tone="muted-foreground" />
-      <Text className="text-center text-[17px] font-semibold leading-6 text-foreground">{t("screen.title")}</Text>
-      <Text className="max-w-72 text-center text-[15px] leading-[22px] text-foreground-secondary">{t("screen.body")}</Text>
+      <Text className="text-center text-heading font-semibold text-foreground">{t("screen.title")}</Text>
+      <Text className="max-w-72 text-center text-body text-foreground-secondary">{t("screen.body")}</Text>
       <View className="mt-2 flex-row gap-3">
         <Button variant="secondary" onPress={() => (router.canGoBack() ? router.back() : router.replace("/"))}>
           {t("actions.back", { ns: "common" })}

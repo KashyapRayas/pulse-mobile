@@ -15,7 +15,7 @@ export function HowItWorksScreen() {
       instant
       primary={
         <View className="w-full gap-6">
-          <Text className="text-[15px] leading-[22px] text-foreground-secondary">
+          <Text className="text-body text-foreground-secondary">
             {t("screen.intro")}
           </Text>
           <LinkList title={t("screen.scores")} rows={SCORE_DOCS.map((d) => ({ label: d.name, description: d.summary, href: `/more/how-it-works/${d.slug}` }))} />

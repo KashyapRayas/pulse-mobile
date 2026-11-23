@@ -70,7 +70,7 @@ const SIZE = {
 const COMPACT = { d: 64, ring: 5, value: 40, tracking: 0 } as const;
 const INSET = 2;
 
-const DIAL_LABEL = "text-xs font-bold uppercase leading-4 tracking-[0.1em]";
+const DIAL_LABEL = "text-caption font-medium tracking-normal";
 /** The web's TRIM on the 12 px labels under the value (the band word, the caption, the label). */
 const LABEL_TRIM = capTrim(12);
 const STATUS_LIT = { poor: "bg-warning", sufficient: "bg-foreground-secondary", optimal: "bg-optimal" } as const;
@@ -234,7 +234,7 @@ export function ScoreDial(props: ScoreDialProps) {
           </Text>
         )}
         {gauge && !compact && r.word && <Text className={cn(DIAL_LABEL, r.word.className)} style={{ ...LABEL_TRIM, marginTop: 8 * cqi + LABEL_TRIM.marginTop }}>{r.word.text}</Text>}
-        {gauge && !compact && !!props.caption && <Text className="text-xs font-medium text-foreground-secondary" style={{ ...LABEL_TRIM, marginTop: 5 * cqi + LABEL_TRIM.marginTop }}>{props.caption}</Text>}
+        {gauge && !compact && !!props.caption && <Text className="text-caption font-medium text-foreground-secondary" style={{ ...LABEL_TRIM, marginTop: 5 * cqi + LABEL_TRIM.marginTop }}>{props.caption}</Text>}
         {lg && !gauge && (
           <>
             <Text className={cn(DIAL_LABEL, "max-w-36 text-center")} style={{ ...LABEL_TRIM, marginTop: 9 * cqi + LABEL_TRIM.marginTop }}>{r.label}</Text>
@@ -252,8 +252,8 @@ export function ScoreDial(props: ScoreDialProps) {
       {gauge && lg && (
         <View pointerEvents="none" className="absolute inset-x-0" style={{ top: d * 0.79 }}>
           {/* Each label centred under its end of the arc. */}
-          <Text className="absolute -ml-4 w-8 text-center font-numeric text-xs font-medium tabular-nums text-muted-foreground" style={{ left: `${gEndPct}%` }}>0</Text>
-          <Text className="absolute -mr-4 w-8 text-center font-numeric text-xs font-medium tabular-nums text-muted-foreground" style={{ right: `${gEndPct}%` }}>100</Text>
+          <Text className="absolute -ml-4 w-8 text-center font-numeric text-caption font-medium tabular-nums text-muted-foreground" style={{ left: `${gEndPct}%` }}>0</Text>
+          <Text className="absolute -mr-4 w-8 text-center font-numeric text-caption font-medium tabular-nums text-muted-foreground" style={{ right: `${gEndPct}%` }}>100</Text>
         </View>
       )}
     </View>
@@ -265,12 +265,12 @@ export function ScoreDial(props: ScoreDialProps) {
     <View className="items-center gap-1.5">
       <View className="flex-row items-center gap-0.5">
         {/* shrink: a phone's text in a row overflows instead of wrapping. */}
-        <Text className={cn(size === "sm" ? "text-xs font-medium leading-4 text-foreground-secondary" : DIAL_LABEL, "shrink text-center")}>{r.label}</Text>
+        <Text className={cn(size === "sm" ? "text-caption font-medium text-foreground-secondary" : DIAL_LABEL, "shrink text-center")}>{r.label}</Text>
         {!!href && <Icon icon={ChevronRight} size={12} tone="foreground" strokeWidth={2.5} />}
       </View>
     </View>
   );
-  const longReason = lg && empty && !loading && reason && <Text className="max-w-72 text-center text-xs font-medium leading-4 text-muted-foreground">{reason.long}</Text>;
+  const longReason = lg && empty && !loading && reason && <Text className="max-w-72 text-center text-caption font-medium text-muted-foreground">{reason.long}</Text>;
   const content = (
     <>
       {ring}
@@ -300,7 +300,7 @@ function ReasonCentre({ code, text, cqi }: { code: ReasonCode; text: string; cqi
   return (
     <View className="items-center gap-2">
       {glyph && <Icon icon={glyph} size={24} tone="foreground-secondary" strokeWidth={1.75} />}
-      <Text className="text-center text-base font-semibold leading-[22px] text-foreground-secondary" numberOfLines={2} style={{ maxWidth: 72 * cqi }}>
+      <Text className="text-center text-body font-semibold text-foreground-secondary" numberOfLines={2} style={{ maxWidth: 72 * cqi }}>
         {text}
       </Text>
     </View>

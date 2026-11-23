@@ -83,7 +83,7 @@ function Wheel({ label, items, index, onIndex }: { label: string; items: string[
       >
         {items.map((item, i) => (
           <Pressable key={item} accessible={false} onPress={() => go(i)} className="items-center justify-center" style={{ height: ROW }}>
-            <Text className={cn("text-[17px] tabular-nums", i === index ? "font-semibold text-foreground" : "text-muted-foreground")}>{item}</Text>
+            <Text className={cn("text-heading tabular-nums", i === index ? "font-semibold text-foreground" : "text-muted-foreground")}>{item}</Text>
           </Pressable>
         ))}
       </ScrollView>
@@ -116,10 +116,10 @@ export function BirthDatePicker({ value, onChange, invalid, compact }: { value: 
           haptic.tap();
           setOpen((o) => !o);
         }}
-        className={cn(compact ? FIELD_BOX_COMPACT : FIELD_BOX, "w-full min-w-0 flex-row items-center justify-between gap-3", compact ? "px-3.5" : "px-4")}
+        className={cn(compact ? FIELD_BOX_COMPACT : FIELD_BOX, "w-full min-w-0 flex-row items-center justify-between gap-3", compact ? "px-4" : "px-4")}
         style={ringStyle(invalid ? c["recovery-red-text"] : open ? c["focus-ring"] : null)}
       >
-        <Text className={cn(compact ? "text-[15px] leading-5" : "text-[17px] leading-6", "tabular-nums", !value && "text-muted-foreground")}>{value ? formatDay(value, { ...DAY.full, month: "long" }) : t("birth.choose")}</Text>
+        <Text className={cn(compact ? "text-body" : "text-heading", "tabular-nums", !value && "text-muted-foreground")}>{value ? formatDay(value, { ...DAY.full, month: "long" }) : t("birth.choose")}</Text>
         <Icon icon={CalendarDays} size={20} tone="foreground-secondary" strokeWidth={1.75} />
       </Pressable>
       {open && (
@@ -141,7 +141,7 @@ export function BirthDatePicker({ value, onChange, invalid, compact }: { value: 
             <LinearGradient pointerEvents="none" colors={[clear, solid]} style={{ position: "absolute", top: 4 + HEIGHT - 50, left: 0, right: 0, height: 50 }} />
           </View>
           <View className="flex-row items-center justify-between gap-3 border-t border-foreground/[0.06] py-1.5 pl-4 pr-1.5">
-            <Text numberOfLines={1} className="shrink text-[13px] leading-[18px] text-muted-foreground">
+            <Text numberOfLines={1} className="shrink text-meta text-muted-foreground">
               {t("birth.scrollHint")}
             </Text>
             {/* Done keeps what the wheels show, even if they were never moved. */}

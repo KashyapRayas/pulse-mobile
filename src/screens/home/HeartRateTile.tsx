@@ -28,7 +28,7 @@ import { useTheme } from "@/ui/theme";
 import { LastReading } from "../health/LastReading";
 
 const HREF = "/health/heart-rate";
-const BPM = "font-numeric text-4xl font-bold leading-10 tracking-[-0.01em]";
+const BPM = "font-numeric text-hero font-bold leading-10 tracking-[-0.01em]";
 
 /** Minute means of the 30 minutes ending at the newest sample's minute; a minute without a sample is a gap. */
 function recentMinutes(samples: { ts: number; bpm: number }[], latestTs: number): (number | null)[] {
@@ -100,7 +100,7 @@ export function HeartRateTile({ phoneOnly }: { phoneOnly?: boolean }) {
   } else {
     body = (
       <View className="gap-0.5">
-        <Text className="text-base font-semibold leading-[22px]">{t("heartRate.none")}</Text>
+        <Text className="text-body font-semibold">{t("heartRate.none")}</Text>
         <Text className={CAPTION}>{demo ? t("heartRate.demoNone") : t("heartRate.notSynced")}</Text>
       </View>
     );

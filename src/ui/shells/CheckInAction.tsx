@@ -13,7 +13,6 @@ import { FAB_SIZE, TAB_ROOTS, useTabBarBottom } from "./layout";
 import { useShellCalendar } from "./ShellStatus";
 import { push } from "../navigate";
 import { Press } from "../Press";
-import { GLASS_RADIUS } from "../radius";
 
 /** The reference app's ringed monogram, with Pulse's mark in a 30 px circle with the indigo-to-blue rim. */
 function Monogram() {
@@ -35,7 +34,7 @@ function Monogram() {
 }
 
 /**
- * The "Check in" action (spec §4.2.1): indigo-rimmed glass with Pulse's mark. It opens the check-in sheet, the route
+ * The "Check in" action (spec §4.2.1): a round, indigo-rimmed glass button beside the capsule (LN10) with Pulse's mark. It opens the check-in sheet, the route
  * app/checkin.tsx, over the screen you are on, for the day that screen shows: `/checkin?d=` carries the screen's
  * `d` as the web keeps `?d=` beside `?checkin=1`. (The tab bar sits in the tabs layout, so the day is the focused route's:
  * the global params, not the layout's own.) With a coach key saved, it opens the coach instead (the web's coach access).
@@ -48,7 +47,7 @@ export function CheckInAction({ onPress }: { onPress?: () => void }) {
   const label = coach ? "Coach" : i18n.t("ui:checkIn.forDay", { day: dayLabel(d, today) });
   return (
     <Press
-      activeScale={0.96}
+      activeScale={1.05}
       accessibilityRole="button"
       accessibilityLabel={label}
       onPress={() => {
@@ -56,7 +55,7 @@ export function CheckInAction({ onPress }: { onPress?: () => void }) {
         (onPress ?? (() => (coach ? push("/coach") : push(`/checkin?d=${d}`))))();
       }}
     >
-      <Glass radius={GLASS_RADIUS} action style={{ width: FAB_SIZE, height: FAB_SIZE, alignItems: "center", justifyContent: "center" }}>
+      <Glass radius={FAB_SIZE / 2} action style={{ width: FAB_SIZE, height: FAB_SIZE, alignItems: "center", justifyContent: "center" }}>
         <Monogram />
       </Glass>
     </Press>

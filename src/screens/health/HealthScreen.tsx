@@ -32,8 +32,8 @@ import { Fast, Slow } from "./pace";
 import { HrvStatusCard } from "./HrvStatusCard";
 import { INSET_ROW } from "@/ui/Card";
 
-const TILE = "font-numeric text-4xl leading-10 font-bold tracking-[-0.01em]";
-const EMPTY = "text-[15px] leading-[22px] text-foreground-secondary";
+const TILE = "font-numeric text-hero leading-10 font-bold tracking-[-0.01em]";
+const EMPTY = "text-body text-foreground-secondary";
 
 const VITAL_ICON: Record<VitalKey, LucideIcon> = { resp: Wind, spo2: Droplet, restingHr: Heart, hrv: Activity, skinTempDev: Thermometer, bp: Stethoscope };
 const VITAL_ORDER: VitalKey[] = ["resp", "restingHr", "hrv", "skinTempDev", "bp"];
@@ -126,7 +126,7 @@ function Monitor({ m }: { m: HealthHubVM["monitor"] }) {
             </Text>
             <View accessibilityElementsHidden className={cn("size-5 items-center justify-center rounded-sm", status === "no_data" ? "bg-secondary" : ok ? "bg-optimal/15" : "bg-warning/15")}>
               {status === "no_data" ? (
-                <Text className="font-numeric text-[10px] font-bold text-muted-foreground">--</Text>
+                <Text className="font-numeric text-label font-bold text-muted-foreground">--</Text>
               ) : ok ? (
                 <Icon icon={Check} size={14} tone="optimal-text" strokeWidth={2.5} />
               ) : (
@@ -154,11 +154,11 @@ function Monitor({ m }: { m: HealthHubVM["monitor"] }) {
         return (
           <View className="gap-4">
             {readings(v)}
-            <View className={cn(INSET_ROW, "flex-row items-center gap-3 py-2.5")}>
+            <View className={cn(INSET_ROW, "flex-row items-center gap-3 py-3")}>
               <View className={cn("size-5 shrink-0 items-center justify-center rounded-sm", all ? "bg-optimal" : "bg-warning")}>
                 {all ? <Icon icon={Check} size={14} tone="background" strokeWidth={3} /> : <Icon icon={TriangleAlert} size={12} tone="primary-foreground" strokeWidth={2.5} />}
               </View>
-              <Text className="text-[15px] leading-[22px] tabular-nums">{t("hub.rangeCount", { inRange: v.inRange, total: v.total })}</Text>
+              <Text className="text-body tabular-nums">{t("hub.rangeCount", { inRange: v.inRange, total: v.total })}</Text>
             </View>
           </View>
         );
@@ -212,7 +212,7 @@ function Fitness({ m }: { m: HealthHubVM["fitness"] }) {
           {v.acwr !== null && v.acwrTone && (
             <View className="shrink-0 items-end gap-1">
               <Text className={LABEL}>{i18n.t("ui:trainingLoad")}</Text>
-              <Text className="font-numeric text-xl font-bold leading-6 tabular-nums">{formatValue("decimal2", v.acwr)}</Text>
+              <Text className="font-numeric text-value font-bold leading-6 tabular-nums">{formatValue("decimal2", v.acwr)}</Text>
               <StatusChip tone={v.acwrTone} className="self-end">{t(`load.${ACWR_KEY[v.acwrTone]}`)}</StatusChip>
             </View>
           )}
@@ -324,7 +324,7 @@ function HealthLoading() {
                 </View>
               ))}
             </View>
-            <View className={cn(INSET_ROW, "flex-row items-center gap-3 py-2.5")}>
+            <View className={cn(INSET_ROW, "flex-row items-center gap-3 py-3")}>
               <Skeleton className="size-5 shrink-0 rounded-sm" />
               <SkeletonText lh={22} fs={15} className="w-32" />
             </View>

@@ -1,8 +1,8 @@
 import { useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-/** The tab bar and the round check-in action are 62 px tall (spec §4.2). */
-export const TAB_BAR_HEIGHT = 62;
+/** The tab bar and the round check-in action are 56 px tall (spec §4.2, LN10: Linear's icon-only toolbar). */
+export const TAB_BAR_HEIGHT = 56;
 export const FAB_SIZE = TAB_BAR_HEIGHT;
 
 /** The tab roots: the bar shows here, with the check-in action beside it. */

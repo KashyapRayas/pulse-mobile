@@ -94,7 +94,7 @@ function MonthPanel({ selected, context, onSelect, weekStartsOn = WEEK_STARTS_ON
       <View className="h-14 flex-row items-center">
         <ChevronButton dir="prev" disabled={!nav.prev} onPress={() => setViewed(addMonths(month, -1))} />
         {/* 12 px like every bar title (spec §11 F19). */}
-        <Text accessibilityRole="header" className="flex-1 text-center text-xs font-bold uppercase leading-4 tracking-[0.1em]">
+        <Text accessibilityRole="header" className="flex-1 text-center text-caption font-medium tracking-normal">
           {monthLabel(month, today)}
         </Text>
         <ChevronButton dir="next" disabled={!nav.next} onPress={() => setViewed(addMonths(month, 1))} />
@@ -102,7 +102,7 @@ function MonthPanel({ selected, context, onSelect, weekStartsOn = WEEK_STARTS_ON
 
       <View className="mt-1 flex-row">
         {weekdays.map((w) => (
-          <Text key={w.short} accessibilityLabel={w.long} className="flex-1 text-center text-xs font-semibold uppercase leading-4 tracking-[0.04em] text-muted-foreground">
+          <Text key={w.short} accessibilityLabel={w.long} className="flex-1 text-center text-caption font-medium tracking-normal text-muted-foreground">
             {w.short}
           </Text>
         ))}
@@ -124,8 +124,8 @@ function MonthPanel({ selected, context, onSelect, weekStartsOn = WEEK_STARTS_ON
       <View className="mt-2 min-h-11 flex-row items-center gap-3 px-3">
         {/* Back to today from a past day or another month (spec §11 UX1). */}
         {(selected !== today || month !== monthOf(today)) && (
-          <Press activeScale={0.96} accessibilityRole="button" accessibilityLabel={t("calendar.backToToday")} onPress={() => onSelect(today)} hitSlop={6} className="h-8 justify-center rounded-full bg-fill-hover px-3.5">
-            <Text className="text-[11px] font-bold uppercase leading-4 tracking-[0.1em]">{i18n.t("common:today")}</Text>
+          <Press activeScale={0.96} accessibilityRole="button" accessibilityLabel={t("calendar.backToToday")} onPress={() => onSelect(today)} hitSlop={6} className="h-8 justify-center rounded-full bg-fill-hover px-4">
+            <Text className="text-label font-medium tracking-normal">{i18n.t("common:today")}</Text>
           </Press>
         )}
         <Legend context={context} />
@@ -172,7 +172,7 @@ function Day({ day, context, value, selected, today, disabled, onSelect }: { day
     >
       {/* Today off the selected day gets a dashed ring, so a past day's month still shows where today is (spec §11 UX1). */}
       <View className={cn("size-8 items-center justify-center rounded-full", selected ? "border-2 border-background-mid bg-dial-track" : today && "border border-dashed border-foreground/45")}>
-        <Text className={cn("font-numeric text-[17px] font-bold leading-none tabular-nums", tone.text)}>{Number(day.slice(8))}</Text>
+        <Text className={cn("font-numeric text-heading font-bold leading-none tabular-nums", tone.text)}>{Number(day.slice(8))}</Text>
         {!!tone.dot && <View className={cn("absolute -bottom-1 size-1 rounded-full", tone.dot)} />}
       </View>
     </Pressable>
@@ -196,7 +196,7 @@ function Legend({ context }: { context: CalendarContext }) {
       {legend(context).map(({ label, color }) => (
         <View key={label} className="flex-row items-center gap-1.5">
           <View className={cn("size-1 rounded-full", DATA_COLORS[color].bg)} />
-          <Text className={cn("text-xs font-semibold leading-4 tabular-nums", DATA_COLORS[color].text)}>{label}</Text>
+          <Text className={cn("text-caption font-semibold tabular-nums", DATA_COLORS[color].text)}>{label}</Text>
         </View>
       ))}
     </View>

@@ -31,7 +31,7 @@ export function SleepCard({ kind, minutes, start, end, href, timeZone }: SleepCa
       chip={
         <>
           <Icon icon={Moon} size={16} tone="foreground" strokeWidth={1.75} />
-          <Text className="font-numeric text-xl font-bold leading-6 tabular-nums">{hmm(minutes)}</Text>
+          <Text className="font-numeric text-value font-bold leading-6 tabular-nums">{hmm(minutes)}</Text>
         </>
       }
       name={name}

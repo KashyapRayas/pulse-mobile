@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, type ComponentProps } from "react";
 import { View } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useReducedMotion, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import type { Tabs } from "expo-router";
 import { HeartPulse, Menu, NotebookPen, type LucideIcon } from "lucide-react-native";
 import { alpha } from "../color";
@@ -11,16 +11,15 @@ import { Gradient } from "../Gradient";
 import { HomeChart } from "../icons";
 import { LiveWorkoutBar } from "./LiveWorkoutBar";
 import { Icon } from "../Icon";
-import { Text } from "../Text";
 import { useTheme } from "../theme";
 import { CheckInAction } from "./CheckInAction";
-import { TAB_BAR_HEIGHT, useTabBarBottom } from "./layout";
+import { TAB_BAR_HEIGHT, useBottomClearance, useTabBarBottom } from "./layout";
 import { Press } from "../Press";
-import { DURATION } from "../motion";
-import { GLASS_RADIUS } from "../radius";
+import { DURATION, SPRING } from "../motion";
 
-/** The lens and each tab sit 4 px inside the bar (rounded-[18px] on the tabs, which a class must spell out). */
-const LENS_RADIUS = GLASS_RADIUS - 4;
+/** A capsule, as Linear's toolbar (LN10); the pill and each tab sit 4 px inside it, fully rounded too. */
+const BAR_RADIUS = TAB_BAR_HEIGHT / 2;
+const LENS_RADIUS = BAR_RADIUS - 4;
 
 type TabBarProps = Parameters<NonNullable<ComponentProps<typeof Tabs>["tabBar"]>>[0];
 
@@ -34,24 +33,28 @@ export const TABS: { route: string; labelKey: "tabs.home" | "tabs.health" | "tab
 ];
 
 /**
- * The active item's lens: one element that slides between items (150 ms), a soft pool of light that is brightest at the
- * item's lower edge, as sampled under the reference app's active tab.
+ * The active item's pill: one flat, faintly lit shape that glides between items on a critically damped spring, as
+ * Linear's toolbar marks its current tab (a 150 ms timing with reduced motion).
  */
 function Lens({ index, itemWidth }: { index: number; itemWidth: number }) {
   const { c } = useTheme();
   const x = useSharedValue(index * itemWidth);
+  const reduced = useReducedMotion();
   useEffect(() => {
-    x.value = withTiming(index * itemWidth, { duration: DURATION.fast });
-  }, [index, itemWidth, x]);
+    x.value = reduced ? withTiming(index * itemWidth, { duration: DURATION.fast }) : withSpring(index * itemWidth, SPRING.snappy);
+  }, [index, itemWidth, x, reduced]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: x.value }], opacity: index < 0 ? 0 : 1 }));
   return (
     <Animated.View pointerEvents="none" style={[{ position: "absolute", left: 4, top: 4, bottom: 4, width: itemWidth, borderRadius: LENS_RADIUS, overflow: "hidden" }, style]}>
-      <Gradient from={alpha(c.foreground, 0.02)} to={alpha(c.foreground, 0.16)} angle="y" />
+      <View style={{ flex: 1, backgroundColor: alpha(c.foreground, 0.09) }} />
     </Animated.View>
   );
 }
 
-/** Phone tab bar: a 62 px glass squircle with five destinations, for expo-router's <Tabs tabBar>. */
+/**
+ * Phone tab bar: a 56 px glass capsule of icons, for expo-router's <Tabs tabBar>. Linear's toolbar carries no labels
+ * (LN10): each tab's name is its accessibility label, and the screen's own left-aligned title says where you are.
+ */
 function Bar({ state, navigation, current: shown }: TabBarProps & { current: number }) {
   const { t } = useTranslation(["ui", "workouts"]);
   const [width, setWidth] = useState(0);
@@ -62,7 +65,7 @@ function Bar({ state, navigation, current: shown }: TabBarProps & { current: num
   const current = tapped ?? shown;
   const itemWidth = Math.max(0, (width - 8) / TABS.length);
   return (
-    <Glass radius={GLASS_RADIUS} accessibilityRole="tablist" accessibilityLabel={t("tabs.primary")} onLayout={(e) => setWidth(e.nativeEvent.layout.width)} style={{ height: TAB_BAR_HEIGHT, flex: 1, minWidth: 0, padding: 4 }}>
+    <Glass radius={BAR_RADIUS} accessibilityRole="tablist" accessibilityLabel={t("tabs.primary")} onLayout={(e) => setWidth(e.nativeEvent.layout.width)} style={{ height: TAB_BAR_HEIGHT, flex: 1, minWidth: 0, padding: 4 }}>
       {width > 0 && <Lens index={current} itemWidth={itemWidth} />}
       <View className="h-full flex-row">
         {TABS.map(({ route, labelKey, icon }, i) => {
@@ -71,7 +74,7 @@ function Bar({ state, navigation, current: shown }: TabBarProps & { current: num
           const on = i === current;
           return (
             <Press
-              activeScale={0.96}
+              activeScale={1.06}
               key={route}
               accessibilityRole="tab"
               accessibilityLabel={label}
@@ -85,10 +88,9 @@ function Bar({ state, navigation, current: shown }: TabBarProps & { current: num
                   requestAnimationFrame(() => navigation.navigate(route_.name));
                 }
               }}
-              className="h-full min-w-0 flex-1 items-center justify-center gap-0.5 rounded-[18px]"
+              className="h-full min-w-0 flex-1 items-center justify-center rounded-full"
             >
-              <Icon icon={icon} size={26} tone={on ? "foreground" : "muted-foreground"} strokeWidth={1.6} />
-              <Text numberOfLines={1} className={on ? "text-[11px] font-semibold leading-[13px] text-foreground" : "text-[11px] font-semibold leading-[13px] text-muted-foreground"}>{label}</Text>
+              <Icon icon={icon} size={22} tone={on ? "foreground" : "muted-foreground"} strokeWidth={on ? 2 : 1.75} />
             </Press>
           );
         })}
@@ -106,12 +108,29 @@ export function TabBar(props: TabBarProps) {
   const route = props.state.routes[props.state.index];
   const current = TABS.findIndex((t) => t.route === route?.name);
   return (
-    <View pointerEvents="box-none" className="absolute inset-x-3 gap-2" style={{ bottom }}>
-      <LiveWorkoutBar />
-      <View pointerEvents="box-none" className="flex-row justify-end gap-2">
-        <Bar {...props} current={current} />
-        <CheckInAction />
+    <>
+      <ScrollEdge />
+      <View pointerEvents="box-none" className="absolute inset-x-3 gap-2" style={{ bottom }}>
+        <LiveWorkoutBar />
+        <View pointerEvents="box-none" className="flex-row justify-end gap-2">
+          <Bar {...props} current={current} />
+          <CheckInAction />
+        </View>
       </View>
+    </>
+  );
+}
+
+/**
+ * The scroll edge under the floating bar: content fades into the background as it nears the screen's foot instead of
+ * running hard under the glass (Linear's scroll-edge treatment, done as a gradient: a variable blur would re-blur the
+ * page every frame on Android, see Glass).
+ */
+function ScrollEdge() {
+  const { c } = useTheme();
+  return (
+    <View pointerEvents="none" className="absolute inset-x-0 bottom-0" style={{ height: useBottomClearance() }}>
+      <Gradient from={alpha(c.background, 0)} to={alpha(c.background, 0.92)} angle="y" />
     </View>
   );
 }

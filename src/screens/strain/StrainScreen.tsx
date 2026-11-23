@@ -28,7 +28,7 @@ import { EmptyState } from "@/ui/shells/EmptyState"
 import { InfoButton } from "@/ui/shells/InfoButton"
 import { SectionShell } from "@/ui/shells/SectionShell"
 import { STRAIN_INFO, STRAIN_TARGET_INFO } from "@/screens/_lib/info"
-import { CAPTION, hrSeries, LABEL, statProps, TodayVsLegend } from "@/screens/_lib/view"
+import { CAPTION, hrSeries, statProps, TodayVsLegend } from "@/screens/_lib/view"
 import { DialDetailSkeleton, Divided, ScreenError } from "@/screens/recovery/shared"
 import { WeeklyTrends, WeeklyTrendsSkeleton } from "@/screens/trends/WeeklyTrends"
 import { useScreen } from "@/screens/useScreen"
@@ -37,6 +37,7 @@ import { CardButtonLink } from "@/screens/home/parts"
 import { GoalsCard } from "@/screens/goals/Goals"
 import { chartHref } from "@/screens/chart/href"
 import { WeeklyPlanCard } from "@/screens/goals/WeeklyPlan"
+import { TYPE } from "@/ui/type";
 
 /** Weekly Trends in the reference app's order (strain-25..38). */
 const WEEKLY: readonly TrendViewKey[] = ["strain", "zones13", "zones45", "steps", "calories", "strength"]
@@ -132,10 +133,10 @@ function TargetRow({ vm }: { vm: StrainVM }) {
       <View className="size-5 shrink-0 items-center justify-center">
         <Icon icon={Flame} size={20} tone="muted-foreground" />
       </View>
-      <View className="min-w-0 flex-1">
-        <Text className={LABEL}>{tr("target.label")}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className={TYPE.rowTitle}>{tr("target.label")}</Text>
         {!!reason && (
-          <Text className={cn(CAPTION, "mt-0.5")} numberOfLines={1}>
+          <Text className={cn(CAPTION, "mt-1")} numberOfLines={1}>
             {reason}
           </Text>
         )}
@@ -143,7 +144,7 @@ function TargetRow({ vm }: { vm: StrainVM }) {
       <InfoButton info={STRAIN_TARGET_INFO} label={tr("target.label")} variant="card" />
       {/* Same columns as KeyStatRow's value + arrow, so the values right-align down the card. */}
       <View className="shrink-0 flex-row gap-2">
-        <Text className={cn("font-numeric text-xl font-bold leading-6 tabular-nums", reason && "text-muted-foreground")}>{text}</Text>
+        <Text className={cn("font-numeric text-value font-bold leading-6 tabular-nums", reason && "text-muted-foreground")}>{text}</Text>
         <View className="w-2" />
       </View>
       {/* The rows below end on a chevron: keep its column so the values still line up. */}

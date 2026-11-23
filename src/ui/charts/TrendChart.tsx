@@ -208,10 +208,10 @@ function Trend({ points, p }: { points: TrendPoint[]; p: TrendChartProps }) {
     <View className="min-w-0">
       <View className={headerClass(ranges)}>
         <View className="min-w-0 shrink">
-          <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] tabular-nums text-muted-foreground">{scrubbed || byDay ? dayLabel(shown?.date ?? today, today) : t("trend.average")}</Text>
-          <ValueUnit value={formatValue(p.format, scrubbed || byDay ? (shown?.value ?? null) : avg)} unit={p.unit} className="font-numeric text-[28px] font-bold leading-8" />
+          <Text className="text-caption font-medium tracking-normal tabular-nums text-muted-foreground">{scrubbed || byDay ? dayLabel(shown?.date ?? today, today) : t("trend.average")}</Text>
+          <ValueUnit value={formatValue(p.format, scrubbed || byDay ? (shown?.value ?? null) : avg)} unit={p.unit} className="font-numeric text-display font-bold leading-8" />
           {p.stack && <StackLegend series={p.stack} point={scrubbed || byDay ? shown : { date: "", value: avg, parts: Object.fromEntries(p.stack.map((s) => [s.key, partAvg(s.key) ?? 0])) }} format={p.format} />}
-          {shown?.provisional && <Text className="mt-1 text-xs font-medium text-muted-foreground">{p.stack ? t("trend.soFar") : i18n.t("reasons:tag.provisionalLabel")}</Text>}
+          {shown?.provisional && <Text className="mt-1 text-caption font-medium text-muted-foreground">{p.stack ? t("trend.soFar") : i18n.t("reasons:tag.provisionalLabel")}</Text>}
           {!scrubbed && !byDay && delta !== null && (
             <View className="mt-1">
               <StatusChip tone={tone === "good" ? "optimal" : tone === "bad" ? "warning" : "neutral"} delta={delta > 0 ? "up" : delta < 0 ? "down" : "flat"}>
@@ -344,9 +344,9 @@ function Trend({ points, p }: { points: TrendPoint[]; p: TrendChartProps }) {
                 {p.reference && <Pill x={x1 + 4} y={y(p.reference.y)} text={p.reference.label} color={c["muted-foreground"]} />}
                 {showAvg && <Pill x={x1 + 4} y={y(avg!)} text={t("trend.avg")} />}
                 {/* Value labels over the bars (W) and over a labelled line's dots. */}
-                {range === "w" && !p.stack && !line && rows.map((r, i) => (r.value === null ? null : <ChartLabel key={r.date} x={xs[i]} y={y(r.value) - 11} className="text-[11px] text-foreground">{r.text}</ChartLabel>))}
+                {range === "w" && !p.stack && !line && rows.map((r, i) => (r.value === null ? null : <ChartLabel key={r.date} x={xs[i]} y={y(r.value) - 11} className="text-label text-foreground">{r.text}</ChartLabel>))}
                 {range === "w" && level && rows.map((r, i) => (r.value === null ? null : <ChartLabel key={r.date} x={xs[i]} y={y(r.value) - 18} className="font-semibold text-foreground-secondary">{`${r.text}${p.unit === "%" ? "%" : ""}`}</ChartLabel>))}
-                {range === "w" && p.stack && rows.map((r, i) => (r.value === null ? null : <ChartLabel key={r.date} x={xs[i]} y={y(r.value) - 11} className="text-[11px] text-foreground">{formatValue(p.format, r.value)}</ChartLabel>))}
+                {range === "w" && p.stack && rows.map((r, i) => (r.value === null ? null : <ChartLabel key={r.date} x={xs[i]} y={y(r.value) - 11} className="text-label text-foreground">{formatValue(p.format, r.value)}</ChartLabel>))}
                 <ScrubLayer width={width} height={height} onScrub={setX} />
                 <ScrubTick index={ai} />
               </>
@@ -355,7 +355,7 @@ function Trend({ points, p }: { points: TrendPoint[]; p: TrendChartProps }) {
         </ChartFigure>
       )}
       {!!(p.baseline || p.target || p.smooth) && values.length > 0 && (
-        <Text className="mt-2 text-xs font-medium leading-4 text-muted-foreground">{p.target ? "Shaded: your Strain Target" : p.baseline ? "Shaded: your normal range" : `Line: ${p.smooth}-day average`}</Text>
+        <Text className="mt-2 text-caption font-medium text-muted-foreground">{p.target ? "Shaded: your Strain Target" : p.baseline ? "Shaded: your normal range" : `Line: ${p.smooth}-day average`}</Text>
       )}
     </View>
   );
@@ -373,13 +373,13 @@ function StackLegend({ series, point, format }: { series: readonly TrendSeries[]
       {point?.value != null && !parts ? (
         <View className="flex-row items-center gap-1.5">
           <View className="size-2 rounded-xs border border-dashed" style={{ borderColor: c["muted-foreground"] }} />
-          <Text className="text-xs font-medium leading-4 text-muted-foreground">{t("trend.noBreakdown")}</Text>
+          <Text className="text-caption font-medium text-muted-foreground">{t("trend.noBreakdown")}</Text>
         </View>
       ) : (
         [...series].reverse().map((s) => (
           <View key={s.key} className="flex-row items-center gap-1.5">
             <View className="size-2 rounded-xs" style={{ backgroundColor: css(s.color) }} />
-            <Text className="text-xs font-medium leading-4 text-muted-foreground">
+            <Text className="text-caption font-medium text-muted-foreground">
               {s.label} <Text className="font-numeric font-semibold tabular-nums text-foreground-secondary">{formatValue(format, parts?.[s.key])}</Text>
             </Text>
           </View>
@@ -404,7 +404,7 @@ export function TrendChartSkeleton({ chip = false, caption = false, ranges = DEF
     <View accessibilityElementsHidden className="min-w-0">
       <View className={headerClass(ranges)}>
         <View className="min-w-0">
-          {day ? <SkeletonText className="w-16" fs={12} lh={16} /> : <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-muted-foreground">{t("trend.average")}</Text>}
+          {day ? <SkeletonText className="w-16" fs={12} lh={16} /> : <Text className="text-caption font-medium tracking-normal text-muted-foreground">{t("trend.average")}</Text>}
           <SkeletonText className="w-14" fs={28} lh={32} />
           {legend && <SkeletonText className="mt-1.5 w-40" />}
           {chip && <Skeleton className="mt-1 h-6 w-28" />}
@@ -412,7 +412,7 @@ export function TrendChartSkeleton({ chip = false, caption = false, ranges = DEF
         <View className={cn("flex-row gap-0.5 rounded-lg bg-muted p-0.5", ranges.length > 3 && "w-full")}>
           {ranges.map((r) => (
             <View key={r} className={cn("h-10 min-w-11 items-center justify-center rounded-md px-3", ranges.length > 3 && "flex-1")}>
-              <Text className="font-numeric text-[13px] font-bold text-muted-foreground/60">{rangeLabel(r)}</Text>
+              <Text className="font-numeric text-meta font-bold text-muted-foreground/60">{rangeLabel(r)}</Text>
             </View>
           ))}
         </View>

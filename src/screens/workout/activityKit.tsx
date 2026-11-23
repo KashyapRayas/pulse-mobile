@@ -22,7 +22,7 @@ export const ACTIVITY_GLYPH: Record<WorkoutType, LucideIcon> = {
 export const activityName = (type: WorkoutType) => i18n.t(`workouts:recorder.types.${type}`);
 
 /** Letter-spaced caps, WHOOP's label face. */
-export const CAPS = "font-bold uppercase tracking-[0.12em]";
+export const CAPS = "font-medium tracking-normal";
 
 /** Zone 0 in the muted grey, then Pulse's zone colours (lib/bands ZONE_COLOR), as the activity detail draws them. */
 const zoneBg = (zone: number) => (zone === 0 ? "bg-muted-foreground" : DATA_COLORS[ZONE_COLOR[zone]].bg);
@@ -51,7 +51,7 @@ export function ZoneBar({ bpm, maxHr, compact = false }: { bpm: number | null; m
         {[0, 1, 2, 3, 4, 5].map((z) => {
           const on = at?.zone === z;
           return (
-            <Text key={z} className={cn("flex-1 text-center", compact ? "text-[10px]" : "text-[12px]", on ? "font-bold text-foreground" : cn(zoneText(z), "opacity-55"))}>
+            <Text key={z} className={cn("flex-1 text-center", compact ? "text-label" : "text-caption", on ? "font-bold text-foreground" : cn(zoneText(z), "opacity-55"))}>
               {i18n.t("workouts:live.zone", { zone: z })}
             </Text>
           );

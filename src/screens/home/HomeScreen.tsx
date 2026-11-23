@@ -77,8 +77,8 @@ const noBandInfo = () => ({
   title: i18n.t("home:noBand.title"),
   body: (
     <>
-      <Text className="text-[15px] leading-[22px] text-foreground-body">{i18n.t("home:noBand.scored")}</Text>
-      <Text className="text-[15px] leading-[22px] text-foreground-body">{i18n.t("home:noBand.phoneShows")}</Text>
+      <Text className="text-body text-foreground-body">{i18n.t("home:noBand.scored")}</Text>
+      <Text className="text-body text-foreground-body">{i18n.t("home:noBand.phoneShows")}</Text>
     </>
   ),
 });
@@ -277,8 +277,8 @@ function Home({ vm, timeZone }: { vm: HomePageVM; timeZone: string }) {
         bottom: vm.weeklyTeaser && (
           <GradientBanner from={c["banner-from"]} to={c["banner-to"]} role="link" onPress={() => go(`/reports/${vm.weeklyTeaser!.period}`)}>
             <Icon icon={CalendarRange} size={22} tone="foreground" strokeWidth={1.5} />
-            <Text className="min-w-0 flex-1 text-base font-semibold leading-[22px]">{t("section.weekReview")}</Text>
-            <Text className="font-numeric text-xs font-medium leading-4 tabular-nums text-foreground-secondary">{rangeLabel(vm.weeklyTeaser.start, vm.weeklyTeaser.end)}</Text>
+            <Text className="min-w-0 flex-1 text-body font-semibold">{t("section.weekReview")}</Text>
+            <Text className="font-numeric text-caption font-medium tabular-nums text-foreground-secondary">{rangeLabel(vm.weeklyTeaser.start, vm.weeklyTeaser.end)}</Text>
             <Icon icon={ChevronRight} size={20} tone="foreground-secondary" strokeWidth={1.75} />
           </GradientBanner>
         ),
@@ -296,7 +296,7 @@ function DayBanner({ outlook }: { outlook: NonNullable<HomeVM["outlook"]> }) {
     <>
       <GradientBanner from={review ? c["banner-from"] : c["outlook-from"]} to={review ? c["banner-to"] : c["outlook-to"]} role="button" onPress={() => setOpen(true)}>
         <Icon icon={glyph} size={22} tone="foreground-secondary" strokeWidth={1.5} />
-        <Text className="min-w-0 flex-1 truncate text-base font-semibold leading-[22px]">{outlook.title}</Text>
+        <Text className="min-w-0 flex-1 truncate text-body font-semibold">{outlook.title}</Text>
         <Icon icon={ChevronRight} size={20} tone={review ? "coach-text" : "outlook-accent"} strokeWidth={1.75} />
       </GradientBanner>
       <InfoDialog open={open} onClose={() => setOpen(false)} title={outlook.title} icon={<Icon icon={glyph} size={28} tone="foreground" strokeWidth={1.5} />} body={outlook.body} />
@@ -321,7 +321,7 @@ function JournalWeek({ vm, at }: { vm: HomePageVM; at: (href: string) => string 
               onPress={() => go(dayHref("/journal", w.day, vm.today))}
               className="min-h-16 flex-1 items-center justify-center gap-2 rounded-lg"
             >
-              <Text accessible={false} className={cn("text-xs font-bold uppercase leading-4 tracking-[0.1em]", current ? "text-foreground" : "text-muted-foreground")}>
+              <Text accessible={false} className={cn("text-caption font-medium tracking-normal", current ? "text-foreground" : "text-muted-foreground")}>
                 {formatDay(w.day, { weekday: "short" })}
               </Text>
               <View accessibilityElementsHidden className={cn("size-7 items-center justify-center rounded-full", w.done ? "bg-optimal" : "border border-foreground/25")}>
@@ -350,13 +350,13 @@ function MonitorAlert({ alert, href }: { alert: NonNullable<HomeVM["monitorAlert
         <Icon icon={illness ? CircleAlert : TriangleAlert} size={20} tone={illness ? "recovery-red-text" : "warning-text"} strokeWidth={1.75} />
       </View>
       <View className="min-w-0 flex-1 gap-0.5">
-        <Text className="text-base font-semibold leading-[22px]">{illness ? t("alert.illnessTitle") : t("alert.flaggedTitle", { count: alert.count })}</Text>
+        <Text className="text-body font-semibold">{illness ? t("alert.illnessTitle") : t("alert.flaggedTitle", { count: alert.count })}</Text>
         <View className="gap-2">
-          <Text className="text-[15px] leading-[22px] text-foreground-secondary">
+          <Text className="text-body text-foreground-secondary">
             {illness ? t("alert.illnessBody") : t("alert.flaggedBody", { names, count: alert.names.length })}
           </Text>
           <Press activeOpacity={0.7} accessibilityRole="link" onPress={() => go(href)} hitSlop={{ left: 8, right: 8, top: 14, bottom: 14 }} className="flex-row items-center gap-0.5 self-start">
-            <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em]">{t("monitor.view")}</Text>
+            <Text className="text-caption font-medium tracking-normal">{t("monitor.view")}</Text>
             <Icon icon={ChevronRight} size={14} tone="foreground" strokeWidth={2} />
           </Press>
         </View>
@@ -393,15 +393,15 @@ function MonitorLine({ chip, chipClass, top, topClass, bottom }: { chip: ReactNo
     <View className="min-w-0 flex-row items-center gap-2">
       <View className={cn(CHIP_BOX, chipClass)}>{chip}</View>
       <View className="min-w-0 flex-1">
-        <Text className={cn("text-xs font-bold uppercase leading-4 tracking-[0.06em]", topClass)}>{top}</Text>
+        <Text className={cn("text-caption font-medium tracking-normal", topClass)}>{top}</Text>
         {/* Wraps rather than truncates: "Day average" lost a pixel at 320 px. */}
-        <Text className="text-xs font-medium leading-4 tabular-nums text-foreground-secondary">{bottom}</Text>
+        <Text className="text-caption font-medium tabular-nums text-foreground-secondary">{bottom}</Text>
       </View>
     </View>
   );
 }
 
-const NO_READING_CHIP = <Text className="font-numeric text-base font-bold text-muted-foreground">{MISSING}</Text>;
+const NO_READING_CHIP = <Text className="font-numeric text-body font-bold text-muted-foreground">{MISSING}</Text>;
 
 function MonitorCard({ vm, href }: { vm: HomePageVM; href: string }) {
   const { t } = useTranslation("home");
@@ -435,7 +435,7 @@ function StressCard({ vm, href, timeZone }: { vm: HomePageVM; href: string; time
   return (
     <SectionShell variant="card" title={t("stress.title")} info={false} href={href} fill>
       <MonitorLine
-        chip={<Text className={cn("font-numeric text-lg font-bold tabular-nums", tone.text)}>{formatValue("int", s.value.value)}</Text>}
+        chip={<Text className={cn("font-numeric text-heading font-bold tabular-nums", tone.text)}>{formatValue("int", s.value.value)}</Text>}
         chipClass={tone.chip}
         top={STRESS_WORD[s.value.level]}
         topClass={tone.text}
@@ -454,7 +454,7 @@ function StressTile({ vm, href, timeZone }: { vm: HomePageVM; href: string; time
     <SectionShell variant="card" title={t("stress.title")} info={false} href={href}>
       {s && tone && (
         <View className="-mt-1 mb-3 flex-row items-baseline justify-between gap-3">
-          <Text className="text-xs font-medium leading-4 text-foreground-secondary">
+          <Text className="text-caption font-medium text-foreground-secondary">
             {s.at !== null ? (
               <Trans t={t} i18nKey="stress.lastUpdated" values={{ time: clock(s.at, timeZone) }} components={{ t: NUM }} />
             ) : (
@@ -462,8 +462,8 @@ function StressTile({ vm, href, timeZone }: { vm: HomePageVM; href: string; time
             )}
           </Text>
           <View className="flex-row items-baseline gap-1.5">
-            <Text className={cn("text-xs font-bold uppercase leading-4 tracking-[0.1em]", tone.text)}>{STRESS_WORD[s.level]}</Text>
-            <Text className="font-numeric text-base font-bold leading-5 tabular-nums text-foreground">{formatValue("int", s.value)}</Text>
+            <Text className={cn("text-caption font-medium tracking-normal", tone.text)}>{STRESS_WORD[s.level]}</Text>
+            <Text className="font-numeric text-body font-bold tabular-nums text-foreground">{formatValue("int", s.value)}</Text>
           </View>
         </View>
       )}
@@ -514,7 +514,7 @@ function EnergyBody({ eb, timeZone }: { eb: NonNullable<HomeVM["energyBank"]["va
       {drains.length > 0 && (
         <View accessibilityRole="list" className="gap-1">
           {drains.map((dr) => (
-            <Text key={dr.t} className="text-xs font-medium leading-4 text-foreground-secondary">
+            <Text key={dr.t} className="text-caption font-medium text-foreground-secondary">
               <Trans t={t} i18nKey="energy.drainAt" values={{ label: dr.label, time: clock(dr.t, timeZone), amount: formatValue("signedInt", -Math.abs(dr.amount)) }} components={{ t: NUM }} />
             </Text>
           ))}
@@ -528,7 +528,7 @@ function MiniStat({ label, value, className }: { label: string; value: string; c
   return (
     <View className={cn(SECONDARY_ROW, "flex-1 p-3")}>
       <Text className={cn(LABEL, "text-muted-foreground")}>{label}</Text>
-      <Text className={cn("mt-1 font-numeric text-xl font-bold leading-6 tabular-nums", className)}>{value}</Text>
+      <Text className={cn("mt-1 font-numeric text-value font-bold leading-6 tabular-nums", className)}>{value}</Text>
     </View>
   );
 }

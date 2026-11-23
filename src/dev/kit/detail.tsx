@@ -43,7 +43,7 @@ export default function KitDetail() {
         footer={
           <Card>
             <View className="px-4">
-              <Text className="text-[15px] leading-[22px] text-foreground-secondary">The footer slot: links to related screens, the data source note.</Text>
+              <Text className="text-body text-foreground-secondary">The footer slot: links to related screens, the data source note.</Text>
             </View>
           </Card>
         }

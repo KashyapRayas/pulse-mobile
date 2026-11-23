@@ -16,7 +16,6 @@ import { Card } from "@/ui/Card";
 import { cn } from "@/ui/cn";
 import { Divided } from "@/ui/Divided";
 import { Icon } from "@/ui/Icon";
-import { LABEL } from "@/ui/metrics/primitives";
 import { goBack, push } from "@/ui/navigate";
 import { useSelectedDay } from "@/ui/shells/DateSwitcher";
 import { EmptyState } from "@/ui/shells/EmptyState";
@@ -27,6 +26,7 @@ import { SkeletonText } from "@/ui/Skeleton";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { ASIDE, BarLine, goalColor, GoalRowShell, UNDER_LABEL, WeekColumns, type Mark } from "./parts";
+import { TYPE } from "@/ui/type";
 
 export const GOALS_SETTINGS = "/settings?s=goals";
 
@@ -89,7 +89,7 @@ function RowSkeleton({ k }: { k: GoalKey }) {
   return (
     <View className="min-h-14 flex-row items-center gap-3 py-2">
       <Icon icon={goalIcon(k)} size={20} tone="muted-foreground" />
-      <Text className={cn(LABEL, "min-w-0 flex-1")} numberOfLines={1}>{GOAL_META[k].short}</Text>
+      <Text className={cn(TYPE.rowTitle, "min-w-0 flex-1")} numberOfLines={1}>{GOAL_META[k].short}</Text>
       <SkeletonText lh={24} fs={20} className="w-16" />
     </View>
   );
@@ -169,7 +169,7 @@ function GoalsList({ goals, rows, week }: { goals: Goals; rows: GoalRow[]; week:
       {off.length > 0 && (
         <View className="mt-5 gap-2">
           <TaskSection>{t("page.off")}</TaskSection>
-          <Text className="text-sm leading-[19px] text-muted-foreground">{t("page.offBody", { labels: off.map((k) => GOAL_META[k].label).join(", ") })}</Text>
+          <Text className="text-meta text-muted-foreground">{t("page.offBody", { labels: off.map((k) => GOAL_META[k].label).join(", ") })}</Text>
         </View>
       )}
     </View>

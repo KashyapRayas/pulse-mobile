@@ -21,25 +21,24 @@ import { MetricState } from "@/ui/shells/MetricState";
 import { SectionShell } from "@/ui/shells/SectionShell";
 import type { InfoContent } from "@/ui/shells/InfoButton";
 import { Skeleton } from "@/ui/Skeleton";
+import { P } from "@/ui/Prose";
 import { Text } from "@/ui/Text";
 import type { TokenName } from "@/ui/palette";
 import { useTheme } from "@/ui/theme";
 import { useScreen } from "../useScreen";
+import { TYPE } from "@/ui/type";
 
-function P({ children }: { children: ReactNode }) {
-  return <Text className="text-[15px] leading-[22px] text-foreground-body">{children}</Text>;
-}
 function SourceNote() {
   const { t } = useTranslation("strain");
-  return <Text className="text-[13px] leading-[18px] text-muted-foreground">{t("sourceNote")}</Text>;
+  return <Text className="text-meta text-muted-foreground">{t("sourceNote")}</Text>;
 }
 export const SOURCE_NOTE = <SourceNote />;
 
 /** A meter stays quiet unless it flags something: only a weak value (warning, alert) takes a colour. */
 const TONE_FILL: Record<ChipTone, TokenName> = { optimal: "foreground-secondary", warning: "warning", alert: "recovery-red", neutral: "foreground-secondary" };
 /** The score heroes' number (Health's Fitness and Heart rate cards), in the foreground colour. */
-export const HERO = "font-numeric text-4xl font-bold leading-10 tracking-[-0.01em]";
-export const LINE = "text-[15px] leading-[22px] text-foreground-secondary";
+export const HERO = "font-numeric text-hero font-bold leading-10 tracking-[-0.01em]";
+export const LINE = "text-body text-foreground-secondary";
 /** A band or status word in caps, in secondary ink (the PWA's Fitness card category). */
 const BAND = cn(LABEL, "text-foreground-secondary");
 
@@ -85,14 +84,14 @@ export function StatRow({
   return (
     <View accessible accessibilityLabel={spoken} className="min-h-14 flex-row items-center gap-3 py-2">
       {!!icon && <View className="size-5 shrink-0 items-center justify-center">{icon}</View>}
-      <View className="min-w-0 flex-1">
-        <Text className={LABEL}>{label}</Text>
-        {!!caption && <Text className={cn(CAPTION, "mt-0.5")}>{caption}</Text>}
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className={TYPE.rowTitle}>{label}</Text>
+        {!!caption && <Text className={cn(CAPTION, "mt-1")}>{caption}</Text>}
       </View>
       {word ? (
-        <Text className={cn("max-w-[50%] text-right text-base font-semibold leading-6", missing && "text-muted-foreground")}>{value}</Text>
+        <Text className={cn("max-w-[50%] text-right text-body font-semibold", missing && "text-muted-foreground")}>{value}</Text>
       ) : (
-        <ValueUnit value={value} unit={unit} className={cn("shrink-0 font-numeric text-xl font-bold leading-6", missing && "text-muted-foreground")} />
+        <ValueUnit value={value} unit={unit} className={cn("shrink-0 font-numeric text-value font-bold leading-6", missing && "text-muted-foreground")} />
       )}
     </View>
   );

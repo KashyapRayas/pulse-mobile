@@ -27,9 +27,10 @@ import { statIcon } from "../_lib/view";
 import { Press } from "@/ui/Press";
 import { DURATION } from "@/ui/motion";
 import { goBack, push } from "@/ui/navigate";
+import { TYPE } from "@/ui/type";
 
 const CARD = "min-h-14 flex-row items-center gap-3 rounded-xl bg-foreground/[0.07] pl-4";
-const NAME = "min-w-0 flex-1 text-[13px] font-bold uppercase leading-4 tracking-[0.1em]";
+const NAME = `min-w-0 flex-1 ${TYPE.rowTitle}`;
 const ROW_H = 56;
 /** One row and the 12 px gap under it: the distance a dragged row travels per place. */
 const PITCH = ROW_H + 12;
@@ -51,7 +52,7 @@ export function EditDashboardButton({ keys, empty }: { keys: DashboardKey[]; emp
       hitSlop={{ top: 6, bottom: 6 }}
       className="-mr-2 h-8 flex-row items-center gap-1.5 rounded-full px-2"
     >
-      <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em]">{t("edit.customize")}</Text>
+      <Text className="text-caption font-medium tracking-normal">{t("edit.customize")}</Text>
       <Icon icon={Pencil} size={16} tone="foreground" strokeWidth={1.75} />
     </Press>
   );
@@ -112,16 +113,16 @@ export function EditDashboardPage({ keys: rawKeys, empty: rawEmpty }: { keys?: s
       footer={
         <>
           {/* The web shows a toast; a phone sheet shows the line above its button. */}
-          {failed && <Text accessibilityRole="alert" className="text-center text-[15px] leading-[22px] text-destructive">{t("edit.saveFailed")}</Text>}
+          {failed && <Text accessibilityRole="alert" className="text-center text-body text-destructive">{t("edit.saveFailed")}</Text>}
           <Button variant="outline-pill" onPress={save} disabled={saving || shown.length === 0}>
             {saving ? t("edit.saving") : t("actions.save", { ns: "common" })}
           </Button>
         </>
       }
     >
-      <Text accessibilityRole="header" className="mt-4 text-[22px] font-semibold leading-7">{t("edit.myDashboard")}</Text>
+      <Text accessibilityRole="header" className={cn("mt-4", TYPE.section)}>{t("edit.myDashboard")}</Text>
       {shown.length === 0 ? (
-        <Text accessibilityRole="alert" className="py-4 text-[15px] leading-[22px] text-foreground-secondary">{t("edit.addAtLeastOne")}</Text>
+        <Text accessibilityRole="alert" className="py-4 text-body text-foreground-secondary">{t("edit.addAtLeastOne")}</Text>
       ) : (
         // Rows sit at fixed places (index × pitch) so a drag only moves one row and the others slide into the gap.
         <GestureHandlerRootView>
@@ -151,13 +152,13 @@ export function EditDashboardPage({ keys: rawKeys, empty: rawEmpty }: { keys?: s
           spellCheck={false}
           returnKeyType="search"
           clearButtonMode="while-editing"
-          className="h-12 rounded-xl bg-fill-faint pl-10 pr-3 text-base text-foreground"
+          className="h-12 rounded-xl bg-fill-faint pl-10 pr-3 text-body text-foreground"
           style={{ fontFamily: FACES.sans.regular }}
         />
       </View>
       {groups.map((g) => (
         <View key={g.key} className="mt-5">
-          <Text accessibilityRole="header" className="text-[13px] font-semibold leading-4 text-foreground-secondary">{g.label}</Text>
+          <Text accessibilityRole="header" className={TYPE.group}>{g.label}</Text>
           <View className="mt-2 gap-3">
             {g.items.map((m) => (
               <Press
@@ -172,7 +173,7 @@ export function EditDashboardPage({ keys: rawKeys, empty: rawEmpty }: { keys?: s
                 <View className="min-w-0 flex-1">
                   {/* In a column, flex-1 would stretch the label down the row (on the web it is inert inside a block span). */}
                   <Text className={NAME.replace("flex-1 ", "")}>{m.label}</Text>
-                  {noData.has(m.key) && <Text className="mt-0.5 text-xs font-medium leading-4 text-muted-foreground">{t("edit.noDataYet")}</Text>}
+                  {noData.has(m.key) && <Text className="mt-0.5 text-caption font-medium text-muted-foreground">{t("edit.noDataYet")}</Text>}
                 </View>
                 <Icon icon={Plus} size={24} tone="foreground" strokeWidth={2} />
               </Press>
@@ -181,7 +182,7 @@ export function EditDashboardPage({ keys: rawKeys, empty: rawEmpty }: { keys?: s
         </View>
       ))}
       {groups.length === 0 && (
-        <Text className="py-6 text-center text-[15px] leading-[22px] text-foreground-secondary">{hidden.length ? t("edit.noMatch", { query: query.trim() }) : t("edit.allOnHome")}</Text>
+        <Text className="py-6 text-center text-body text-foreground-secondary">{hidden.length ? t("edit.noMatch", { query: query.trim() }) : t("edit.allOnHome")}</Text>
       )}
       <Text accessibilityLiveRegion="polite" className="absolute h-px w-px opacity-0">{status}</Text>
     </TaskPage>

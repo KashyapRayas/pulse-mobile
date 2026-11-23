@@ -63,16 +63,16 @@ function FoodRow({ f, timeZone, onDelete, onSeparate }: { f: FoodItem; timeZone:
   const from = !mine ? tr("row.fitbit") : f.duplicateOf ? tr("row.duplicate") : f.separate ? tr("row.separate") : f.via === "photo" ? tr("row.photo") : f.via === "text" ? tr("row.description") : null;
   const time = clock(f.ts * 1000, timeZone);
   return (
-    <View className="flex-row items-start gap-3 py-2.5">
+    <View className="flex-row items-start gap-3 py-3">
       <View className="mt-0.5">
         <Icon icon={mine ? VIA_ICON[f.via ?? "manual"] : Utensils} size={18} tone="foreground-secondary" />
       </View>
       <View className="min-w-0 flex-1 gap-0.5">
-        <Text className={cn("text-[15px] font-semibold leading-5", f.duplicateOf && "text-muted-foreground")}>
+        <Text className={cn("text-body font-semibold", f.duplicateOf && "text-muted-foreground")}>
           {f.title}
           {f.portion ? <Text className="font-normal text-muted-foreground">{`  ${f.portion}`}</Text> : null}
         </Text>
-        <Text className={cn("text-sm leading-5 tabular-nums", f.duplicateOf && "text-muted-foreground line-through")}>{numbersOf(f)}</Text>
+        <Text className={cn("text-meta tabular-nums", f.duplicateOf && "text-muted-foreground line-through")}>{numbersOf(f)}</Text>
         <Text className={cn(CAPTION, "tabular-nums")}>{from ? `${time} · ${from}` : time}</Text>
         {!!f.duplicateOf && <RowLink label={tr("row.countToo")} onPress={() => onSeparate(true)} />}
         {f.separate && !f.duplicateOf && <RowLink label={tr("row.undo")} onPress={() => onSeparate(false)} />}
@@ -94,7 +94,7 @@ function FoodRow({ f, timeZone, onDelete, onSeparate }: { f: FoodItem; timeZone:
 function RowLink({ label, onPress }: { label: string; onPress: () => void }) {
   return (
     <Press accessibilityRole="button" onPress={onPress} hitSlop={{ top: 12, bottom: 12, left: 4, right: 12 }} className="mt-1 self-start">
-      <Text className="text-sm font-semibold leading-5 underline">{label}</Text>
+      <Text className="text-meta font-semibold underline">{label}</Text>
     </Press>
   );
 }
@@ -106,14 +106,14 @@ function AverageTile({ title, a }: { title: string; a: Averages }) {
   const days = tr("averages.days", { days: a.days, span: a.span });
   return (
     <View accessible accessibilityLabel={`${title}: ${a.days === 0 ? tr("averages.none") : `${tr("numbers.kcal", { value: show(a.kcal, grouped) })}, ${macros}, ${days}`}`} className="min-w-0 flex-1 gap-2 rounded-xl bg-inset p-3">
-      <Text className="text-[10px] font-bold uppercase leading-3 tracking-[0.1em] text-foreground-secondary">{title}</Text>
+      <Text className="text-label font-medium tracking-normal text-foreground-secondary">{title}</Text>
       {a.days === 0 ? (
         <Text className={CAPTION}>{tr("averages.none")}</Text>
       ) : (
         <>
-          <Text className="font-numeric text-[30px] font-bold leading-9 tracking-[-0.01em] tabular-nums">
+          <Text className="font-numeric text-display font-bold leading-9 tracking-[-0.01em] tabular-nums">
             {show(a.kcal, grouped)}
-            <Text className="text-sm font-medium leading-5">{` ${tr("unit.kcal")}`}</Text>
+            <Text className="text-meta font-medium">{` ${tr("unit.kcal")}`}</Text>
           </Text>
           <Text className={cn(CAPTION, "tabular-nums")}>{macros}</Text>
           <Text className={cn(CAPTION, "tabular-nums")}>{days}</Text>
@@ -139,16 +139,16 @@ function Balance({ vm }: { vm: NutritionVM }) {
     <View className="gap-3">
       <View className="gap-1">
         {both ? (
-          <Text className="text-[17px] font-bold leading-6 tabular-nums">{t("balance.summary", { in: grouped(calIn), out: grouped(calOut) })}</Text>
+          <Text className="text-heading font-bold tabular-nums">{t("balance.summary", { in: grouped(calIn), out: grouped(calOut) })}</Text>
         ) : (
           <>
-            <Text className="text-[17px] font-bold leading-6 tabular-nums">{calIn === null ? t("balance.noFood") : t("balance.calIn", { in: grouped(calIn) })}</Text>
-            <Text className="text-[17px] font-bold leading-6 tabular-nums">{calOut === null ? t("balance.noBurn") : t("balance.calOut", { out: grouped(calOut) })}</Text>
+            <Text className="text-heading font-bold tabular-nums">{calIn === null ? t("balance.noFood") : t("balance.calIn", { in: grouped(calIn) })}</Text>
+            <Text className="text-heading font-bold tabular-nums">{calOut === null ? t("balance.noBurn") : t("balance.calOut", { out: grouped(calOut) })}</Text>
             {calOut === null && <Text className={CAPTION}>{reasonCopy(kcalOut.reason).long}</Text>}
           </>
         )}
-        <Text className="text-sm leading-5 tabular-nums">{t("balance.goal", { goal: grouped(goal) })}</Text>
-        {net !== null && <Text className="text-sm font-semibold leading-5 tabular-nums">{net < 0 ? t("balance.deficit", { kcal: grouped(-net) }) : net > 0 ? t("balance.surplus", { kcal: grouped(net) }) : t("balance.even")}</Text>}
+        <Text className="text-meta tabular-nums">{t("balance.goal", { goal: grouped(goal) })}</Text>
+        {net !== null && <Text className="text-meta font-semibold tabular-nums">{net < 0 ? t("balance.deficit", { kcal: grouped(-net) }) : net > 0 ? t("balance.surplus", { kcal: grouped(net) }) : t("balance.even")}</Text>}
       </View>
       {days.some((d) => d.kcalIn !== null || d.kcalOut !== null) ? (
         <CalorieBalanceChart summary={t("balance.chartSummary", { goal: grouped(goal) })} data={data} goal={goal} goalLabel={t("balance.goalPill")} />
@@ -233,7 +233,7 @@ export function NutritionScreen() {
           <View className="gap-6">
             <Button onPress={() => push(foodHref())}>
               <Icon icon={Plus} size={18} tone="primary-foreground" />
-              <Text className="text-[15px] font-bold uppercase tracking-[0.1em] text-primary-foreground">{t("screen.addFood")}</Text>
+              <Text className="text-body font-medium tracking-normal text-primary-foreground">{t("screen.addFood")}</Text>
             </Button>
             <SectionShell variant="section" title={t("screen.todaysFood")}>
               {!vm.meals.length && !vm.unlisted ? (
@@ -252,7 +252,7 @@ export function NutritionScreen() {
                   ))}
                   {vm.unlisted && (
                     <SectionShell variant="card" title={t("screen.unlistedTitle")} info={false}>
-                      <Text className="text-sm leading-5 tabular-nums">
+                      <Text className="text-meta tabular-nums">
                         {[vm.unlisted.kcal !== null && t("numbers.kcal", { value: grouped(vm.unlisted.kcal) }), vm.unlisted.protein !== null && t("numbers.protein", { value: grams(vm.unlisted.protein) }), vm.unlisted.carbs !== null && t("numbers.carbs", { value: grams(vm.unlisted.carbs) }), vm.unlisted.fat !== null && t("numbers.fat", { value: grams(vm.unlisted.fat) })].filter(Boolean).join(" · ")}
                       </Text>
                       <Text className={cn(CAPTION, "mt-1")}>{t("screen.unlistedNote")}</Text>

@@ -11,6 +11,7 @@ import { DetailHeader, DetailHeaderRow, detailRowHeight } from "./DetailHeader";
 import { DoneScreen } from "./DoneScreen";
 import { HEADER_FADE, useHeaderHeight } from "./Header";
 import { goBack } from "@/ui/navigate";
+import { TYPE } from "../type";
 
 export type TaskPageProps = {
   title: string;
@@ -28,14 +29,9 @@ export type TaskPageProps = {
   done?: { title: string; body: string; onDone: () => void } | null;
 };
 
-/** A caps section label with a hairline running to the edge, as the reference app's "TIME ───". Use inside a task page. */
+/** A group label inside a task page ("Daytime", "Meal"): the kit's one group label (TYPE.group), as Linear's "In Progress". */
 export function TaskSection({ children }: { children: string }) {
-  return (
-    <View className="flex-row items-center gap-3">
-      <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-muted-foreground">{children}</Text>
-      <View className="h-px flex-1 bg-fill-pressed" />
-    </View>
-  );
+  return <Text accessibilityRole="header" className={TYPE.group}>{children}</Text>;
 }
 
 /**

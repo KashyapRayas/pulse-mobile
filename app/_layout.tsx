@@ -10,13 +10,10 @@ import { StatusBar } from "expo-status-bar";
 import { colorScheme } from "nativewind";
 import { Platform, Text, View } from "react-native";
 import { enableFreeze } from "react-native-screens";
-import { Barlow_500Medium } from "@expo-google-fonts/barlow/500Medium";
-import { Barlow_600SemiBold } from "@expo-google-fonts/barlow/600SemiBold";
-import { Barlow_700Bold } from "@expo-google-fonts/barlow/700Bold";
-import { Figtree_400Regular } from "@expo-google-fonts/figtree/400Regular";
-import { Figtree_500Medium } from "@expo-google-fonts/figtree/500Medium";
-import { Figtree_600SemiBold } from "@expo-google-fonts/figtree/600SemiBold";
-import { Figtree_700Bold } from "@expo-google-fonts/figtree/700Bold";
+import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
+import { Inter_500Medium } from "@expo-google-fonts/inter/500Medium";
+import { Inter_600SemiBold } from "@expo-google-fonts/inter/600SemiBold";
+import { Inter_700Bold } from "@expo-google-fonts/inter/700Bold";
 
 import { i18n } from "@/i18n/config";
 import { useLanguage } from "@/i18n/useLanguage";
@@ -48,9 +45,9 @@ SplashScreen.setOptions({ duration: 0, fade: false });
 export const unstable_settings = { anchor: "(tabs)", screenErrorBoundary: ScreenError };
 
 function RootLayout() {
-  // Fonts: Figtree for text, Barlow for numerals, as the web (pulse src/app/layout.tsx). Each weight is its own file
-  // and its own family name; src/ui/Text.tsx picks the name from the web's font classes.
-  const [fonts, fontError] = useFonts({ Figtree_400Regular, Figtree_500Medium, Figtree_600SemiBold, Figtree_700Bold, Barlow_500Medium, Barlow_600SemiBold, Barlow_700Bold });
+  // Fonts: Inter for text and numerals, as Linear sets it (numerals take tabular figures in src/ui/Text.tsx). Each
+  // weight is its own file and its own family name; src/ui/Text.tsx picks the name from the web's font classes.
+  const [fonts, fontError] = useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
   // Boot opens the database and reads the profile, the source and the saved theme (src/state/app.ts); the stored theme is
   // applied before the first frame, so a dark-mode person never sees a light flash.
   useEffect(() => void boot((theme) => colorScheme.set(theme as "light" | "dark" | "system")), []);

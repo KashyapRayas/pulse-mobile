@@ -25,19 +25,19 @@ export function About({ version, scoringVersion }: { version: string; scoringVer
           [t("about.scoringVersion"), String(scoringVersion)],
         ].map(([k, v], i) => (
           <View key={k} className={cn(ROW, i > 0 && ROW_RULE)}>
-            <Text className="text-[15px] leading-[22px]">{k}</Text>
-            <Text className="font-numeric text-[15px] font-semibold leading-[22px] tabular-nums text-foreground-secondary">{v}</Text>
+            <Text className="text-body">{k}</Text>
+            <Text className="font-numeric text-body font-semibold tabular-nums text-foreground-secondary">{v}</Text>
           </View>
         ))}
       </View>
       {/* On a narrow phone each label shrinks to stay on one line beside its arrow. */}
       <View className="mt-4 flex-row gap-2">
         <Button variant="secondary" className="flex-1" accessibilityLabel={t("about.sourceCodeLabel")} onPress={() => Linking.openURL(REPO_URL)}>
-          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} className="shrink text-[13px] font-bold uppercase tracking-[0.1em] text-secondary-foreground">{t("about.sourceCode")}</Text>
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} className="shrink text-meta font-medium tracking-normal text-secondary-foreground">{t("about.sourceCode")}</Text>
           <Icon icon={ArrowUpRight} size={16} tone="secondary-foreground" />
         </Button>
         <Button variant="outline" className="flex-1" onPress={() => push("/report?from=about")}>
-          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} className="shrink text-[13px] font-bold uppercase tracking-[0.1em]">{t("about.reportBug")}</Text>
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} className="shrink text-meta font-medium tracking-normal">{t("about.reportBug")}</Text>
         </Button>
       </View>
     </SectionShell>

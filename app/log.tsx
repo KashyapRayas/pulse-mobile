@@ -81,7 +81,7 @@ export default function LogPage() {
   );
   const field = (k: string, label: string, hint: string | undefined, o: { mode: "numeric" | "decimal" | "text"; placeholder?: string; maxLength?: number; className?: string }) => (
     <Field key={k} label={label} hint={hint} className={o.className}>
-      <Input accessibilityLabel={label} inputMode={o.mode} placeholder={o.placeholder} maxLength={o.maxLength} value={form[k] as string} onChangeText={set(k)} className={o.mode === "text" ? "text-base" : "text-base tabular-nums"} returnKeyType="done" />
+      <Input accessibilityLabel={label} inputMode={o.mode} placeholder={o.placeholder} maxLength={o.maxLength} value={form[k] as string} onChangeText={set(k)} className={o.mode === "text" ? "text-body" : "text-body tabular-nums"} returnKeyType="done" />
     </Field>
   );
   const when = (children: React.ReactNode) => <Section title={t("logForm.when")}>{children}</Section>;
@@ -107,7 +107,7 @@ export default function LogPage() {
                   {waterSteps().map((step) => (
                     <Button key={step} variant="secondary" disabled={saving} className="h-14 flex-1 gap-2" onPress={() => void send({ kind: "water", ml: Math.round(water.stored(step)), at: time }, false)}>
                       <Icon icon={Droplet} size={20} strokeWidth={1.75} tone="secondary-foreground" />
-                      <Text className="text-[15px] font-bold uppercase tracking-[0.1em] text-secondary-foreground">+{step} {water.unit}</Text>
+                      <Text className="text-body font-medium tracking-normal text-secondary-foreground">+{step} {water.unit}</Text>
                     </Button>
                   ))}
                 </View>

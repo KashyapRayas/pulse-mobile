@@ -33,14 +33,14 @@ export function DismissDialog({ open, onKeep, onDismiss }: { open: boolean; onKe
         >
           <Gradient from={c["popover-top"]} to={c.popover} angle="y" />
           <View className="items-center gap-2 pt-4">
-            <Text accessibilityRole="header" className="text-center text-[15px] font-bold uppercase leading-5 tracking-[0.1em]">
+            <Text accessibilityRole="header" className="text-center text-body font-medium tracking-normal">
               {t("dismiss.title")}
             </Text>
-            <Text className="text-center text-[15px] leading-[22px] text-foreground-secondary">{t("dismiss.body")}</Text>
+            <Text className="text-center text-body text-foreground-secondary">{t("dismiss.body")}</Text>
           </View>
           <Pressable accessibilityRole="checkbox" accessibilityState={{ checked }} onPress={() => setChecked(!checked)} className="min-h-11 flex-row items-center gap-3">
             <View className={cn("size-7 items-center justify-center rounded-md border", checked ? "border-primary bg-primary" : "border-input")}>{checked && <Check size={14} color={c["primary-foreground"]} strokeWidth={2.5} />}</View>
-            <Text className="shrink text-xs font-bold uppercase leading-4 tracking-[0.1em]">{t("dismiss.again")}</Text>
+            <Text className="shrink text-caption font-medium tracking-normal">{t("dismiss.again")}</Text>
           </Pressable>
           <View className="gap-3">
             <Button onPress={onKeep}>

@@ -13,11 +13,12 @@ import { SkeletonText } from "../Skeleton";
 import { Text } from "../Text";
 import { ring } from "../shadow";
 import { useTheme } from "../theme";
-import { CAPTION, DeltaMark, LABEL, StatusChip, ValueUnit } from "./primitives";
+import { CAPTION, DeltaMark, StatusChip, ValueUnit } from "./primitives";
 import { Sparkline } from "./Sparkline";
 import { push } from "../navigate";
 import { Press } from "../Press";
 import { BAR_CORNERS } from "@/ui/radius";
+import { TYPE } from "../type";
 
 export type SleepStatus = "poor" | "sufficient" | "optimal";
 
@@ -50,8 +51,8 @@ export type KeyStatRowProps = {
   className?: string;
 };
 
-const TILE_LABEL = "text-[10px] font-bold uppercase leading-3 tracking-[0.1em]";
-const TILE_CHIP = "min-h-5 px-1.5 py-0.5";
+const TILE_LABEL = "text-label font-medium tracking-normal";
+const TILE_CHIP = "min-h-5 px-2 py-1";
 const STATUS_ACTIVE: Record<SleepStatus, string> = { poor: "bg-warning", sufficient: "bg-foreground-secondary", optimal: "bg-optimal" };
 
 type Computed = { valueText: string; avgText?: string; diffText?: string; dir?: DeltaDir; tone?: Tone; reason?: string; meta?: MetricMeta; loading?: boolean };
@@ -102,9 +103,9 @@ function Row({ p, c }: { p: KeyStatRowProps; c: Computed }) {
       {!!p.icon && <View className="size-5 shrink-0 items-center justify-center">{p.icon}</View>}
       <View className="min-w-0 flex-1">
         {/* Long metric labels must wrap to fit narrow phone widths. */}
-        {p.label ? <Text className={LABEL}>{p.label}</Text> : <SkeletonText className="w-32" />}
+        {p.label ? <Text className={TYPE.rowTitle}>{p.label}</Text> : <SkeletonText className="w-32" />}
         {!!(c.reason || p.caption) && (
-          <Text className={cn(CAPTION, "mt-0.5")} numberOfLines={1}>
+          <Text className={cn(CAPTION, "mt-1")} numberOfLines={1}>
             {c.reason ?? p.caption}
           </Text>
         )}
@@ -125,10 +126,10 @@ function Row({ p, c }: { p: KeyStatRowProps; c: Computed }) {
             </View>
           ) : (
             // A My Dashboard card prints the number alone ("43", "5,185"), percent kept, as the reference app does (dashboard-01); the spoken sentence keeps the unit.
-            <ValueUnit value={c.valueText} unit={card && p.unit !== "%" ? undefined : p.unit} className={cn("font-numeric text-xl font-bold leading-6", c.reason && "text-muted-foreground")} />
+            <ValueUnit value={c.valueText} unit={card && p.unit !== "%" ? undefined : p.unit} className={cn("font-numeric text-value font-bold leading-6", c.reason && "text-muted-foreground")} />
           )}
           {!!c.avgText && !c.reason && (
-            <Text className="font-numeric text-[13px] font-medium leading-4 tabular-nums text-muted-foreground">
+            <Text className="font-numeric text-meta font-medium tabular-nums text-muted-foreground">
               {c.avgText}
               {p.unit === "%" && "%"}
             </Text>
@@ -160,7 +161,7 @@ function Tile({ p, c }: { p: KeyStatRowProps; c: Computed }) {
     >
       <CardFill ring={flagged ? colors["warning-ring"] : undefined} />
       <View className={cn(wide ? "min-w-0 flex-1 gap-2" : "flex-1 gap-3", p.spark && "flex-none")}>
-        <View className="flex-row items-center gap-2.5">
+        <View className="flex-row items-center gap-2">
           {!!p.icon && <View className="size-5 shrink-0 items-center justify-center">{p.icon}</View>}
           {p.label ? (
             <Text className={cn(TILE_LABEL, "min-w-0 shrink text-foreground-secondary")} numberOfLines={3}>
@@ -170,7 +171,7 @@ function Tile({ p, c }: { p: KeyStatRowProps; c: Computed }) {
             <SkeletonText className="w-24" lh={12} fs={10} />
           )}
         </View>
-        <View className={cn("items-start gap-2", !wide && "mt-auto")}>
+        <View className="items-start gap-2">
           {c.loading ? (
             <>
               <View className="w-10">
@@ -179,7 +180,7 @@ function Tile({ p, c }: { p: KeyStatRowProps; c: Computed }) {
               <SkeletonText className="w-28" lh={20} fs={11} />
             </>
           ) : (
-            <ValueUnit value={c.valueText} unit={p.unit} className={cn("font-numeric text-[30px] font-bold leading-9 tracking-[-0.01em]", c.reason && "text-muted-foreground")} unitClassName="text-sm font-medium leading-5 text-foreground" />
+            <ValueUnit value={c.valueText} unit={p.unit} className={cn("font-numeric text-display font-bold leading-9 tracking-[-0.01em]", c.reason && "text-muted-foreground")} unitClassName="text-meta font-medium text-foreground" />
           )}
           {c.loading ? null : c.reason ? (
             <Text className={CAPTION}>{c.reason}</Text>
@@ -188,12 +189,12 @@ function Tile({ p, c }: { p: KeyStatRowProps; c: Computed }) {
               {/* On a wide tile the comparison moves to the right (below), unless there is a sparkline to show instead. */}
               {!wide &&
                 (p.chip ? (
-                  <StatusChip tone={p.chip.tone} className={TILE_CHIP} textClassName="text-[11px]">
+                  <StatusChip tone={p.chip.tone} className={TILE_CHIP} textClassName="text-label">
                     {p.chip.text}
                   </StatusChip>
                 ) : (
                   c.avgText && (
-                    <StatusChip tone="neutral" delta={c.dir} className={TILE_CHIP} textClassName="text-[11px]">
+                    <StatusChip tone="neutral" delta={c.dir} className={TILE_CHIP} textClassName="text-label">
                       {c.avgText}
                       {!!p.unit && <Text className="font-semibold">{p.unit === "%" ? "%" : ` ${unitLabel(p.unit)}`}</Text>}
                     </StatusChip>
@@ -211,14 +212,14 @@ function Tile({ p, c }: { p: KeyStatRowProps; c: Computed }) {
         <View className="shrink-0 items-end gap-1">
           <Text className={CAPTION}>{p.chip ? "Your range" : (p.averageLabel ?? "30-day avg")}</Text>
           {p.chip ? (
-            <StatusChip tone={p.chip.tone} className={TILE_CHIP} textClassName="text-[11px]">
+            <StatusChip tone={p.chip.tone} className={TILE_CHIP} textClassName="text-label">
               {p.chip.text}
             </StatusChip>
           ) : (
             <>
-              <ValueUnit value={c.avgText!} unit={p.unit} className="font-numeric text-lg font-bold leading-6" unitClassName="text-xs font-medium leading-4 text-muted-foreground" />
+              <ValueUnit value={c.avgText!} unit={p.unit} className="font-numeric text-heading font-bold" unitClassName="text-caption font-medium text-muted-foreground" />
               {!!c.diffText && (
-                <Text className={cn("font-numeric text-xs font-bold leading-4 tabular-nums", TONE_TEXT[c.tone ?? "neutral"])}>
+                <Text className={cn("font-numeric text-caption font-bold tabular-nums", TONE_TEXT[c.tone ?? "neutral"])}>
                   {i18n.t("ui:keyStat.vsAvg", { diff: `${c.diffText}${unitSuffix(p.unit)}` })}
                 </Text>
               )}

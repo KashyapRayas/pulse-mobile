@@ -118,7 +118,7 @@ function Chart({ hr, variant, zoned }: { hr: HrSeries; variant: "day" | "activit
               <ChartLabel key={t} x={yTickX(x0)} y={y(t)} anchor="end" w={x0}>{String(t)}</ChartLabel>
             ))}
             {shownTicks.map(({ t, x }) => (
-              <ChartLabel key={t} x={x} y={xTickY(y1)} className={workout ? "text-xs font-bold text-foreground" : undefined}>{clockTick(t, tz)}</ChartLabel>
+              <ChartLabel key={t} x={x} y={xTickY(y1)} className={workout ? "text-caption font-bold text-foreground" : undefined}>{clockTick(t, tz)}</ChartLabel>
             ))}
             <ScrubLayer width={width} height={h} onScrub={setX} />
             <ScrubTick index={ai} />
@@ -136,7 +136,7 @@ function Chart({ hr, variant, zoned }: { hr: HrSeries; variant: "day" | "activit
 }
 
 function ZoneName({ name }: { name: string }) {
-  return <Text className="text-xs font-medium leading-4 text-muted-foreground">{name}</Text>;
+  return <Text className="text-caption font-medium text-muted-foreground">{name}</Text>;
 }
 
 /** Heart rate across the day or an activity, with zones and markers (spec §5.7). */

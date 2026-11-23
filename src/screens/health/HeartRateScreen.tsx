@@ -63,7 +63,7 @@ function HeartRateHero({ v, now }: { v: HeartRateVM; now: number }) {
   ];
   return (
     <View className="w-full max-w-[360px] items-center gap-2 py-4">
-      <ValueUnit value={big === null ? MISSING : String(big)} unit="bpm" className="font-numeric text-[64px] font-bold leading-[64px] tracking-[-0.02em]" unitClassName="text-xl font-semibold leading-7 text-foreground-secondary" />
+      <ValueUnit value={big === null ? MISSING : String(big)} unit="bpm" className="font-numeric text-giant font-bold leading-[64px] tracking-[-0.02em]" unitClassName="text-value font-semibold leading-7 text-foreground-secondary" />
       {v.isToday ? (
         v.latest ? (
           <LastReading t={v.latest.t} now={now} />
@@ -76,7 +76,7 @@ function HeartRateHero({ v, now }: { v: HeartRateVM; now: number }) {
       <View className="mt-4 w-full flex-row gap-3">
         {stats.map((s) => (
           <View key={s.id} accessible accessibilityLabel={t(/\d/.test(s.spoken) ? "heartRate.statAriaBpm" : "heartRate.statAria", { label: s.label, spoken: s.spoken })} className="flex-1 items-center">
-            <Text accessibilityElementsHidden className="font-numeric text-xl font-bold leading-6 tabular-nums">
+            <Text accessibilityElementsHidden className="font-numeric text-value font-bold leading-6 tabular-nums">
               {s.value}
             </Text>
             <Text accessibilityElementsHidden className={cn(LABEL, "mt-1 text-muted-foreground")}>

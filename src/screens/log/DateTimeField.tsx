@@ -26,7 +26,7 @@ export type DateTimeFieldProps = {
   label: string;
 };
 
-const FRAME = "h-11 justify-center rounded-lg border border-input px-2.5";
+const FRAME = "h-11 justify-center rounded-lg border border-input px-3";
 
 export function DateTimeField({ value, onChange, mode, max, min, label }: DateTimeFieldProps) {
   const { c, scheme } = useTheme();
@@ -52,7 +52,7 @@ export function DateTimeField({ value, onChange, mode, max, min, label }: DateTi
       // The web input's focus ring (`border-ring`) while its picker is open.
       style={{ backgroundColor: c["input-fill"], borderColor: step ? c.ring : c.input }}
     >
-      <Text numberOfLines={1} className={value ? "text-base tabular-nums" : "text-base text-muted-foreground"}>
+      <Text numberOfLines={1} className={value ? "text-body tabular-nums" : "text-body text-muted-foreground"}>
         {shown}
       </Text>
     </Pressable>

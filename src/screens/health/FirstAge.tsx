@@ -24,8 +24,8 @@ function Row({ done, title, detail, onPress }: { done: boolean; title: string; d
   const body = (
     <>
       <Icon icon={done ? Check : Circle} size={18} tone={done ? "optimal" : "muted-foreground"} strokeWidth={2} />
-      <View className="min-w-0 flex-1">
-        <Text className="text-[15px] font-semibold leading-5">{title}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className="text-body font-semibold">{title}</Text>
         <Text className={CAPTION}>{detail}</Text>
       </View>
       {onPress && <Icon icon={ChevronRight} size={18} tone="muted-foreground" />}

@@ -9,12 +9,14 @@ import type { Family } from "../fontClasses";
 import type { TokenName } from "../palette";
 import { Text } from "../Text";
 import { useTheme } from "../theme";
+import { LineIcon } from "../LineIcon";
 
 // Small shared marks used by every kit component (spec §5.0). One look per meaning.
 
-/** Shared type styles: the uppercase small label and the muted caption. */
-export const LABEL = "text-xs leading-4 font-bold tracking-[0.1em] uppercase";
-export const CAPTION = "text-xs leading-4 font-medium text-muted-foreground";
+/** A stat's or a chart's own label ("Typical range", "Hours of sleep"): 14 px medium. A list row's title is TYPE.rowTitle. */
+export const LABEL = "text-meta font-medium";
+/** A note or a row's second line: TYPE.rowSub, 14 px muted (Linear's secondary text). */
+export const CAPTION = "text-meta text-muted-foreground";
 /**
  * The web's CAP_TRIM (`leading-none` and `text-box: trim-both cap alphabetic`): the text's box runs from the capital
  * height to the baseline, so a margin measures from the letters themselves. React Native has no text-box-trim, so this
@@ -39,10 +41,14 @@ export function StatusChip({ tone, children, delta, className, textClassName }: 
   const bg = classes.find((k) => k.startsWith("bg-"));
   const text = classes.find((k) => k.startsWith("text-")) ?? "";
   const glyph = CHIP_ICON[tone];
+  // The mark sits on the first line (LineIcon), 6 px from the text, so a chip that wraps in a narrow tile keeps it beside
+  // the first line rather than floating between the two.
+  const step = /\btext-label\b/.test(textClassName ?? "") ? "label" : "caption";
+  const mark = delta ? <DeltaMark dir={delta} tone="neutral" color={text.slice(5) as TokenName} /> : glyph && <Icon icon={glyph} size={step === "label" ? 12 : 14} tone={text.slice(5) as TokenName} strokeWidth={2.5} />;
   return (
-    <View className={cn("min-h-6 flex-row items-center gap-1 self-start rounded-md px-2 py-1", bg, className)}>
-      {delta ? <DeltaMark dir={delta} tone="neutral" color={text.slice(5) as TokenName} /> : glyph && <Icon icon={glyph} size={12} tone={text.slice(5) as TokenName} strokeWidth={2.5} />}
-      <Text className={cn("text-xs font-bold leading-4 tabular-nums", text, textClassName)}>{children}</Text>
+    <View className={cn("min-h-6 max-w-full flex-row items-start gap-1.5 self-start rounded-md px-2 py-1", bg, className)}>
+      {!!mark && <LineIcon step={step}>{mark}</LineIcon>}
+      <Text className={cn("shrink text-caption font-bold tabular-nums", text, textClassName)}>{children}</Text>
     </View>
   );
 }
@@ -76,8 +82,8 @@ export function ValueUnit({ value, unit, className, unitClassName, fit }: { valu
         <>
           {/* The web's ml-0.5 before a symbol, ml-1 before a word. A nested text has no margin, so the gap is a space of
               a known face and size (Figtree SemiBold 13 px: 0.241 em, 3.13 px) with letter spacing making up the rest. */}
-          <Text className="font-sans text-[13px] font-semibold" style={{ letterSpacing: (isSymbolUnit(unit) ? 2 : 4) - SPACE_13 }}>{" "}</Text>
-          <Text className={cn("text-[13px] font-semibold leading-4 text-foreground-secondary", unitClassName)}>{unitLabel(unit)}</Text>
+          <Text className="font-sans text-meta font-semibold" style={{ letterSpacing: (isSymbolUnit(unit) ? 2 : 4) - SPACE_13 }}>{" "}</Text>
+          <Text className={cn("text-meta font-semibold text-foreground-secondary", unitClassName)}>{unitLabel(unit)}</Text>
         </>
       )}
     </Text>

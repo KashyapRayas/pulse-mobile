@@ -1,8 +1,8 @@
 import type { ReactNode, Ref } from "react";
 import { Platform, Pressable, StyleSheet, type PressableProps, type StyleProp, View, type ViewStyle } from "react-native";
-import Animated, { interpolate, type SharedValue, useAnimatedStyle, useSharedValue, withSequence, withTiming } from "react-native-reanimated";
+import Animated, { interpolate, type SharedValue, useAnimatedStyle, useReducedMotion, useSharedValue, withSequence, withSpring, withTiming } from "react-native-reanimated";
 import { cn } from "./cn";
-import { DURATION, EASE } from "./motion";
+import { DURATION, EASE, SPRING } from "./motion";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -20,7 +20,10 @@ export type PressProps = Omit<PressableProps, "style" | "children"> & {
   style?: StyleProp<ViewStyle>;
   children?: ReactNode;
   ref?: Ref<View>;
-  /** Pressed scale, the web's `active:scale-[x]`. */
+  /**
+   * Pressed scale, the web's `active:scale-[x]`. Above 1 it is a lift (the floating glass controls): the control rises
+   * on a spring and settles back with a small pulse, as Linear's glass does under the finger.
+   */
   activeScale?: number;
   /** Pressed fill as a background class, the web's `active:bg-*` ("bg-accent", "bg-fill-hover" for its bg-foreground/8). */
   activeBg?: string;
@@ -47,6 +50,8 @@ export function Press(props: PressProps) {
 
 function AnimatedPress({ className, style, activeScale = 1, activeBg, activeOpacity = 1, onPressIn, onPressOut, children, ...props }: PressProps) {
   const p = useSharedValue(0);
+  const reduced = useReducedMotion();
+  const lift = activeScale > 1 && !reduced;
   // Only the animated properties: an opacity of 1 here would override a class's `opacity-disabled`.
   const animated = useAnimatedStyle(() => ({
     ...(activeOpacity !== 1 && { opacity: interpolate(p.value, [0, 1], [1, activeOpacity]) }),
@@ -56,12 +61,13 @@ function AnimatedPress({ className, style, activeScale = 1, activeBg, activeOpac
     <AnimatedPressable
       unstable_pressDelay={PRESS_DELAY_MS}
       onPressIn={(e) => {
-        p.set(withTiming(1, TIMING));
+        p.set(lift ? withSpring(1, SPRING.lift) : withTiming(1, TIMING));
         onPressIn?.(e);
       }}
       onPressOut={(e) => {
         // A quick tap gets its press-in at release (after the delay): finish going in, then come back out.
-        p.set(withSequence(withTiming(1, { ...TIMING, duration: TIMING.duration * (1 - p.get()) }), withTiming(0, TIMING)));
+        const settle = lift ? withSpring(0, SPRING.lift) : withTiming(0, TIMING);
+        p.set(withSequence(withTiming(1, { ...TIMING, duration: TIMING.duration * (1 - p.get()) }), settle));
         onPressOut?.(e);
       }}
       className={className}

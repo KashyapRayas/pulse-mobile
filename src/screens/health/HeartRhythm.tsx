@@ -33,9 +33,9 @@ export function HeartRhythm({ rhythm }: { rhythm: HeartRhythmVM }) {
     return (
       <Card className={ROW}>
         <Icon icon={HeartPulse} size={20} tone="muted-foreground" strokeWidth={1.5} />
-        <View className="min-w-0 flex-1">
-          <Text className="text-[15px] leading-5 text-foreground-secondary">{t("rhythm.none")}</Text>
-          <Text className={cn(CAPTION, "mt-0.5")}>{t("rhythm.noneBody")}</Text>
+        <View className="min-w-0 flex-1 gap-1">
+          <Text className="text-body text-foreground-secondary">{t("rhythm.none")}</Text>
+          <Text className={cn(CAPTION, "mt-1")}>{t("rhythm.noneBody")}</Text>
         </View>
       </Card>
     );
@@ -46,7 +46,7 @@ export function HeartRhythm({ rhythm }: { rhythm: HeartRhythmVM }) {
       <Card className="py-0">
         {latest ? (
           <Press activeBg="bg-accent" accessibilityRole="button" accessibilityLabel={t("rhythm.latestAria", { when: when(latest), label: latest.label, bpm: bpm(latest) })} onPress={() => open(latest)} className="w-full gap-3 p-4">
-            <View accessibilityElementsHidden className="w-full flex-row items-center gap-2.5">
+            <View accessibilityElementsHidden className="w-full flex-row items-center gap-2">
               <Icon icon={Activity} size={20} tone="muted-foreground" strokeWidth={1.5} />
               <Text className={cn(LABEL, "flex-1 text-foreground-secondary")}>{t("rhythm.latest")}</Text>
               <Text className={cn(CAPTION, "tabular-nums")}>{when(latest)}</Text>
@@ -55,14 +55,14 @@ export function HeartRhythm({ rhythm }: { rhythm: HeartRhythmVM }) {
               </View>
             </View>
             <View accessibilityElementsHidden className="items-start gap-2">
-              <ValueUnit value={bpm(latest)} unit={t("rhythm.bpmAvg")} className="font-numeric text-[30px] leading-9 font-bold tracking-[-0.01em]" unitClassName="text-sm leading-5 font-medium text-foreground" />
+              <ValueUnit value={bpm(latest)} unit={t("rhythm.bpmAvg")} className="font-numeric text-display leading-9 font-bold tracking-[-0.01em]" unitClassName="text-meta font-medium text-foreground" />
               <StatusChip tone={latest.tone}>{latest.label}</StatusChip>
             </View>
           </Press>
         ) : (
           <View className={ROW}>
             <Icon icon={Activity} size={20} tone="muted-foreground" strokeWidth={1.5} />
-            <Text className="flex-1 text-[15px] leading-5 text-foreground-secondary">{t("rhythm.noEcg")}</Text>
+            <Text className="flex-1 text-body text-foreground-secondary">{t("rhythm.noEcg")}</Text>
           </View>
         )}
         {older.length > 0 && (
@@ -71,12 +71,12 @@ export function HeartRhythm({ rhythm }: { rhythm: HeartRhythmVM }) {
             {older.map((e, i) => (
               <Press activeBg="bg-accent" key={e.id} accessibilityRole="button" onPress={() => open(e)} className={cn(ROW, "w-full", i > 0 && "border-t border-border")}>
                 <View className="min-w-0 flex-1">
-                  <Text numberOfLines={1} className="text-[15px] font-medium leading-5">
+                  <Text numberOfLines={1} className="text-body font-medium">
                     {e.label}
                   </Text>
                   <Text className={cn(CAPTION, "mt-0.5 tabular-nums")}>{when(e)}</Text>
                 </View>
-                <ValueUnit value={bpm(e)} unit="bpm" className="font-numeric text-xl leading-6 font-bold" />
+                <ValueUnit value={bpm(e)} unit="bpm" className="font-numeric text-value leading-6 font-bold" />
                 <View className="-mr-1">
                   <Icon icon={ChevronRight} size={16} tone="muted-foreground" strokeWidth={1.75} />
                 </View>
@@ -88,13 +88,13 @@ export function HeartRhythm({ rhythm }: { rhythm: HeartRhythmVM }) {
 
       <Card className={ROW}>
         <Icon icon={HeartPulse} size={20} tone="muted-foreground" strokeWidth={1.5} />
-        <View className="min-w-0 flex-1">
+        <View className="min-w-0 flex-1 gap-1">
           <Text className={LABEL}>{t("rhythm.irn")}</Text>
-          <Text className={cn(CAPTION, "mt-0.5")}>
+          <Text className={cn(CAPTION, "mt-1")}>
             {irn.latestDay ? t("rhythm.irnLatest", { day: formatDay(irn.latestDay, DAY.short) }) : t("rhythm.irnNone")}
           </Text>
         </View>
-        <Text className="font-numeric text-xl leading-6 font-bold tabular-nums">{irn.count}</Text>
+        <Text className="font-numeric text-value leading-6 font-bold tabular-nums">{irn.count}</Text>
       </Card>
 
       <Text className={cn(CAPTION, "px-1")}>{rhythmDisclaimer()}</Text>

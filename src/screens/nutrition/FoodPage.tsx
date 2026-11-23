@@ -48,7 +48,7 @@ type Draft = { key: number; form: FoodForm; confidence: Confidence | null; open:
 
 const grouped = (v: number) => FORMATS.grouped(v);
 const gramsText = (v: number) => (Math.round(v * 10) / 10).toString();
-const BODY = "text-sm leading-5 text-muted-foreground";
+const BODY = "text-meta text-muted-foreground";
 
 /** The sheet's href: over Journal's day `d` (today left out), or editing Pulse's entry `edit`. */
 export const foodHref = (o: { d?: string; edit?: string } = {}) => {
@@ -76,7 +76,7 @@ function MethodTile({ icon, label, onPress, disabled }: { icon: LucideIcon; labe
   return (
     <Press activeScale={0.96} accessibilityRole="button" accessibilityLabel={label} accessibilityState={{ disabled }} onPress={disabled ? undefined : onPress} className={cn("min-h-24 flex-1 justify-between rounded-2xl bg-secondary p-3", disabled && "opacity-50")}>
       <Icon icon={icon} size={22} tone="secondary-foreground" />
-      <Text className="text-[15px] font-semibold leading-5 text-secondary-foreground">{label}</Text>
+      <Text className="text-body font-semibold text-secondary-foreground">{label}</Text>
     </Press>
   );
 }
@@ -85,7 +85,7 @@ function MethodTile({ icon, label, onPress, disabled }: { icon: LucideIcon; labe
 function Notice({ title, children, alert }: { title?: string; children: ReactNode; alert?: boolean }) {
   return (
     <View accessibilityRole={alert ? "alert" : undefined} className="gap-1 rounded-xl bg-inset p-3">
-      {!!title && <Text className="text-[15px] font-semibold leading-5">{title}</Text>}
+      {!!title && <Text className="text-body font-semibold">{title}</Text>}
       {typeof children === "string" ? <Text className={BODY}>{children}</Text> : children}
     </View>
   );
@@ -96,7 +96,7 @@ function FoodFields({ form, onChange }: { form: FoodForm; onChange: (k: keyof Fo
   const { t } = useTranslation("nutrition");
   const field = (k: keyof FoodForm, label: string, hint: string, mode: "text" | "numeric" | "decimal", placeholder?: string, maxLength?: number) => (
     <Field key={k} label={label} hint={hint} className={mode === "text" ? undefined : "flex-1"}>
-      <Input accessibilityLabel={label} inputMode={mode} placeholder={placeholder} maxLength={maxLength} value={form[k]} onChangeText={(t) => onChange(k, t)} className={mode === "text" ? "text-base" : "text-base tabular-nums"} returnKeyType="done" />
+      <Input accessibilityLabel={label} inputMode={mode} placeholder={placeholder} maxLength={maxLength} value={form[k]} onChangeText={(t) => onChange(k, t)} className={mode === "text" ? "text-body" : "text-body tabular-nums"} returnKeyType="done" />
     </Field>
   );
   return (
@@ -140,9 +140,9 @@ function DraftRow({ d, onToggle, onChange, onRemove }: { d: Draft; onToggle: () 
     <View className="gap-3 py-3">
       <View className="flex-row items-start gap-1">
         <Press accessibilityRole="button" accessibilityLabel={d.open ? t("food.draftClose", { name }) : t("food.draftEdit", { name })} accessibilityState={{ expanded: d.open }} onPress={onToggle} className="min-w-0 flex-1 gap-1">
-          <Text className="text-base font-semibold leading-[21px]">
+          <Text className="text-body font-semibold">
             {name}
-            {d.form.portion.trim() ? <Text className="text-[15px] font-normal text-muted-foreground">{`  ${d.form.portion.trim()}`}</Text> : null}
+            {d.form.portion.trim() ? <Text className="text-body font-normal text-muted-foreground">{`  ${d.form.portion.trim()}`}</Text> : null}
           </Text>
           <Text className={cn(BODY, "tabular-nums")}>{summaryOf(d.form)}</Text>
           {d.confidence && <Text className={CAPTION}>{t(`food.confidence${d.confidence === "high" ? "High" : d.confidence === "medium" ? "Medium" : "Low"}`)}</Text>}
@@ -402,7 +402,7 @@ function Sheet({ edit, at: at0, meal: meal0, timeZone, today }: { edit: FoodItem
       <Notice title={t("food.cameraBlockedTitle")}>
         <Text className={BODY}>{t("food.cameraBlockedBody")}</Text>
         <Press accessibilityRole="link" onPress={() => void Linking.openSettings()} className="mt-1 self-start">
-          <Text className="text-sm font-semibold leading-5 underline">{t("food.openSettings")}</Text>
+          <Text className="text-meta font-semibold underline">{t("food.openSettings")}</Text>
         </Press>
       </Notice>
     ) : notice === "photo_failed" ? (
@@ -420,13 +420,13 @@ function Sheet({ edit, at: at0, meal: meal0, timeZone, today }: { edit: FoodItem
           <Image source={{ uri: `data:${photo.mediaType};base64,${photo.base64}` }} resizeMode="cover" accessibilityLabel={t("food.photoAlt")} className="h-48 w-full rounded-2xl bg-inset" />
         ) : (
           <View className="rounded-xl bg-inset p-3">
-            <Text className="text-base leading-[22px]">{`“${text.trim()}”`}</Text>
+            <Text className="text-body">{`“${text.trim()}”`}</Text>
           </View>
         )}
         <View className="flex-row items-center gap-3">
           <ActivityIndicator />
           <View className="flex-1 gap-0.5">
-            <Text className="text-base font-semibold leading-[21px]">{t("food.estimating", { provider })}</Text>
+            <Text className="text-body font-semibold">{t("food.estimating", { provider })}</Text>
             <Text className={CAPTION}>{t("food.estimatingNote")}</Text>
           </View>
         </View>
@@ -469,7 +469,7 @@ function Sheet({ edit, at: at0, meal: meal0, timeZone, today }: { edit: FoodItem
       <View className="gap-6 pt-2">
         {note ? <Notice>{note}</Notice> : null}
         <Section title={t("food.total")}>
-          <View accessible accessibilityLabel={t("food.totalA11y", { kcal: Math.round(total.kcal), protein: gramsText(total.protein), carbs: gramsText(total.carbs), fat: gramsText(total.fat) })} className="flex-row flex-wrap items-baseline gap-x-3.5 gap-y-1">
+          <View accessible accessibilityLabel={t("food.totalA11y", { kcal: Math.round(total.kcal), protein: gramsText(total.protein), carbs: gramsText(total.carbs), fat: gramsText(total.fat) })} className="flex-row flex-wrap items-baseline gap-x-4 gap-y-1">
             {(
               [
                 [grouped(total.kcal), "kcal"],
@@ -478,8 +478,8 @@ function Sheet({ edit, at: at0, meal: meal0, timeZone, today }: { edit: FoodItem
                 [gramsText(total.fat), "fat"],
               ] as const
             ).map(([v, unit]) => (
-              <Text key={unit} className="text-[13px] font-medium leading-[22px] text-muted-foreground">
-                <Text className="font-numeric text-xl font-bold leading-[22px] tabular-nums text-foreground">{v}</Text>
+              <Text key={unit} className="text-meta font-medium text-muted-foreground">
+                <Text className="font-numeric text-value font-bold leading-[22px] tabular-nums text-foreground">{v}</Text>
                 {` ${t(`unit.${unit}`)}`}
               </Text>
             ))}
@@ -558,7 +558,7 @@ function Sheet({ edit, at: at0, meal: meal0, timeZone, today }: { edit: FoodItem
             <MethodTile icon={ImagePlus} label={t("food.choosePhoto")} onPress={() => void fromPhoto("library")} disabled={busy || !hasKey} />
           </View>
           {busy && (
-            <View accessibilityLiveRegion="polite" className="flex-row items-center gap-2.5">
+            <View accessibilityLiveRegion="polite" className="flex-row items-center gap-2">
               <ActivityIndicator />
               <Text className={BODY}>{t("food.gettingPhoto")}</Text>
             </View>
@@ -575,12 +575,12 @@ function Sheet({ edit, at: at0, meal: meal0, timeZone, today }: { edit: FoodItem
               submitBehavior="blurAndSubmit"
               returnKeyType="done"
               onSubmitEditing={fromText}
-              className="text-base"
+              className="text-body"
             />
           </Field>
           <Button variant="secondary" onPress={fromText} disabled={text.trim().length < 2 || !hasKey}>
             <Icon icon={Sparkles} size={16} tone="secondary-foreground" />
-            <Text className="text-[13px] font-bold uppercase tracking-[0.1em] text-secondary-foreground">{t("food.estimateFromDescription")}</Text>
+            <Text className="text-meta font-medium tracking-normal text-secondary-foreground">{t("food.estimateFromDescription")}</Text>
           </Button>
           {hasKey && (
             <View className="flex-row items-start gap-2">
@@ -592,7 +592,7 @@ function Sheet({ edit, at: at0, meal: meal0, timeZone, today }: { edit: FoodItem
         <Section title={t("food.enterTitle")}>
           <Button variant="secondary" onPress={typeIt}>
             <Icon icon={PencilLine} size={16} tone="secondary-foreground" />
-            <Text className="text-[13px] font-bold uppercase tracking-[0.1em] text-secondary-foreground">{t("food.typeFood")}</Text>
+            <Text className="text-meta font-medium tracking-normal text-secondary-foreground">{t("food.typeFood")}</Text>
           </Button>
         </Section>
       </View>

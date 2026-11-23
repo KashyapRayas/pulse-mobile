@@ -64,14 +64,14 @@ function LastRuns({ log, timeZone }: { log: RunLogEntry[]; timeZone: string }) {
   if (!log.length) return <Text className={cn(HINT, "mt-2")}>{t("bg.none")}</Text>;
   return (
     <View className="mt-2">
-      <Text accessibilityRole="header" className="text-[13px] font-semibold leading-[18px] text-foreground-secondary">
+      <Text accessibilityRole="header" className="text-meta font-semibold text-foreground-secondary">
         {t("bg.lastRuns")}
       </Text>
       {log.slice(0, 6).map((e, i) => (
         <View key={e.at} className={cn("py-2", i > 0 && ROW_RULE)}>
           <View className="flex-row items-center justify-between gap-3">
             <Text className={cn(ROW_LABEL, "tabular-nums")}>{t("bg.dayTime", { day: formatDay(localDay(e.at / 1000, timeZone), DAY.monthDay), time: clock(e.at, timeZone) })}</Text>
-            <Text className={cn("text-[13px] font-semibold tabular-nums", RESULT_TONE[e.result])}>{t("bg.runLine", { result: t(`bg.result.${e.result}`), seconds: (e.ms / 1000).toFixed(1) })}</Text>
+            <Text className={cn("text-meta font-semibold tabular-nums", RESULT_TONE[e.result])}>{t("bg.runLine", { result: t(`bg.result.${e.result}`), seconds: (e.ms / 1000).toFixed(1) })}</Text>
           </View>
           {!!e.note && <Text className={HINT}>{e.note}</Text>}
         </View>
@@ -153,11 +153,11 @@ function BackgroundCard({ s, timeZone }: { s: Prefs; timeZone: string }) {
         disabled={!hc}
       />
       <Text className={HINT}>{t("bg.androidDecides")}</Text>
-      {!available && <Text className="mt-2 text-[13px] font-medium leading-[18px] text-warning-text">{t("bg.restricted")}</Text>}
+      {!available && <Text className="mt-2 text-meta font-medium text-warning-text">{t("bg.restricted")}</Text>}
       {hc && (
         <>
           <View className={cn(ROW, ROW_RULE, "mt-2")}>
-            <View className="min-w-0 flex-1">
+            <View className="min-w-0 flex-1 gap-1">
               <Text className={ROW_LABEL}>{t("bg.access")}</Text>
               <Text className={HINT}>{t("bg.accessHint")}</Text>
             </View>
@@ -167,7 +167,7 @@ function BackgroundCard({ s, timeZone }: { s: Prefs; timeZone: string }) {
               run unless it may run in the background; the sync then stalls for minutes. Their switch is under the
               app's own settings, so the button opens those. */}
           <View className={cn(ROW, ROW_RULE)}>
-            <View className="min-w-0 flex-1">
+            <View className="min-w-0 flex-1 gap-1">
               <Text className={ROW_LABEL}>{t("bg.battery")}</Text>
               <Text className={HINT}>
                 {unrestricted ? t("bg.batteryOk") : t("bg.batteryHint")}
@@ -277,7 +277,7 @@ function NotificationsCard({ s, timeZone }: { s: Prefs; timeZone: string }) {
     <SectionShell variant="card" title={t("notif.title")}>
       {denied && (
         <View className="mb-2 gap-2">
-          <Text className="text-[13px] font-medium leading-[18px] text-warning-text">{t("notif.blocked")}</Text>
+          <Text className="text-meta font-medium text-warning-text">{t("notif.blocked")}</Text>
           <Button variant="outline" onPress={() => void Linking.openSettings()}>
             {t("notif.openSettings")}
           </Button>

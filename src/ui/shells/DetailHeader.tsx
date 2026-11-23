@@ -8,9 +8,8 @@ import { cn } from "../cn";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 import { DateSwitcher, type DateSwitcherProps } from "./DateSwitcher";
-import { HEADER_ROW, HEADER_TITLE, HeaderFrame, HeaderRow } from "./Header";
+import { HEADER_ROW, HEADER_TITLE, HeaderButton, HeaderFrame, HeaderRow } from "./Header";
 import { InfoButton, type InfoContent } from "./InfoButton";
-import { Press } from "../Press";
 
 export type DetailHeaderProps = {
   title: string;
@@ -42,20 +41,20 @@ export const detailRowHeight = ({ subtitle, dateTitle }: Pick<DetailHeaderProps,
 export function DetailHeaderRow({ title, subtitle, info, backHref, dateTitle, dismiss = "back", align = "center", titleIcon, action, onBack, className, centerStyle }: DetailHeaderProps & { className?: string; centerStyle?: ComponentProps<typeof Animated.View>["style"] }) {
   const close = dismiss === "close";
   const back = (
-    <Press activeBg="bg-fill-hover" accessibilityRole="button" accessibilityLabel={i18n.t(close ? "common:actions.close" : "common:actions.back")} onPress={onBack ?? (() => goBack(backHref))} className="size-11 items-center justify-center rounded-full">
-      <Icon icon={close ? X : ChevronLeft} size={close ? 24 : 26} tone="foreground" strokeWidth={1.75} />
-    </Press>
+    <HeaderButton accessibilityRole="button" accessibilityLabel={i18n.t(close ? "common:actions.close" : "common:actions.back")} onPress={onBack ?? (() => goBack(backHref))}>
+      <Icon icon={close ? X : ChevronLeft} size={close ? 20 : 22} tone="foreground" strokeWidth={2} />
+    </HeaderButton>
   );
   const right = action ?? (info && <InfoButton info={info} label={title} variant="header" />);
 
   if (align === "start")
     return (
-      <View className={cn("min-h-11 flex-row items-start gap-2 px-2", subtitle && "pb-1", className)}>
+      <View className={cn("min-h-11 flex-row items-start gap-2 px-3", subtitle && "pb-1", className)}>
         <View className="h-11 justify-center">{back}</View>
         {!!titleIcon && <View className="h-11 justify-center"><View className="size-7 items-center justify-center">{titleIcon}</View></View>}
         <View className="min-w-0 flex-1 pt-3">
           <Text accessibilityRole="header" className={cn(HEADER_TITLE)} numberOfLines={1}>{title}</Text>
-          {!!subtitle && <Text className="text-[13px] leading-[18px] tabular-nums text-foreground-secondary" numberOfLines={1}>{subtitle}</Text>}
+          {!!subtitle && <Text className="text-meta tabular-nums text-foreground-secondary" numberOfLines={1}>{subtitle}</Text>}
         </View>
         {!!right && <View className="h-11 justify-center">{right}</View>}
       </View>
@@ -74,7 +73,7 @@ export function DetailHeaderRow({ title, subtitle, info, backHref, dateTitle, di
           ) : (
             <>
               <Text accessibilityRole="header" className={cn(HEADER_TITLE, "max-w-full")} numberOfLines={1}>{title}</Text>
-              {!!subtitle && <Text className="max-w-full text-[11px] font-semibold uppercase leading-4 tracking-[0.1em] text-muted-foreground" numberOfLines={1}>{subtitle}</Text>}
+              {!!subtitle && <Text className="max-w-full text-label font-medium tracking-normal text-muted-foreground" numberOfLines={1}>{subtitle}</Text>}
             </>
           )}
         </Animated.View>

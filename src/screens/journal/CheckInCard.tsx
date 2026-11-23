@@ -11,7 +11,7 @@ import { push } from "@/ui/navigate";
 export function TagBadge({ children }: { children: string }) {
   return (
     <View className="h-7 items-center justify-center rounded-full bg-secondary px-3">
-      <Text className="text-[13px] font-semibold text-secondary-foreground">{children}</Text>
+      <Text className="text-meta font-semibold text-secondary-foreground">{children}</Text>
     </View>
   );
 }
@@ -43,7 +43,7 @@ export function CheckInCard({ dayLabel, day, today, checkIn }: { dayLabel: strin
         </View>
       ) : (
         <View className="flex-1 gap-4">
-          <Text className="max-w-[65ch] text-[15px] leading-[22px] text-foreground-secondary">{t("card.prompt")}</Text>
+          <Text className="max-w-[65ch] text-body text-foreground-secondary">{t("card.prompt")}</Text>
           <Button className="mt-auto w-full" onPress={start}>
             {t("actions.checkIn", { ns: "common" })}
           </Button>

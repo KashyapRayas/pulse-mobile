@@ -102,7 +102,7 @@
     "name": "Nome",
     "portion": "Porzione",
     "fiber": "Fibre",
-    "optional": "(facoltativo)",
+    "optional": "Facoltativo",
     "unitKcal": "(kcal)",
     "unitG": "(g)",
     "fiberHint": "(g, facoltativo)",

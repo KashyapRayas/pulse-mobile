@@ -50,16 +50,16 @@ export function PlusPage({ label }: { label: string }) {
         {/* Start activity first, as WHOOP's menu: replaces the menu with the start screen. */}
         <Press activeBg="bg-fill-pressed" accessibilityRole="menuitem" onPress={() => router.replace("/workout-live" as Href)} className={item}>
           <Icon icon={Timer} size={20} tone="foreground-secondary" strokeWidth={1.75} />
-          <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em]">{t("workouts:home.start")}</Text>
+          <Text className="text-meta font-medium tracking-normal">{t("workouts:home.start")}</Text>
         </Press>
         <Press activeBg="bg-fill-pressed" accessibilityRole="menuitem" onPress={() => setInfo(true)} className={item}>
           <Icon icon={Plus} size={20} tone="foreground-secondary" strokeWidth={1.75} />
-          <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em]">{t("activities.add")}</Text>
+          <Text className="text-meta font-medium tracking-normal">{t("activities.add")}</Text>
         </Press>
         {/* Replaces the menu with the check-in rather than stacking a second sheet on it. */}
         <Press activeBg="bg-fill-pressed" accessibilityRole="menuitem" onPress={() => router.replace("/checkin" as Href)} className={item}>
           <Icon icon={NotebookPen} size={20} tone="foreground-secondary" strokeWidth={1.75} />
-          <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em]">{t("add.completeJournal")}</Text>
+          <Text className="text-meta font-medium tracking-normal">{t("add.completeJournal")}</Text>
         </Press>
       </View>
       <InfoDialog open={info} onClose={() => setInfo(false)} {...ADD_ACTIVITY_INFO} />

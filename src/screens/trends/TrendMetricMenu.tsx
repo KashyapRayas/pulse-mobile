@@ -14,7 +14,7 @@ import { Press } from "@/ui/Press";
 
 export type TrendMetricOption = { key: string; label: string; icon?: LucideIcon };
 
-const ITEM = "text-[13px] font-bold uppercase leading-4 tracking-[0.1em]";
+const ITEM = "text-meta font-medium tracking-normal";
 
 export function TrendMetricMenu({ current, options, onSelect }: { current: string; options: TrendMetricOption[]; onSelect: (key: string) => void }) {
   const { t } = useTranslation("trends");
@@ -25,7 +25,7 @@ export function TrendMetricMenu({ current, options, onSelect }: { current: strin
       <View ref={ref} collapsable={false}>
         <CardButton accessibilityLabel={t("changeMetric", { label: on.label })} onPress={() => (haptic.tap(), open())} activeScale={0.99} className="min-h-14 w-full flex-row items-center gap-3 rounded-xl px-4">
           <View accessibilityElementsHidden className="size-6 items-center justify-center">{on.icon && <Icon icon={on.icon} size={20} tone="muted-foreground" strokeWidth={1.75} />}</View>
-          <Text numberOfLines={1} className="min-w-0 flex-1 text-[15px] font-bold uppercase leading-5 tracking-[0.08em]">{on.label}</Text>
+          <Text numberOfLines={1} className="min-w-0 flex-1 text-body font-medium tracking-normal">{on.label}</Text>
           <Turn on={!!anchor}>
             <Icon icon={ChevronDown} size={20} tone="foreground" strokeWidth={2.25} />
           </Turn>

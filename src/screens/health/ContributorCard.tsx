@@ -15,6 +15,7 @@ import { Icon } from "@/ui/Icon";
 import { ContributorRow } from "@/ui/metrics/ContributorRow";
 import { CAPTION } from "@/ui/metrics/primitives";
 import { SectionShell } from "@/ui/shells/SectionShell";
+import { Prose } from "@/ui/Prose";
 import { Text } from "@/ui/Text";
 import { trendHref } from "@/lib/url";
 import { TextLink } from "./CardButton";
@@ -66,7 +67,7 @@ function Chevron({ open }: { open: boolean }) {
   const reduced = useReducedMotion();
   const style = useAnimatedStyle(() => ({ transform: [{ rotate: reduced ? (open ? "180deg" : "0deg") : withTiming(open ? "180deg" : "0deg", { duration: DURATION.base }) }] }), [open, reduced]);
   return (
-    <Animated.View style={style} className="mt-3.5">
+    <Animated.View style={style} className="mt-4">
       <Icon icon={ChevronDown} size={20} tone="muted-foreground" strokeWidth={2} />
     </Animated.View>
   );
@@ -116,13 +117,13 @@ export function ContributorCard({ title, items }: { title: string; items: Health
                 <Animated.View entering={FadeIn.duration(DURATION.base)} exiting={FadeOut.duration(DURATION.fast)} className="gap-3 pb-5">
                   {c.years !== null && (
                     <View className="gap-1">
-                      <Text className="text-[17px] font-semibold leading-6">{factorCopy(c.label, c.years).title}</Text>
-                      <Text className="text-[15px] leading-[22px] text-foreground-secondary">{factorCopy(c.label, c.years).body}</Text>
+                      <Text className="text-heading font-semibold">{factorCopy(c.label, c.years).title}</Text>
+                      <Text className="text-body text-foreground-secondary">{factorCopy(c.label, c.years).body}</Text>
                     </View>
                   )}
-                  <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("contributor.target", { value: show(c.target) })}</Text>
+                  <Text className="text-body text-foreground-secondary">{t("contributor.target", { value: show(c.target) })}</Text>
                   {!!c.caption && c.metric.value !== null && <Text className={CAPTION}>{c.caption}</Text>}
-                  <Text className="text-[15px] leading-[22px]">{c.explanation}</Text>
+                  <Prose>{c.explanation}</Prose>
                   <Text className={CAPTION}>{t("contributor.source", { source: c.source })}</Text>
                   {!!HS_TREND[c.key] && <TextLink href={trendHref(HS_TREND[c.key])}>{t("contributor.viewTrend")}</TextLink>}
                 </Animated.View>

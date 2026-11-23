@@ -26,7 +26,7 @@ function Aside({ r }: { r: ReportListItem }) {
   return (
     <View className="shrink-0 flex-row items-center gap-2">
       <MiniRing variant="recovery" value={r.recovery} />
-      <Text accessibilityLabel={r.recovery !== null ? t("archive.avgRecoveryValue", { value }) : t("archive.avgRecoveryNone", { value })} className="w-9 text-right font-numeric text-[15px] font-bold leading-5 tabular-nums">
+      <Text accessibilityLabel={r.recovery !== null ? t("archive.avgRecoveryValue", { value }) : t("archive.avgRecoveryNone", { value })} numberOfLines={1} className="min-w-12 text-right font-numeric text-body font-bold tabular-nums">
         {formatValue("int", r.recovery)}
         {r.recovery !== null && "%"}
       </Text>
@@ -89,14 +89,14 @@ export default function ReportsScreen() {
               value={view}
               options={[{ value: "weeks", label: t("weekly") }, { value: "months", label: t("monthly") }]}
               onChange={(v) => router.setParams({ view: v === "weeks" ? "" : "months", all: "" })}
-              textClassName="text-[13px] font-bold uppercase tracking-[0.1em]"
+              textClassName="text-meta font-medium tracking-normal"
             />
             {shown.map((g) => (
               <LinkList key={g.title} title={g.title} rows={g.rows} />
             ))}
             {shown.length < groups.length && (
               <Press activeBg="bg-fill-faint" accessibilityRole="button" onPress={() => (haptic.tap(), router.setParams({ all: "1" }))} className="mx-auto h-11 items-center justify-center rounded-full px-5">
-                <Text className="text-xs font-bold uppercase tracking-[0.1em] text-foreground-body">{t("archive.showEarlier")}</Text>
+                <Text className="text-caption font-medium tracking-normal text-foreground-body">{t("archive.showEarlier")}</Text>
               </Press>
             )}
           </View>

@@ -10,6 +10,7 @@ import { saveProfileAction, type ProfileFormState } from "@/actions/profile";
 import { displayPrefs, feetInches, fromFeetInches } from "@/lib/units";
 import { appState, saveProfile } from "@/state/app";
 import { Button } from "@/ui/Button";
+import { FIELD_ERROR, FIELD_HINT, FIELD_LABEL } from "@/ui/Field";
 import { Text } from "@/ui/Text";
 import { Field, RadioSegments, SmallButton, TextField } from "../settings/controls";
 import { BirthDatePicker } from "./BirthDatePicker";
@@ -71,7 +72,7 @@ export function ProfileForm({
   const compact = !!sheet;
   const variant = compact ? "compact" : "field";
   // The unit after a number that has a partner (5 ft 10 in), in the field's own type size and padding.
-  const unitSuffix = (unit: string) => <Text className={compact ? "pr-3.5 text-[15px] text-muted-foreground" : "pr-4 text-[17px] text-muted-foreground"}>{unit}</Text>;
+  const unitSuffix = (unit: string) => <Text className={compact ? "pr-4 text-body text-muted-foreground" : "pr-4 text-heading text-muted-foreground"}>{unit}</Text>;
   const gap = compact ? "gap-4" : "gap-6";
 
   const fields = (
@@ -85,7 +86,7 @@ export function ProfileForm({
       </Field>
 
       <View accessibilityRole="radiogroup" className="gap-2">
-        <Text className={`${compact ? "" : "mb-2 "}text-xs font-bold uppercase leading-4 tracking-[0.1em] text-foreground-secondary`}>{t("form.rangesLabel")}</Text>
+        <Text className={`${compact ? "" : "mb-2 "}${FIELD_LABEL}`}>{t("form.rangesLabel")}</Text>
         <RadioSegments
           label={t("form.rangesLabel")}
           value={sex}
@@ -96,11 +97,11 @@ export function ProfileForm({
           ]}
         />
         {f?.sex ? (
-          <Text accessibilityLiveRegion="polite" className="text-[13px] font-medium leading-[18px] text-recovery-red-text">
+          <Text accessibilityLiveRegion="polite" className={FIELD_ERROR}>
             {t("form.chooseOne")}
           </Text>
         ) : (
-          <Text className="text-[13px] leading-[18px] text-muted-foreground">
+          <Text className={FIELD_HINT}>
             {t("form.rangesHint")}
           </Text>
         )}
@@ -113,8 +114,8 @@ export function ProfileForm({
       ) : (
         <View className="min-h-14 flex-row items-center gap-3 rounded-xl bg-field py-2 pl-4 pr-2">
           <View className="min-w-0 flex-1">
-            <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-foreground-secondary">{t("form.timeZone")}</Text>
-            <Text numberOfLines={1} className="text-[15px] leading-5 text-foreground">
+            <Text className={FIELD_LABEL}>{t("form.timeZone")}</Text>
+            <Text numberOfLines={1} className="text-body text-foreground">
               {describeZone(timeZone)}
             </Text>
           </View>
@@ -145,7 +146,7 @@ export function ProfileForm({
       )}
 
       {state?.ok === false && !!state.error && (
-        <Text accessibilityRole="alert" className="text-[13px] font-medium leading-[18px] text-recovery-red-text">
+        <Text accessibilityRole="alert" className={FIELD_ERROR}>
           {state.error}
         </Text>
       )}

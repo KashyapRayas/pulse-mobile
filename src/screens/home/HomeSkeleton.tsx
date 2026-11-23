@@ -46,12 +46,14 @@ function InsightSkeleton() {
   return (
     <View accessibilityElementsHidden className="pb-2">
       <View className="absolute inset-x-5 bottom-0 h-8 rounded-b-2xl bg-card-peek" />
-      <View className={`${CARD_CLASS} gap-0.5 p-5 pr-12`} style={shadow}>
+      <View className={`${CARD_CLASS} gap-1 p-4 pr-12`} style={shadow}>
         <CardFill />
-        <SkeletonText lh={22} fs={16} className="w-40" />
-        <SkeletonText lh={20} fs={15} className="w-full" />
-        <SkeletonText lh={20} fs={15} className="w-2/3" />
-        <SkeletonText lh={20} fs={15} className="w-1/2" />
+        <SkeletonText lh={20} fs={15} className="w-40" />
+        <View>
+          <SkeletonText lh={18} fs={13} className="w-full" />
+          <SkeletonText lh={18} fs={13} className="w-2/3" />
+          <SkeletonText lh={18} fs={13} className="w-1/2" />
+        </View>
         <View className="absolute right-2 top-2 h-12 w-6 rounded-lg bg-fill-hover" />
       </View>
     </View>

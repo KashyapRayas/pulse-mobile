@@ -14,10 +14,10 @@ import { Segmented } from "@/ui/Segmented";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 
-const LABEL = "text-xs font-bold uppercase leading-4 tracking-[0.1em] text-foreground-secondary";
+const LABEL = "text-caption font-medium tracking-normal text-foreground-secondary";
 
 /** The two times step down with the card's width, as the web's container query does: 32 px from 288 px, 26 px from 240 px, else 22 px. */
-const timeSize = (w: number) => (w >= 288 ? "text-[32px]" : w >= 240 ? "text-[26px]" : "text-[22px]");
+const timeSize = (w: number) => (w >= 288 ? "text-display" : "text-title");
 
 export function TonightPlan({ plan, timeZone }: { plan: SleepPlanVM; timeZone: string }) {
   const { c } = useTheme();
@@ -66,11 +66,11 @@ export function TonightPlan({ plan, timeZone }: { plan: SleepPlanVM; timeZone: s
           label={t("tonight.sleepGoal")}
           value={key}
           onChange={setKey}
-          textClassName="text-[13px] font-bold uppercase tracking-[0.1em]"
+          textClassName="text-meta font-medium tracking-normal"
           options={plan.plans.map((p) => ({ value: p.key, label: p.label, accessibilityLabel: t("tonight.goalShare", { label: p.label, percent: Math.round(p.share * 100) }) }))}
         />
       </View>
-      <Text className="text-xs font-medium leading-4 text-muted-foreground">
+      <Text className="text-caption font-medium text-muted-foreground">
         <Trans t={t} i18nKey="tonight.need" values={{ time: hmm(plan.needMin) }} components={{ t: <Text className="font-numeric tabular-nums" /> }} />
       </Text>
     </View>

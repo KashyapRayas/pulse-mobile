@@ -16,6 +16,7 @@ import { ACTIVITY_ICON } from "@/ui/icons";
 import { CAPTION, DeltaMark, LABEL } from "@/ui/metrics/primitives";
 import { Text } from "@/ui/Text";
 import { HERO, LINE, StatRow } from "@/screens/strain/TrainingCards";
+import { TYPE } from "@/ui/type";
 
 /** The change's direction as KeyStatRow marks it: a dip is down and bad, a lift up and good, barely any a dot. */
 const MARK: Record<ReturnType<typeof costTone>, { dir: DeltaDir; tone: Tone }> = { cost: { dir: "down", tone: "bad" }, lift: { dir: "up", tone: "good" }, flat: { dir: "flat", tone: "neutral" } };
@@ -38,11 +39,11 @@ function CostRow({ e, minSessions }: { e: ActivityCostEntry; minSessions: number
   return (
     <View accessible accessibilityLabel={value ? t("cost.spoken", { name: e.name, value, caption }) : t("cost.spokenNone", { name: e.name, caption })} className="min-h-14 flex-row items-center gap-3 py-2">
       <Icon icon={ACTIVITY_ICON[e.kind]} size={20} tone="muted-foreground" strokeWidth={1.75} />
-      <View className="min-w-0 flex-1">
-        <Text className={LABEL}>{e.name}</Text>
-        <Text className={cn(CAPTION, "mt-0.5")}>{caption}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className={TYPE.rowTitle}>{e.name}</Text>
+        <Text className={cn(CAPTION, "mt-1")}>{caption}</Text>
       </View>
-      <CostValue e={e} value={value} className="font-numeric text-xl font-bold leading-6" />
+      <CostValue e={e} value={value} className="font-numeric text-value font-bold leading-6" />
     </View>
   );
 }
@@ -111,15 +112,15 @@ export function DetectedRow({ item, timeZone }: { item: DetectedItem; timeZone?:
     >
       <View className="h-11 w-[84px] shrink-0 flex-row items-center justify-center gap-1.5 rounded-md border-[1.5px] border-dashed border-strain">
         <Icon icon={item.kind === "cardio" ? Activity : ACTIVITY_ICON[item.kind]} size={16} tone="strain-text" strokeWidth={1.75} />
-        <Text className="font-numeric text-xl font-bold tabular-nums text-strain-text">{formatValue("pct", item.strain)}</Text>
+        <Text className="font-numeric text-value font-bold tabular-nums text-strain-text">{formatValue("pct", item.strain)}</Text>
       </View>
-      <View className="min-w-0 flex-1">
-        <Text className="text-[15px] font-bold uppercase leading-5 tracking-[0.1em] text-foreground-secondary">{t("detected.title")}</Text>
-        <Text className="text-xs font-medium leading-4 text-muted-foreground" numberOfLines={1}>{item.steps ? t("detected.lineSteps", { label: item.label, hr: item.avgHr, steps: formatValue("grouped", item.steps) }) : t("detected.line", { label: item.label, hr: item.avgHr })}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className={cn(TYPE.rowTitle, "text-foreground-secondary")}>{t("detected.title")}</Text>
+        <Text className={TYPE.rowSub} numberOfLines={1}>{item.steps ? t("detected.lineSteps", { label: item.label, hr: item.avgHr, steps: formatValue("grouped", item.steps) }) : t("detected.line", { label: item.label, hr: item.avgHr })}</Text>
       </View>
       <View className="shrink-0 items-end">
-        <Text className="font-numeric text-xs font-medium leading-4 tabular-nums text-foreground-secondary">{s}</Text>
-        <Text className="font-numeric text-xs font-medium leading-4 tabular-nums text-foreground-secondary">{e}</Text>
+        <Text className="font-numeric text-caption font-medium tabular-nums text-foreground-secondary">{s}</Text>
+        <Text className="font-numeric text-caption font-medium tabular-nums text-foreground-secondary">{e}</Text>
       </View>
     </View>
   );
