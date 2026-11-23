@@ -3045,6 +3045,7 @@ as the web app's spec §11 LN rows record. Layout, kit and every metric state ar
 | LN13 | Card titles 13 under 16 px content; three group-label styles; five row styles; two form Fields; one card per settings row | Type roles (`src/ui/type.ts`): card title 16 semibold, one group label, one row title and second line, one field label (`src/ui/Field.tsx`); grouped lists with inset hairlines |
 | LN14 | Chip icons centred on two-line text, 4 px from it; tiles of uneven height; titles and hints touching | `LineIcon` puts an icon on its text's first line; the chip gap is 6 px; tiles in a row stretch to equal height with top-aligned values; a 4 px gap between a title and its hint; settings rows 12 px above and below |
 | LN15 | Two filled pills in teal and blue, unrelated to the monoline wordmark | A frame with the wordmark's beat, in its stroke and corners (square top-left like the P), mono; every icon and the splash rendered from `markPath` |
+| LN16 | The round action opened the day's check-in (the coach only with a key saved) | It is the AI coach, always (`CoachAction`): the Journal is already the third tab, and the check-in opens from there. A chip wraps to two lines inside its column, its mark on the first line's middle |
 
 ## 12. Inferred decisions and coverage gaps
 

@@ -1,20 +1,16 @@
 import { i18n } from "@/i18n/config";
 import { View } from "react-native";
-import { useGlobalSearchParams } from "expo-router";
-import { useHasCoachKey } from "@/coach/session";
 import Svg, { Circle, Defs, LinearGradient, Stop } from "react-native-svg";
-import { dayLabel } from "@/lib/format";
-import { parseDay } from "@/lib/url";
+import { BotMessageSquare } from "lucide-react-native";
 import { Glass } from "../Glass";
 import { haptic } from "../haptics";
-import { Mark } from "../brand";
+import { Icon } from "../Icon";
 import { useTheme } from "../theme";
 import { FAB_SIZE, TAB_ROOTS, useTabBarBottom } from "./layout";
-import { useShellCalendar } from "./ShellStatus";
 import { push } from "../navigate";
 import { Press } from "../Press";
 
-/** The reference app's ringed monogram, with Pulse's mark in a 30 px circle with the indigo-to-blue rim. */
+/** The coach's glyph (More's Coach row uses the same) in a 30 px circle with the indigo-to-blue rim. */
 function Monogram() {
   const { c } = useTheme();
   return (
@@ -28,31 +24,25 @@ function Monogram() {
         </Defs>
         <Circle cx={15} cy={15} r={14.25} fill={c["action-face"]} stroke="url(#rim)" strokeWidth={1.5} />
       </Svg>
-      <Mark size={16} />
+      <Icon icon={BotMessageSquare} size={16} tone="foreground" strokeWidth={1.9} />
     </View>
   );
 }
 
 /**
- * The "Check in" action (spec §4.2.1): a round, indigo-rimmed glass button beside the capsule (LN10) with Pulse's mark. It opens the check-in sheet, the route
- * app/checkin.tsx, over the screen you are on, for the day that screen shows: `/checkin?d=` carries the screen's
- * `d` as the web keeps `?d=` beside `?checkin=1`. (The tab bar sits in the tabs layout, so the day is the focused route's:
- * the global params, not the layout's own.) With a coach key saved, it opens the coach instead (the web's coach access).
+ * The round action at the end of the tab bar (spec §4.2.1, LN16): the AI coach. The tab bar's third tab is the
+ * Journal, so this is the one way to the chat from anywhere; it opens the coach over the screen you are on (its setup
+ * first, until a provider key is saved).
  */
-export function CheckInAction({ onPress }: { onPress?: () => void }) {
-  const { today } = useShellCalendar();
-  const { d: raw } = useGlobalSearchParams<{ d?: string }>();
-  const { d } = parseDay(raw, today);
-  const coach = useHasCoachKey();
-  const label = coach ? "Coach" : i18n.t("ui:checkIn.forDay", { day: dayLabel(d, today) });
+export function CoachAction({ onPress }: { onPress?: () => void }) {
   return (
     <Press
       activeScale={1.05}
       accessibilityRole="button"
-      accessibilityLabel={label}
+      accessibilityLabel={i18n.t("coach:title")}
       onPress={() => {
         haptic.tap();
-        (onPress ?? (() => (coach ? push("/coach") : push(`/checkin?d=${d}`))))();
+        (onPress ?? (() => push("/coach")))();
       }}
     >
       <Glass radius={FAB_SIZE / 2} action style={{ width: FAB_SIZE, height: FAB_SIZE, alignItems: "center", justifyContent: "center" }}>
@@ -64,18 +54,18 @@ export function CheckInAction({ onPress }: { onPress?: () => void }) {
 
 /**
  * Floats alone on detail screens (spec §4.2). Not on the tab roots (the tab bar carries it there), Settings, the coach
- * or the dev kit (except its detail demo, which shows how a detail screen looks).
+ * itself or the dev kit (except its detail demo, which shows how a detail screen looks).
  */
-export function showsCheckIn(pathname: string) {
+export function showsCoachAction(pathname: string) {
   return !(TAB_ROOTS.includes(pathname) || pathname.startsWith("/settings") || pathname.startsWith("/coach") || (pathname.startsWith("/dev") && !pathname.startsWith("/dev/kit/detail")));
 }
 
 /** The action floating alone at the foot of a detail screen, where the tab bar would sit. Rendered by <ScreenScroll>. */
-export function FloatingCheckIn() {
+export function FloatingCoachAction() {
   const bottom = useTabBarBottom();
   return (
     <View pointerEvents="box-none" className="absolute right-3" style={{ bottom }}>
-      <CheckInAction />
+      <CoachAction />
     </View>
   );
 }

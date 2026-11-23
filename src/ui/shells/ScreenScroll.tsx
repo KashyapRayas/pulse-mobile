@@ -6,7 +6,7 @@ import Animated, { useAnimatedReaction, useAnimatedRef, useAnimatedScrollHandler
 import { Ground, HealthspanGround } from "../Ground";
 import { useKeyboardInset, useRevealFocused } from "../keyboard";
 import { useTheme } from "../theme";
-import { FloatingCheckIn, showsCheckIn } from "./CheckInAction";
+import { FloatingCoachAction, showsCoachAction } from "./CoachAction";
 import { HEADER_FADE } from "./Header";
 import { useBottomClearance } from "./layout";
 import { usePullToSync } from "./PullToSync";
@@ -74,7 +74,7 @@ export function ScreenScroll({ header, top, onScroll, bottomPad, healthspan, flo
   const { c } = useTheme();
   const clearance = useBottomClearance();
   const pathname = usePathname();
-  const checkIn = floatingAction && showsCheckIn(pathname);
+  const checkIn = floatingAction && showsCoachAction(pathname);
   const { section } = useLocalSearchParams<{ section?: string }>();
   const scroll = useAnimatedRef<Animated.ScrollView>();
   const offset = useScrollViewOffset(scroll);
@@ -133,7 +133,7 @@ export function ScreenScroll({ header, top, onScroll, bottomPad, healthspan, flo
       <HealthspanGround.Provider value={!!healthspan}>{header}</HealthspanGround.Provider>
       {pull.indicator}
       {checkIn && (
-        <FloatingCheckIn />
+        <FloatingCoachAction />
       )}
     </View>
   );

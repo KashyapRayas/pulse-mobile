@@ -12,7 +12,7 @@ import { HomeChart } from "../icons";
 import { LiveWorkoutBar } from "./LiveWorkoutBar";
 import { Icon } from "../Icon";
 import { useTheme } from "../theme";
-import { CheckInAction } from "./CheckInAction";
+import { CoachAction } from "./CoachAction";
 import { TAB_BAR_HEIGHT, useBottomClearance, useTabBarBottom } from "./layout";
 import { Press } from "../Press";
 import { DURATION, SPRING } from "../motion";
@@ -114,7 +114,7 @@ export function TabBar(props: TabBarProps) {
         <LiveWorkoutBar />
         <View pointerEvents="box-none" className="flex-row justify-end gap-2">
           <Bar {...props} current={current} />
-          <CheckInAction />
+          <CoachAction />
         </View>
       </View>
     </>
