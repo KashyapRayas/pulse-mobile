@@ -3,9 +3,7 @@
   "settingsTitle": "Configurações do Coach",
   "chatsTitle": "Conversas",
   "providerFallback": "seu provedor",
-  "provider": {
-    "custom": "Seu próprio servidor"
-  },
+  "provider": { "custom": "Seu próprio servidor" },
   "suggestions": {
     "brief": "Resumo de hoje",
     "sync": "O que posso fazer enquanto o sono da noite passada sincroniza?",
@@ -38,7 +36,8 @@
     "profile": "Configure seu perfil primeiro.",
     "provider": "Seu provedor recusou a solicitação (chave, cota ou cobrança). Verifique sua conta com ele.",
     "network": "Não foi possível alcançar seu provedor. Verifique sua conexão e tente de novo.",
-    "default": "Não foi possível obter uma resposta. Tente de novo."
+    "default": "Não foi possível obter uma resposta. Tente de novo.",
+    "server": "Seu provedor teve um problema ao responder. Tente de novo em instantes."
   },
   "chat": {
     "toolFailed": "Não foi possível ler essa parte dos seus dados.",
@@ -49,14 +48,18 @@
     "shareAnswer": "Compartilhar resposta",
     "regenerate": "Gerar resposta de novo",
     "emptyTitle": "O que você quer saber?",
-    "emptyBody": "O Coach consulta os seus próprios números do Pulse antes de responder, usando {{provider}}. Não é orientação médica.",
-    "checkIn": "Check-in de hoje",
+    "emptyBody": "O Coach consulta os seus próprios números do Pulse antes de responder. Não é orientação médica.",
     "chatLabel": "Conversar com o Coach do Pulse",
     "retry": "Tentar de novo",
     "placeholder": "Mensagem para o Coach",
     "askLabel": "Perguntar ao Coach",
     "stop": "Parar",
-    "send": "Enviar"
+    "send": "Enviar",
+    "copy": "Copiar",
+    "copyAnswer": "Copiar resposta",
+    "copied": "Copiado para a área de transferência",
+    "jumpLatest": "Ir para a mensagem mais recente",
+    "holdHint": "Toque e segure para copiar ou editar"
   },
   "bar": {
     "chats": "Conversas",

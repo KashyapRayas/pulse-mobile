@@ -16,6 +16,8 @@ import { markerSlices, ringShare } from "@/lib/charts";
 import { arcPath, polar } from "@/ui/charts/geometry";
 import { ZoneBars, type ZoneRow } from "@/ui/charts/ZoneBars";
 import { CARD_CLASS } from "@/ui/Card";
+import { TYPE } from "@/ui/type";
+import { HeaderButton } from "@/ui/shells/Header";
 import { cn } from "@/ui/cn";
 import { Mark } from "@/ui/brand";
 import { ARC_FROM, ARC_SWEEP } from "@/ui/metrics/MiniRing";
@@ -95,24 +97,24 @@ export function LiveActivityScreen() {
     <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
       {/* Header: minimise (the workout keeps recording), the activity and its time, the menu (Discard). */}
       <View className="h-16 flex-row items-center px-2">
-        <Press accessibilityRole="button" accessibilityLabel={t("live.minimise")} onPress={() => router.replace("/(tabs)" as Href)} hitSlop={8} className="size-11 items-center justify-center">
-          <ChevronDown size={26} color={c.foreground} strokeWidth={2} />
-        </Press>
+        <HeaderButton accessibilityRole="button" accessibilityLabel={t("live.minimise")} onPress={() => router.replace("/(tabs)" as Href)}>
+          <ChevronDown size={22} color={c.foreground} strokeWidth={2} />
+        </HeaderButton>
         {/* The time is the headline, as WHOOP's bar has it; the activity sits small above it. */}
         <View className="flex-1 items-center">
           <Text className={cn("text-caption text-muted-foreground", CAPS)}>{paused ? t("live.pausedName", { name: activityName(session.type) }) : activityName(session.type)}</Text>
           <Text className={cn("font-numeric text-title font-bold leading-7 tabular-nums", paused ? "text-warning-text" : "text-foreground")}>{barClock(session.activeMs)}</Text>
         </View>
-        <Press accessibilityRole="button" accessibilityLabel={t("live.discard")} onPress={() => setAsk("discard")} hitSlop={8} className="size-11 items-center justify-center">
-          <Ellipsis size={24} color={c.foreground} strokeWidth={2} />
-        </Press>
+        <HeaderButton accessibilityRole="button" accessibilityLabel={t("live.discard")} onPress={() => setAsk("discard")}>
+          <Ellipsis size={22} color={c.foreground} strokeWidth={2} />
+        </HeaderButton>
       </View>
 
       {/* Tabs: ACTIVITY STRAIN, HEART RATE. */}
       <View className="flex-row border-b border-border" accessibilityRole="tablist">
         {(["strain", "hr"] as const).map((k) => (
           <Press key={k} accessibilityRole="tab" accessibilityState={{ selected: tab === k }} onPress={() => setTab(k)} className="h-11 flex-1 items-center justify-end">
-            <Text numberOfLines={1} adjustsFontSizeToFit className={cn("mb-3 px-1 text-label font-medium tracking-normal", tab === k ? "text-foreground" : "text-muted-foreground")}>{t(k === "strain" ? "live.tabStrain" : "live.tabHr")}</Text>
+            <Text numberOfLines={1} adjustsFontSizeToFit className={cn("mb-3 px-1", TYPE.tab, tab === k ? "text-foreground" : "text-muted-foreground")}>{t(k === "strain" ? "live.tabStrain" : "live.tabHr")}</Text>
             <View className={cn("h-0.5 w-2/3 rounded-full", tab === k ? "bg-foreground" : "bg-transparent")} />
           </Press>
         ))}

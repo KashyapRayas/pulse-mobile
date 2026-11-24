@@ -10,7 +10,7 @@ import { alpha } from "@/ui/color";
 import { EASE } from "@/ui/motion";
 
 /** The circle's smallest size as a share of its largest (empty lungs). */
-const MIN_SCALE = 0.42;
+const MIN_SCALE = 0.5;
 /** The glow reaches this much past the core at full. */
 const HALO = 1.14;
 
@@ -67,7 +67,7 @@ export function BreathCircle({ stages, startAt, size, color, children }: Props) 
       <View style={[disc, { borderWidth: 1.5, borderColor: alpha(color, 0.28) }]} />
       <Animated.View style={[disc, { backgroundColor: alpha(color, 0.1) }, glow]} />
       <Animated.View style={[disc, { backgroundColor: alpha(color, 0.26), borderWidth: 2, borderColor: alpha(color, 0.85) }, core]} />
-      <View style={{ position: "absolute", alignItems: "center", justifyContent: "center", width: size * MIN_SCALE * 1.6 }}>{children}</View>
+      <View style={{ position: "absolute", alignItems: "center", justifyContent: "center", width: size * MIN_SCALE - 12 }}>{children}</View>
     </View>
   );
 }

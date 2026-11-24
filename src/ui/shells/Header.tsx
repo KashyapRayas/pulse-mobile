@@ -94,6 +94,22 @@ export function HeaderFrame({ children, rows = HEADER_ROW, expanded, extra = 0, 
   );
 }
 
+/**
+ * Several header controls in one glass capsule (LN9), as Linear groups an issue's actions: 40 px tall, each control a
+ * 40 px round target inside it. `actions` in reading order; each one an icon, its spoken label and what it does.
+ */
+export function HeaderActions({ actions }: { actions: { icon: ReactNode; label: string; onPress: () => void }[] }) {
+  return (
+    <Glass radius={20} style={{ height: 40, flexDirection: "row", alignItems: "center", paddingHorizontal: 2 }}>
+      {actions.map((a) => (
+        <Press key={a.label} accessibilityRole="button" accessibilityLabel={a.label} onPress={a.onPress} activeBg="bg-fill-hover" className="size-10 items-center justify-center rounded-full">
+          {a.icon}
+        </Press>
+      ))}
+    </Glass>
+  );
+}
+
 /** A three-slot header row: left, centred title, right. */
 export function HeaderRow({ left, center, right, className, tall }: { left?: ReactNode; center: ReactNode; right?: ReactNode; className?: string; tall?: boolean }) {
   return (

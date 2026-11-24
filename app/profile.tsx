@@ -23,7 +23,7 @@ export default function EditProfile() {
         goBack();
         toast.success(t("app.profileSaved"));
       }}
-      footer={({ pending, submit }) => <SaveButton pending={pending} label={t("app.profileSave")} onPress={submit} />}
+      footer={({ pending, submit, changed }) => <SaveButton pending={pending} disabled={!changed} label={t("app.profileSave")} onPress={submit} />}
       sheet={(fields, footer) => (
         <TaskPage title={TITLE} description={DESCRIPTION} footer={<View className="px-4">{footer}</View>}>
           <View className="px-4">{fields}</View>

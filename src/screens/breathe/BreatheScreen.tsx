@@ -178,11 +178,14 @@ export function BreatheScreen() {
 
   const hero = (
     <View className="w-full items-center gap-4">
+      {/* Before a run the circle is the Start button too: the page's own Start sits below the pace and length choices,
+          out of sight on a phone, and the circle is what the eye lands on. */}
+      <Press disabled={!!run || !!result} accessibilityRole={run || result ? undefined : "button"} accessibilityLabel={run || result ? undefined : t("breathe.start")} onPress={start} activeScale={0.97}>
       <BreathCircle stages={(run?.protocol ?? protocol).stages} startAt={run?.start ?? null} size={CIRCLE} color={tint}>
         {stage && clockState ? (
           // Announced on each stage switch only: the label leaves out the per-second count.
           <View accessible accessibilityLiveRegion="polite" accessibilityLabel={stageLabel(stage)} className="items-center gap-0.5">
-            <Text className="text-center text-body font-semibold">{stageLabel(stage)}</Text>
+            <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} className="text-center text-meta font-semibold">{stageLabel(stage)}</Text>
             <Text className={cn(NUM, "text-center text-hero leading-[54px] tabular-nums")} style={{ color: tint }}>
               {String(clockState.secs)}
             </Text>
@@ -191,6 +194,7 @@ export function BreatheScreen() {
           <Wind size={36} color={tint} strokeWidth={1.75} />
         )}
       </BreathCircle>
+      </Press>
       {running && clockState ? (
         <View accessible accessibilityLabel={t("breathe.leftLabel", { time: clockDuration(clockState.leftMs), title: protocol.title })} className="items-center gap-0.5">
           <ValueUnit value={clockDuration(clockState.leftMs)} unit={t("breathe.left")} className={cn(NUM, "text-display leading-8")} />
@@ -254,7 +258,7 @@ export function BreatheScreen() {
             options={DURATIONS.map((m) => ({ value: String(m), label: t("breathe.minutesShort", { count: m }), accessibilityLabel: t("breathe.minutesLabel", { count: m }) }))}
           />
           <View className="mt-4 min-h-14 flex-row items-center gap-3">
-            <View className="min-w-0 flex-1 gap-0.5">
+            <View className="min-w-0 flex-1 gap-1">
               <Text className={ROW_TITLE}>{t("breathe.hapticCues")}</Text>
               <Text className={CAPTION}>{t("breathe.hapticHint")}</Text>
             </View>

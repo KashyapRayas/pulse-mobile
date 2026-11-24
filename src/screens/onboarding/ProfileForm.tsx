@@ -36,7 +36,8 @@ export function ProfileForm({
   /** First run: only what nothing else can supply (birth date, sex). Height and max HR wait for Settings. */
   onboarding?: boolean;
   onSaved?: () => void;
-  footer: (state: { pending: boolean; submit: () => void }) => ReactNode;
+  /** `changed`: a field differs from `defaults` (the Edit sheet keeps Save off until then: saving recomputes every day). */
+  footer: (state: { pending: boolean; submit: () => void; changed: boolean }) => ReactNode;
   /** The Edit profile sheet: smaller fields, and the host places the fields and the footer itself (the sheet pins the footer under its scrolling body). */
   sheet?: (fields: ReactNode, footer: ReactNode) => ReactNode;
 }) {
@@ -152,7 +153,16 @@ export function ProfileForm({
       )}
     </View>
   );
-  const foot = footer({ pending, submit });
+  const changed =
+    name !== (defaults.name ?? "") ||
+    birthDate !== defaults.birthDate ||
+    sex !== defaults.sex ||
+    timeZone !== (defaults.timeZone ?? deviceZone()) ||
+    heightCm !== (defaults.heightCm?.toString() ?? "") ||
+    feet !== (startHeight ? String(startHeight.feet) : "") ||
+    inches !== (startHeight ? String(startHeight.inches) : "") ||
+    maxHr !== (defaults.maxHr?.toString() ?? "");
+  const foot = footer({ pending, submit, changed });
   return sheet ? (
     sheet(fields, foot)
   ) : (
@@ -164,10 +174,10 @@ export function ProfileForm({
 }
 
 /** The submit, as the web's `SaveButton`: a sheet-size pill that reads "Saving…" while the action runs. */
-export function SaveButton({ pending, label, onPress }: { pending: boolean; label: string; onPress: () => void }) {
+export function SaveButton({ pending, label, onPress, disabled }: { pending: boolean; label: string; onPress: () => void; disabled?: boolean }) {
   const { t } = useTranslation("onboarding");
   return (
-    <Button disabled={pending} onPress={onPress}>
+    <Button disabled={pending || disabled} onPress={onPress}>
       {pending ? t("profile.saving") : label}
     </Button>
   );

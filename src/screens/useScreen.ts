@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { i18n } from "@/i18n/config";
 import type { QueryCtx } from "@/queries/ctx";
 import { dataChanged, dataVersion, queryCtx, useDataVersion } from "@/state/app";
@@ -112,10 +112,21 @@ export function useScreen<T>(query: (ctx: QueryCtx) => Promise<T>, key: ScreenKe
     setTick((t) => t + 1);
   }, [k]);
 
+  // A query can fail once while the database reopens under it (db.ts `healing`, after an update or a background sync):
+  // it tries once more before the screen shows its error, so a screen is not left on its skeleton by one bad moment.
+  const retried = useRef<string | null>(null);
   useEffect(() => {
     if (fresh(cache.get(k))) return;
     let live = true;
-    load(k, query).catch((e: unknown) => live && setError({ k, error: e instanceof Error ? e : new Error(String(e)) }));
+    load(k, query).catch((e: unknown) => {
+      if (!live) return;
+      if (retried.current !== k) {
+        retried.current = k;
+        setTimeout(() => live && setTick((t) => t + 1), 400);
+        return;
+      }
+      setError({ k, error: e instanceof Error ? e : new Error(String(e)) });
+    });
     return () => {
       live = false;
     };

@@ -3,9 +3,7 @@
   "settingsTitle": "Ustawienia Coacha",
   "chatsTitle": "Czaty",
   "providerFallback": "Twój dostawca",
-  "provider": {
-    "custom": "Twój własny serwer"
-  },
+  "provider": { "custom": "Twój własny serwer" },
   "suggestions": {
     "brief": "Dzisiejsze podsumowanie",
     "sync": "Co mogę zrobić, gdy sen z ostatniej nocy się synchronizuje?",
@@ -38,7 +36,8 @@
     "profile": "Najpierw skonfiguruj swój profil.",
     "provider": "Twój dostawca odrzucił żądanie (klucz, limit lub płatności). Sprawdź swoje konto u niego.",
     "network": "Nie udało się połączyć z Twoim dostawcą. Sprawdź połączenie i spróbuj ponownie.",
-    "default": "Nie udało się uzyskać odpowiedzi. Spróbuj ponownie."
+    "default": "Nie udało się uzyskać odpowiedzi. Spróbuj ponownie.",
+    "server": "Twój dostawca miał problem z odpowiedzią. Spróbuj ponownie za chwilę."
   },
   "chat": {
     "toolFailed": "Nie udało się odczytać tej części Twoich danych.",
@@ -49,14 +48,18 @@
     "shareAnswer": "Udostępnij odpowiedź",
     "regenerate": "Wygeneruj odpowiedź ponownie",
     "emptyTitle": "Co chcesz wiedzieć?",
-    "emptyBody": "Coach sprawdza Twoje własne liczby z Pulse, zanim odpowie, korzystając z: {{provider}}. To nie jest porada medyczna.",
-    "checkIn": "Check-in na dziś",
+    "emptyBody": "Coach sprawdza Twoje własne liczby z Pulse, zanim odpowie. To nie jest porada medyczna.",
     "chatLabel": "Czat z Coach w Pulse",
     "retry": "Ponów",
     "placeholder": "Napisz do Coacha",
     "askLabel": "Zapytaj Coacha",
     "stop": "Zatrzymaj",
-    "send": "Wyślij"
+    "send": "Wyślij",
+    "copy": "Kopiuj",
+    "copyAnswer": "Kopiuj odpowiedź",
+    "copied": "Skopiowano do schowka",
+    "jumpLatest": "Przejdź do najnowszej wiadomości",
+    "holdHint": "Przytrzymaj, aby skopiować lub edytować"
   },
   "bar": {
     "chats": "Czaty",

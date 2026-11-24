@@ -5,9 +5,9 @@
 // offset, at the foot, for 4 s. One is shown at a time, and a new one replaces it.
 import { useEffect, useSyncExternalStore } from "react";
 import { View } from "react-native";
-import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
+import Animated, { FadeInDown, FadeOutUp } from "react-native-reanimated";
 import { CircleCheck, OctagonX } from "lucide-react-native";
-import { useBottomClearance } from "./shells/layout";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { haptic } from "./haptics";
 import { Icon } from "./Icon";
 import { usePanelStyle } from "./Panel";
@@ -48,8 +48,9 @@ export const toast = {
 export function ToastHost() {
   const t = useSyncExternalStore(subscribe, () => current);
   const panel = usePanelStyle({ ring: null, shadow: "toast" });
-  // Just above the floating tab bar, where Linear shows its toast (LN11).
-  const bottom = useBottomClearance() - 12;
+  // At the top, under the header row: a toast at the foot covered a page's Save button and the chat's composer, and hid
+  // behind the keyboard (LN11).
+  const top = useSafeAreaInsets().top + 56;
   // One message at a time: each replaces the last, and clears itself after 4 s.
   useEffect(() => {
     if (!t) return;
@@ -64,11 +65,11 @@ export function ToastHost() {
   }, [t]);
   if (!t) return null;
   return (
-    <View pointerEvents="none" className="absolute inset-x-0 px-4" style={{ bottom }}>
+    <View pointerEvents="none" className="absolute inset-x-0 px-4" style={{ top }}>
       <Animated.View
         key={t.id}
-        entering={FadeInUp.duration(DURATION.enter)}
-        exiting={FadeOutDown.duration(DURATION.fast)}
+        entering={FadeInDown.duration(DURATION.enter)}
+        exiting={FadeOutUp.duration(DURATION.fast)}
         accessibilityRole="alert"
         accessibilityLiveRegion="polite"
         className="max-w-full flex-row items-start gap-2 self-center rounded-2xl border border-border bg-popover py-3 pl-3 pr-4"

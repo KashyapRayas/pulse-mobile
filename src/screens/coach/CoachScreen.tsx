@@ -8,18 +8,18 @@ import { router, useLocalSearchParams } from "expo-router";
 import { generateId, type UIMessage } from "ai";
 import { History, Settings2, SquarePen } from "lucide-react-native";
 import { CHAT_ID } from "@/coach/chats";
-import { providerLabel } from "@/coach/providers";
 import { useChatCount, useCoachSetup } from "@/coach/session";
 import { loadChat } from "@/coach/storage";
 import { coachSuggestions } from "@/coach/suggestions";
 import { activityChatSeed } from "@/coach/activityChat";
 import type { CoachActivity } from "@/coach/activity";
 import { todayOf } from "@/queries/common";
-import { Button } from "@/ui/Button";
 import { Icon } from "@/ui/Icon";
 import { push } from "@/ui/navigate";
 import { Skeleton } from "@/ui/Skeleton";
 import { DetailHeader } from "@/ui/shells/DetailHeader";
+import { HeaderActions } from "@/ui/shells/Header";
+import { haptic } from "@/ui/haptics";
 import { DetailShell } from "@/ui/shells/DetailShell";
 import { useScreen } from "../useScreen";
 import { Coach } from "./Coach";
@@ -37,23 +37,17 @@ function ChatSkeleton() {
   );
 }
 
-/** The header's right side: Chats (with the count), New chat once a chat is open, and Coach settings. */
+/** The header's right side, one glass capsule: Chats (with the count), New chat once a chat is open, and Coach settings. */
 function BarActions({ chatCount, chatOpen, onNew }: { chatCount: number; chatOpen: boolean; onNew: () => void }) {
   const { t } = useTranslation("coach");
   return (
-    <View className="flex-row items-center">
-      <Button variant="ghost" size="icon-touch" haptic={false} onPress={() => push("/coach/chats")} accessibilityLabel={chatCount ? t("bar.chatsCount", { count: chatCount }) : t("bar.chats")}>
-        <Icon icon={History} size={20} />
-      </Button>
-      {chatOpen && (
-        <Button variant="ghost" size="icon-touch" onPress={onNew} accessibilityLabel={t("bar.newChat")}>
-          <Icon icon={SquarePen} size={20} />
-        </Button>
-      )}
-      <Button variant="ghost" size="icon-touch" haptic={false} onPress={() => push("/coach/settings")} accessibilityLabel={t("settingsTitle")}>
-        <Icon icon={Settings2} size={20} />
-      </Button>
-    </View>
+    <HeaderActions
+      actions={[
+        { icon: <Icon icon={History} size={19} />, label: chatCount ? t("bar.chatsCount", { count: chatCount }) : t("bar.chats"), onPress: () => push("/coach/chats") },
+        ...(chatOpen ? [{ icon: <Icon icon={SquarePen} size={19} />, label: t("bar.newChat"), onPress: () => (haptic.tap(), onNew()) }] : []),
+        { icon: <Icon icon={Settings2} size={19} />, label: t("settingsTitle"), onPress: () => push("/coach/settings") },
+      ]}
+    />
   );
 }
 
@@ -66,7 +60,15 @@ export function CoachScreen() {
   const brief = param(params.brief) === "1";
   const sendNow = param(params.send) === "1";
   const n = param(params.n);
-  const fresh = useMemo(() => generateId(), [n]); // eslint-disable-line react-hooks/exhaustive-deps
+  // The id a new chat takes. Held in state and renewed by hand: a memo keyed on `n` that never reads it is folded away
+  // by the React Compiler, which left New chat reopening the chat just saved under the first fresh id. New chat sets a
+  // new `?n=`, which renews it; opening the coach pushes a new screen, with its own.
+  const [fresh, setFresh] = useState(generateId);
+  const [freshFor, setFreshFor] = useState(n);
+  if (n !== freshFor) {
+    setFreshFor(n);
+    setFresh(generateId());
+  }
   const workoutId = param(params.workout);
   const sleepDay = param(params.sleep);
   const napId = param(params.nap);
@@ -115,9 +117,7 @@ export function CoachScreen() {
             prefill={brief && !c ? t("suggestions.brief") : !c && seed.length ? t("activity.expand") : question}
             auto={(brief || sendNow) && !c}
             activity={activity}
-            providerLabel={providerLabel(setup.provider)}
             suggestions={data.suggestions}
-            today={data.today}
             onSaved={(id) => router.setParams({ c: id, q: undefined, brief: undefined, send: undefined, workout: undefined, sleep: undefined, nap: undefined, preview: undefined })}
           />
         ) : (

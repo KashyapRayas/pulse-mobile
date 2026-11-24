@@ -56,11 +56,16 @@ export function niceTicks([lo, hi]: [number, number], duration = false) {
 /** Month labels that fit across a phone's plot at 12 px: the seven calendar months 6M's 182 days touch. 1Y's thirteen
  * would run into each other, so a longer window labels every other month. */
 const MONTH_LABELS = 7;
+/** The fewest days between two month labels: a month's labels are about 30 days apart. */
+const MIN_LABEL_DAYS = 22;
 
-/** The keys that carry an x label: 6M and 1Y one per month (the first day from the 14th on), M every 7th from the end, else all. */
+/** The keys that carry an x label: 6M and 1Y one per month (the first day from the 14th on; not a first month entered too late to keep clear of the next), M every 7th from the end, else all. */
 export function xTickKeys(keys: string[], range: TrendRange, weekly: boolean) {
   if (byMonth(range)) {
-    const months = keys.filter((k, i) => i === 0 || k.slice(0, 7) !== keys[i - 1].slice(0, 7)).map((k) => keys.find((x) => x.slice(0, 7) === k.slice(0, 7) && x.slice(8) >= "14") ?? k);
+    const all = keys.filter((k, i) => i === 0 || k.slice(0, 7) !== keys[i - 1].slice(0, 7)).map((k) => keys.find((x) => x.slice(0, 7) === k.slice(0, 7) && x.slice(8) >= "14") ?? k);
+    // A first month the range enters late (the 26th) is labelled on that day, too close to the next month's 14th: the
+    // two labels would run into each other, so that partial month goes unlabelled.
+    const months = all.length > 1 && (Date.parse(all[1]) - Date.parse(all[0])) / 864e5 < MIN_LABEL_DAYS ? all.slice(1) : all;
     const every = Math.ceil(months.length / MONTH_LABELS);
     return months.filter((_, i) => (months.length - 1 - i) % every === 0);
   }

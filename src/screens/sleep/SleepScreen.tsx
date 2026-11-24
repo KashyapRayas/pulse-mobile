@@ -34,6 +34,7 @@ import { HoursVsNeed, SleepConsistency, SleepEfficiency } from "./SleepCards";
 import { WeeklyTrends } from "../trends/WeeklyTrends";
 import { SLEEP_BODY_SKELETON, SleepSkeleton } from "./SleepSkeleton";
 import { TYPE } from "@/ui/type";
+import { ScreenError } from "../ScreenError";
 
 /** Weekly Trends, in the reference app's order (sleep-28..34). */
 const WEEKLY: readonly TrendViewKey[] = ["sleep", "hours", "hours_need", "restorative", "consistency", "time_in_bed", "efficiency"];
@@ -65,9 +66,10 @@ export const sleepKey = (d: string) => ["sleep", d] as const;
 export function SleepScreen() {
   const [d] = useSelectedDay();
   const { timeZone } = useShellCalendar();
-  const { data } = useScreen(sleepQuery(d), sleepKey(d));
+  const { data, error, reload } = useScreen(sleepQuery(d), sleepKey(d));
   // The web shows its skeleton on every navigation: another day's data is not this day's.
   const shown = data?.vm.day === d && timeZone ? data : undefined;
+  if (!shown && error) return <ScreenError error={error} retry={async () => reload()} />;
   return shown && timeZone ? <Sleep vm={shown.vm} weekly={shown.weekly} timeZone={timeZone} /> : <SleepSkeleton />;
 }
 

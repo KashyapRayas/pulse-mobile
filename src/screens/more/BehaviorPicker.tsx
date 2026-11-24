@@ -5,7 +5,7 @@
 import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { Check, Search } from "lucide-react-native";
+import { Check, Search, X } from "lucide-react-native";
 import { saveBehaviors } from "@/actions/journal";
 import { i18n } from "@/i18n/config";
 import { MAX_TAGS } from "@/queries/journal";
@@ -70,6 +70,13 @@ export function BehaviorPicker({ tags, initial, selected, onChange }: { tags: Be
             <Icon icon={Search} size={20} tone="muted-foreground" strokeWidth={1.75} />
           </View>
         }
+        right={
+          query ? (
+            <Pressable accessibilityRole="button" accessibilityLabel={t("behaviours.clearSearch")} hitSlop={8} onPress={() => setQuery("")} className="size-11 items-center justify-center">
+              <Icon icon={X} size={18} tone="muted-foreground" strokeWidth={1.75} />
+            </Pressable>
+          ) : undefined
+        }
       />
       {/* Category tabs in one scrolling row, the chosen one underlined (journal-04, journal-06). */}
       <View className="mt-3 -mx-4">
@@ -88,7 +95,7 @@ export function BehaviorPicker({ tags, initial, selected, onChange }: { tags: Be
                 }}
                 className="h-11 justify-center px-2"
               >
-                <Text className={cn("text-caption font-medium tracking-normal", on ? "text-foreground" : "text-muted-foreground")}>{t.label}</Text>
+                <Text className={cn(TYPE.tab, on ? "text-foreground" : "text-muted-foreground")}>{t.label}</Text>
                 <View className={cn("absolute inset-x-2.5 bottom-1.5 h-0.5 rounded-full bg-foreground", !on && "opacity-0")} />
               </Pressable>
             );

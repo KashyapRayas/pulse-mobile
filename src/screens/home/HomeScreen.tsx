@@ -63,6 +63,7 @@ import { PlusKey } from "./PlusMenu";
 import { TonightPlan } from "./TonightPlan";
 import { push } from "@/ui/navigate";
 import { Press } from "@/ui/Press";
+import { ScreenError } from "../ScreenError";
 
 const STRESS_TONE: Record<StressLevel, { chip: string; text: string }> = {
   low: { chip: "bg-stress-low/15", text: "text-stress-low-text" },
@@ -97,7 +98,7 @@ const homeKey = (d: string) => ["home", d] as const;
 export function HomeScreen() {
   const [d] = useSelectedDay();
   const { timeZone } = useShellCalendar();
-  const { data } = useScreen(homeQuery(d), homeKey(d));
+  const { data, error, reload } = useScreen(homeQuery(d), homeKey(d));
   const keys = useScreen(async (ctx) => dashboardKeys(ctx, await dashboardChoice()), ["home-keys"]).data;
   // The web shows its skeleton on every navigation: another day's data is not this day's.
   const vm = data?.day === d && timeZone ? data : undefined;
@@ -125,6 +126,7 @@ export function HomeScreen() {
       ]);
     }, [day, today, ready]),
   );
+  if (!vm && error) return <ScreenError error={error} retry={async () => reload()} />;
   return vm && timeZone ? <Home vm={vm} timeZone={timeZone} /> : <HomeSkeleton stats={keys} />;
 }
 

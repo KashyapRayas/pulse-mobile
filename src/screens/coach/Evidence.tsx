@@ -1,7 +1,7 @@
 // Tool results as kit cards (spec §7.21 Messages), ported from pulse src/app/(app)/coach/Evidence.tsx and Coach.tsx's
 // DayCard: get_day as three MiniRings with contributors, the other tools as compact KeyStatRow cards, each followed by
 // a "Based on" link to the screen it read.
-import { unitLabel } from "@/lib/format";
+import { DAY, formatDay, unitLabel } from "@/lib/format";
 import { localeFixed } from "@/lib/locale";
 import type { ReactNode } from "react";
 import { View } from "react-native";
@@ -96,7 +96,7 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
     return (
       <View className="gap-2">
         <DayCard d={d} />
-        <BasedOn href={`/recovery?d=${d.day}`}>{t("evidence.dayTitle", { day: d.day })}</BasedOn>
+        <BasedOn href={`/recovery?d=${d.day}`}>{t("evidence.dayTitle", { day: formatDay(d.day, DAY.short) })}</BasedOn>
       </View>
     );
   }
@@ -119,7 +119,7 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
     const plan = d.planner.value;
     return (
       <View className="gap-2">
-        <EvidenceCard title={t("evidence.sleepTitle", { day: d.day })}>
+        <EvidenceCard title={t("evidence.sleepTitle", { day: formatDay(d.day, DAY.short) })}>
           <KeyStatRow variant="row" label={t("evidence.timeAsleep")} metric={metric(d.asleepMinutes)} unit="min" format="int" direction="none" />
           {d.summary
             .filter((v) => v.key === "efficiency" || v.key === "consistency")
@@ -133,7 +133,7 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
             </Text>
           )}
         </EvidenceCard>
-        <BasedOn href={`/sleep?d=${d.day}`}>{t("evidence.plannerTitle", { day: d.day })}</BasedOn>
+        <BasedOn href={`/sleep?d=${d.day}`}>{t("evidence.plannerTitle", { day: formatDay(d.day, DAY.short) })}</BasedOn>
       </View>
     );
   }
@@ -143,7 +143,7 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
       <View className="gap-2">
         <EvidenceCard title={t("evidence.workoutsTitle", { start: d.start, end: d.end })}>
           {d.workouts.length ? (
-            d.workouts.slice(0, 5).map((v) => <KeyStatRow key={v.id} variant="row" label={v.name} metric={metric(v.strain)} unit="%" format="int" direction="none" caption={t("evidence.workoutCaption", { day: v.day, minutes: v.minutes })} href={`/activity/${encodeURIComponent(v.id)}`} />)
+            d.workouts.slice(0, 5).map((v) => <KeyStatRow key={v.id} variant="row" label={v.name} metric={metric(v.strain)} unit="%" format="int" direction="none" caption={t("evidence.workoutCaption", { day: formatDay(v.day, DAY.short), minutes: v.minutes })} href={`/activity/${encodeURIComponent(v.id)}`} />)
           ) : (
             <Text className={NOTE}>{t("evidence.noWorkouts")}</Text>
           )}
@@ -158,14 +158,14 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
     if (!a) return <Text className={NOTE}>{t("evidence.unavailable")}</Text>;
     return (
       <View className="gap-2">
-        <EvidenceCard title={t("evidence.workoutTitle", { name: a.name, day: a.day })}>
+        <EvidenceCard title={t("evidence.workoutTitle", { name: a.name, day: formatDay(a.day, DAY.short) })}>
           <KeyStatRow variant="row" label={t("evidence.activityStrain")} metric={metric(a.strain)} unit="%" format="int" direction="none" />
           {a.stats.slice(0, 3).map((v) => (
             <KeyStatRow key={v.label} variant="row" label={v.label} metric={metric(v)} unit={v.unit ?? undefined} format="decimal1" average={v.baseline} direction="none" />
           ))}
           <ZoneBars variant="rows" data={zoneBars(a.zones)} note={a.zoneNote} />
         </EvidenceCard>
-        <BasedOn href={`/activity/${encodeURIComponent(a.id)}`}>{t("evidence.workoutTitle", { name: a.name, day: a.day })}</BasedOn>
+        <BasedOn href={`/activity/${encodeURIComponent(a.id)}`}>{t("evidence.workoutTitle", { name: a.name, day: formatDay(a.day, DAY.short) })}</BasedOn>
       </View>
     );
   }
@@ -195,12 +195,12 @@ export function Evidence({ name, output }: { name: string; output: unknown }) {
     const d = output as CoachOutputs["get_health"];
     return (
       <View className="gap-2">
-        <EvidenceCard title={t("evidence.healthTitle", { day: d.day })}>
+        <EvidenceCard title={t("evidence.healthTitle", { day: formatDay(d.day, DAY.short) })}>
           {d.vitals.map((v) => (
             <KeyStatRow key={v.vital} variant="row" label={v.vital} metric={metric(v)} unit={v.unit} format="decimal1" direction="none" caption={String(v.status).replaceAll("_", " ")} />
           ))}
         </EvidenceCard>
-        <BasedOn href={`/health/monitor?d=${d.day}`}>{t("evidence.healthTitle", { day: d.day })}</BasedOn>
+        <BasedOn href={`/health/monitor?d=${d.day}`}>{t("evidence.healthTitle", { day: formatDay(d.day, DAY.short) })}</BasedOn>
       </View>
     );
   }

@@ -52,6 +52,7 @@ export default function LogPage() {
     );
 
   const time = at ?? defaultAt(vm);
+  const untouched = JSON.stringify(form) === JSON.stringify(EMPTY[kind]);
   const now = wallNow(vm.timeZone);
 
   const send = async (input: LogInput, close = true) => {
@@ -93,7 +94,8 @@ export default function LogPage() {
       footer={
         <>
           {!!error && <FormAlert>{error}</FormAlert>}
-          <Button onPress={save} disabled={saving}>
+          {/* Nothing typed yet: nothing to save (the quick adds above save on their own). Typed but invalid: Save says why. */}
+          <Button onPress={save} disabled={saving || untouched}>
             {saving ? t("logForm.saving") : t("actions.save", { ns: "common" })}
           </Button>
         </>

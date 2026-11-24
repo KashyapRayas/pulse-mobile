@@ -58,6 +58,13 @@ function RootLayout() {
   }, [navigationRef]);
   const status = useApp((s) => s.status);
   const opened = useApp((s) => s.store !== null);
+  const theme = useApp((s) => s.theme);
+  // Back from a tab root closes the activity but keeps this JS runtime, so `boot` does not run again when Pulse is
+  // reopened, while Android starts the new activity in the phone's light or dark: the saved choice is applied again on
+  // every mount of the root, not only at boot.
+  useEffect(() => {
+    if (opened) colorScheme.set(theme);
+  }, [opened, theme]);
   // Onboarded: a profile, a source and a first completed run (pulse's (app) layout sends anyone else to onboarding).
   const onboarded = useApp((s) => s.onboarded);
   const bootError = useApp((s) => (s.store ? null : s.error));

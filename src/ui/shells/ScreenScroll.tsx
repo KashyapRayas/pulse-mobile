@@ -11,6 +11,7 @@ import { HEADER_FADE } from "./Header";
 import { useBottomClearance } from "./layout";
 import { usePullToSync } from "./PullToSync";
 import { DURATION } from "../motion";
+import { useApp } from "@/state/app";
 
 /** A screen's scroll position as a shared value, and a 0-1 `collapsed` that eases to 1 once `threshold` is scrolled past. */
 export function useCollapse(durationIn: number = DURATION.collapse, durationOut: number = DURATION.fast) {
@@ -98,6 +99,7 @@ export function ScreenScroll({ header, top, onScroll, bottomPad, healthspan, flo
     },
     [section, scroll],
   );
+  const displayKey = useApp((s) => (s.profile?.display ? `${s.profile.display.units}-${s.profile.display.hours}` : ""));
   return (
     <View ref={keyboardRef} onLayout={measureKeyboard} className="flex-1 bg-background" style={{ backgroundColor: c.background }}>
       {/* The scroll view ends at the keyboard's top, so a form's fields scroll clear of it (src/ui/keyboard.ts). */}
@@ -123,7 +125,10 @@ export function ScreenScroll({ header, top, onScroll, bottomPad, healthspan, flo
           removeClippedSubviews
         >
           <AnchorContext.Provider value={register}>
-            <View ref={content} collapsable={false} removeClippedSubviews>
+            {/* Remounted when the units or the clock change (Settings › App): the compiled components cache what they
+                formatted by their own inputs, which the display choice is not, so a re-render alone kept "11:01 PM"
+                after the switch to 24-hour. Navigation and the header stay; only the page below them is rebuilt. */}
+            <View key={displayKey} ref={content} collapsable={false} removeClippedSubviews>
               {children}
             </View>
           </AnchorContext.Provider>

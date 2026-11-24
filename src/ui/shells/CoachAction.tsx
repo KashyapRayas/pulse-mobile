@@ -1,33 +1,12 @@
 import { i18n } from "@/i18n/config";
 import { View } from "react-native";
-import Svg, { Circle, Defs, LinearGradient, Stop } from "react-native-svg";
-import { BotMessageSquare } from "lucide-react-native";
+import { Sparkle } from "lucide-react-native";
 import { Glass } from "../Glass";
 import { haptic } from "../haptics";
 import { Icon } from "../Icon";
-import { useTheme } from "../theme";
 import { FAB_SIZE, TAB_ROOTS, useTabBarBottom } from "./layout";
 import { push } from "../navigate";
 import { Press } from "../Press";
-
-/** The coach's glyph (More's Coach row uses the same) in a 30 px circle with the indigo-to-blue rim. */
-function Monogram() {
-  const { c } = useTheme();
-  return (
-    <View accessibilityElementsHidden className="size-[30px] items-center justify-center">
-      <Svg width={30} height={30} style={{ position: "absolute" }}>
-        <Defs>
-          <LinearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor={c["action-rim-from"]} />
-            <Stop offset="1" stopColor={c["action-rim-to"]} />
-          </LinearGradient>
-        </Defs>
-        <Circle cx={15} cy={15} r={14.25} fill={c["action-face"]} stroke="url(#rim)" strokeWidth={1.5} />
-      </Svg>
-      <Icon icon={BotMessageSquare} size={16} tone="foreground" strokeWidth={1.9} />
-    </View>
-  );
-}
 
 /**
  * The round action at the end of the tab bar (spec §4.2.1, LN16): the AI coach. The tab bar's third tab is the
@@ -45,8 +24,10 @@ export function CoachAction({ onPress }: { onPress?: () => void }) {
         (onPress ?? (() => push("/coach")))();
       }}
     >
-      <Glass radius={FAB_SIZE / 2} action style={{ width: FAB_SIZE, height: FAB_SIZE, alignItems: "center", justifyContent: "center" }}>
-        <Monogram />
+      {/* The tab bar's own glass and one monoline glyph in the text colour, as Linear's round search beside its toolbar:
+          no tinted rim or gradient, so it reads as part of the bar rather than a badge on it. */}
+      <Glass radius={FAB_SIZE / 2} style={{ width: FAB_SIZE, height: FAB_SIZE, alignItems: "center", justifyContent: "center" }}>
+        <Icon icon={Sparkle} size={22} tone="foreground" strokeWidth={1.75} />
       </Glass>
     </Press>
   );

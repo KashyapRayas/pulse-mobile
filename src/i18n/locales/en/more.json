@@ -78,6 +78,7 @@
     "tooMany": "That’s more behaviours than Pulse can track. Choose fewer.",
     "saveFailed": "Couldn’t save. Check your connection and try again.",
     "search": "Search for behaviours",
+    "clearSearch": "Clear search",
     "tabAll": "All",
     "tabYours": "Yours",
     "selected": "Selected",

@@ -36,7 +36,8 @@
     "profile": "Configura primero tu perfil.",
     "provider": "Tu proveedor rechazó la solicitud (clave, cuota o facturación). Revisa tu cuenta con ellos.",
     "network": "No se pudo contactar a tu proveedor. Revisa tu conexión e inténtalo de nuevo.",
-    "default": "No se pudo obtener una respuesta. Inténtalo de nuevo."
+    "default": "No se pudo obtener una respuesta. Inténtalo de nuevo.",
+    "server": "Tu proveedor tuvo un problema al responder. Inténtalo de nuevo en un momento."
   },
   "chat": {
     "toolFailed": "No se pudo leer esa parte de tus datos.",
@@ -47,14 +48,18 @@
     "shareAnswer": "Compartir respuesta",
     "regenerate": "Regenerar respuesta",
     "emptyTitle": "¿Qué te gustaría saber?",
-    "emptyBody": "El Coach consulta tus propios números de Pulse antes de responder, usando {{provider}}. No es consejo médico.",
-    "checkIn": "Registro de hoy",
+    "emptyBody": "El Coach consulta tus propios números de Pulse antes de responder. No es consejo médico.",
     "chatLabel": "Chatear con el Coach de Pulse",
     "retry": "Reintentar",
     "placeholder": "Escribe al Coach",
     "askLabel": "Preguntar al Coach",
     "stop": "Detener",
-    "send": "Enviar"
+    "send": "Enviar",
+    "copy": "Copiar",
+    "copyAnswer": "Copiar respuesta",
+    "copied": "Copiado al portapapeles",
+    "jumpLatest": "Ir al último mensaje",
+    "holdHint": "Mantén pulsado para copiar o editar"
   },
   "bar": {
     "chats": "Chats",

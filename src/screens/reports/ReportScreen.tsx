@@ -15,7 +15,6 @@ import { todayOf } from "@/queries/common";
 import { latestReport } from "@/queries/home";
 import { getReport, type ReportPageVM } from "@/queries/reports";
 import { useWeeklyPlan } from "@/state/weeklyPlan";
-import { Button } from "@/ui/Button";
 import type { KeyStat, ReportVM } from "@/queries/types";
 import { Divided, LoadError } from "@/screens/trends/parts";
 import { useScreen } from "@/screens/useScreen";
@@ -38,6 +37,7 @@ import { Text } from "@/ui/Text";
 import { push } from "@/ui/navigate";
 import { Press } from "@/ui/Press";
 import { reportShareText, STAT_FORMAT } from "./share";
+import { HeaderButton } from "@/ui/shells/Header";
 
 const WEEK = /^\d{4}-W\d{2}$/;
 const MONTH = /^\d{4}-\d{2}$/;
@@ -165,9 +165,9 @@ function ShareButton({ vm }: { vm: ReportPageVM }) {
     Share.share({ message: reportShareText(vm) }, { dialogTitle: vm.kind === "week" ? t("page.shareWeekly") : t("page.shareMonthly") }).catch(() => {});
   };
   return (
-    <Button variant="ghost" size="icon-touch" onPress={share} accessibilityLabel={vm.kind === "week" ? t("page.shareWeekA11y") : t("page.shareMonthA11y")}>
-      <Icon icon={Share2} size={22} tone="foreground" strokeWidth={1.75} />
-    </Button>
+    <HeaderButton accessibilityRole="button" onPress={share} accessibilityLabel={vm.kind === "week" ? t("page.shareWeekA11y") : t("page.shareMonthA11y")}>
+      <Icon icon={Share2} size={20} tone="foreground" strokeWidth={1.75} />
+    </HeaderButton>
   );
 }
 

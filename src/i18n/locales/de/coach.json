@@ -36,7 +36,8 @@
     "profile": "Richte zuerst dein Profil ein.",
     "provider": "Dein Anbieter hat die Anfrage abgelehnt (Schlüssel, Kontingent oder Abrechnung). Prüfe dein Konto bei ihm.",
     "network": "Dein Anbieter war nicht erreichbar. Prüfe deine Verbindung und versuch es noch einmal.",
-    "default": "Es kam keine Antwort. Versuch es noch einmal."
+    "default": "Es kam keine Antwort. Versuch es noch einmal.",
+    "server": "Dein Anbieter hatte ein Problem beim Antworten. Versuche es gleich noch einmal."
   },
   "chat": {
     "toolFailed": "Dieser Teil deiner Daten konnte nicht gelesen werden.",
@@ -47,14 +48,18 @@
     "shareAnswer": "Antwort teilen",
     "regenerate": "Antwort neu erzeugen",
     "emptyTitle": "Was möchtest du wissen?",
-    "emptyBody": "Der Coach schlägt deine eigenen Pulse-Zahlen nach, bevor er antwortet, mit {{provider}}. Das ist keine medizinische Beratung.",
-    "checkIn": "Für heute einchecken",
+    "emptyBody": "Der Coach schlägt deine eigenen Pulse-Zahlen nach, bevor er antwortet. Das ist keine medizinische Beratung.",
     "chatLabel": "Chat mit dem Coach von Pulse",
     "retry": "Erneut versuchen",
     "placeholder": "Nachricht an Coach",
     "askLabel": "Coach fragen",
     "stop": "Stopp",
-    "send": "Senden"
+    "send": "Senden",
+    "copy": "Kopieren",
+    "copyAnswer": "Antwort kopieren",
+    "copied": "In die Zwischenablage kopiert",
+    "jumpLatest": "Zur neuesten Nachricht",
+    "holdHint": "Gedrückt halten zum Kopieren und Bearbeiten"
   },
   "bar": {
     "chats": "Chats",

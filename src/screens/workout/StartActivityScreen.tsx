@@ -11,6 +11,7 @@ import { ChevronDown, ChevronUp, Heart, Search, X } from "lucide-react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { arcPath } from "@/ui/charts/geometry";
 import { Gradient } from "@/ui/Gradient";
+import { HeaderButton } from "@/ui/shells/Header";
 import { Press } from "@/ui/Press";
 import { Text } from "@/ui/Text";
 import { queryCtx, useApp } from "@/state/app";
@@ -82,11 +83,12 @@ export function StartActivityScreen() {
     <View className="flex-1 bg-background">
       <Gradient from={c["strain-band-4"]} to={c.background} angle="y" />
       {/* Header: X, the sport and its caret (the picker). */}
-      <View className="bg-background" style={{ paddingTop: insets.top }}>
-        <View className="h-16 flex-row items-center px-4">
-          <Press accessibilityRole="button" accessibilityLabel={t("start.close")} onPress={() => router.back()} hitSlop={12} className="mr-5">
-            <X size={28} color={c.foreground} strokeWidth={2} />
-          </Press>
+      {/* Clear over the gradient, so the blue runs up under the status bar with no band; solid while the picker shows. */}
+      <View className={picking ? "bg-background" : undefined} style={{ paddingTop: insets.top }}>
+        <View className="h-16 flex-row items-center gap-3 px-3">
+          <HeaderButton accessibilityRole="button" accessibilityLabel={t("start.close")} onPress={() => router.back()}>
+            <X size={22} color={c.foreground} strokeWidth={2} />
+          </HeaderButton>
           <Press accessibilityRole="button" accessibilityLabel={t("start.choose", { name: activityName(type) })} onPress={() => setPicking((p) => !p)} className="flex-1 flex-row items-center">
             <Glyph size={26} color={c.foreground} strokeWidth={2} />
             <Text className={cn("ml-3 flex-1 text-body text-foreground", CAPS)}>{activityName(type)}</Text>
