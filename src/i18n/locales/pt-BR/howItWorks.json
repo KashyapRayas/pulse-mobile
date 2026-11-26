@@ -107,7 +107,7 @@
     "s2R2Detail": "Mais Strain do que a Recovery de hoje sugere; espere sentir isso amanhã.",
     "s3Title": "Um exemplo prático",
     "s3P0": "Considere 14 dias de Strain passado, do mais antigo ao mais recente: 45, 50, 20, 55, 48, 40, 60, 47, 52, 25, 50, 45, 55, 50. O Strain do próprio dia de hoje fica de fora. Combinada dia a dia, a base chega a 47,9.",
-    "s3P1": "A Recovery de hoje é 72%, então o centro é 47,9 × 1,13 = 54,2. A faixa vai de 54,2 − 8,6 a 54,2 + 24,4: um Strain Target de 46 - 79%. Com o mesmo histórico e uma Recovery de 30%, o centro cai para 42,2 e o Strain Target para 36 - 58%.",
+    "s3P1": "A Recovery de hoje é 72%, então o centro é 47,9 × 1,13 = 54,2. A faixa vai de 54,2 − 8,6 a 54,2 + 24,4: um Strain Target de 46 a 79%. Com o mesmo histórico e uma Recovery de 30%, o centro cai para 42,2 e o Strain Target para 36 a 58%.",
     "s4Title": "Limites",
     "s4P0": "Com menos de 14 dias de Strain, a base combina o que houver, então as primeiras semanas valem como estimativa. O Strain Target não conhece seu plano de treino, competições ou lesões. É um guia, não uma prescrição."
   },
@@ -414,7 +414,7 @@
     "s2R1Detail": "Você está carregando fadiga do treino recente.",
     "s3Title": "Um exemplo prático",
     "s3P0": "Considere 14 dias de carga diária: 30, 45, 0, 50, 40, 35, 55, depois 45, 60, 0, 50, 55, 40, 65. Os zeros são dias de descanso.",
-    "s3P1": "A Fadiga avança um quarto do caminho até a carga de cada dia, então termina em 47,0 após o 65 do dia 14. O Condicionamento avança 2/43 do caminho, então só chegou a 20,4. A Forma é Condicionamento menos Fadiga: 20,4 - 47,0 = -26,6.",
+    "s3P1": "A Fadiga avança um quarto do caminho até a carga de cada dia, então termina em 47,0 após o 65 do dia 14. O Condicionamento avança 2/43 do caminho, então só chegou a 20,4. A Forma é Condicionamento menos Fadiga: 20,4 a 47,0 = -26,6.",
     "s3P2": "Uma Forma negativa significa que a carga recente é mais pesada do que a média de longo prazo. O Condicionamento só se estabiliza após várias semanas, então leia as primeiras semanas como um guia aproximado.",
     "s4Title": "Limites",
     "s4P0": "A frequência cardíaca é o único dado, então a carga que mal a eleva passa despercebida. Até você treinar regularmente por algumas semanas, o status aparece como calibrando."

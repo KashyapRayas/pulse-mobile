@@ -65,11 +65,11 @@ describe("strain target reached", () => {
   it("goes once Day Strain reaches the low end, inside the range, opening Strain", () => {
     const [a] = decideSmart({ ...on, strain: 46 });
     expect(a).toMatchObject({ kind: "strain_target", title: "Strain target reached", url: DEEP_LINK.strain, day: TODAY, mark: { strainTargetDay: TODAY } });
-    expect(a.body).toBe("Day Strain 46% is inside today’s target of 46 - 79%.");
+    expect(a.body).toBe("Day Strain 46% is inside today’s target of 46\u00a0to\u00a079%.");
   });
 
   it("says so when the first look already finds it past the range", () => {
-    expect(decideSmart({ ...on, strain: 112.4 })[0].body).toBe("Day Strain 112% is past today’s target of 46 - 79%. Prioritise sleep tonight to recover.");
+    expect(decideSmart({ ...on, strain: 112.4 })[0].body).toBe("Day Strain 112% is past today’s target of 46\u00a0to\u00a079%. Prioritise sleep tonight to recover.");
     expect(strainBody(79, { low: 46, high: 79 })).toContain("inside");
   });
 
@@ -191,7 +191,7 @@ describe("weekly report ready", () => {
   it("goes Monday morning for the week that just ended, opening its report", () => {
     const [a] = decideSmart(on);
     expect(a).toMatchObject({ kind: "weekly_report", title: "Weekly report ready", url: "pulse://reports/2026-W40", day: MONDAY, mark: { reportPeriod: "2026-W40" } });
-    expect(a.body).toBe("Sep 28 - Oct 4: Recovery averaged 64%, Day Strain 42%.");
+    expect(a.body).toBe("Sep 28 to Oct 4: Recovery averaged 64%, Day Strain 42%.");
     expect(reportLink("2026-W40")).toBe("pulse://reports/2026-W40");
   });
 
@@ -225,8 +225,8 @@ describe("weekly report ready", () => {
   });
 
   it("words only what the week has", () => {
-    expect(reportBody({ ...W40, averages: { ...W40.averages, strain: null } })).toBe("Sep 28 - Oct 4: Recovery averaged 64%.");
-    expect(reportBody({ ...W40, averages: { ...W40.averages, recovery: null, strain: null } })).toBe("Your week of Sep 28 - Oct 4 is in.");
+    expect(reportBody({ ...W40, averages: { ...W40.averages, strain: null } })).toBe("Sep 28 to Oct 4: Recovery averaged 64%.");
+    expect(reportBody({ ...W40, averages: { ...W40.averages, recovery: null, strain: null } })).toBe("Your week of Sep 28 to Oct 4 is in.");
   });
 });
 

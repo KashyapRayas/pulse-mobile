@@ -35,7 +35,11 @@ export type TagKind = keyof typeof TAG_COPY | "so_far" | "partial_week" | "parti
 
 const CHIP_ICON: Record<ChipTone, LucideIcon | null> = { optimal: Check, warning: TriangleAlert, alert: CircleAlert, neutral: null };
 
-/** Value plus tone, e.g. "✓ within 16.1 - 16.9". Icon follows the tone unless `delta` is given. Children may be text or nested <Text>. */
+/**
+ * Value plus tone, e.g. "✓ Within 16.1 to 16.9". Icon follows the tone unless `delta` is given. Children may be text or
+ * nested <Text>. Never wider than its column: a long label wraps inside the chip, as many lines as it needs, with the mark
+ * held on the first line; a range keeps together (its non-breaking spaces, valueRange in src/lib/format.ts).
+ */
 export function StatusChip({ tone, children, delta, className, textClassName }: { tone: ChipTone; children: React.ReactNode; delta?: DeltaDir; className?: string; textClassName?: string }) {
   // CHIP_TONE_CLASS is "bg-... text-..." for the web, where the text colour inherits; here the two go to different elements.
   const classes = CHIP_TONE_CLASS[tone].split(" ");
@@ -50,7 +54,7 @@ export function StatusChip({ tone, children, delta, className, textClassName }: 
   // the first line rather than floating between the two.
   const step = /\btext-label\b/.test(textClassName ?? "") ? "label" : /\btext-meta\b/.test(textClassName ?? "") ? "meta" : "caption";
   const mark = delta ? <DeltaMark dir={delta} tone="neutral" color={text.slice(5) as TokenName} /> : glyph && <Icon icon={glyph} size={step === "label" ? 12 : 14} tone={text.slice(5) as TokenName} strokeWidth={2.5} />;
-  // The chip hugs its text but never outgrows its column, wrapping to two lines at most. A percentage or flex-shrink
+  // The chip hugs its text but never outgrows its column, wrapping rather than cutting the label short. A percentage or flex-shrink
   // limit is not enough on Android: text in a shrinking row is measured once, at its one-line width, and drawn that way
   // past the chip. So the row around the chip (which takes the column's width, a column stretches it, and carries the
   // caller's placement: self-*, margins) reports its width; the chip takes it as a px maxWidth, and the text that less
@@ -67,7 +71,7 @@ export function StatusChip({ tone, children, delta, className, textClassName }: 
     <View className={cn("max-w-full flex-row items-center self-stretch", justify, margins)} onLayout={(e) => setRoom(e.nativeEvent.layout.width)}>
       <View className={cn("min-h-6 flex-row items-start gap-1.5 rounded-md px-2 py-1", bg, inner)} style={room ? { maxWidth: room } : undefined}>
         {!!mark && <LineIcon step={step}>{mark}</LineIcon>}
-        <Text numberOfLines={2} className={cn("shrink text-caption font-bold tabular-nums", text, textClassName)} style={room ? { maxWidth: Math.max(0, room - sides - markWidth + 1) } : undefined}>
+        <Text className={cn("shrink text-caption font-bold tabular-nums", text, textClassName)} style={room ? { maxWidth: Math.max(0, room - sides - markWidth + 1) } : undefined}>
           {children}
         </Text>
       </View>

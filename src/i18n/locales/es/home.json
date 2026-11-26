@@ -1,7 +1,7 @@
 {
   "title": "Inicio",
   "sync": {
-    "progress": "Sincronizando · {{percent}}%",
+    "progress": "Sincronizando, {{percent}}%",
     "syncing": "Sincronizando…"
   },
   "noBand": {
@@ -92,7 +92,7 @@
     "wokeAt": "Despertaste a las <t>{{time}}</t> con <t>{{level}}%</t>",
     "charged": "Carga",
     "drained": "Descarga",
-    "drainAt": "{{label}} a las <t>{{time}}</t> · <t>{{amount}}</t>"
+    "drainAt": "{{label}} a las <t>{{time}}</t>, <t>{{amount}}</t>"
   },
   "heartRate": {
     "title": "Frecuencia cardíaca",
@@ -150,11 +150,11 @@
     "highStress": "Pasaste {{duration}} con estrés alto."
   },
   "edit": {
-    "customizeLabel": "Personalizar Mi panel",
-    "customize": "Personalizar",
-    "pageTitle": "Personalizar panel",
-    "success": "Listo",
-    "saved": "Se guardaron tus preferencias.",
+    "customizeLabel": "Editar Mi panel",
+    "customize": "Editar",
+    "pageTitle": "Editar Mi panel",
+    "success": "Guardado",
+    "saved": "Mi panel muestra ahora estas métricas.",
     "saveFailed": "No se pudo guardar tu panel. Inténtalo de nuevo.",
     "saving": "Guardando…",
     "myDashboard": "Mi panel",
@@ -175,5 +175,169 @@
     "moved": "{{label}} se movió a la posición {{position}} de {{total}}",
     "removed": "{{label}} quitada de Inicio",
     "added": "{{label}} añadida en la posición {{position}}"
+  },
+  "review": {
+    "headline": {
+      "target": "Strain Target de {{low}} a {{high}}%",
+      "plan": "Tu plan para hoy",
+      "red": "Recuperación baja. Haz un día suave",
+      "yellow": "Recuperación moderada. Entrena con cuidado",
+      "shortSleep": "Te falta sueño. Tómatelo con calma",
+      "green": "Bien recuperado. Listo para un día duro",
+      "past": "Superaste tu Strain Target",
+      "inTarget": "Quedaste dentro de tu Strain Target",
+      "lighter": "Un día más suave que tu objetivo",
+      "strain": "Day Strain {{value}}%",
+      "recovery": "Recovery {{value}}%",
+      "day": "Tu día"
+    },
+    "score": {
+      "sleep": "Sueño",
+      "recovery": "Recovery",
+      "strain": "Strain"
+    },
+    "noData": "sin datos",
+    "openHint": "Abre el resumen completo del día",
+    "noAverage": "Aún sin media de 7 días",
+    "nearAverage": "Cerca de tu media de 7 días",
+    "aboveAverage": "{{amount}} por encima de tu media de 7 días",
+    "belowAverage": "{{amount}} por debajo de tu media de 7 días",
+    "strain": "Strain",
+    "strainSoFar": "Strain hasta ahora",
+    "ofTarget": "de <t>{{low}}</t> a <t>{{high}}%</t>",
+    "target": {
+      "above": "Por encima del objetivo",
+      "in": "En el objetivo",
+      "below": "Por debajo del objetivo"
+    },
+    "drivers": "Qué movió tu Recovery",
+    "driverSpoken": "{{label}}, {{points}}",
+    "stress": "Estrés",
+    "stressLevels": "Tiempo en cada nivel (horas)",
+    "started": "Inicio",
+    "nowAt": "Ahora en <t>{{level}}%</t>",
+    "endedAt": "Terminó el día en <t>{{level}}%</t>",
+    "lastNight": "Anoche",
+    "nightBefore": "La noche anterior",
+    "sleepOf": "<b>{{asleep}}</b> de <t>{{need}}</t> necesarias",
+    "bedWake": "{{bed}} a {{wake}}",
+    "short": "<t>{{short}}</t> por debajo de tu necesidad.",
+    "metNeed": "Cubriste tu necesidad de sueño.",
+    "debt": "Deuda de sueño <t>{{debt}}</t>.",
+    "stages": "Fases (horas)",
+    "open": "Abrir {{name}}",
+    "nothing": "No se midió nada este día."
+  },
+  "search": {
+    "open": "Buscar métricas",
+    "title": "Buscar",
+    "placeholder": "Buscar métricas y páginas",
+    "label": "Buscar métricas y páginas",
+    "clear": "Borrar búsqueda",
+    "tabs": {
+      "all": "Todo",
+      "commands": "Páginas y acciones"
+    },
+    "recent": "Recientes",
+    "offUsual": "Fuera de lo habitual hoy",
+    "offUsualDay": "Fuera de lo habitual ese día",
+    "metrics": "Métricas",
+    "pages": "Páginas",
+    "actions": "Acciones",
+    "noData": "Sin datos",
+    "noMatch": "Nada coincide con «{{query}}».",
+    "hint": "Aquí aparecen las métricas que abres y las que más se alejan de lo habitual.",
+    "valueSpoken": "{{label}}, {{value}}",
+    "noDataSpoken": "{{label}}, sin datos",
+    "page": {
+      "home": "Inicio",
+      "recovery": "Recovery",
+      "sleep": "Sueño",
+      "strain": "Strain",
+      "health": "Salud",
+      "pulseAge": "Pulse Age",
+      "monitor": "Health Monitor",
+      "stress": "Stress Monitor",
+      "fitness": "Forma física",
+      "heartRate": "Frecuencia cardíaca",
+      "journal": "Diario",
+      "insights": "Datos de hábitos",
+      "trends": "Tendencias",
+      "reports": "Informes",
+      "activities": "Actividades",
+      "coach": "Coach",
+      "settings": "Ajustes",
+      "checkIn": "Registrar",
+      "customize": "Personalizar Inicio",
+      "review": "Resumen del día"
+    }
+  },
+  "customize": {
+    "open": "Personalizar Inicio",
+    "title": "Personalizar Inicio",
+    "intro": "Tus puntuaciones siempre van primero. Desactiva lo que no uses y ordena el resto como lo lees.",
+    "area": {
+      "top": "Bajo los indicadores",
+      "day": "Mi día",
+      "side": "Panel"
+    },
+    "section": {
+      "heartRate": {
+        "label": "Frecuencia cardíaca",
+        "hint": "La lectura en vivo o la última de hoy"
+      },
+      "monitors": {
+        "label": "Health Monitor y Stress Monitor",
+        "hint": "Las dos tarjetas bajo los indicadores, o los recuentos de tu teléfono"
+      },
+      "coach": {
+        "label": "Tarjetas del Coach",
+        "hint": "Las notas de hoy sobre esfuerzo, recuperación y sueño"
+      },
+      "day": {
+        "label": "Panorama y resumen del día",
+        "hint": "Plan por la mañana, resumen por la tarde"
+      },
+      "activities": {
+        "label": "Actividades",
+        "hint": "Entrenamientos, sueño y siestas"
+      },
+      "tonight": {
+        "label": "Sueño de esta noche",
+        "hint": "Hora de dormir del Sleep Planner"
+      },
+      "journal": {
+        "label": "Mi diario",
+        "hint": "Los registros de esta semana"
+      },
+      "energy": {
+        "label": "Energy Bank",
+        "hint": "Carga y descarga a lo largo del día"
+      },
+      "dashboard": {
+        "label": "Mi panel",
+        "hint": "Tus métricas elegidas"
+      },
+      "strainRecovery": {
+        "label": "Gráfico de Strain y recuperación",
+        "hint": "Los últimos 7 días"
+      },
+      "week": {
+        "label": "Resumen semanal",
+        "hint": "Enlace al último informe semanal"
+      }
+    },
+    "show": "Mostrar {{label}}",
+    "moveUp": "Subir {{label}}",
+    "moveDown": "Bajar {{label}}",
+    "shown": "{{label}} visible",
+    "hidden": "{{label}} oculto",
+    "moved": "{{label}} en la posición {{position}} de {{total}}",
+    "saving": "Guardando",
+    "reset": "Restablecer",
+    "savedTitle": "Guardado",
+    "savedBody": "Inicio muestra ahora tu diseño.",
+    "saveFailed": "No se pudo guardar el diseño de Inicio. Inténtalo de nuevo.",
+    "onlyScores": "Inicio mostrará solo tus puntuaciones."
   }
 }

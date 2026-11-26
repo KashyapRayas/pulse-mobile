@@ -89,12 +89,12 @@
     "title": "Breathe",
     "aboutTitle": "About Breathe",
     "aboutBody": "Paced breathing with a circle and haptic cues: one light pulse as you breathe in, two as you breathe out, none on a hold. With your band live, Pulse shows your heart rate; when the band also sends beat-to-beat intervals, it takes a one-minute HRV reading (RMSSD) before and after. Sessions stay on this phone and scores don’t use them.",
-    "hrvLine": "HRV {{value}} ms · RMSSD, last minute",
+    "hrvLine": "HRV {{value}} ms (RMSSD, last minute)",
     "hrvMeasuring": "HRV: measuring…",
     "length": "Length",
     "breaths": "Breaths",
     "left": "left",
-    "leftLabel": "{{time}} left · {{title}}",
+    "leftLabel": "{{time}} left, {{title}}",
     "endSession": "End session",
     "goAgain": "Go again",
     "changePace": "Change pace",
@@ -141,7 +141,7 @@
     "hrvShort": "HRV",
     "breathing": "Breathing",
     "recentLabel": "{{when}}: {{title}}, {{duration}}, {{aside}}",
-    "whenDuration": "{{when}} · {{duration}}",
+    "whenDuration": "{{when}}, {{duration}}",
     "whenAt": "{{day}}, {{time}}",
     "cardBody": "A few minutes of slow, paced breathing to settle. With your band live, see your heart rate fall and your HRV before and after."
   }

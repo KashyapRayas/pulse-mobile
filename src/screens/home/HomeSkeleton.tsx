@@ -16,6 +16,8 @@ import { SectionShell } from "@/ui/shells/SectionShell";
 import { Skeleton, SkeletonText } from "@/ui/Skeleton";
 import { ENERGY_INFO, STRAIN_RECOVERY_INFO, TONIGHT_INFO } from "../_lib/info";
 import { statIcon } from "../_lib/view";
+import { useSelectedDay } from "@/ui/shells/DateSwitcher";
+import { HomeHeaderActions } from "./HeaderActions";
 
 const rows = (n: number, Row: (i: number) => React.ReactNode) => Array.from({ length: n }, (_, i) => <Fragment key={i}>{Row(i)}</Fragment>);
 
@@ -63,11 +65,13 @@ function InsightSkeleton() {
 /** `stats`: My Dashboard's chosen metrics (getHome's order), so the skeleton has as many rows as the page will. */
 export function HomeSkeleton({ stats = DASHBOARD_DEFAULT }: { stats?: DashboardKey[] }) {
   const { t } = useTranslation("home");
+  const [day] = useSelectedDay();
   return (
     <PageShell
       loading
       title={t("title")}
       layout="home"
+      headerRight={<HomeHeaderActions d={day} />}
       slots={{
         top: (
           <View accessibilityState={{ busy: true }} className="-mt-2">
@@ -104,7 +108,7 @@ export function HomeSkeleton({ stats = DASHBOARD_DEFAULT }: { stats?: DashboardK
             </View>
             <SectionShell variant="section" title={t("section.myDay")} action={<View accessibilityElementsHidden className="size-10 rounded-full bg-muted" />}>
               <View className="gap-3">
-                <BannerSkeleton />
+                <Skeleton className="h-24 rounded-2xl" />
                 <SectionShell variant="card" title={t("activities.today")} action={ICON_SLOT}>
                   <TimelineSkeleton />
                   <Skeleton className="mt-3 h-12 rounded-xl" />

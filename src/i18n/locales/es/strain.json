@@ -177,8 +177,8 @@
   },
   "costCaption": {
     "notEnough": "Aún no hay suficientes datos: {{have}} de {{needed}}",
-    "based": "{{bounce}} · {{sessions}}",
-    "early": "{{bounce}} · {{sessions}}, estimación temprana"
+    "based": "{{bounce}}, {{sessions}}",
+    "early": "{{bounce}}, {{sessions}}, estimación temprana"
   },
   "costSentence": {
     "needs": "Pulse necesita {{needed}} con un Recovery a la mañana siguiente para medir lo que te cuestan; hasta ahora tiene {{have}}.",
@@ -210,8 +210,8 @@
   "detected": {
     "spoken": "Actividad detectada, probablemente {{label}}, frecuencia cardíaca promedio {{hr}} bpm, de {{start}} a {{end}}. No es un entrenamiento registrado.",
     "title": "Detectada",
-    "line": "{{label}} · {{hr}} bpm prom.",
-    "lineSteps": "{{label}} · {{hr}} bpm prom. · {{steps}} pasos",
+    "line": "{{label}}, {{hr}} bpm prom.",
+    "lineSteps": "{{label}}, {{hr}} bpm prom., {{steps}} pasos",
     "note": "Actividad detectada: 12 minutos o más de frecuencia cardíaca elevada sin un entrenamiento registrado, etiquetada según tus pasos. Se muestra como referencia y no suma nada a tus puntuaciones."
   },
   "menu": {
@@ -278,7 +278,7 @@
   },
   "target": {
     "label": "Strain Target",
-    "range": "{{low}} - {{high}}",
+    "range": "{{low}} a {{high}}",
     "spoken": "Strain Target de {{low}} a {{high}}",
     "spokenReason": "Strain Target: {{reason}}"
   },
@@ -365,11 +365,11 @@
     "belowZone1": "Por debajo de Zone 1",
     "zone": "Zone {{zone}}",
     "waiting": "Esperando un latido",
-    "zoneWithBand": "{{zone}} · banda de hoy {{floor}}–{{ceiling}} bpm",
+    "zoneWithBand": "{{zone}}, banda de hoy {{floor}}–{{ceiling}} bpm",
     "today": "Hoy",
     "readError": "No se pudieron leer las puntuaciones de hoy.",
     "reading": "Leyendo las puntuaciones de hoy…",
-    "targetLine": "El objetivo de hoy es {{low}} - {{high}}.",
+    "targetLine": "El objetivo de hoy es {{low}} a {{high}}.",
     "noTarget": "Aún no hay Strain Target hoy: necesita el Recovery de hoy. El Coach usa solo tu banda de frecuencia cardíaca.",
     "recoveryLine": "Un Recovery de {{value}}% define cuánto te deja apretar el Coach.",
     "notSynced": "La frecuencia cardíaca de hoy aún no se ha sincronizado, así que el Day Strain parte de este entrenamiento.",
@@ -378,7 +378,7 @@
     "noHeartRate": "Aún no hay frecuencia cardíaca",
     "workoutStrain": "Strain del entrenamiento",
     "time": "Tiempo",
-    "avgMax": "{{avg}} prom. · {{max}} máx.",
+    "avgMax": "{{avg}} prom., {{max}} máx.",
     "verdictPast": "Pasaste el objetivo de hoy: prioriza dormir esta noche.",
     "verdictInside": "Dentro del objetivo de hoy.",
     "verdictBelow": "{{value}} por debajo del objetivo de hoy.",
@@ -389,7 +389,7 @@
     "keptOnPhone": "Se guarda en este teléfono; Fitbit sincroniza el entrenamiento en sí con tus puntuaciones.",
     "when": "{{day}}, {{time}}",
     "recentSpoken": "{{when}}: {{duration}}, Strain del entrenamiento {{value}} por ciento",
-    "recentLine": "{{duration}} · {{bpm}} bpm prom.",
+    "recentLine": "{{duration}}, {{bpm}} bpm prom.",
     "strain": "Strain"
   }
 }

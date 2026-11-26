@@ -32,8 +32,8 @@ describe("Activity Cost wording", () => {
   });
 
   it("captions how many workouts it rests on, or how many more it needs", () => {
-    expect(costCaption(run(-8, 2), 4)).toBe("Back to baseline in about 2 days · 12 runs");
-    expect(costCaption(run(-8, 2, 5), 4)).toBe("Back to baseline in about 2 days · 5 runs, early estimate");
+    expect(costCaption(run(-8, 2), 4)).toBe("Back to baseline in about 2 days, 12 runs");
+    expect(costCaption(run(-8, 2, 5), 4)).toBe("Back to baseline in about 2 days, 5 runs, early estimate");
     expect(costCaption(short, 4)).toBe("Not enough data yet: 2 of 4 strength sessions");
   });
 

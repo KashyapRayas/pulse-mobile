@@ -50,7 +50,7 @@
     "hoursOfSleep": "Hours of sleep",
     "sleepNeeded": "Sleep needed",
     "calibrating": "Your need settles after 7 nights. Using {{need}} until then.",
-    "healthyMinimum": "Healthy Minimum",
+    "healthyMinimum": "Healthy minimum",
     "recentStrain": "Recent Strain",
     "sleepDebt": "Sleep Debt",
     "naps": "Naps",
@@ -81,12 +81,12 @@
   },
   "weekly": {
     "sleep": "Sleep Performance",
-    "hours": "Hours vs. Needed (hours)",
-    "hoursNeed": "Hours vs. Needed (%)",
-    "restorative": "Restorative Sleep",
+    "hours": "Hours vs. needed (hours)",
+    "hoursNeed": "Hours vs. needed (%)",
+    "restorative": "Restorative sleep",
     "consistency": "Sleep Consistency",
-    "timeInBed": "Time in Bed",
-    "efficiency": "Sleep Efficiency"
+    "timeInBed": "Time in bed",
+    "efficiency": "Sleep efficiency"
   },
   "skeleton": {
     "healthyMinimum": "Healthy minimum",

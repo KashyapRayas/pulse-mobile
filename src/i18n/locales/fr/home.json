@@ -1,7 +1,7 @@
 {
   "title": "Accueil",
   "sync": {
-    "progress": "Synchronisation · {{percent}}%",
+    "progress": "Synchronisation, {{percent}}%",
     "syncing": "Synchronisation…"
   },
   "noBand": {
@@ -92,7 +92,7 @@
     "wokeAt": "Réveil à <t>{{time}}</t> avec <t>{{level}}%</t>",
     "charged": "Rechargé",
     "drained": "Épuisé",
-    "drainAt": "{{label}} à <t>{{time}}</t> · <t>{{amount}}</t>"
+    "drainAt": "{{label}} à <t>{{time}}</t>, <t>{{amount}}</t>"
   },
   "heartRate": {
     "title": "Fréquence cardiaque",
@@ -150,11 +150,11 @@
     "highStress": "Tu as passé {{duration}} en stress élevé."
   },
   "edit": {
-    "customizeLabel": "Personnaliser Mon tableau de bord",
-    "customize": "Personnaliser",
-    "pageTitle": "Personnaliser le tableau de bord",
-    "success": "Succès",
-    "saved": "Tes préférences ont été enregistrées.",
+    "customizeLabel": "Modifier Mon tableau de bord",
+    "customize": "Modifier",
+    "pageTitle": "Modifier Mon tableau de bord",
+    "success": "Enregistré",
+    "saved": "Mon tableau de bord affiche maintenant ces mesures.",
     "saveFailed": "Impossible d’enregistrer ton tableau de bord. Réessaie.",
     "saving": "Enregistrement…",
     "myDashboard": "Mon tableau de bord",
@@ -175,5 +175,169 @@
     "moved": "{{label}} déplacé à la position {{position}} sur {{total}}",
     "removed": "{{label}} retiré de l’Accueil",
     "added": "{{label}} ajouté à la position {{position}}"
+  },
+  "review": {
+    "headline": {
+      "target": "Strain Target de {{low}} à {{high}} %",
+      "plan": "Ton plan pour aujourd’hui",
+      "red": "Récupération faible. Garde une journée légère",
+      "yellow": "Récupération moyenne. Entraîne-toi avec prudence",
+      "shortSleep": "Manque de sommeil. Vas-y doucement",
+      "green": "Bien récupéré. Prêt pour une grosse journée",
+      "past": "Tu as dépassé ton Strain Target",
+      "inTarget": "Tu es dans ton Strain Target",
+      "lighter": "Une journée plus légère que ton objectif",
+      "strain": "Day Strain {{value}} %",
+      "recovery": "Recovery {{value}} %",
+      "day": "Ta journée"
+    },
+    "score": {
+      "sleep": "Sommeil",
+      "recovery": "Recovery",
+      "strain": "Strain"
+    },
+    "noData": "aucune donnée",
+    "openHint": "Ouvre le bilan complet de la journée",
+    "noAverage": "Pas encore de moyenne sur 7 jours",
+    "nearAverage": "Proche de ta moyenne sur 7 jours",
+    "aboveAverage": "{{amount}} au-dessus de ta moyenne sur 7 jours",
+    "belowAverage": "{{amount}} sous ta moyenne sur 7 jours",
+    "strain": "Strain",
+    "strainSoFar": "Strain jusqu’ici",
+    "ofTarget": "sur <t>{{low}}</t> à <t>{{high}} %</t>",
+    "target": {
+      "above": "Au-dessus de l’objectif",
+      "in": "Dans l’objectif",
+      "below": "Sous l’objectif"
+    },
+    "drivers": "Ce qui a fait bouger ta Recovery",
+    "driverSpoken": "{{label}}, {{points}}",
+    "stress": "Stress",
+    "stressLevels": "Temps à chaque niveau (heures)",
+    "started": "Début",
+    "nowAt": "Maintenant à <t>{{level}} %</t>",
+    "endedAt": "Journée finie à <t>{{level}} %</t>",
+    "lastNight": "La nuit dernière",
+    "nightBefore": "La nuit précédente",
+    "sleepOf": "<b>{{asleep}}</b> sur <t>{{need}}</t> nécessaires",
+    "bedWake": "{{bed}} à {{wake}}",
+    "short": "<t>{{short}}</t> sous ton besoin.",
+    "metNeed": "Tu as couvert ton besoin de sommeil.",
+    "debt": "Dette de sommeil <t>{{debt}}</t>.",
+    "stages": "Phases (heures)",
+    "open": "Ouvrir {{name}}",
+    "nothing": "Rien n’a été mesuré ce jour-là."
+  },
+  "search": {
+    "open": "Rechercher des mesures",
+    "title": "Recherche",
+    "placeholder": "Rechercher des mesures et des pages",
+    "label": "Rechercher des mesures et des pages",
+    "clear": "Effacer la recherche",
+    "tabs": {
+      "all": "Tout",
+      "commands": "Pages et actions"
+    },
+    "recent": "Récents",
+    "offUsual": "Inhabituel aujourd’hui",
+    "offUsualDay": "Inhabituel ce jour-là",
+    "metrics": "Mesures",
+    "pages": "Pages",
+    "actions": "Actions",
+    "noData": "Aucune donnée",
+    "noMatch": "Rien ne correspond à « {{query}} ».",
+    "hint": "Les mesures que tu ouvres apparaissent ici, avec celles qui s’écartent le plus de l’habitude.",
+    "valueSpoken": "{{label}}, {{value}}",
+    "noDataSpoken": "{{label}}, aucune donnée",
+    "page": {
+      "home": "Accueil",
+      "recovery": "Recovery",
+      "sleep": "Sommeil",
+      "strain": "Strain",
+      "health": "Santé",
+      "pulseAge": "Pulse Age",
+      "monitor": "Health Monitor",
+      "stress": "Stress Monitor",
+      "fitness": "Forme",
+      "heartRate": "Fréquence cardiaque",
+      "journal": "Journal",
+      "insights": "Analyses des comportements",
+      "trends": "Tendances",
+      "reports": "Rapports",
+      "activities": "Activités",
+      "coach": "Coach",
+      "settings": "Réglages",
+      "checkIn": "Faire le point",
+      "customize": "Personnaliser l’accueil",
+      "review": "Bilan du jour"
+    }
+  },
+  "customize": {
+    "open": "Personnaliser l’accueil",
+    "title": "Personnaliser l’accueil",
+    "intro": "Tes scores restent toujours en tête. Désactive ce que tu n’utilises pas et range le reste dans l’ordre où tu le lis.",
+    "area": {
+      "top": "Sous les cadrans",
+      "day": "Ma journée",
+      "side": "Tableau de bord"
+    },
+    "section": {
+      "heartRate": {
+        "label": "Fréquence cardiaque",
+        "hint": "La mesure en direct ou la dernière du jour"
+      },
+      "monitors": {
+        "label": "Health Monitor et Stress Monitor",
+        "hint": "Les deux cartes sous les cadrans, ou les comptes de ton téléphone"
+      },
+      "coach": {
+        "label": "Cartes du Coach",
+        "hint": "Les notes du jour sur l’effort, la récupération et le sommeil"
+      },
+      "day": {
+        "label": "Perspectives et bilan du jour",
+        "hint": "Le plan le matin, le résumé le soir"
+      },
+      "activities": {
+        "label": "Activités",
+        "hint": "Entraînements, sommeil et siestes"
+      },
+      "tonight": {
+        "label": "Sommeil de cette nuit",
+        "hint": "L’heure du coucher du Sleep Planner"
+      },
+      "journal": {
+        "label": "Mon journal",
+        "hint": "Les points de cette semaine"
+      },
+      "energy": {
+        "label": "Energy Bank",
+        "hint": "Recharge et dépense au fil de la journée"
+      },
+      "dashboard": {
+        "label": "Mon tableau de bord",
+        "hint": "Tes mesures choisies"
+      },
+      "strainRecovery": {
+        "label": "Graphique Strain et récupération",
+        "hint": "Les 7 derniers jours"
+      },
+      "week": {
+        "label": "Bilan de la semaine",
+        "hint": "Lien vers le dernier rapport hebdomadaire"
+      }
+    },
+    "show": "Afficher {{label}}",
+    "moveUp": "Monter {{label}}",
+    "moveDown": "Descendre {{label}}",
+    "shown": "{{label}} affiché",
+    "hidden": "{{label}} masqué",
+    "moved": "{{label}} en position {{position}} sur {{total}}",
+    "saving": "Enregistrement",
+    "reset": "Rétablir par défaut",
+    "savedTitle": "Enregistré",
+    "savedBody": "L’accueil affiche maintenant ta disposition.",
+    "saveFailed": "Impossible d’enregistrer la disposition de l’accueil. Réessaie.",
+    "onlyScores": "L’accueil n’affichera que tes scores."
   }
 }

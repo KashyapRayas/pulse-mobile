@@ -54,7 +54,7 @@ const numbersOf = (f: FoodItem) =>
     f.fat !== null && i18n.t("nutrition:numbers.fat", { value: grams(f.fat) }),
   ]
     .filter(Boolean)
-    .join(" · ");
+    .join(", ");
 
 /** One food: how it was logged, name and portion, numbers, time and source; edit and delete for Pulse's own. */
 function FoodRow({ f, timeZone, onDelete, onSeparate }: { f: FoodItem; timeZone: string; onDelete: () => void; onSeparate: (on: boolean) => void }) {
@@ -73,7 +73,7 @@ function FoodRow({ f, timeZone, onDelete, onSeparate }: { f: FoodItem; timeZone:
           {f.portion ? <Text className="font-normal text-muted-foreground">{`  ${f.portion}`}</Text> : null}
         </Text>
         <Text className={cn("text-meta tabular-nums", f.duplicateOf && "text-muted-foreground line-through")}>{numbersOf(f)}</Text>
-        <Text className={cn(CAPTION, "tabular-nums")}>{from ? `${time} · ${from}` : time}</Text>
+        <Text className={cn(CAPTION, "tabular-nums")}>{from ? `${time}, ${from}` : time}</Text>
         {!!f.duplicateOf && <RowLink label={tr("row.countToo")} onPress={() => onSeparate(true)} />}
         {f.separate && !f.duplicateOf && <RowLink label={tr("row.undo")} onPress={() => onSeparate(false)} />}
       </View>
@@ -102,7 +102,7 @@ function RowLink({ label, onPress }: { label: string; onPress: () => void }) {
 /** One period's daily averages: a flat tile on the card, calories big, the macros as a caption row, then the days logged. */
 function AverageTile({ title, a }: { title: string; a: Averages }) {
   const { t: tr } = useTranslation("nutrition");
-  const macros = [tr("numbers.protein", { value: show(a.protein, grams) }), tr("numbers.carbs", { value: show(a.carbs, grams) }), tr("numbers.fat", { value: show(a.fat, grams) })].join(" · ");
+  const macros = [tr("numbers.protein", { value: show(a.protein, grams) }), tr("numbers.carbs", { value: show(a.carbs, grams) }), tr("numbers.fat", { value: show(a.fat, grams) })].join(", ");
   const days = tr("averages.days", { days: a.days, span: a.span });
   return (
     <View accessible accessibilityLabel={`${title}: ${a.days === 0 ? tr("averages.none") : `${tr("numbers.kcal", { value: show(a.kcal, grouped) })}, ${macros}, ${days}`}`} className="min-w-0 flex-1 gap-2 rounded-xl bg-inset p-3">
@@ -253,7 +253,7 @@ export function NutritionScreen() {
                   {vm.unlisted && (
                     <SectionShell variant="card" title={t("screen.unlistedTitle")} info={false}>
                       <Text className="text-meta tabular-nums">
-                        {[vm.unlisted.kcal !== null && t("numbers.kcal", { value: grouped(vm.unlisted.kcal) }), vm.unlisted.protein !== null && t("numbers.protein", { value: grams(vm.unlisted.protein) }), vm.unlisted.carbs !== null && t("numbers.carbs", { value: grams(vm.unlisted.carbs) }), vm.unlisted.fat !== null && t("numbers.fat", { value: grams(vm.unlisted.fat) })].filter(Boolean).join(" · ")}
+                        {[vm.unlisted.kcal !== null && t("numbers.kcal", { value: grouped(vm.unlisted.kcal) }), vm.unlisted.protein !== null && t("numbers.protein", { value: grams(vm.unlisted.protein) }), vm.unlisted.carbs !== null && t("numbers.carbs", { value: grams(vm.unlisted.carbs) }), vm.unlisted.fat !== null && t("numbers.fat", { value: grams(vm.unlisted.fat) })].filter(Boolean).join(", ")}
                       </Text>
                       <Text className={cn(CAPTION, "mt-1")}>{t("screen.unlistedNote")}</Text>
                     </SectionShell>

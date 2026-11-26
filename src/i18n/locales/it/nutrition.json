@@ -123,7 +123,7 @@
     "allRemoved": "Ogni cibo è stato rimosso. Scatta un’altra foto o inserisci il cibo tu.",
     "todayNothing": "Oggi: ancora nulla registrato",
     "todayKcal": "Oggi: {{kcal}} kcal",
-    "todayKcalProtein": "Oggi: {{kcal}} kcal · {{protein}} g di proteine",
+    "todayKcalProtein": "Oggi: {{kcal}} kcal, {{protein}} g di proteine",
     "noKeyTitle": "Le stime da foto usano la tua chiave di IA",
     "noKeyBody": "Aggiungi una chiave di Anthropic, OpenAI, Google o un altro provider nelle impostazioni del Coach, e Pulse potrà stimare un pasto da una foto o da poche parole. Fino ad allora, inserisci il cibo tu.",
     "cameraDenied": "Pulse ha bisogno della fotocamera per scattare la foto. Consentila quando Android lo chiede, oppure scegli una foto.",
@@ -202,7 +202,7 @@
   },
   "balance": {
     "title": "Calorie assunte e bruciate",
-    "summary": "{{in}} Cal assunte — {{out}} Cal bruciate",
+    "summary": "{{in}} Cal assunte, {{out}} Cal bruciate",
     "calIn": "{{in}} Cal assunte",
     "calOut": "{{out}} Cal bruciate",
     "noFood": "Nessun cibo registrato oggi",

@@ -110,7 +110,7 @@ export function TimeZonePicker({ value, onChange, invalid, inputRef, compact }: 
                   >
                     <Text numberOfLines={1} className="min-w-0 flex-1 text-body">
                       <Text className={cn("text-body text-foreground", selected ? "font-semibold" : "font-medium")}>{z.city}</Text>
-                      <Text className="text-body text-muted-foreground"> · {z.region}</Text>
+                      <Text className="text-body text-muted-foreground">, {z.region}</Text>
                     </Text>
                     <Text className="shrink-0 font-numeric text-meta tabular-nums text-foreground-secondary">{z.offset}</Text>
                     <View style={{ opacity: selected ? 1 : 0 }}>

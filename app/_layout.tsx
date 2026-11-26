@@ -3,7 +3,7 @@ import "../global.css";
 import { useEffect, useMemo } from "react";
 import * as Sentry from "@sentry/react-native";
 import { useFonts } from "expo-font";
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useNavigationContainerRef } from "expo-router";
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useNavigationContainerRef, usePathname } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import * as SystemUI from "expo-system-ui";
 import { StatusBar } from "expo-status-bar";
@@ -18,6 +18,9 @@ import { Inter_700Bold } from "@expo-google-fonts/inter/700Bold";
 import { i18n } from "@/i18n/config";
 import { useLanguage } from "@/i18n/useLanguage";
 import { useNotificationDeepLinks, useTabLinks } from "@/background/links";
+import { pushRecentMetric } from "@/actions/recentMetrics";
+import { metricOfPath } from "@/lib/search";
+import { isDashboardKey } from "@/lib/dashboard";
 import { Opening } from "@/screens/Opening";
 import { ScreenError } from "@/screens/ScreenError";
 import { ShellData } from "@/screens/ShellData";
@@ -105,6 +108,12 @@ function Screens({ onboarded }: { onboarded: boolean }) {
   // A tapped notification opens its screen once the navigator exists, a cold start included (src/background/links.ts).
   useNotificationDeepLinks();
   useTabLinks();
+  // Opening a metric's screen, however you got there, puts it first in search's Recent (src/actions/recentMetrics.ts).
+  const pathname = usePathname();
+  useEffect(() => {
+    const key = metricOfPath(pathname);
+    if (key && key !== "stress" && isDashboardKey(key)) void pushRecentMetric(key);
+  }, [pathname]);
   // Without a theme React Navigation paints its own white card and light grey ground while a screen slides in or out, and the
   // window itself is the system's default: a white flash on every push, back and sheet. Both are the app's ground instead.
   const theme = useMemo(() => {
@@ -165,6 +174,9 @@ function Screens({ onboarded }: { onboarded: boolean }) {
           <Stack.Screen name="dev/kit/metrics" />
           {/* Task pages (the web's drawers) are ordinary pages: a route in app/ rendering <TaskPage>, opened with push(). */}
           <Stack.Screen name="dashboard" />
+          <Stack.Screen name="customize-home" />
+          <Stack.Screen name="day-review" />
+          <Stack.Screen name="search" options={{ animation: "fade_from_bottom" }} />
           <Stack.Screen name="plus" />
           <Stack.Screen name="trends-metric" />
           <Stack.Screen name="ecg" />

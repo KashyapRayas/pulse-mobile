@@ -106,7 +106,7 @@ function statSpecs(row: DayRow | undefined, isToday: boolean, rows: Map<string, 
     strength: scored(weekly(rows, strengthDay), dailyReason, "min", "up", trendHref("strength")),
     // Fitbit's VO2 max, else Pulse's estimate (provisional), as the Fitness page shows it.
     vo2max: spec((r) => vo2Of(r)?.value, maybe(row && vo2Of(row)?.value, "no_data", !!(row && vo2Of(row)?.estimate)), "ml/kg/min", "up", "/health/fitness", "decimal1"),
-    lean_mass: scored(lean, "no_data", "kg", "neutral", metricHref("weight"), "decimal1"),
+    lean_mass: scored(lean, "no_data", "kg", "neutral", trendHref("lean_mass"), "decimal1"),
   } satisfies Record<ScoredKey, StatSpec>);
   for (const b of BODY_METRICS) {
     const pick = (r: DayRow) => (b.key === "weight" ? r.metrics?.weightKg : r.metrics?.bodyFatPct);

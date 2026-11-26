@@ -1,13 +1,16 @@
-import { useCallback, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { Trans, useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/config";
 import { STRESS_WORD } from "@/lib/bands";
 import { cardInfo } from "@/ui/shells/cardInfo";
-import { CalendarRange, Check, ChevronRight, CircleAlert, Info, Lightbulb, Maximize2, Moon, Plus, Sun, TriangleAlert } from "lucide-react-native";
+import { CalendarRange, Check, ChevronRight, CircleAlert, Info, Lightbulb, Maximize2, Plus, TriangleAlert } from "lucide-react-native";
 import { isDashboardKey } from "@/lib/dashboard";
 import { dashboardChoice } from "@/actions/dashboard";
+import { homeLayout } from "@/actions/homeLayout";
+import { visibleIn, type HomeArea, type HomeLayout } from "@/lib/homeLayout";
+import { getDayReview, type DayReviewVM } from "@/queries/dayReview";
 import type { QueryCtx } from "@/queries/ctx";
 import { addDays } from "@/lib/time";
 import { clock, DAY, formatDay, formatValue, MISSING, rangeLabel } from "@/lib/format";
@@ -32,7 +35,6 @@ import { SleepCard } from "@/ui/metrics/SleepCard";
 import { TickScale } from "@/ui/metrics/TickScale";
 import { EmptyState } from "@/ui/shells/EmptyState";
 import { InfoCardTrigger } from "@/ui/shells/InfoButton";
-import { InfoDialog } from "@/ui/shells/InfoDialog";
 import { MetricState } from "@/ui/shells/MetricState";
 import { HeaderSentinel, PageShell } from "@/ui/shells/PageShell";
 import { SectionShell } from "@/ui/shells/SectionShell";
@@ -52,6 +54,9 @@ import { sleepKey, sleepQuery } from "../sleep/SleepScreen";
 import { strainKey, strainQuery } from "../strain/StrainScreen";
 import { useScreenReady } from "@/ui/shells/useScreenReady";
 import { preloadWhenIdle, useScreen } from "../useScreen";
+import { CustomizeHomeButton } from "./CustomizeHome";
+import { HomeHeaderActions } from "./HeaderActions";
+import { DayReviewBanner } from "./DayReview";
 import { EditDashboardButton } from "./EditDashboard";
 import { DetectedRow } from "../activity/ActivityCost";
 import { HeartRateTile } from "./HeartRateTile";
@@ -87,11 +92,18 @@ const noBandInfo = () => ({
 const go = (href: string) => push(href);
 
 /** halo's Home with My Dashboard from Pulse's catalogue (src/queries/homeExtras.ts) and the stress tile's line. */
-type HomePageVM = Omit<HomeVM, "dashboard"> & { dashboard: { empty: HomeDashboard["empty"] }; stressChart: HomeDashboard["stressChart"] };
+type HomePageVM = Omit<HomeVM, "dashboard"> & {
+  dashboard: { empty: HomeDashboard["empty"] };
+  stressChart: HomeDashboard["stressChart"];
+  /** The day banner (src/queries/dayReview.ts). */
+  review: DayReviewVM | null;
+  /** Customize Home's sections and order (src/lib/homeLayout.ts). */
+  layout: HomeLayout;
+};
 const homeQuery = (d: string) => async (ctx: QueryCtx): Promise<HomePageVM> => {
-  const chosen = await dashboardChoice();
-  const [vm, dash] = await Promise.all([getHome(d, ctx), getHomeDashboard(d, ctx, chosen)]);
-  return { ...vm, keyStats: dash.keyStats, dashboard: { empty: dash.empty }, stressChart: dash.stressChart };
+  const [chosen, layout] = await Promise.all([dashboardChoice(), homeLayout()]);
+  const [vm, dash, review] = await Promise.all([getHome(d, ctx), getHomeDashboard(d, ctx, chosen), getDayReview(d, ctx)]);
+  return { ...vm, keyStats: dash.keyStats, dashboard: { empty: dash.empty }, stressChart: dash.stressChart, review, layout };
 };
 const homeKey = (d: string) => ["home", d] as const;
 
@@ -141,10 +153,104 @@ function Home({ vm, timeZone }: { vm: HomePageVM; timeZone: string }) {
   const imported = useMemo(() => vm.activities.items.flatMap((it) => (it.kind === "activity" ? [{ id: it.id, start: it.start, end: it.end }] : [])), [vm.activities.items]);
   const recorded = useRecordedRows(d, timeZone, imported);
 
+  const show = (area: HomeArea) => visibleIn(vm.layout, area);
+  const topCards: Record<"heartRate" | "monitors" | "coach", ReactNode> = {
+    heartRate: vm.isToday && <HeartRateTile key="heartRate" phoneOnly={!!vm.phone} />,
+    monitors: vm.phone ? (
+      <PhoneActivity key="monitors" stats={vm.phone} link={{ d, today }} />
+    ) : (
+      <View key="monitors" className="flex-row gap-3">
+        <View className="min-w-0 flex-1 flex-row"><MonitorCard vm={vm} href={at("/health/monitor")} /></View>
+        <View className="min-w-0 flex-1 flex-row"><StressCard vm={vm} href={at("/health/stress")} timeZone={timeZone} /></View>
+      </View>
+    ),
+    coach: vm.insights.length > 0 && <HomeInsight key="coach" day={d} items={vm.insights} />,
+  };
+  const dayCards: Record<"day" | "activities" | "tonight" | "journal" | "energy", ReactNode> = {
+    day: vm.review && <DayReviewBanner key="day" review={vm.review} today={today} />,
+    activities: (
+      <SectionShell key="activities" variant="card" title={vm.activities.title} info={vm.isToday ? false : cardInfo("Activities")} action={<IconLink href="/activities" label={t("activities.all")} icon={Maximize2} />}>
+        {vm.activities.items.length || vm.activities.detected.length || recorded.length ? (
+          <View className="gap-1.5">
+            {/* Imported and recorded activities in one list, newest first, as the import orders its own. */}
+            {[
+              ...vm.activities.items.map((it) => ({ start: it.start, key: it.id, node:
+                it.kind === "activity" ? (
+                  <ActivityCard key={it.id} name={it.name} kind={it.activityKind} strain={it.strain} start={it.start} end={it.end} distanceKm={it.distanceKm} paceS={it.paceS} href={activityHref(it.id)} timeZone={timeZone} />
+                ) : (
+                  <SleepCard key={it.id} kind={it.kind} minutes={it.minutes} start={it.start} end={it.end} href={it.kind === "nap" ? napHref(it.id) : at("/sleep")} timeZone={timeZone} />
+                ) })),
+              ...recorded.map((row) => ({ start: row.start, key: row.session.id, node: <RecordedActivityCard key={row.session.id} row={row} timeZone={timeZone} /> })),
+            ].sort((a, b) => b.start - a.start).map((row) => row.node)}
+            {vm.activities.detected.map((it) => <DetectedRow key={`detected-${it.start}`} item={it} timeZone={timeZone} />)}
+          </View>
+        ) : (
+          <EmptyState body={vm.isToday ? t("activities.emptyToday") : t("activities.emptyDay")} />
+        )}
+        {/* Add explains importing from Google; Start records one live on the phone (WHOOP's pair of buttons). */}
+        <View className="mt-3 flex-row gap-3">
+          <View className="min-w-0 flex-1">
+            <InfoCardTrigger info={ADD_ACTIVITY_INFO} activeScale={0.96} className={vm.isToday ? `${CARD_BUTTON} px-3` : CARD_BUTTON}>
+              <CardButtonContent icon={Plus} label={t("activities.add")} compact={vm.isToday} />
+            </InfoCardTrigger>
+          </View>
+          {vm.isToday && <StartActivityButton />}
+        </View>
+      </SectionShell>
+    ),
+    tonight: vm.isToday && (
+      <SectionShell key="tonight" variant="card" title={t("section.tonight")} info={TONIGHT_INFO} fill action={<IconLink href={at("/sleep?section=planner")} label={t("tonight.openPlanner")} icon={ChevronRight} />}>
+        <MetricState
+          metric={vm.tonight}
+          skeleton={null}
+          renderReason={(r, meta) => (
+            <View className="my-auto">
+              <ReasonPlaceholder reason={r} nightsLeft={meta.nightsLeft} size="md" copy={r === "calibrating" ? t("noBand.plannerNeeds") : undefined} />
+            </View>
+          )}
+        >
+          {(plan) => <TonightPlan plan={plan} timeZone={timeZone} />}
+        </MetricState>
+      </SectionShell>
+    ),
+    journal: <JournalWeek key="journal" vm={vm} at={at} />,
+    energy: <EnergyCard key="energy" vm={vm} timeZone={timeZone} />,
+  };
+  // One point cannot show a trend.
+  const chart = vm.strainRecovery.filter((p) => p.strain !== null || p.recovery !== null).length >= 2;
+  const sideCards: Record<"dashboard" | "strainRecovery" | "week", ReactNode> = {
+    dashboard: (
+      <SectionShell key="dashboard" variant="section" title={t("section.myDashboard")} action={<EditDashboardButton keys={dashboardKeysShown} empty={vm.dashboard.empty} />}>
+        <View accessibilityRole="list" className="gap-2">
+          {vm.keyStats.map((s) =>
+            s.key === "stress" ? <StressTile key={s.key} vm={vm} href={at("/health/stress")} timeZone={timeZone} /> : <KeyStatRow key={s.key} variant="card" {...statProps(s, { d, today })} />,
+          )}
+        </View>
+      </SectionShell>
+    ),
+    strainRecovery: chart && (
+      <SectionShell key="strainRecovery" variant="card" title={t("section.strainRecovery")} info={STRAIN_RECOVERY_INFO} fill>
+        <StrainRecoveryChart points={vm.strainRecovery} today={d} />
+      </SectionShell>
+    ),
+    week: vm.weeklyTeaser && (
+      <GradientBanner key="week" from={c["banner-from"]} to={c["banner-to"]} role="link" onPress={() => go(`/reports/${vm.weeklyTeaser!.period}`)}>
+        <Icon icon={CalendarRange} size={22} tone="foreground" strokeWidth={1.5} />
+        <Text className="min-w-0 flex-1 text-body font-semibold">{t("section.weekReview")}</Text>
+        <Text className="font-numeric text-caption font-medium tabular-nums text-foreground-secondary">{rangeLabel(vm.weeklyTeaser.start, vm.weeklyTeaser.end)}</Text>
+        <Icon icon={ChevronRight} size={20} tone="foreground-secondary" strokeWidth={1.75} />
+      </GradientBanner>
+    ),
+  };
+  const top = show("top").map((k) => topCards[k as keyof typeof topCards]).filter(Boolean);
+  const day = show("day").map((k) => dayCards[k as keyof typeof dayCards]).filter(Boolean);
+  const side = show("side").map((k) => sideCards[k as keyof typeof sideCards]).filter(Boolean);
+
   return (
     <PageShell
       title={t("title")}
       layout="home"
+      headerRight={<HomeHeaderActions d={d} />}
       rings={{
         sleep: { value: dials.sleep.value, href: at("/sleep") },
         recovery: { value: dials.recovery.value, href: at("/recovery") },
@@ -192,117 +298,24 @@ function Home({ vm, timeZone }: { vm: HomePageVM; timeZone: string }) {
         ),
         main: (
           <View className="gap-8">
-            <View className="-mt-2 gap-6">
-              {vm.isToday && <HeartRateTile phoneOnly={!!vm.phone} />}
-              {vm.phone ? (
-                <PhoneActivity stats={vm.phone} link={{ d, today }} />
-              ) : (
-                <View className="flex-row gap-3">
-                  <View className="min-w-0 flex-1 flex-row"><MonitorCard vm={vm} href={at("/health/monitor")} /></View>
-                  <View className="min-w-0 flex-1 flex-row"><StressCard vm={vm} href={at("/health/stress")} timeZone={timeZone} /></View>
-                </View>
-              )}
-              {vm.insights.length > 0 && <HomeInsight day={d} items={vm.insights} />}
-              {vm.monitorAlert && <MonitorAlert alert={vm.monitorAlert} href={at("/health/monitor")} />}
-            </View>
-            <SectionShell variant="section" title={t("section.myDay")} action={<PlusKey label={vm.isToday ? t("add.today") : t("add.day", { day: formatDay(d, DAY.short) })} />}>
-              <View className="gap-3">
-                {vm.outlook && <DayBanner outlook={vm.outlook} />}
-                <SectionShell variant="card" title={vm.activities.title} info={vm.isToday ? false : cardInfo("Activities")} action={<IconLink href="/activities" label={t("activities.all")} icon={Maximize2} />}>
-                  {vm.activities.items.length || vm.activities.detected.length || recorded.length ? (
-                    <View className="gap-1.5">
-                      {/* Imported and recorded activities in one list, newest first, as the import orders its own. */}
-                      {[
-                        ...vm.activities.items.map((it) => ({ start: it.start, key: it.id, node:
-                          it.kind === "activity" ? (
-                            <ActivityCard key={it.id} name={it.name} kind={it.activityKind} strain={it.strain} start={it.start} end={it.end} distanceKm={it.distanceKm} paceS={it.paceS} href={activityHref(it.id)} timeZone={timeZone} />
-                          ) : (
-                            <SleepCard key={it.id} kind={it.kind} minutes={it.minutes} start={it.start} end={it.end} href={it.kind === "nap" ? napHref(it.id) : at("/sleep")} timeZone={timeZone} />
-                          ) })),
-                        ...recorded.map((row) => ({ start: row.start, key: row.session.id, node: <RecordedActivityCard key={row.session.id} row={row} timeZone={timeZone} /> })),
-                      ].sort((a, b) => b.start - a.start).map((row) => row.node)}
-                      {vm.activities.detected.map((it) => <DetectedRow key={`detected-${it.start}`} item={it} timeZone={timeZone} />)}
-                    </View>
-                  ) : (
-                    <EmptyState body={vm.isToday ? t("activities.emptyToday") : t("activities.emptyDay")} />
-                  )}
-                  {/* Add explains importing from Google; Start records one live on the phone (WHOOP's pair of buttons). */}
-                  <View className="mt-3 flex-row gap-3">
-                    <View className="min-w-0 flex-1">
-                      <InfoCardTrigger info={ADD_ACTIVITY_INFO} activeScale={0.96} className={vm.isToday ? `${CARD_BUTTON} px-3` : CARD_BUTTON}>
-                        <CardButtonContent icon={Plus} label={t("activities.add")} compact={vm.isToday} />
-                      </InfoCardTrigger>
-                    </View>
-                    {vm.isToday && <StartActivityButton />}
-                  </View>
-                </SectionShell>
-                {vm.isToday && (
-                  <SectionShell variant="card" title={t("section.tonight")} info={TONIGHT_INFO} fill action={<IconLink href={at("/sleep?section=planner")} label={t("tonight.openPlanner")} icon={ChevronRight} />}>
-                    <MetricState
-                      metric={vm.tonight}
-                      skeleton={null}
-                      renderReason={(r, meta) => (
-                        <View className="my-auto">
-                          <ReasonPlaceholder reason={r} nightsLeft={meta.nightsLeft} size="md" copy={r === "calibrating" ? t("noBand.plannerNeeds") : undefined} />
-                        </View>
-                      )}
-                    >
-                      {(plan) => <TonightPlan plan={plan} timeZone={timeZone} />}
-                    </MetricState>
-                  </SectionShell>
-                )}
-                <JournalWeek vm={vm} at={at} />
-                <EnergyCard vm={vm} timeZone={timeZone} />
+            {/* The monitor alert is not a section: hiding the monitors never hides a warning. */}
+            {(top.length > 0 || vm.monitorAlert) && (
+              <View className="-mt-2 gap-6">
+                {top}
+                {vm.monitorAlert && <MonitorAlert alert={vm.monitorAlert} href={at("/health/monitor")} />}
               </View>
-            </SectionShell>
-          </View>
-        ),
-        aside: (
-          <SectionShell
-            variant="section"
-            title={t("section.myDashboard")}
-            action={<EditDashboardButton keys={dashboardKeysShown} empty={vm.dashboard.empty} />}
-          >
-            <View accessibilityRole="list" className="gap-2">
-              {vm.keyStats.map((s) =>
-                s.key === "stress" ? <StressTile key={s.key} vm={vm} href={at("/health/stress")} timeZone={timeZone} /> : <KeyStatRow key={s.key} variant="card" {...statProps(s, { d, today })} />,
-              )}
-            </View>
-            {/* One point cannot show a trend. */}
-            {vm.strainRecovery.filter((p) => p.strain !== null || p.recovery !== null).length >= 2 && (
-              <SectionShell variant="card" title={t("section.strainRecovery")} info={STRAIN_RECOVERY_INFO} fill className="mt-3">
-                <StrainRecoveryChart points={vm.strainRecovery} today={d} />
+            )}
+            {day.length > 0 && (
+              <SectionShell variant="section" title={t("section.myDay")} action={<PlusKey label={vm.isToday ? t("add.today") : t("add.day", { day: formatDay(d, DAY.short) })} />}>
+                <View className="gap-3">{day}</View>
               </SectionShell>
             )}
-          </SectionShell>
+          </View>
         ),
-        bottom: vm.weeklyTeaser && (
-          <GradientBanner from={c["banner-from"]} to={c["banner-to"]} role="link" onPress={() => go(`/reports/${vm.weeklyTeaser!.period}`)}>
-            <Icon icon={CalendarRange} size={22} tone="foreground" strokeWidth={1.5} />
-            <Text className="min-w-0 flex-1 text-body font-semibold">{t("section.weekReview")}</Text>
-            <Text className="font-numeric text-caption font-medium tabular-nums text-foreground-secondary">{rangeLabel(vm.weeklyTeaser.start, vm.weeklyTeaser.end)}</Text>
-            <Icon icon={ChevronRight} size={20} tone="foreground-secondary" strokeWidth={1.75} />
-          </GradientBanner>
-        ),
+        aside: side.length > 0 && <View className="gap-3">{side}</View>,
+        bottom: <CustomizeHomeButton />,
       }}
     />
-  );
-}
-
-function DayBanner({ outlook }: { outlook: NonNullable<HomeVM["outlook"]> }) {
-  const { c } = useTheme();
-  const [open, setOpen] = useState(false);
-  const review = outlook.kind === "review";
-  const glyph = review ? Moon : Sun;
-  return (
-    <>
-      <GradientBanner from={review ? c["banner-from"] : c["outlook-from"]} to={review ? c["banner-to"] : c["outlook-to"]} role="button" onPress={() => setOpen(true)}>
-        <Icon icon={glyph} size={22} tone="foreground-secondary" strokeWidth={1.5} />
-        <Text className="min-w-0 flex-1 truncate text-body font-semibold">{outlook.title}</Text>
-        <Icon icon={ChevronRight} size={20} tone={review ? "coach-text" : "outlook-accent"} strokeWidth={1.75} />
-      </GradientBanner>
-      <InfoDialog open={open} onClose={() => setOpen(false)} title={outlook.title} icon={<Icon icon={glyph} size={28} tone="foreground" strokeWidth={1.5} />} body={outlook.body} />
-    </>
   );
 }
 

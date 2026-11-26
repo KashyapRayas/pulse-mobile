@@ -96,5 +96,7 @@
     "low": "Low",
     "medium": "Medium",
     "high": "High"
-  }
+  },
+  "range": "{{from}} to {{to}}",
+  "dateRange": "{{from}} to {{to}}"
 }

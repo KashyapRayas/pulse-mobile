@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { setLocale } from "./locale";
-import { agoShort, DAY, FORMATS, dayLabel, dayPhrase, pillLabel, dialAriaLabel, durationWords, formatDay, formatValue, rangeLabel, unitLabel } from "./format";
+import { agoShort, DAY, FORMATS, dayLabel, dayPhrase, pillLabel, dialAriaLabel, durationWords, formatDay, formatValue, rangeLabel, unitLabel, valueRange } from "./format";
 
 describe("format", () => {
   it("shortens sync ages for the header", () => {
@@ -36,7 +36,9 @@ describe("format", () => {
     expect(pillLabel("2026-09-28", "2026-10-02")).toBe("Mon., Sep. 28");
     expect(pillLabel("2026-05-04", "2026-10-02")).toBe("Mon., May 4");
     expect(pillLabel("2026-10-01", "2026-10-02")).toBe("Yesterday");
-    expect(rangeLabel("2026-09-22", "2026-09-28")).toBe("Sep 22 - Sep 28");
+    expect(rangeLabel("2026-09-22", "2026-09-28")).toBe("Sep 22 to 28");
+    expect(rangeLabel("2026-09-29", "2026-10-05")).toBe("Sep 29 to Oct 5");
+    expect(valueRange("5.6", "7.6")).toBe("5.6\u00a0to\u00a07.6");
     expect(dayLabel("2026-03-01", "2026-03-02")).toBe("Yesterday");
     expect(formatDay("2026-09-28", DAY.long)).toBe("Monday, September 28");
     expect(formatDay("2026-09", DAY.monthYear)).toBe("September 2026");

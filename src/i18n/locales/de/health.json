@@ -44,7 +44,7 @@
     "outperforming": "Übertrifft das Ziel",
     "onTrack": "Auf Kurs",
     "roomToImprove": "Luft nach oben",
-    "bodyOutperforming": "Mit deinem Wert für {{name}} stärkst du deine langfristige Gesundheit. Bleib dran, um den Nutzen zu halten.",
+    "bodyOutperforming": "Das nimmt deinem Pulse Age Jahre ab. Halte deinen Wert für {{name}} hier, um den Vorteil zu behalten.",
     "bodyUnder": "Dein Wert für {{name}} fügt deinem Pulse Age Jahre hinzu. Wenn du ihn dem Ziel für dein Alter näherbringst, nimmst du sie wieder ab.",
     "bodyOnTrack": "Dein Wert für {{name}} liegt nah am Ziel für dein Alter. Kleine Fortschritte summieren sich über die Jahre."
   },
@@ -105,7 +105,7 @@
     "pageAt": "{{day}} um {{time}}"
   },
   "live": {
-    "rmssd": "HRV {{rmssd}} ms · RMSSD, letzte Minute",
+    "rmssd": "HRV {{rmssd}} ms, RMSSD, letzte Minute",
     "measuring": "HRV: misst…",
     "noContact": "Kein Hautkontakt: Trage das Band eng.",
     "unknown": "unbekannt",
@@ -185,9 +185,9 @@
     "monitorBody": "Health Monitor vergleicht die Vitalwerte der letzten Nacht mit deinem persönlichen Normalbereich: dem Durchschnitt deiner letzten 30 Nächte plus/minus eine Standardabweichung. Beim Blutsauerstoff wird zusätzlich alles unter 95% markiert. Eine Veränderung mehrerer Vitalwerte auf einmal kann ein frühes Anzeichen einer Krankheit sein. Pulse ist kein Medizinprodukt; wenn du dich unwohl fühlst, sprich mit einem Arzt.",
     "stressTitle": "Über Stress Monitor",
     "stressIntro": "Stress Monitor bewertet alle 6 Minuten, wie aktiviert dein Körper ist, von 0 bis 100: deine Herzfrequenz im Vergleich zu deiner Herzfrequenz im Wachzustand der letzten 30 Tage, nachts dein HRV im Vergleich zu seiner 30-Tage-Baseline.",
-    "stressLow": "Niedrig, 0 - 29: Du fühlst dich vielleicht ruhig, entspannt oder müde.",
-    "stressMedium": "Mittel, 30 - 59: neutral, wach oder leicht aktiviert.",
-    "stressHigh": "Hoch, 60 - 100: aufgeregt, gestresst oder stark aktiviert.",
+    "stressLow": "Niedrig, 0 bis 29: Du fühlst dich vielleicht ruhig, entspannt oder müde.",
+    "stressMedium": "Mittel, 30 bis 59: neutral, wach oder leicht aktiviert.",
+    "stressHigh": "Hoch, 60 bis 100: aufgeregt, gestresst oder stark aktiviert.",
     "stressNote": "Workouts und Sport bleiben außen vor, ein Lauf zählt also nie als Stress. Stress ist vorläufig, bis deine Daten 30 Tage umfassen.",
     "fitnessTitle": "Über Fitness",
     "fitnessBody": "VO2 max ist die größte Sauerstoffmenge, die dein Körper bei intensiver Belastung nutzen kann. Pulse ordnet ihn anhand des FRIEND-Registers Menschen deines Alters und Geschlechts zu. Training Load teilt deine Ermüdung (etwa eine Woche Workout-Belastung) durch deine Fitness (etwa drei Wochen); über 1,4 ist ein Ausschlag.",
@@ -313,7 +313,7 @@
   "vital": {
     "skinTemp": "Hauttemp.",
     "below95": "Unter 95%",
-    "within": "Innerhalb von {{lo}} - {{hi}}",
+    "within": "Innerhalb von {{lo}} bis {{hi}}",
     "elevated": "Erhöht, über {{hi}}",
     "low": "Niedrig, unter {{lo}}"
   },
@@ -368,7 +368,7 @@
     "noReadings30d": "In den letzten 30 Tagen wurden keine Blutdruckmessungen aufgezeichnet.",
     "trendPlotSummary": "Blutdruckverlauf über 30 Tage: systolische und diastolische Werte",
     "breakdown": "Kategorien der letzten 30 Tage ({{count}})",
-    "readingsOnDay": " · {{count}} Messungen am Tag",
+    "readingsOnDay": ", {{count}} Messungen am Tag",
     "singleReading": "Basiert auf einer Messung",
     "readingsOnDate": "Messwerte am {{date}}",
     "guidelines": "Einteilung nach AHA/ACC",

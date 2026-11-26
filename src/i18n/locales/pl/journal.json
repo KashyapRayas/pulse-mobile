@@ -229,7 +229,7 @@
     "title": "Dziennik",
     "selectBehaviours": "Wybierz zachowania",
     "saved": "Zapisano",
-    "savedBody": "Miłego dnia!",
+    "savedBody": "Twoje odpowiedzi są w dzisiejszym dzienniku.",
     "saveFailed": "Nie udało się zapisać. Sprawdź połączenie i spróbuj ponownie.",
     "saving": "Zapisywanie…",
     "save": "Zapisz dziennik",
@@ -297,7 +297,7 @@
   "insights": {
     "footer": "Wpływy to różnice w średnich, nie dowód przyczyny. Zmieniaj jeden nawyk naraz, by zobaczyć, co naprawdę robi.",
     "outcome": "Wynik",
-    "unlockTitle": "Zapisuj dalej, aby odblokować",
+    "unlockTitle": "Zapisz więcej dni, aby to zobaczyć",
     "unlockBody": "Zapisz zachowanie jako Tak w co najmniej 5 dniach i jako Nie w co najmniej 5, aby zobaczyć, jak zmienia Twoje {{word}} następnego dnia.",
     "progress": "{{label}}: zapisano {{have}} z 10 dni",
     "split": "{{yes}} z 5 dni z, {{no}} z 5 dni bez"

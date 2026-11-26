@@ -18,15 +18,15 @@ describe("Weekly Plan card text", () => {
 
   it("captions say how a target stands, what is left and the streak", () => {
     const zone = { key: "zone13" as const, target: 150, format: "grouped" as const };
-    expect(planCaption({ ...zone, value: 160, status: "done", expected: 64, streak: { current: 3, longest: 3 } })).toBe("Done · 3-week streak");
+    expect(planCaption({ ...zone, value: 160, status: "done", expected: 64, streak: { current: 3, longest: 3 } })).toBe("Done, 3-week streak");
     expect(planCaption({ ...zone, value: 160, status: "done", expected: 64, streak: { current: 1, longest: 1 } })).toBe("Done this week");
-    expect(planCaption({ ...zone, value: 80, status: "on_pace", expected: 42.9, streak: none })).toBe(`On pace · 70${S}min to go`);
-    expect(planCaption({ ...zone, value: 80, status: "on_pace", expected: 42.9, streak: { current: 2, longest: 2 } })).toBe(`70${S}min to go · 2-week streak on the line`);
+    expect(planCaption({ ...zone, value: 80, status: "on_pace", expected: 42.9, streak: none })).toBe(`On pace, 70${S}min to go`);
+    expect(planCaption({ ...zone, value: 80, status: "on_pace", expected: 42.9, streak: { current: 2, longest: 2 } })).toBe(`70${S}min to go, 2-week streak on the line`);
     expect(planCaption({ ...zone, value: 20, status: "behind", expected: 64.3, streak: none })).toBe(`45${S}min behind pace`);
     expect(planCaption({ key: "steps", target: 8000, format: "grouped", value: 7500, status: "behind", expected: null, streak: none })).toBe(`500${S}steps a day short`);
     expect(planCaption({ key: "consistency", target: 80, format: "int", value: 78, status: "behind", expected: null, streak: none })).toBe(`2${S}points short`);
     expect(planCaption({ key: "strength", target: 2, format: "int", value: 0, status: "behind", expected: 1.4, streak: none })).toBe(`2${S}sessions to go`);
-    expect(planCaption({ key: "sleepNeed", target: 5, format: "int", value: 1, status: "missed", expected: 4.3, streak: { current: 0, longest: 4 } })).toBe("Missed · best run 4 weeks");
+    expect(planCaption({ key: "sleepNeed", target: 5, format: "int", value: 1, status: "missed", expected: 4.3, streak: { current: 0, longest: 4 } })).toBe("Missed, best run 4 weeks");
     expect(planCaption({ key: "steps", target: 8000, format: "grouped", value: null, status: "no_data", expected: null, streak: none })).toBe("No data yet");
   });
 

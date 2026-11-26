@@ -1,7 +1,7 @@
 {
   "title": "Главная",
   "sync": {
-    "progress": "Синхронизация · {{percent}}%",
+    "progress": "Синхронизация, {{percent}}%",
     "syncing": "Синхронизирую…"
   },
   "noBand": {
@@ -94,7 +94,7 @@
     "wokeAt": "Проснулся в <t>{{time}}</t> с <t>{{level}}%</t>",
     "charged": "Заряд",
     "drained": "Расход",
-    "drainAt": "{{label}} в <t>{{time}}</t> · <t>{{amount}}</t>"
+    "drainAt": "{{label}} в <t>{{time}}</t>, <t>{{amount}}</t>"
   },
   "heartRate": {
     "title": "Пульс",
@@ -156,11 +156,11 @@
     "highStress": "Высокий стресс: {{duration}}."
   },
   "edit": {
-    "customizeLabel": "Настроить Мои показатели",
-    "customize": "Настроить",
-    "pageTitle": "Настройка показателей",
-    "success": "Готово",
-    "saved": "Твои настройки сохранены.",
+    "customizeLabel": "Изменить «Мои показатели»",
+    "customize": "Изменить",
+    "pageTitle": "Изменить «Мои показатели»",
+    "success": "Сохранено",
+    "saved": "Теперь в «Моих показателях» эти метрики.",
     "saveFailed": "Не удалось сохранить твои показатели. Попробуй ещё раз.",
     "saving": "Сохраняю…",
     "myDashboard": "Мои показатели",
@@ -181,5 +181,169 @@
     "moved": "{{label}} перемещён на позицию {{position}} из {{total}}",
     "removed": "{{label}} убран с Главной",
     "added": "{{label}} добавлен на позицию {{position}}"
+  },
+  "review": {
+    "headline": {
+      "target": "Strain Target {{low}}–{{high}}%",
+      "plan": "Твой план на сегодня",
+      "red": "Слабое восстановление. Сегодня полегче",
+      "yellow": "Среднее восстановление. Тренируйся аккуратно",
+      "shortSleep": "Недосып. Без спешки",
+      "green": "Хорошо восстановлен. Можно на тяжёлый день",
+      "past": "Ты превысил свой Strain Target",
+      "inTarget": "Ты попал в свой Strain Target",
+      "lighter": "День легче твоей цели",
+      "strain": "Day Strain {{value}}%",
+      "recovery": "Recovery {{value}}%",
+      "day": "Твой день"
+    },
+    "score": {
+      "sleep": "Сон",
+      "recovery": "Recovery",
+      "strain": "Strain"
+    },
+    "noData": "нет данных",
+    "openHint": "Открывает полные итоги дня",
+    "noAverage": "Пока нет среднего за 7 дней",
+    "nearAverage": "Около твоего среднего за 7 дней",
+    "aboveAverage": "На {{amount}} выше среднего за 7 дней",
+    "belowAverage": "На {{amount}} ниже среднего за 7 дней",
+    "strain": "Strain",
+    "strainSoFar": "Strain пока",
+    "ofTarget": "при цели <t>{{low}}</t>–<t>{{high}}%</t>",
+    "target": {
+      "above": "Выше цели",
+      "in": "В цели",
+      "below": "Ниже цели"
+    },
+    "drivers": "Что повлияло на Recovery",
+    "driverSpoken": "{{label}}, {{points}}",
+    "stress": "Стресс",
+    "stressLevels": "Время на каждом уровне (часы)",
+    "started": "Начало",
+    "nowAt": "Сейчас <t>{{level}}%</t>",
+    "endedAt": "День закончился на <t>{{level}}%</t>",
+    "lastNight": "Прошлая ночь",
+    "nightBefore": "Ночь перед этим",
+    "sleepOf": "<b>{{asleep}}</b> из нужных <t>{{need}}</t>",
+    "bedWake": "{{bed}}–{{wake}}",
+    "short": "Не хватило <t>{{short}}</t> до нормы.",
+    "metNeed": "Ты покрыл потребность во сне.",
+    "debt": "Недосып <t>{{debt}}</t>.",
+    "stages": "Фазы (часы)",
+    "open": "Открыть: {{name}}",
+    "nothing": "В этот день ничего не измерено."
+  },
+  "search": {
+    "open": "Поиск метрик",
+    "title": "Поиск",
+    "placeholder": "Поиск метрик и страниц",
+    "label": "Поиск метрик и страниц",
+    "clear": "Очистить поиск",
+    "tabs": {
+      "all": "Все",
+      "commands": "Страницы и действия"
+    },
+    "recent": "Недавние",
+    "offUsual": "Не как обычно сегодня",
+    "offUsualDay": "Не как обычно в этот день",
+    "metrics": "Метрики",
+    "pages": "Страницы",
+    "actions": "Действия",
+    "noData": "Нет данных",
+    "noMatch": "Ничего не найдено по запросу «{{query}}».",
+    "hint": "Здесь появятся метрики, которые ты открываешь, и те, что дальше всего от обычного.",
+    "valueSpoken": "{{label}}, {{value}}",
+    "noDataSpoken": "{{label}}, нет данных",
+    "page": {
+      "home": "Главная",
+      "recovery": "Recovery",
+      "sleep": "Сон",
+      "strain": "Strain",
+      "health": "Здоровье",
+      "pulseAge": "Pulse Age",
+      "monitor": "Health Monitor",
+      "stress": "Stress Monitor",
+      "fitness": "Форма",
+      "heartRate": "Пульс",
+      "journal": "Дневник",
+      "insights": "Выводы о привычках",
+      "trends": "Тренды",
+      "reports": "Отчёты",
+      "activities": "Активности",
+      "coach": "Coach",
+      "settings": "Настройки",
+      "checkIn": "Отметиться",
+      "customize": "Настроить главную",
+      "review": "Итоги дня"
+    }
+  },
+  "customize": {
+    "open": "Настроить главную",
+    "title": "Настроить главную",
+    "intro": "Твои оценки всегда вверху. Выключи то, чем не пользуешься, а остальное расставь в том порядке, в каком читаешь.",
+    "area": {
+      "top": "Под индикаторами",
+      "day": "Мой день",
+      "side": "Показатели"
+    },
+    "section": {
+      "heartRate": {
+        "label": "Пульс",
+        "hint": "Живое или последнее измерение за сегодня"
+      },
+      "monitors": {
+        "label": "Health Monitor и Stress Monitor",
+        "hint": "Две карточки под индикаторами или счётчики телефона"
+      },
+      "coach": {
+        "label": "Карточки Coach",
+        "hint": "Сегодняшние заметки о нагрузке, восстановлении и сне"
+      },
+      "day": {
+        "label": "Прогноз и итоги дня",
+        "hint": "План утром, итоги вечером"
+      },
+      "activities": {
+        "label": "Активности",
+        "hint": "Тренировки, сон и дневной сон"
+      },
+      "tonight": {
+        "label": "Сон на эту ночь",
+        "hint": "Время отбоя из Sleep Planner"
+      },
+      "journal": {
+        "label": "Мой дневник",
+        "hint": "Отметки этой недели"
+      },
+      "energy": {
+        "label": "Energy Bank",
+        "hint": "Заряд и расход в течение дня"
+      },
+      "dashboard": {
+        "label": "Мои показатели",
+        "hint": "Выбранные тобой метрики"
+      },
+      "strainRecovery": {
+        "label": "График Strain и восстановления",
+        "hint": "Последние 7 дней"
+      },
+      "week": {
+        "label": "Итоги недели",
+        "hint": "Ссылка на последний недельный отчёт"
+      }
+    },
+    "show": "Показывать: {{label}}",
+    "moveUp": "Выше: {{label}}",
+    "moveDown": "Ниже: {{label}}",
+    "shown": "Показано: {{label}}",
+    "hidden": "Скрыто: {{label}}",
+    "moved": "{{label}}: место {{position}} из {{total}}",
+    "saving": "Сохранение",
+    "reset": "Сбросить",
+    "savedTitle": "Сохранено",
+    "savedBody": "Главная теперь показывает твой порядок.",
+    "saveFailed": "Не удалось сохранить порядок главной. Попробуй ещё раз.",
+    "onlyScores": "На главной останутся только твои оценки."
   }
 }

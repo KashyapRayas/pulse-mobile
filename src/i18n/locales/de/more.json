@@ -89,12 +89,12 @@
     "title": "Atmen",
     "aboutTitle": "Über Atmen",
     "aboutBody": "Getaktetes Atmen mit einem Kreis und haptischen Hinweisen: ein leichter Impuls beim Einatmen, zwei beim Ausatmen, keiner beim Halten. Mit deinem Band live zeigt Pulse deine Herzfrequenz; wenn das Band auch Schlag-zu-Schlag-Intervalle sendet, misst es davor und danach eine Minute lang die HRV (RMSSD). Sitzungen bleiben auf diesem Handy und fließen nicht in die Werte ein.",
-    "hrvLine": "HRV {{value}} ms · RMSSD, letzte Minute",
+    "hrvLine": "HRV {{value}} ms, RMSSD, letzte Minute",
     "hrvMeasuring": "HRV: wird gemessen…",
     "length": "Dauer",
     "breaths": "Atemzüge",
     "left": "übrig",
-    "leftLabel": "Noch {{time}} · {{title}}",
+    "leftLabel": "Noch {{time}}, {{title}}",
     "endSession": "Sitzung beenden",
     "goAgain": "Nochmal",
     "changePace": "Tempo ändern",
@@ -141,7 +141,7 @@
     "hrvShort": "HRV",
     "breathing": "Atmen",
     "recentLabel": "{{when}}: {{title}}, {{duration}}, {{aside}}",
-    "whenDuration": "{{when}} · {{duration}}",
+    "whenDuration": "{{when}}, {{duration}}",
     "whenAt": "{{day}}, {{time}}",
     "cardBody": "Ein paar Minuten langsames, getaktetes Atmen zum Runterkommen. Mit deinem Band live siehst du, wie deine Herzfrequenz sinkt und wie sich deine HRV davor und danach verhält."
   }

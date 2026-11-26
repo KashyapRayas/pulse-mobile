@@ -228,7 +228,7 @@
     "title": "Journal",
     "selectBehaviours": "Choisir des comportements",
     "saved": "Enregistré",
-    "savedBody": "Bonne journée !",
+    "savedBody": "Tes réponses sont dans le journal du jour.",
     "saveFailed": "Impossible d’enregistrer. Vérifie ta connexion et réessaie.",
     "saving": "Enregistrement…",
     "save": "Enregistrer le journal",
@@ -296,7 +296,7 @@
   "insights": {
     "footer": "Les effets sont des écarts de moyennes, pas une preuve de cause. Change une habitude à la fois pour voir ce qu’elle fait vraiment.",
     "outcome": "Résultat",
-    "unlockTitle": "Continue à noter pour débloquer",
+    "unlockTitle": "Note plus de jours pour les voir",
     "unlockBody": "Note un comportement Oui sur au moins 5 jours et Non sur au moins 5 pour voir comment il change ta {{word}} du lendemain.",
     "progress": "{{label}} : {{have}} jours sur 10 notés",
     "split": "{{yes}} jours sur 5 avec, {{no}} sur 5 sans"

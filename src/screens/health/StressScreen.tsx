@@ -1,5 +1,7 @@
 // Stress Monitor `/health/stress` for `d` (spec §7.9). Ported from pulse src/app/(app)/health/stress/page.tsx and
 // loading.tsx (the skeleton shows while the query runs).
+import { useSelectedDay } from "@/ui/shells/DateSwitcher";
+import { useShellCalendar } from "@/ui/shells/ShellStatus";
 import { View } from "react-native";
 import { Trans, useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/config";
@@ -102,7 +104,7 @@ export function StressScreen() {
   return (
     <DetailShell
       title="Stress Monitor"
-      bodySkeleton={bodySkeleton()}
+      bodySkeleton={bodySkeleton(dayWord)}
       dateSwitcher={{ mode: "day" }}
       info={STRESS_INFO}
       hero={
@@ -139,8 +141,9 @@ export function StressScreen() {
   );
 }
 
-const loadingPrimary = () => (
-  <SectionShell variant="card" title={i18n.t("common:today")}>
+/** The day's chart card; titled with the day being loaded ("Today", "Yesterday", "Mon, Sep 28"), as the loaded card is. */
+const loadingPrimary = (title: string) => (
+  <SectionShell variant="card" title={title}>
     <StressChartSkeleton variant="full" />
   </SectionShell>
 );
@@ -171,9 +174,9 @@ const loadingSecondary = () => [
 ];
 
 /** Below the fold while a cold push slides in: the loading state's first sections. */
-const bodySkeleton = () => (
+const bodySkeleton = (title: string) => (
   <>
-    {loadingPrimary()}
+    {loadingPrimary(title)}
     <View className="gap-3">{loadingSecondary().slice(0, 2)}</View>
   </>
 );
@@ -183,6 +186,9 @@ const bodySkeleton = () => (
  * and the 30-day trend.
  */
 function StressLoading() {
+  const [d] = useSelectedDay();
+  const { today } = useShellCalendar();
+  const dayTitle = dayLabel(d, today);
   return (
     <DetailShell
       loading
@@ -190,8 +196,8 @@ function StressLoading() {
       dateSwitcher={{ mode: "day" }}
       hero={<ScoreDialSkeleton variant="gauge" size="lg" />}
       insight={<InsightCardSkeleton />}
-      primary={loadingPrimary()}
-      bodySkeleton={bodySkeleton()}
+      primary={loadingPrimary(dayTitle)}
+      bodySkeleton={bodySkeleton(dayTitle)}
       secondary={loadingSecondary()}
     />
   );

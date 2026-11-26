@@ -173,7 +173,7 @@ export function describeEntry(type: LogType, data: unknown): { title: string; de
       const macros = [f.protein != null && tr("entry.protein", { g: f.protein }), f.carbs != null && tr("entry.carbs", { g: f.carbs }), f.fat != null && tr("entry.fat", { g: f.fat })];
       const meal = MEALS.find((m) => m[0] === f.meal)?.[1] ?? tr("entry.food");
       const detail = [`${n(f.kcal)} kcal`, ...macros].filter(Boolean).join(", ");
-      return { title: f.name ?? meal, detail: f.portion ? `${f.portion} · ${detail}` : detail };
+      return { title: f.name ?? meal, detail: f.portion ? `${f.portion}, ${detail}` : detail };
     }
     case "weight":
       return { title: tr("entry.weight"), detail: quantityText((data as LogData[typeof type]).kg, "kg", "decimal1") };

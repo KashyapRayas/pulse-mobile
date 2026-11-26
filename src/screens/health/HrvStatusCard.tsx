@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { RoundedRect } from "@shopify/react-native-skia";
 import { useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/config";
-import { formatValue } from "@/lib/format";
+import { formatValue, valueRange } from "@/lib/format";
 import { todayOf } from "@/queries/common";
 import { getHrvStatus, type HrvStatusVM } from "@/queries/training";
 import { ChartFigure, PlotCanvas } from "@/ui/charts/ChartFrame";
@@ -100,7 +100,7 @@ export function HrvStatusCard({ d }: { d?: string }) {
               <StatRow label={t("hrv.lastNight")} value={formatValue("int", v.lastNight)} unit="ms" spoken={v.lastNight == null ? t("hrv.noHrv") : t("hrv.lastNightAria", { value: Math.round(v.lastNight) })} />
               <StatRow
                 label={t("hrv.usualRange")}
-                value={`${formatValue("int", v.band.low)}–${formatValue("int", v.band.high)}`}
+                value={valueRange(formatValue("int", v.band.low), formatValue("int", v.band.high))}
                 unit="ms"
                 spoken={t("hrv.usualRangeAria", { low: Math.round(v.band.low), high: Math.round(v.band.high) })}
               />

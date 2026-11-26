@@ -44,7 +44,7 @@
     "outperforming": "Oltre le attese",
     "onTrack": "Sulla buona strada",
     "roomToImprove": "Margine di miglioramento",
-    "bodyOutperforming": "Con {{name}} stai potenziando la tua salute a lungo termine. Continua così per mantenere il beneficio.",
+    "bodyOutperforming": "Questo toglie anni alla tua Pulse Age. Mantenere {{name}} qui conserva questo beneficio.",
     "bodyUnder": "{{name}} sta aggiungendo anni al tuo Pulse Age. Avvicinarlo all’obiettivo per la tua età li toglierebbe.",
     "bodyOnTrack": "{{name}} è vicino all’obiettivo per la tua età. Piccoli miglioramenti qui si sommano negli anni."
   },
@@ -105,7 +105,7 @@
     "pageAt": "{{day}} alle {{time}}"
   },
   "live": {
-    "rmssd": "HRV {{rmssd}} ms · RMSSD, ultimo minuto",
+    "rmssd": "HRV {{rmssd}} ms, RMSSD, ultimo minuto",
     "measuring": "HRV: misurazione…",
     "noContact": "Nessun contatto con la pelle: indossa la fascia aderente.",
     "unknown": "sconosciuto",
@@ -186,9 +186,9 @@
     "monitorBody": "Health Monitor confronta i parametri vitali di stanotte con il tuo intervallo normale personale: la media delle tue ultime 30 notti più o meno una deviazione standard. L’ossigeno nel sangue segnala anche qualsiasi valore sotto il 95%. Un cambiamento in più parametri insieme può essere un segnale precoce di malattia. Pulse non è un dispositivo medico; se non ti senti bene, parla con un medico.",
     "stressTitle": "Informazioni su Stress Monitor",
     "stressIntro": "Stress Monitor valuta da 0 a 100, ogni 6 minuti, quanto è attivato il tuo corpo: la tua frequenza cardiaca rispetto a quella da sveglio negli ultimi 30 giorni e, di notte, il tuo HRV rispetto alla sua base a 30 giorni.",
-    "stressLow": "Basso, 0 - 29: potresti sentirti calmo, rilassato o assonnato.",
-    "stressMedium": "Medio, 30 - 59: neutro, vigile o leggermente attivato.",
-    "stressHigh": "Alto, 60 - 100: eccitato, stressato o molto attivato.",
+    "stressLow": "Basso, da 0 a 29: potresti sentirti calmo, rilassato o assonnato.",
+    "stressMedium": "Medio, da 30 a 59: neutro, vigile o leggermente attivato.",
+    "stressHigh": "Alto, da 60 a 100: eccitato, stressato o molto attivato.",
     "stressNote": "Allenamenti ed esercizio sono esclusi, quindi una corsa non conta mai come stress. Lo stress è provvisorio finché i tuoi dati non coprono 30 giorni.",
     "fitnessTitle": "Informazioni su Fitness",
     "fitnessBody": "Il VO2 max è il massimo di ossigeno che il tuo corpo può usare durante uno sforzo intenso. Pulse lo confronta con persone della tua età e del tuo sesso dal registro FRIEND. Training Load divide il tuo affaticamento (circa una settimana di carico di allenamento) per la tua fitness (circa tre settimane); sopra 1,4 è un picco.",
@@ -314,7 +314,7 @@
   "vital": {
     "skinTemp": "Temp. cutanea",
     "below95": "Sotto il 95%",
-    "within": "Tra {{lo}} - {{hi}}",
+    "within": "Tra {{lo}} e {{hi}}",
     "elevated": "Elevato, sopra {{hi}}",
     "low": "Basso, sotto {{lo}}"
   },
@@ -370,7 +370,7 @@
     "noReadings30d": "Nessuna misurazione della pressione arteriosa registrata negli ultimi 30 giorni.",
     "trendPlotSummary": "Andamento della pressione arteriosa a 30 giorni: valori sistolici e diastolici",
     "breakdown": "Ripartizione per categoria a 30 giorni ({{count}})",
-    "readingsOnDay": " · {{count}} misurazioni nel giorno",
+    "readingsOnDay": ", {{count}} misurazioni nel giorno",
     "singleReading": "Basato su una sola misurazione",
     "readingsOnDate": "Misurazioni del {{date}}",
     "guidelines": "Classificazione AHA/ACC",

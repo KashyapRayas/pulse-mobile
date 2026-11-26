@@ -1,7 +1,7 @@
 {
   "title": "Główna",
   "sync": {
-    "progress": "Synchronizacja · {{percent}}%",
+    "progress": "Synchronizacja, {{percent}}%",
     "syncing": "Synchronizacja…"
   },
   "noBand": {
@@ -94,7 +94,7 @@
     "wokeAt": "Pobudka o <t>{{time}}</t> z <t>{{level}}%</t>",
     "charged": "Naładowanie",
     "drained": "Rozładowanie",
-    "drainAt": "{{label}} o <t>{{time}}</t> · <t>{{amount}}</t>"
+    "drainAt": "{{label}} o <t>{{time}}</t>, <t>{{amount}}</t>"
   },
   "heartRate": {
     "title": "Tętno",
@@ -156,11 +156,11 @@
     "highStress": "W wysokim stresie spędzono {{duration}}."
   },
   "edit": {
-    "customizeLabel": "Dostosuj Mój pulpit",
-    "customize": "Dostosuj",
-    "pageTitle": "Dostosuj pulpit",
-    "success": "Gotowe",
-    "saved": "Twoje preferencje zostały zapisane.",
+    "customizeLabel": "Edytuj Mój pulpit",
+    "customize": "Edytuj",
+    "pageTitle": "Edytuj Mój pulpit",
+    "success": "Zapisano",
+    "saved": "Mój pulpit pokazuje teraz te wskaźniki.",
     "saveFailed": "Nie udało się zapisać pulpitu. Spróbuj ponownie.",
     "saving": "Zapisywanie…",
     "myDashboard": "Mój pulpit",
@@ -181,5 +181,169 @@
     "moved": "{{label}} przeniesiono na pozycję {{position}} z {{total}}",
     "removed": "Usunięto {{label}} z ekranu głównego",
     "added": "Dodano {{label}} na pozycji {{position}}"
+  },
+  "review": {
+    "headline": {
+      "target": "Strain Target {{low}}–{{high}}%",
+      "plan": "Twój plan na dziś",
+      "red": "Słaba regeneracja. Dziś lżej",
+      "yellow": "Umiarkowana regeneracja. Trenuj ostrożnie",
+      "shortSleep": "Za mało snu. Spokojnie dziś",
+      "green": "Dobrze zregenerowany. Gotowy na ciężki dzień",
+      "past": "Przekroczyłeś swój Strain Target",
+      "inTarget": "Mieścisz się w swoim Strain Target",
+      "lighter": "Lżejszy dzień niż Twój cel",
+      "strain": "Day Strain {{value}}%",
+      "recovery": "Recovery {{value}}%",
+      "day": "Twój dzień"
+    },
+    "score": {
+      "sleep": "Sen",
+      "recovery": "Recovery",
+      "strain": "Strain"
+    },
+    "noData": "brak danych",
+    "openHint": "Otwiera pełne podsumowanie dnia",
+    "noAverage": "Brak jeszcze średniej z 7 dni",
+    "nearAverage": "Blisko Twojej średniej z 7 dni",
+    "aboveAverage": "{{amount}} powyżej Twojej średniej z 7 dni",
+    "belowAverage": "{{amount}} poniżej Twojej średniej z 7 dni",
+    "strain": "Strain",
+    "strainSoFar": "Strain do teraz",
+    "ofTarget": "przy celu <t>{{low}}</t>–<t>{{high}}%</t>",
+    "target": {
+      "above": "Powyżej celu",
+      "in": "W celu",
+      "below": "Poniżej celu"
+    },
+    "drivers": "Co wpłynęło na Recovery",
+    "driverSpoken": "{{label}}, {{points}}",
+    "stress": "Stres",
+    "stressLevels": "Czas na każdym poziomie (godziny)",
+    "started": "Początek",
+    "nowAt": "Teraz <t>{{level}}%</t>",
+    "endedAt": "Koniec dnia na <t>{{level}}%</t>",
+    "lastNight": "Ostatnia noc",
+    "nightBefore": "Noc wcześniej",
+    "sleepOf": "<b>{{asleep}}</b> z potrzebnych <t>{{need}}</t>",
+    "bedWake": "{{bed}}–{{wake}}",
+    "short": "<t>{{short}}</t> poniżej potrzeby.",
+    "metNeed": "Pokryłeś swoją potrzebę snu.",
+    "debt": "Dług snu <t>{{debt}}</t>.",
+    "stages": "Fazy (godziny)",
+    "open": "Otwórz: {{name}}",
+    "nothing": "Tego dnia nic nie zmierzono."
+  },
+  "search": {
+    "open": "Szukaj wskaźników",
+    "title": "Szukaj",
+    "placeholder": "Szukaj wskaźników i stron",
+    "label": "Szukaj wskaźników i stron",
+    "clear": "Wyczyść wyszukiwanie",
+    "tabs": {
+      "all": "Wszystko",
+      "commands": "Strony i działania"
+    },
+    "recent": "Ostatnie",
+    "offUsual": "Dziś odbiega od normy",
+    "offUsualDay": "Tego dnia odbiegało od normy",
+    "metrics": "Wskaźniki",
+    "pages": "Strony",
+    "actions": "Działania",
+    "noData": "Brak danych",
+    "noMatch": "Nic nie pasuje do „{{query}}”.",
+    "hint": "Tu pojawią się wskaźniki, które otwierasz, i te najdalej od Twojej normy.",
+    "valueSpoken": "{{label}}, {{value}}",
+    "noDataSpoken": "{{label}}, brak danych",
+    "page": {
+      "home": "Start",
+      "recovery": "Recovery",
+      "sleep": "Sen",
+      "strain": "Strain",
+      "health": "Zdrowie",
+      "pulseAge": "Pulse Age",
+      "monitor": "Health Monitor",
+      "stress": "Stress Monitor",
+      "fitness": "Kondycja",
+      "heartRate": "Tętno",
+      "journal": "Dziennik",
+      "insights": "Wnioski o zachowaniach",
+      "trends": "Trendy",
+      "reports": "Raporty",
+      "activities": "Aktywności",
+      "coach": "Coach",
+      "settings": "Ustawienia",
+      "checkIn": "Wpis",
+      "customize": "Dostosuj Start",
+      "review": "Podsumowanie dnia"
+    }
+  },
+  "customize": {
+    "open": "Dostosuj Start",
+    "title": "Dostosuj Start",
+    "intro": "Twoje wyniki są zawsze na górze. Wyłącz to, czego nie używasz, a resztę ułóż w kolejności, w jakiej czytasz.",
+    "area": {
+      "top": "Pod wskaźnikami",
+      "day": "Mój dzień",
+      "side": "Pulpit"
+    },
+    "section": {
+      "heartRate": {
+        "label": "Tętno",
+        "hint": "Dzisiejszy pomiar na żywo lub ostatni"
+      },
+      "monitors": {
+        "label": "Health Monitor i Stress Monitor",
+        "hint": "Dwie karty pod wskaźnikami albo liczniki telefonu"
+      },
+      "coach": {
+        "label": "Karty Coach",
+        "hint": "Dzisiejsze uwagi o wysiłku, regeneracji i śnie"
+      },
+      "day": {
+        "label": "Prognoza i podsumowanie dnia",
+        "hint": "Plan rano, podsumowanie wieczorem"
+      },
+      "activities": {
+        "label": "Aktywności",
+        "hint": "Treningi, sen i drzemki"
+      },
+      "tonight": {
+        "label": "Dzisiejszy sen",
+        "hint": "Pora snu z Sleep Planner"
+      },
+      "journal": {
+        "label": "Mój dziennik",
+        "hint": "Wpisy z tego tygodnia"
+      },
+      "energy": {
+        "label": "Energy Bank",
+        "hint": "Ładowanie i zużycie w ciągu dnia"
+      },
+      "dashboard": {
+        "label": "Mój pulpit",
+        "hint": "Wybrane przez Ciebie wskaźniki"
+      },
+      "strainRecovery": {
+        "label": "Wykres Strain i regeneracji",
+        "hint": "Ostatnie 7 dni"
+      },
+      "week": {
+        "label": "Podsumowanie tygodnia",
+        "hint": "Link do ostatniego raportu tygodniowego"
+      }
+    },
+    "show": "Pokaż: {{label}}",
+    "moveUp": "Przesuń w górę: {{label}}",
+    "moveDown": "Przesuń w dół: {{label}}",
+    "shown": "Pokazano: {{label}}",
+    "hidden": "Ukryto: {{label}}",
+    "moved": "{{label}}: pozycja {{position}} z {{total}}",
+    "saving": "Zapisywanie",
+    "reset": "Przywróć domyślne",
+    "savedTitle": "Zapisano",
+    "savedBody": "Start pokazuje teraz Twój układ.",
+    "saveFailed": "Nie udało się zapisać układu Start. Spróbuj ponownie.",
+    "onlyScores": "Start pokaże tylko Twoje wyniki."
   }
 }

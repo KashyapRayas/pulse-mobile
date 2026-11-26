@@ -44,7 +44,7 @@
     "outperforming": "Outperforming",
     "onTrack": "On track",
     "roomToImprove": "Room to improve",
-    "bodyOutperforming": "You're boosting your long-term health with your {{name}}. Keep it up to hold on to the benefit.",
+    "bodyOutperforming": "This takes years off your Pulse Age. Holding your {{name}} here keeps that benefit.",
     "bodyUnder": "Your {{name}} is adding years to your Pulse Age. Moving it toward the target for your age would take them off.",
     "bodyOnTrack": "Your {{name}} is close to the target for your age. Small gains here add up over the years."
   },
@@ -105,7 +105,7 @@
     "pageAt": "{{day}} at {{time}}"
   },
   "live": {
-    "rmssd": "HRV {{rmssd}} ms · RMSSD, last minute",
+    "rmssd": "HRV {{rmssd}} ms (RMSSD, last minute)",
     "measuring": "HRV: measuring…",
     "noContact": "No skin contact: wear the band snug.",
     "unknown": "unknown",
@@ -185,9 +185,9 @@
     "monitorBody": "Health Monitor compares last night’s vitals with your personal normal range: the average of your last 30 nights plus or minus one standard deviation. Blood oxygen also flags anything below 95%. A change in several vitals at once can be an early sign of illness. Pulse is not a medical device; if you feel unwell, talk to a doctor.",
     "stressTitle": "About Stress Monitor",
     "stressIntro": "Stress Monitor scores how activated your body is, from 0 to 100, every 6 minutes: your heart rate against your awake heart rate over the last 30 days, and at night your HRV against its 30-day baseline.",
-    "stressLow": "Low, 0 - 29: you might be feeling calm, relaxed or sleepy.",
-    "stressMedium": "Medium, 30 - 59: neutral, alert or mildly activated.",
-    "stressHigh": "High, 60 - 100: excited, stressed or highly activated.",
+    "stressLow": "Low, 0 to 29: you might be feeling calm, relaxed or sleepy.",
+    "stressMedium": "Medium, 30 to 59: neutral, alert or mildly activated.",
+    "stressHigh": "High, 60 to 100: excited, stressed or highly activated.",
     "stressNote": "Workouts and exercise are left out, so a run never counts as stress. Stress is provisional until your data spans 30 days.",
     "fitnessTitle": "About Fitness",
     "fitnessBody": "VO2 max is the most oxygen your body can use during hard exercise. Pulse ranks it against people of your age and sex from the FRIEND registry. Training load divides your fatigue (about a week of workout load) by your fitness (about three weeks); above 1.4 is a spike.",
@@ -313,7 +313,7 @@
   "vital": {
     "skinTemp": "Skin temp",
     "below95": "Below 95%",
-    "within": "Within {{lo}} - {{hi}}",
+    "within": "Within {{lo}} to {{hi}}",
     "elevated": "Elevated, above {{hi}}",
     "low": "Low, below {{lo}}"
   },
@@ -348,8 +348,8 @@
   "behavior": {
     "sleep86": "86%+ Sleep Performance",
     "strain7": "33%+ Strain",
-    "earlyWorkout": "Early Workout",
-    "consistentWake": "Consistent Wake Time"
+    "earlyWorkout": "Early workout",
+    "consistentWake": "Consistent wake time"
   },
   "stage": {
     "awake": "Awake",
@@ -368,17 +368,17 @@
     "noReadings30d": "No blood pressure readings recorded in the last 30 days.",
     "trendPlotSummary": "30-day blood pressure trend: systolic and diastolic readings",
     "breakdown": "30-Day Category Breakdown ({{count}})",
-    "readingsOnDay": " · {{count}} readings on day",
+    "readingsOnDay": ", {{count}} readings on day",
     "singleReading": "Based on one reading",
     "readingsOnDate": "Readings on {{date}}",
-    "guidelines": "AHA/ACC Classification Guidelines",
+    "guidelines": "AHA/ACC classification guidelines",
     "disclaimer": "Pulse is not a diagnostic device. Consult a physician for diagnosis and medical management of blood pressure.",
     "prior": "Prior: {{value}}",
     "noReadingWithPrior": "No reading on {{date}}. Most recent: {{value}} mmHg on {{priorDate}}.",
     "emptyDayHint": "No blood pressure reading recorded on this day. Record readings in Health Connect to track trends.",
     "readingMeta": "{{date}} at {{time}}",
     "ariaDetail": "Blood pressure detail: {{reading}} mmHg, {{status}}",
-    "ariaDetailNoReading": "Blood pressure detail: No reading",
+    "ariaDetailNoReading": "Blood pressure detail: no reading",
     "category": {
       "normal": "Normal",
       "elevated": "Elevated",
@@ -389,8 +389,8 @@
     },
     "stageRange": {
       "normal": "< 120 and < 80 mmHg",
-      "elevated": "120–129 and < 80 mmHg",
-      "stage1": "130–139 or 80–89 mmHg",
+      "elevated": "120 to 129 and under 80 mmHg",
+      "stage1": "130 to 139 or 80 to 89 mmHg",
       "stage2": "140+ or 90+ mmHg",
       "crisis": "> 180 and/or > 120 mmHg"
     }

@@ -219,9 +219,9 @@ export function BloodPressureCard({
               date: summary.isToday ? t("common:today") : formatDay(day, DAY.short),
               time: latest.time,
             })}
-            {latest.bodyPosition ? ` · ${latest.bodyPosition}` : ""}
-            {latest.measurementLocation ? ` · ${latest.measurementLocation}` : ""}
-            {summary.readings.length > 1 ? t("bloodPressure.readingsOnDay", { count: summary.readings.length }) : ` · ${t("bloodPressure.singleReading")}`}
+            {latest.bodyPosition ? `, ${latest.bodyPosition}` : ""}
+            {latest.measurementLocation ? `, ${latest.measurementLocation}` : ""}
+            {summary.readings.length > 1 ? t("bloodPressure.readingsOnDay", { count: summary.readings.length }) : `, ${t("bloodPressure.singleReading")}`}
           </Text>
         </View>
       ) : (

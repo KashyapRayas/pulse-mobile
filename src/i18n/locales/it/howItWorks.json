@@ -107,7 +107,7 @@
     "s2R2Detail": "Più Strain di quanto suggerisca il Recovery di oggi; aspettati che si veda domani.",
     "s3Title": "Un esempio pratico",
     "s3P0": "Prendi 14 giorni di Strain passato, dal più vecchio: 45, 50, 20, 55, 48, 40, 60, 47, 52, 25, 50, 45, 55, 50. Lo Strain di oggi è escluso. Combinata giorno per giorno, la base arriva a 47,9.",
-    "s3P1": "Il Recovery di oggi è 72%, quindi il centro è 47,9 × 1,13 = 54,2. L’intervallo va da 54,2 − 8,6 a 54,2 + 24,4: un obiettivo di 46 - 79%. Con lo stesso storico e un Recovery del 30%, il centro scende a 42,2 e l’obiettivo a 36 - 58%.",
+    "s3P1": "Il Recovery di oggi è 72%, quindi il centro è 47,9 × 1,13 = 54,2. L’intervallo va da 54,2 − 8,6 a 54,2 + 24,4: un obiettivo di 46 a 79%. Con lo stesso storico e un Recovery del 30%, il centro scende a 42,2 e l’obiettivo a 36 a 58%.",
     "s4Title": "Limiti",
     "s4P0": "Con meno di 14 giorni di Strain la base combina quelli che ci sono, quindi le prime settimane sono una stima. L’obiettivo non conosce il tuo piano di allenamento, le gare o gli infortuni. È una guida, non una prescrizione."
   },
@@ -414,7 +414,7 @@
     "s2R1Detail": "Stai portando affaticamento dall’allenamento recente.",
     "s3Title": "Un esempio pratico",
     "s3P0": "Prendi 14 giorni di carico giornaliero: 30, 45, 0, 50, 40, 35, 55, poi 45, 60, 0, 50, 55, 40, 65. Gli zeri sono giorni di riposo.",
-    "s3P1": "L’Affaticamento si sposta di un quarto verso il carico di ogni giorno, quindi termina a 47,0 dopo il 65 del giorno 14. La Fitness si sposta di 2/43, quindi è arrivata solo a 20,4. La Forma è Fitness meno Affaticamento: 20,4 - 47,0 = -26,6.",
+    "s3P1": "L’Affaticamento si sposta di un quarto verso il carico di ogni giorno, quindi termina a 47,0 dopo il 65 del giorno 14. La Fitness si sposta di 2/43, quindi è arrivata solo a 20,4. La Forma è Fitness meno Affaticamento: 20,4 a 47,0 = -26,6.",
     "s3P2": "Una Forma negativa significa che il carico recente è più pesante della media a lungo termine. La Fitness si assesta solo dopo diverse settimane, quindi leggi le prime settimane come una guida approssimativa.",
     "s4Title": "Limiti",
     "s4P0": "La frequenza cardiaca è il suo unico dato, quindi il carico che alza appena la frequenza cardiaca sfugge. Finché non ti alleni con regolarità per qualche settimana lo stato risulta in calibrazione."

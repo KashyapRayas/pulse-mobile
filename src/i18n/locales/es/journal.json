@@ -228,7 +228,7 @@
     "title": "Diario",
     "selectBehaviours": "Elegir hábitos",
     "saved": "Guardado",
-    "savedBody": "¡Que tengas un gran día!",
+    "savedBody": "Tus respuestas están en el diario de hoy.",
     "saveFailed": "No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.",
     "saving": "Guardando…",
     "save": "Guardar diario",
@@ -296,7 +296,7 @@
   "insights": {
     "footer": "Los efectos son diferencias de promedios, no prueba de causa. Cambia un hábito a la vez para ver lo que realmente hace.",
     "outcome": "Resultado",
-    "unlockTitle": "Sigue registrando para desbloquear",
+    "unlockTitle": "Registra más días para verlos",
     "unlockBody": "Registra un hábito como Sí al menos 5 días y como No al menos 5 para ver cómo cambia tu {{word}} del día siguiente.",
     "progress": "{{label}}: {{have}} de 10 días registrados",
     "split": "{{yes}} de 5 días con, {{no}} de 5 sin"

@@ -170,8 +170,8 @@
   },
   "costCaption": {
     "notEnough": "Not enough data yet: {{have}} of {{needed}}",
-    "based": "{{bounce}} · {{sessions}}",
-    "early": "{{bounce}} · {{sessions}}, early estimate"
+    "based": "{{bounce}}, {{sessions}}",
+    "early": "{{bounce}}, {{sessions}}, early estimate"
   },
   "costSentence": {
     "needs": "Pulse needs {{needed}} with a Recovery the next morning to measure what they cost you; it has {{have}} so far.",
@@ -202,8 +202,8 @@
   "detected": {
     "spoken": "Detected activity, likely {{label}}, average heart rate {{hr}} bpm, {{start}} to {{end}}. Not a recorded workout.",
     "title": "Detected",
-    "line": "{{label}} · {{hr}} bpm avg",
-    "lineSteps": "{{label}} · {{hr}} bpm avg · {{steps}} steps",
+    "line": "{{label}}, {{hr}} bpm avg",
+    "lineSteps": "{{label}}, {{hr}} bpm avg, {{steps}} steps",
     "note": "Detected activity: 12 minutes or more of raised heart rate with no workout recorded, labelled from your steps. It is shown for reference and adds nothing to your scores."
   },
   "menu": {
@@ -266,7 +266,7 @@
   },
   "target": {
     "label": "Strain Target",
-    "range": "{{low}} - {{high}}",
+    "range": "{{low}} to {{high}}",
     "spoken": "Strain Target {{low}} to {{high}}",
     "spokenReason": "Strain Target: {{reason}}"
   },
@@ -276,7 +276,7 @@
     "zones45": "HR Zones 4-5",
     "steps": "Steps",
     "calories": "Calories",
-    "strength": "Strength Activity Time"
+    "strength": "Strength activity time"
   },
   "activities": {
     "title": "Activities",
@@ -325,7 +325,7 @@
   },
   "live": {
     "title": "Live workout",
-    "infoTitle": "About Live Workout",
+    "infoTitle": "About live workouts",
     "infoBody": "Strain Coach on your band’s live heart rate. Day Strain builds as you train, on the same Strain math as the rest of Pulse, starting from what today already holds. The coach compares it with today’s Strain Target, and your heart rate with a band set by today’s Recovery: it says push when you’re easy for the day and ease off once you’re in range or climbing past what Recovery can pay for. Nothing here is saved to your scores: the workout counts when Fitbit syncs it.",
     "dayStrain": "Day strain",
     "end": "End workout",
@@ -348,14 +348,14 @@
     "zoneSpoken": "Zone {{zone}}: {{time}}",
     "zoneSpokenCurrent": "Zone {{zone}}, current: {{time}}",
     "zoneShort": "Z{{zone}}",
-    "belowZone1": "Below Zone 1",
+    "belowZone1": "Below zone 1",
     "zone": "Zone {{zone}}",
     "waiting": "Waiting for a beat",
-    "zoneWithBand": "{{zone}} · today’s band {{floor}}–{{ceiling}} bpm",
+    "zoneWithBand": "{{zone}}, today’s band {{floor}} to {{ceiling}} bpm",
     "today": "Today",
     "readError": "Couldn’t read today’s scores.",
     "reading": "Reading today’s scores…",
-    "targetLine": "Today’s target is {{low}} - {{high}}.",
+    "targetLine": "Today’s target is {{low}} to {{high}}.",
     "noTarget": "No Strain Target yet today: it needs today’s Recovery. The coach uses your heart-rate band alone.",
     "recoveryLine": "Recovery {{value}}% sets how hard the coach lets you go.",
     "notSynced": "Today’s heart rate hasn’t synced yet, so Day Strain starts from this workout.",
@@ -364,7 +364,7 @@
     "noHeartRate": "No heart rate yet",
     "workoutStrain": "Workout strain",
     "time": "Time",
-    "avgMax": "{{avg}} avg · {{max}} max",
+    "avgMax": "{{avg}} avg, {{max}} max",
     "verdictPast": "Past today’s target: prioritise sleep tonight.",
     "verdictInside": "Inside today’s target.",
     "verdictBelow": "{{value}} below today’s target.",
@@ -375,7 +375,7 @@
     "keptOnPhone": "Kept on this phone; Fitbit syncs the workout itself to your scores.",
     "when": "{{day}}, {{time}}",
     "recentSpoken": "{{when}}: {{duration}}, workout strain {{value}} percent",
-    "recentLine": "{{duration}} · {{bpm}} bpm avg",
+    "recentLine": "{{duration}}, {{bpm}} bpm avg",
     "strain": "Strain"
   }
 }

@@ -95,12 +95,12 @@
     "title": "Oddychaj",
     "aboutTitle": "O funkcji Oddychaj",
     "aboutBody": "Oddychanie w rytmie z kołem i sygnałami haptycznymi: jedno lekkie drgnięcie przy wdechu, dwa przy wydechu, żadne przy zatrzymaniu. Gdy opaska działa na żywo, Pulse pokazuje Twoje tętno; jeśli opaska wysyła też odstępy między uderzeniami, mierzy HRV (RMSSD) przez minutę przed i po. Sesje zostają na tym telefonie i nie wpływają na wyniki.",
-    "hrvLine": "HRV {{value}} ms · RMSSD, ostatnia minuta",
+    "hrvLine": "HRV {{value}} ms, RMSSD, ostatnia minuta",
     "hrvMeasuring": "HRV: pomiar…",
     "length": "Długość",
     "breaths": "Oddechy",
     "left": "zostało",
-    "leftLabel": "Zostało {{time}} · {{title}}",
+    "leftLabel": "Zostało {{time}}, {{title}}",
     "endSession": "Zakończ sesję",
     "goAgain": "Jeszcze raz",
     "changePace": "Zmień tempo",
@@ -149,7 +149,7 @@
     "hrvShort": "HRV",
     "breathing": "Oddychanie",
     "recentLabel": "{{when}}: {{title}}, {{duration}}, {{aside}}",
-    "whenDuration": "{{when}} · {{duration}}",
+    "whenDuration": "{{when}}, {{duration}}",
     "whenAt": "{{day}}, {{time}}",
     "cardBody": "Kilka minut powolnego oddychania w rytmie, by się wyciszyć. Gdy opaska działa na żywo, zobacz, jak spada Twoje tętno, oraz HRV przed i po."
   }

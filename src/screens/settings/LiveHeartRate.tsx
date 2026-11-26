@@ -225,7 +225,7 @@ function Note({ icon, children }: { icon: LucideIcon; children: string }) {
 function DeviceRow({ d, onPress, aside, rule }: { d: FoundDevice; onPress: () => void; aside?: string; rule?: boolean }) {
   const { t } = useTranslation("settings");
   const signal = signalWord(d.rssi);
-  const detail = [d.paired ? t("live.pairedHere") : d.likely ? t("live.likelyBand") : null, signal ? t("live.signal", { signal }) : null, aside ?? null].filter(Boolean).join(" · ");
+  const detail = [d.paired ? t("live.pairedHere") : d.likely ? t("live.likelyBand") : null, signal ? t("live.signal", { signal }) : null, aside ?? null].filter(Boolean).join(", ");
   return (
     <Press
       activeOpacity={0.6}

@@ -290,15 +290,15 @@ export function pointLabels(mode: "daily" | "day", xs: readonly number[], days: 
   return days.map((d) => (d.slice(0, 4) === year ? shortDayText(d) : `${shortDayText(d)}, ${d.slice(0, 4)}`));
 }
 
-/** The visible window in words: "Sep 3 – Oct 7" (years when they differ from today's), or "06:00 – 14:30" (a day's end "24:00"). */
+/** The visible window in words: "Sep 3 to Oct 7" (years when they differ from today's), or "06:00 to 14:30" (a day's end "24:00"). */
 export function windowText(mode: "daily" | "day", from: number, to: number, days: readonly string[] | null, today: string): string {
-  if (mode === "day" || !days) return `${minuteText(from)} – ${dayClock(to)}`;
+  if (mode === "day" || !days) return i18n.t("common:dateRange", { from: minuteText(from), to: dayClock(to) });
   const a = days[Math.max(0, Math.min(days.length - 1, Math.ceil(from)))];
   const b = days[Math.max(0, Math.min(days.length - 1, Math.floor(to)))];
   if (!a || !b) return "";
   const year = today.slice(0, 4);
   const fmt = (d: string) => (d.slice(0, 4) === year && a.slice(0, 4) === b.slice(0, 4) ? monthDayText(d) : fullDayText(d));
-  return a === b ? fmt(a) : `${fmt(a)} – ${fmt(b)}`;
+  return a === b ? fmt(a) : i18n.t("common:dateRange", { from: fmt(a), to: fmt(b) });
 }
 
 // --- Windows and axes ---

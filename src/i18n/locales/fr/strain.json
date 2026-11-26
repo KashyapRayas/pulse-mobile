@@ -177,8 +177,8 @@
   },
   "costCaption": {
     "notEnough": "Pas encore assez de données : {{have}} sur {{needed}}",
-    "based": "{{bounce}} · {{sessions}}",
-    "early": "{{bounce}} · {{sessions}}, estimation préliminaire"
+    "based": "{{bounce}}, {{sessions}}",
+    "early": "{{bounce}}, {{sessions}}, estimation préliminaire"
   },
   "costSentence": {
     "needs": "Pulse a besoin de {{needed}} avec une Recovery le lendemain matin pour mesurer ce qu’elles te coûtent ; il en a {{have}} pour l’instant.",
@@ -210,8 +210,8 @@
   "detected": {
     "spoken": "Activité détectée, probablement {{label}}, fréquence cardiaque moyenne {{hr}} bpm, de {{start}} à {{end}}. Pas une séance enregistrée.",
     "title": "Détectée",
-    "line": "{{label}} · {{hr}} bpm moy.",
-    "lineSteps": "{{label}} · {{hr}} bpm moy. · {{steps}} pas",
+    "line": "{{label}}, {{hr}} bpm moy.",
+    "lineSteps": "{{label}}, {{hr}} bpm moy., {{steps}} pas",
     "note": "Activité détectée : 12 minutes ou plus de fréquence cardiaque élevée sans séance enregistrée, nommée d’après tes pas. Elle est affichée à titre indicatif et n’ajoute rien à tes scores."
   },
   "menu": {
@@ -278,7 +278,7 @@
   },
   "target": {
     "label": "Strain Target",
-    "range": "{{low}} - {{high}}",
+    "range": "{{low}} à {{high}}",
     "spoken": "Strain Target {{low}} à {{high}}",
     "spokenReason": "Strain Target : {{reason}}"
   },
@@ -365,11 +365,11 @@
     "belowZone1": "Sous la Zone 1",
     "zone": "Zone {{zone}}",
     "waiting": "En attente d’un battement",
-    "zoneWithBand": "{{zone}} · plage du jour {{floor}}–{{ceiling}} bpm",
+    "zoneWithBand": "{{zone}}, plage du jour {{floor}}–{{ceiling}} bpm",
     "today": "Aujourd’hui",
     "readError": "Impossible de lire les scores du jour.",
     "reading": "Lecture des scores du jour…",
-    "targetLine": "La cible du jour est {{low}} - {{high}}.",
+    "targetLine": "La cible du jour est {{low}} à {{high}}.",
     "noTarget": "Pas encore de Strain Target aujourd’hui : il faut la Recovery du jour. Le Coach utilise ta plage de fréquence cardiaque seule.",
     "recoveryLine": "Recovery {{value}}% fixe jusqu’où le Coach te laisse aller.",
     "notSynced": "La fréquence cardiaque du jour n’est pas encore synchronisée, donc le Day Strain part de cette séance.",
@@ -378,7 +378,7 @@
     "noHeartRate": "Pas encore de fréquence cardiaque",
     "workoutStrain": "Strain de la séance",
     "time": "Durée",
-    "avgMax": "{{avg}} moy. · {{max}} max.",
+    "avgMax": "{{avg}} moy., {{max}} max.",
     "verdictPast": "Au-delà de la cible du jour : privilégie le sommeil cette nuit.",
     "verdictInside": "Dans la cible du jour.",
     "verdictBelow": "{{value}} sous la cible du jour.",
@@ -389,7 +389,7 @@
     "keptOnPhone": "Conservé sur ce téléphone ; Fitbit synchronise la séance elle-même avec tes scores.",
     "when": "{{day}}, {{time}}",
     "recentSpoken": "{{when}} : {{duration}}, Strain de la séance {{value}} pour cent",
-    "recentLine": "{{duration}} · {{bpm}} bpm moy.",
+    "recentLine": "{{duration}}, {{bpm}} bpm moy.",
     "strain": "Strain"
   }
 }

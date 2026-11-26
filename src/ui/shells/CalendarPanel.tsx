@@ -183,7 +183,7 @@ const legend = (context: CalendarContext): { label: string; color: keyof typeof 
   context === "recovery"
     ? [
         { label: "<34%", color: "recovery-red" },
-        { label: "34% - 66%", color: "recovery-yellow" },
+        { label: "34% to 66%", color: "recovery-yellow" },
         { label: ">66%", color: "recovery-green" },
       ]
     : context === "strain"

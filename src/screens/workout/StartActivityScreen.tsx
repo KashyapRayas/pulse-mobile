@@ -1,6 +1,7 @@
 // Start an activity `/workout/start` (docs/workout-tracker/whoop-ui.md § Pre-start, reference/prestart-android.jpg):
 // X, the sport and a caret over a dark blue gradient; the live heart rate in a blue bubble that beats with it; a white
 // sheet with the Strain Target row and the START ACTIVITY pill. The caret opens the picker.
+import { valueRange } from "@/lib/format";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Animated, Linking, ScrollView, TextInput, useWindowDimensions, View } from "react-native";
 import { Switch } from "@/screens/settings/controls";
@@ -121,7 +122,7 @@ export function StartActivityScreen() {
               <TargetRing value={target?.[0] ?? null} on={targetOn} />
               <View className="ml-3 flex-1">
                 <Text className={cn("text-caption text-muted-foreground", CAPS)}>{t("start.strainTarget")}</Text>
-                <Text className="font-numeric text-value font-bold leading-6 tabular-nums text-foreground">{target ? `${Math.round(target[0])}–${Math.round(target[1])}%` : "--"}</Text>
+                <Text className="font-numeric text-value font-bold leading-6 tabular-nums text-foreground">{target ? valueRange(Math.round(target[0]), `${Math.round(target[1])}%`) : "--"}</Text>
               </View>
               <Switch value={targetOn && !!target} disabled={!target} onValueChange={setTargetOn} label={t("start.strainTarget")} />
             </View>

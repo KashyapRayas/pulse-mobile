@@ -129,7 +129,7 @@ const n0 = (s: string) => {
 /** "182 kcal · 12.6 g protein · 1.6 g carbs · 13.9 g fat": the numbers as typed so far. */
 function summaryOf(f: FoodForm) {
   const g = (s: string, key: "protein" | "carbs" | "fat" | "fiber") => (num(s) !== null && !Number.isNaN(num(s)) ? i18n.t(`nutrition:numbers.${key}`, { value: s.trim().replace(",", ".") }) : null);
-  return [i18n.t("nutrition:numbers.kcal", { value: f.kcal.trim() || "?" }), g(f.protein, "protein"), g(f.carbs, "carbs"), g(f.fat, "fat"), g(f.fiber, "fiber")].filter(Boolean).join(" · ");
+  return [i18n.t("nutrition:numbers.kcal", { value: f.kcal.trim() || "?" }), g(f.protein, "protein"), g(f.carbs, "carbs"), g(f.fat, "fat"), g(f.fiber, "fiber")].filter(Boolean).join(", ");
 }
 
 /** One estimated food under review: name, portion and numbers; the pencil opens its fields, the bin drops it. */

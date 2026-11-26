@@ -95,7 +95,7 @@
     "tooShortBody": "An activity needs at least 2 minutes to be saved. Keep recording, or discard this one.",
     "open": "{{name}} recording. Open the live screen",
     "pausedBar": "{{name}} paused",
-    "pausedName": "{{name}} · paused",
+    "pausedName": "{{name}}, paused",
     "pausedDial": "Paused",
     "strainSoFar": "Activity strain {{strain}}% so far"
   },

@@ -9,12 +9,12 @@
   <string name="pulse_widget_empty">Choose at least one metric.</string>
   <string name="pulse_widget_too_many">Choose no more than %1$d metrics.</string>
   <string name="pulse_widget_description">Your last synced Pulse health summary. Tap a metric to open its details.</string>
-  <string name="pulse_widget_small">Small · one metric</string>
-  <string name="pulse_widget_medium">Medium · three metrics</string>
-  <string name="pulse_widget_large">Large · six metrics + heart rate</string>
+  <string name="pulse_widget_small">Small, one metric</string>
+  <string name="pulse_widget_medium">Medium, three metrics</string>
+  <string name="pulse_widget_large">Large, six metrics and heart rate</string>
   <string name="pulse_widget_demo">Sample data</string>
   <string name="pulse_widget_updated">Synced</string>
-  <string name="pulse_widget_stale">Older sync · open Pulse</string>
+  <string name="pulse_widget_stale">Older sync. Open Pulse</string>
   <string name="pulse_widget_open">Open Pulse and sync to see your data</string>
   <string name="pulse_widget_today">Open Pulse for today\'s data</string>
   <string name="pulse_widget_reading">Reading</string>

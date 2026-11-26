@@ -330,7 +330,7 @@ function leanCaption(c: HealthspanContribution, b: HealthspanBody | null | undef
   const kg = quantity("kg");
   if (b?.leanKg != null && b.fatKg != null) parts.push(i18n.t("health:hs.leanMass", { lean: localeFixed(kg.value(b.leanKg), 1), fat: localeFixed(kg.value(b.fatKg), 1), unit: kg.unit }));
   if (b?.ffmi != null && b.fmi != null) parts.push(i18n.t("health:hs.leanIndex", { ffmi: localeFixed(b.ffmi, 1), fmi: localeFixed(b.fmi, 1) }));
-  return i18n.t(c.estimated ? "health:hs.leanCaptionEstimated" : "health:hs.leanCaption", { parts: parts.join(" · ") });
+  return i18n.t(c.estimated ? "health:hs.leanCaptionEstimated" : "health:hs.leanCaption", { parts: parts.join(", ") });
 }
 type HealthspanBody = Extract<NonNullable<DayRow["healthspan"]>, { reason: null }>["bodyComposition"];
 

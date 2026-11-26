@@ -17,8 +17,8 @@ describe("periodWindow", () => {
 
 describe("periodLabel", () => {
   it("prints the reference app's range", () => {
-    expect(periodLabel("2026-03-17", "2026-04-15")).toBe("Mar 17 - Apr 15, 26");
-    expect(periodLabel("2025-10-16", "2026-04-15")).toBe("Oct 16, 25 - Apr 15, 26");
+    expect(periodLabel("2026-03-17", "2026-04-15")).toBe("Mar 17 to Apr 15, 26");
+    expect(periodLabel("2025-10-16", "2026-04-15")).toBe("Oct 16, 25 to Apr 15, 26");
   });
 });
 
@@ -83,7 +83,7 @@ describe("verdict", () => {
   });
   it("uses the typical range on the week when one is given", () => {
     expect(verdict({ ...base, label: "RHR", now: 60, prior: 59, typical: [58, 62] })).toBe(
-      "Your average RHR during this 7-day period was within its typical range (58 - 62).",
+      "Your average RHR during this 7-day period was within its typical range (58 to 62).",
     );
   });
   it("words weekly totals", () => {

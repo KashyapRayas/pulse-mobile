@@ -144,7 +144,7 @@ function Day({ g, today, timeZone }: { g: Group; today: string; timeZone: string
         </Text>
         <Text className="shrink font-numeric text-caption font-medium tabular-nums text-muted-foreground" numberOfLines={1}>
           {g.steps !== null && t("activities.steps", { value: formatValue("grouped", g.steps) })}
-          {g.steps !== null && g.dayStrain !== null && " · "}
+          {g.steps !== null && g.dayStrain !== null && ", "}
           {g.dayStrain !== null && (
             <Trans t={t} i18nKey="activities.dayStrain" values={{ value: formatValue("pct", g.dayStrain) }} components={{ b: <Text className="font-bold text-strain-text" /> }} />
           )}

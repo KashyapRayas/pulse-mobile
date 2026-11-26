@@ -71,7 +71,7 @@ export function reportShareText(vm: ReportPageVM): string {
         p.sleep.map((s) => {
           if (s.key === "nightsMet") return nights?.metric.value == null ? null : `${s.label} ${nights.metric.value} ${s.unit ?? ""}`.trimEnd();
           const line = statLine(s, suffixOf(s.key));
-          return line && s.key === "slept" && s.caption ? `${line} · ${s.caption.toLowerCase()}` : line;
+          return line && s.key === "slept" && s.caption ? `${line}, ${s.caption.toLowerCase()}` : line;
         }),
       ),
     ),

@@ -1,7 +1,7 @@
 {
   "title": "Home",
   "sync": {
-    "progress": "Syncing · {{percent}}%",
+    "progress": "Syncing {{percent}}%",
     "syncing": "Syncing…"
   },
   "noBand": {
@@ -90,7 +90,7 @@
     "wokeAt": "Woke at <t>{{time}}</t> with <t>{{level}}%</t>",
     "charged": "Charged",
     "drained": "Drained",
-    "drainAt": "{{label}} at <t>{{time}}</t> · <t>{{amount}}</t>"
+    "drainAt": "{{label}} at <t>{{time}}</t>, <t>{{amount}}</t>"
   },
   "heartRate": {
     "title": "Heart rate",
@@ -144,11 +144,11 @@
     "highStress": "You spent {{duration}} in high stress."
   },
   "edit": {
-    "customizeLabel": "Customize My Dashboard",
-    "customize": "Customize",
-    "pageTitle": "Customize dashboard",
-    "success": "Success",
-    "saved": "Your preferences have been saved.",
+    "customizeLabel": "Edit My Dashboard",
+    "customize": "Edit",
+    "pageTitle": "Edit My Dashboard",
+    "success": "Saved",
+    "saved": "My Dashboard shows these metrics now.",
     "saveFailed": "Couldn’t save your dashboard. Try again.",
     "saving": "Saving…",
     "myDashboard": "My Dashboard",
@@ -169,5 +169,169 @@
     "moved": "{{label}} moved to position {{position}} of {{total}}",
     "removed": "{{label}} removed from Home",
     "added": "{{label}} added at position {{position}}"
+  },
+  "review": {
+    "headline": {
+      "target": "Strain Target {{low}} to {{high}}%",
+      "plan": "Your plan for today",
+      "red": "Low recovery. Keep today light",
+      "yellow": "Moderate recovery. Train with care",
+      "shortSleep": "Short on sleep. Take it steady",
+      "green": "Well recovered. Ready for a hard day",
+      "past": "You went past your Strain Target",
+      "inTarget": "You landed in your Strain Target",
+      "lighter": "A lighter day than your target",
+      "strain": "Day Strain {{value}}%",
+      "recovery": "Recovery {{value}}%",
+      "day": "Your day"
+    },
+    "score": {
+      "sleep": "Sleep",
+      "recovery": "Recovery",
+      "strain": "Strain"
+    },
+    "noData": "no data",
+    "openHint": "Opens the full review of the day",
+    "noAverage": "No 7-day average yet",
+    "nearAverage": "Near your 7-day average",
+    "aboveAverage": "{{amount}} above your 7-day average",
+    "belowAverage": "{{amount}} below your 7-day average",
+    "strain": "Strain",
+    "strainSoFar": "Strain so far",
+    "ofTarget": "of <t>{{low}}</t> to <t>{{high}}%</t>",
+    "target": {
+      "above": "Above target",
+      "in": "In target",
+      "below": "Below target"
+    },
+    "drivers": "What moved Recovery",
+    "stress": "Stress",
+    "stressLevels": "Time in each level (hours)",
+    "started": "Started",
+    "nowAt": "Now at <t>{{level}}%</t>",
+    "endedAt": "Ended the day at <t>{{level}}%</t>",
+    "lastNight": "Last night",
+    "nightBefore": "The night before",
+    "sleepOf": "<b>{{asleep}}</b> of <t>{{need}}</t> needed",
+    "bedWake": "{{bed}} to {{wake}}",
+    "short": "<t>{{short}}</t> short of your need.",
+    "metNeed": "You met your sleep need.",
+    "debt": "Sleep debt <t>{{debt}}</t>.",
+    "stages": "Stages (hours)",
+    "open": "Open {{name}}",
+    "nothing": "Nothing was measured on this day.",
+    "driverSpoken": "{{label}}, {{points}}"
+  },
+  "search": {
+    "open": "Search metrics",
+    "title": "Search",
+    "placeholder": "Search metrics and pages",
+    "label": "Search metrics and pages",
+    "clear": "Clear search",
+    "tabs": {
+      "all": "All",
+      "commands": "Pages and actions"
+    },
+    "recent": "Recent",
+    "offUsual": "Off your usual today",
+    "offUsualDay": "Off your usual on this day",
+    "metrics": "Metrics",
+    "pages": "Pages",
+    "actions": "Actions",
+    "noData": "No data",
+    "noMatch": "Nothing matches “{{query}}”.",
+    "hint": "Metrics you open show here, with the ones furthest from your usual.",
+    "valueSpoken": "{{label}}, {{value}}",
+    "noDataSpoken": "{{label}}, no data",
+    "page": {
+      "home": "Home",
+      "recovery": "Recovery",
+      "sleep": "Sleep",
+      "strain": "Strain",
+      "health": "Health",
+      "pulseAge": "Pulse Age",
+      "monitor": "Health Monitor",
+      "stress": "Stress Monitor",
+      "fitness": "Fitness",
+      "heartRate": "Heart rate",
+      "journal": "Journal",
+      "insights": "Behaviour insights",
+      "trends": "Trends",
+      "reports": "Reports",
+      "activities": "Activities",
+      "coach": "Coach",
+      "settings": "Settings",
+      "checkIn": "Check in",
+      "customize": "Customize Home",
+      "review": "Day in review"
+    }
+  },
+  "customize": {
+    "open": "Customize Home",
+    "title": "Customize Home",
+    "intro": "Your scores always lead. Turn off what you don’t use and move the rest into the order you read it.",
+    "area": {
+      "top": "Under the dials",
+      "day": "My Day",
+      "side": "Dashboard"
+    },
+    "section": {
+      "heartRate": {
+        "label": "Heart rate",
+        "hint": "Today’s live or latest reading"
+      },
+      "monitors": {
+        "label": "Health and Stress Monitor",
+        "hint": "The two cards under the dials, or your phone’s counts"
+      },
+      "coach": {
+        "label": "Coach cards",
+        "hint": "Today’s strain, recovery and sleep notes"
+      },
+      "day": {
+        "label": "Daily outlook and review",
+        "hint": "Morning plan, evening summary"
+      },
+      "activities": {
+        "label": "Activities",
+        "hint": "Workouts, sleep and naps"
+      },
+      "tonight": {
+        "label": "Tonight’s sleep",
+        "hint": "Bedtime from the Sleep Planner"
+      },
+      "journal": {
+        "label": "My journal",
+        "hint": "This week’s check-ins"
+      },
+      "energy": {
+        "label": "Energy Bank",
+        "hint": "Charge and drain through the day"
+      },
+      "dashboard": {
+        "label": "My Dashboard",
+        "hint": "Your chosen metrics"
+      },
+      "strainRecovery": {
+        "label": "Strain and recovery chart",
+        "hint": "The last 7 days"
+      },
+      "week": {
+        "label": "Week in review",
+        "hint": "Link to the latest weekly report"
+      }
+    },
+    "show": "Show {{label}}",
+    "moveUp": "Move {{label}} up",
+    "moveDown": "Move {{label}} down",
+    "shown": "{{label}} shown",
+    "hidden": "{{label}} hidden",
+    "moved": "{{label}} moved to position {{position}} of {{total}}",
+    "saving": "Saving",
+    "reset": "Reset to default",
+    "savedTitle": "Saved",
+    "savedBody": "Home shows your layout now.",
+    "saveFailed": "Couldn’t save your Home layout. Try again.",
+    "onlyScores": "Home will show only your scores."
   }
 }

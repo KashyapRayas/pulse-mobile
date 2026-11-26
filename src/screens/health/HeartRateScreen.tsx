@@ -2,12 +2,14 @@
 // from pulse src/app/(app)/health/heart-rate/page.tsx, LiveHeartRate.tsx and loading.tsx. The web's poll of
 // `/heart-rate` is the app's live ticker (src/state/liveHr.tsx, halo's): it reads Health Connect every minute, and when
 // a read moved the samples (`liveVersion`) this screen re-reads today.
+import { useSelectedDay } from "@/ui/shells/DateSwitcher";
+import { useShellCalendar } from "@/ui/shells/ShellStatus";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/config";
-import { dayLabel, MISSING } from "@/lib/format";
+import { dayLabel, MISSING, valueRange } from "@/lib/format";
 import { getHeartRate } from "@/queries/health";
 import type { HeartRateVM } from "@/queries/types";
 import { refreshLiveHr, useLiveHr } from "@/state/liveHr";
@@ -57,7 +59,7 @@ function HeartRateHero({ v, now }: { v: HeartRateVM; now: number }) {
   const avg = bpms.length ? Math.round(mean(bpms)) : null;
   const big = v.isToday ? (v.latest?.bpm ?? null) : avg;
   const stats = [
-    { id: "range", label: t("heartRate.range"), value: bpms.length ? `${Math.min(...bpms)}–${Math.max(...bpms)}` : MISSING, spoken: bpms.length ? `${Math.min(...bpms)} to ${Math.max(...bpms)}` : t("heartRate.noReadings") },
+    { id: "range", label: t("heartRate.range"), value: bpms.length ? valueRange(Math.min(...bpms), Math.max(...bpms)) : MISSING, spoken: bpms.length ? `${Math.min(...bpms)} to ${Math.max(...bpms)}` : t("heartRate.noReadings") },
     ...(v.isToday ? [{ id: "average", label: t("heartRate.average"), value: avg === null ? MISSING : String(avg), spoken: avg === null ? t("heartRate.noReadings") : String(avg) }] : []),
     { id: "resting", label: t("heartRate.resting"), value: v.restingHr === null ? MISSING : String(v.restingHr), spoken: v.restingHr === null ? t("heartRate.notYet") : String(v.restingHr) },
   ];
@@ -113,7 +115,7 @@ export function HeartRateScreen() {
   return (
     <DetailShell
       title={t("title.heartRate")}
-      bodySkeleton={bodySkeleton()}
+      bodySkeleton={bodySkeleton(dayLabel(d, today))}
       dateSwitcher={{ mode: "day" }}
       info={HEART_RATE_INFO}
       hero={
@@ -135,8 +137,9 @@ export function HeartRateScreen() {
   );
 }
 
-const loadingPrimary = () => (
-  <SectionShell variant="card" title={i18n.t("common:today")}>
+/** The day's chart card; titled with the day being loaded ("Today", "Yesterday", "Mon, Sep 28"), as the loaded card is. */
+const loadingPrimary = (title: string) => (
+  <SectionShell variant="card" title={title}>
     <IntradayHrChartSkeleton />
   </SectionShell>
 );
@@ -148,15 +151,18 @@ const loadingSecondary = () => [
 ];
 
 /** Below the fold while a cold push slides in: the loading state's first sections. */
-const bodySkeleton = () => (
+const bodySkeleton = (title: string) => (
   <>
-    {loadingPrimary()}
+    {loadingPrimary(title)}
     <View className="gap-3">{loadingSecondary().slice(0, 2)}</View>
   </>
 );
 
 /** Heart rate loading: the date row, the reading with its three stats, the day's chart, then time in zones. */
 function HeartRateLoading() {
+  const [d] = useSelectedDay();
+  const { today } = useShellCalendar();
+  const dayTitle = dayLabel(d, today);
   const { t } = useTranslation("health");
   return (
     <DetailShell
@@ -177,8 +183,8 @@ function HeartRateLoading() {
           </View>
         </View>
       }
-      primary={loadingPrimary()}
-      bodySkeleton={bodySkeleton()}
+      primary={loadingPrimary(dayTitle)}
+      bodySkeleton={bodySkeleton(dayTitle)}
       secondary={loadingSecondary()}
     />
   );
