@@ -18,7 +18,7 @@
     "strength": "Tempo di attività di forza",
     "steps": "Passi",
     "calories": "Calorie",
-    "vo2max": "VO2 Max",
+    "vo2max": "VO2 max",
     "lean_mass": "Massa magra"
   },
   "viewShort": {
@@ -62,7 +62,7 @@
     "strength": "Che cos’è il tempo di attività di forza?",
     "steps": "Che cosa sono i passi?",
     "calories": "Che cosa sono le calorie?",
-    "vo2max": "Che cos’è il VO2 Max?",
+    "vo2max": "Che cos’è il VO2 max?",
     "lean_mass": "Che cos’è la massa magra?"
   },
   "aboutBody": {

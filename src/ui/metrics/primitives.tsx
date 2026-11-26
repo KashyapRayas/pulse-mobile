@@ -47,6 +47,11 @@ export function StatusChip({ tone, children, delta, className, textClassName }: 
   const text = classes.find((k) => k.startsWith("text-")) ?? "";
   const glyph = CHIP_ICON[tone];
   const [room, setRoom] = useState<number | null>(null);
+  // The chip's own width before any cap. A row that shrink-wraps the chip (a chip beside a value in a horizontal row)
+  // reports the chip's width as its room, so the cap applies only where the room is narrower than the chip would be:
+  // otherwise the chip squeezed itself into two lines ("No / data") beside free space.
+  const [natural, setNatural] = useState<number | null>(null);
+  const capped = room !== null && natural !== null && room < natural - 0.5;
   // What the text may use of the room: the chip's sides (px-2, or the caller's px-*), then the mark and its 6 px gap.
   const sides = 8 * Number(/(?:^|\s)px-(\d+(?:\.\d+)?)(?:\s|$)/.exec(className ?? "")?.[1] ?? 2);
   const markWidth = delta ? (delta === "flat" ? 6 : 8) + 6 : glyph ? (/\btext-label\b/.test(textClassName ?? "") ? 12 : 14) + 6 : 0;
@@ -69,9 +74,9 @@ export function StatusChip({ tone, children, delta, className, textClassName }: 
   const margins = place.filter((k) => !k.startsWith("self-")).join(" ");
   return (
     <View className={cn("max-w-full flex-row items-center self-stretch", justify, margins)} onLayout={(e) => setRoom(e.nativeEvent.layout.width)}>
-      <View className={cn("min-h-6 flex-row items-start gap-1.5 rounded-md px-2 py-1", bg, inner)} style={room ? { maxWidth: room } : undefined}>
+      <View className={cn("min-h-6 flex-row items-start gap-1.5 rounded-md px-2 py-1", bg, inner)} style={capped ? { maxWidth: room } : undefined} onLayout={(e) => !capped && setNatural(e.nativeEvent.layout.width)}>
         {!!mark && <LineIcon step={step}>{mark}</LineIcon>}
-        <Text className={cn("shrink text-caption font-bold tabular-nums", text, textClassName)} style={room ? { maxWidth: Math.max(0, room - sides - markWidth + 1) } : undefined}>
+        <Text className={cn("shrink text-caption font-bold tabular-nums", text, textClassName)} style={capped ? { maxWidth: Math.max(0, room - sides - markWidth + 1) } : undefined}>
           {children}
         </Text>
       </View>

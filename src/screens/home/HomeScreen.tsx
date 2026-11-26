@@ -523,7 +523,7 @@ function EnergyBody({ eb, timeZone }: { eb: NonNullable<HomeVM["energyBank"]["va
       <EnergyBankChart data={metric} />
       <View className="mt-auto flex-row gap-3">
         <MiniStat label={t("energy.charged")} value={formatValue("signedInt", eb.charged)} className="text-optimal-text" />
-        <MiniStat label={t("energy.drained")} value={formatValue("signedInt", eb.drained)} className="text-warning-text" />
+        <MiniStat label={t("energy.drained")} value={formatValue("signedInt", -Math.abs(eb.drained))} className="text-warning-text" />
       </View>
       {/* The chart's dots, in time order. */}
       {drains.length > 0 && (

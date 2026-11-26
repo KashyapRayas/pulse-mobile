@@ -76,7 +76,8 @@ export function StrainRecoveryChart({ points, today }: { points: StrainRecoveryP
     <ChartFigure summary={summary} height={HEIGHT}>
       {({ width, height }) => {
         const margin = { top: 20, right: 4, bottom: TODAY_TAIL - 40 + 2, left: 4 };
-        const x0 = margin.left + 24;
+        // Room for "100" at 13 px (about 23 px): a 24 px column cut it to "1…".
+        const x0 = margin.left + 30;
         const x1 = width - margin.right - 40;
         const y0 = margin.top;
         const y1 = height - margin.bottom - 40;
@@ -107,7 +108,7 @@ export function StrainRecoveryChart({ points, today }: { points: StrainRecoveryP
               {rows.map((r, i) => (r.strain === null ? null : <HollowDot key={`s${r.day}`} x={centers[i]} y={ys(r.strain)} r={4} stroke={c.strain} />))}
             </PlotCanvas>
             {LEFT_TICKS.map((v) => (
-              <ChartLabel key={`l${v}`} x={x0 - 8} y={ys(v)} anchor="end" w={24} className="font-semibold" color={c["strain-text"]}>{String(v)}</ChartLabel>
+              <ChartLabel key={`l${v}`} x={x0 - 6} y={ys(v)} anchor="end" w={30} className="font-semibold" color={c["strain-text"]}>{String(v)}</ChartLabel>
             ))}
             {RIGHT_TICKS.map((v) => (
               <ChartLabel key={`r${v}`} x={x1 + 8} y={yr(v)} anchor="start" w={40} className="font-semibold" color={css(`var(--${BAND_TEXT[recoveryBand(v)]})`)}>{`${v}%`}</ChartLabel>

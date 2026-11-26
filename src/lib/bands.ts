@@ -50,6 +50,8 @@ export function partColor(key: string): string {
     asleep: "sleep",
     need: "optimal",
     deep: "stage-deep",
+    light_sleep: "stage-light",
+    awake: "stage-awake",
     low: "stress-low",
     medium: "stress-medium",
     high: "stress-high",
