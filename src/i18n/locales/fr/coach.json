@@ -59,7 +59,10 @@
     "copyAnswer": "Copier la réponse",
     "copied": "Copié dans le presse-papiers",
     "jumpLatest": "Aller au dernier message",
-    "holdHint": "Appuie longuement pour copier ou modifier"
+    "holdHint": "Appuie longuement pour copier ou modifier",
+    "yourMessage": "Ton message",
+    "followUpsLabel": "Questions de suivi",
+    "counter": "{{used}} / {{max}}"
   },
   "bar": {
     "chats": "Discussions",
@@ -205,5 +208,54 @@
     "spokenAnalyzing": "Coach analyse cette activité. Touchez pour ouvrir la discussion.",
     "expand": "Développe cette analyse d’activité.",
     "napQuestion": "Analyse ma sieste du {{day}} commençant à {{time}}."
+  },
+  "tools": {
+    "open": "Poser une question sur un sujet",
+    "title": "Demander à propos de",
+    "subtitle": "Choisis un sujet et le coach le consulte pour toi.",
+    "label": {
+      "today": "Aujourd’hui",
+      "sleep": "Cette nuit",
+      "workouts": "Séances",
+      "trends": "Tendances",
+      "habits": "Habitudes",
+      "health": "Health Monitor"
+    },
+    "ask": {
+      "today": "Fais-moi le point sur aujourd’hui : Recovery, sommeil et Strain.",
+      "sleep": "Comment ai-je dormi cette nuit, et qu’est-ce que ça veut dire pour aujourd’hui ?",
+      "workouts": "Comment se sont passées mes séances la semaine dernière ?",
+      "trends": "Comment ma Recovery et ma HRV ont-elles évolué ces deux dernières semaines ?",
+      "habits": "Quelles habitudes du journal influencent le plus ma Recovery ?",
+      "health": "Y a-t-il quelque chose d’anormal dans mon Health Monitor aujourd’hui ?"
+    }
+  },
+  "steps": {
+    "get_day": "J’ai regardé ta journée",
+    "get_sleep": "J’ai lu ton sommeil",
+    "get_activity": "J’ai vérifié une séance",
+    "get_trend": "J’ai vérifié tes tendances",
+    "get_activities": "J’ai regardé tes séances",
+    "get_journal_impacts": "J’ai lu ton journal",
+    "get_health": "J’ai vérifié ton Health Monitor",
+    "get_report": "J’ai lu ton rapport",
+    "get_profile": "J’ai vérifié ton profil",
+    "default": "J’ai regardé tes données",
+    "summary_one": "{{count}} élément consulté",
+    "summary_many": "{{count}} éléments consultés",
+    "summary_other": "{{count}} éléments consultés"
+  },
+  "followUps": {
+    "dayTrain": "Comment devrais-je m’entraîner aujourd’hui ?",
+    "dayRecover": "Qu’est-ce qui aiderait le plus ma Recovery ?",
+    "sleepTonight": "Comment mieux dormir cette nuit ?",
+    "sleepBedtime": "À quelle heure devrais-je me coucher ce soir ?",
+    "workoutNext": "Quelle devrait être ma prochaine séance ?",
+    "workoutWeek": "Comment se présente mon entraînement cette semaine ?",
+    "trendWhy": "Qu’est-ce qui explique cette tendance ?",
+    "trendMonth": "Comment ça se compare au mois dernier ?",
+    "habitsFocus": "Sur quelle habitude devrais-je me concentrer ?",
+    "healthWatch": "Y a-t-il quelque chose à surveiller ?",
+    "reportFocus": "Sur quoi devrais-je me concentrer ensuite ?"
   }
 }

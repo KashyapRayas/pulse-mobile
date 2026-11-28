@@ -961,3 +961,26 @@ which app to open while both are installed.
 ```sh
 APP_VARIANT=fork npx expo prebuild --platform android --clean && cd android && ./gradlew assembleRelease
 ```
+
+## The coach's motion: layout animations and a gesture sheet (Reanimated 4, Gesture Handler 2)
+
+The coach's arrivals use Reanimated's layout animations (`entering` and `exiting` on an `Animated.View`): a sent message
+rises in on a spring, new paragraphs of a streaming answer fade in, Send and Stop swap with a zoom. An `entering`
+animation plays only when its view mounts, so a paragraph that keeps growing stays put and only new ones fade in, and
+messages loaded with a chat skip it on purpose. An `exiting` animation needs its own view to be the one removed: the
+jump-to-latest button keeps its slot mounted so its zoom-out can play. Layout animations follow the system's Remove
+animations setting by default; the hand-built loops (`src/screens/coach/Motion.tsx`) read `useReducedMotion` and stand
+still.
+
+The shimmer on a working line is a veil, not a mask: a horizontal `LinearGradient` in the chat's own ground colour, three
+times the text's width with a clear band in the middle, slides across the text on the UI thread. It needs no masked view
+(not installed) and works on any text that sits on the plain ground.
+
+The floating sheet (`src/screens/coach/Sheet.tsx`) is a transparent `Modal` with its own `GestureHandlerRootView`
+(Android modals are a separate window, so gestures need a root inside them). A `Gesture.Pan` with an
+`activeOffsetY` lets taps inside the card through and drags it down; past a share of its height, or on a flick, it
+closes. Its exit runs to the end before the modal unmounts, and an `onClosed` callback fires then, which is when a text
+field under it can take the keyboard.
+
+References: [Reanimated layout animations](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/entering-exiting-animations/),
+[Gesture Handler with modals](https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/installation#usage-with-modals-on-android).

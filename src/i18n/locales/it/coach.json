@@ -59,7 +59,10 @@
     "copyAnswer": "Copia la risposta",
     "copied": "Copiato negli appunti",
     "jumpLatest": "Vai all’ultimo messaggio",
-    "holdHint": "Tieni premuto per copiare o modificare"
+    "holdHint": "Tieni premuto per copiare o modificare",
+    "yourMessage": "Il tuo messaggio",
+    "followUpsLabel": "Domande successive",
+    "counter": "{{used}} / {{max}}"
   },
   "bar": {
     "chats": "Chat",
@@ -205,5 +208,54 @@
     "spokenAnalyzing": "Coach sta analizzando questa attività. Tocca per aprire la chat.",
     "expand": "Approfondisci questa analisi dell’attività.",
     "napQuestion": "Analizza il mio riposino del {{day}} iniziato alle {{time}}."
+  },
+  "tools": {
+    "open": "Chiedi su un argomento",
+    "title": "Chiedi su",
+    "subtitle": "Scegli un argomento e il coach lo controlla per te.",
+    "label": {
+      "today": "Oggi",
+      "sleep": "Stanotte",
+      "workouts": "Allenamenti",
+      "trends": "Tendenze",
+      "habits": "Abitudini",
+      "health": "Health Monitor"
+    },
+    "ask": {
+      "today": "Fammi un riepilogo di oggi: Recovery, sonno e Strain.",
+      "sleep": "Come ho dormito stanotte e cosa significa per oggi?",
+      "workouts": "Come sono andati i miei allenamenti nell’ultima settimana?",
+      "trends": "Come sono cambiate la mia Recovery e la mia HRV nelle ultime due settimane?",
+      "habits": "Quali abitudini del diario influenzano di più la mia Recovery?",
+      "health": "C’è qualcosa di anomalo oggi nel mio Health Monitor?"
+    }
+  },
+  "steps": {
+    "get_day": "Ho guardato la tua giornata",
+    "get_sleep": "Ho letto il tuo sonno",
+    "get_activity": "Ho controllato un allenamento",
+    "get_trend": "Ho controllato le tue tendenze",
+    "get_activities": "Ho guardato i tuoi allenamenti",
+    "get_journal_impacts": "Ho letto il tuo diario",
+    "get_health": "Ho controllato il tuo Health Monitor",
+    "get_report": "Ho letto il tuo report",
+    "get_profile": "Ho controllato il tuo profilo",
+    "default": "Ho guardato i tuoi dati",
+    "summary_one": "{{count}} elemento controllato",
+    "summary_many": "{{count}} elementi controllati",
+    "summary_other": "{{count}} elementi controllati"
+  },
+  "followUps": {
+    "dayTrain": "Come dovrei allenarmi oggi?",
+    "dayRecover": "Cosa aiuterebbe di più la mia Recovery?",
+    "sleepTonight": "Come posso dormire meglio stanotte?",
+    "sleepBedtime": "A che ora dovrei andare a letto stasera?",
+    "workoutNext": "Quale dovrebbe essere il mio prossimo allenamento?",
+    "workoutWeek": "Com’è il mio allenamento questa settimana?",
+    "trendWhy": "Cosa sta guidando questa tendenza?",
+    "trendMonth": "Com’è rispetto al mese scorso?",
+    "habitsFocus": "Su quale abitudine dovrei concentrarmi?",
+    "healthWatch": "C’è qualcosa da tenere d’occhio?",
+    "reportFocus": "Su cosa dovrei concentrarmi adesso?"
   }
 }
