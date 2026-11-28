@@ -27,8 +27,9 @@ keeps: the Linear tokens, type scale, popover material, hairlines and the coach 
    - Send springs in when there is text, and Send and Stop swap with a small zoom.
    - Near the 2,000-character limit, a "N left" counter appears.
    - Sending gives a light tap.
-2. **Tools sheet** (a Family-style floating sheet). Its title is "Ask about". Six tiles each send a focused question
-   that leads the coach to one tool:
+2. **Tools sheet** (a Family-style floating card laid out as a Linear sheet: a grabber, a left-aligned title over a
+   muted line, a close circle, then one group of inset rows with hairlines). Its title is "Ask about". Six rows, each an
+   icon, the topic and the question it sends, lead the coach to one tool:
    - Today
    - Last night
    - Workouts
@@ -46,7 +47,9 @@ keeps: the Linear tokens, type scale, popover material, hairlines and the coach 
    - The evidence cards (rings, sleep, trends) still follow, as before.
 5. **Streaming.**
    - Each new paragraph of an answer fades in.
-   - A small coach-blue dot pulses at the end while the answer is still coming.
+   - Three coach-blue dots wave under the words while the answer is still coming.
+   - After its lookups, while the coach works out what to say, "Thinking…" shows again under the steps.
+   - Arrivals take 180 ms and springs settle in about a quarter second (owner's feedback on the first APK: snappier).
 6. **Messages.**
    - A message you send rises in on a spring. Messages loaded from history do not animate.
    - Under an answer, Copy turns into a check for a moment.
@@ -57,7 +60,7 @@ keeps: the Linear tokens, type scale, popover material, hairlines and the coach 
 9. **Empty chat.** The mark and the starter questions rise in one after another.
 10. **Errors.** The error card fades in, with the error haptic.
 
-Reduced motion: springs, sweeps and the breathing all fall back to no animation. The shimmer and the caret become
+Reduced motion: springs, sweeps and the breathing all fall back to no animation. The shimmer and the typing dots become
 static.
 
 ```mermaid
@@ -67,7 +70,7 @@ flowchart LR
   G -- yes --> R[Tool steps: spinner + shimmering step]
   R --> D[Steps done: 'Looked at N things' + evidence cards]
   D --> A
-  G -- no --> A[Answer streams: paragraphs fade in, caret dot]
+  G -- no --> A[Answer streams: paragraphs fade in, typing dots]
   A --> F[Finished: actions row, Copy to check, follow-ups]
   F --> S
 ```
@@ -78,9 +81,9 @@ flowchart LR
 |---|---|
 | `src/screens/coach/Coach.tsx` | Composer, messages, thinking, steps, follow-ups, jump button, empty state, the user message sheet |
 | `src/screens/coach/Sheet.tsx` (new) | The floating sheet: Modal, dim fade, card on a spring, pan to dismiss, header with icon, title and close |
-| `src/screens/coach/Motion.tsx` (new) | `Shimmer` (a light band over text), `Spinner`, `BreathingMark`, `StreamCaret`, `CopyIcon` |
+| `src/screens/coach/Motion.tsx` (new) | `Shimmer` (a light band over text), `Spinner`, `Breathing`, `TypingDots`, the coach's quick timings (`SNAP`, `SNAP_SPRING`) |
 | `src/screens/coach/ToolSteps.tsx` (new) | The grouped tool steps row |
-| `src/screens/coach/ToolsSheet.tsx` (new) | The "+" tools sheet |
+| `src/screens/coach/ToolsSheet.tsx` (new) | The "+" tools sheet: one group of Linear inset rows |
 | `src/screens/coach/Prose.tsx` | New blocks fade in while an answer streams |
 | `src/coach/parts.ts` (new) + test | Groups a message's parts into text and tool-step runs. Pure |
 | `src/coach/followUps.ts` (new) + test | Follow-up keys from the tools an answer used. Pure |
@@ -108,11 +111,11 @@ floating sheet elsewhere later, it moves into the kit as its own change.
 
 1. Open Coach on an empty chat. The mark and suggestions rise in.
 2. Type in the composer. The border turns blue, and Send springs in. Clear the text, and Send fades back.
-3. Tap **+**. The tools sheet floats up. Drag it down, and it closes. Open it again and tap **Last night**. The question
+3. Tap **+**. The tools sheet floats up with six rows in one group. Drag it down, and it closes. Open it again and tap **Last night**. The question
    sends.
 4. While it answers: the breathing mark and the shimmering "Thinking…", then a spinner with the shimmering step, then
    "Looked at N things". Tap it, and the steps open with checks.
-5. The answer's paragraphs fade in, with a dot at the end until it finishes. Tap **Stop** mid-answer, and Send returns.
+5. The answer's paragraphs fade in, with three waving dots under them until it finishes. Tap **Stop** mid-answer, and Send returns.
 6. When it finishes, follow-up questions appear. Tap one, and it sends.
 7. Tap Copy under an answer. The icon turns into a check.
 8. Hold your own message. The floating sheet opens with Copy and Edit. Edit still works.
