@@ -52,6 +52,8 @@ modules/*/android/.gradle/
 
 # Claude Code worktrees
 .claude/worktrees/
+# Test APKs from scripts/test-apk.sh
+.claude/test-apks/
 
 # Sentry build plugin credentials (docs/telemetry.md)
 .env.sentry-build-plugin

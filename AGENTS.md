@@ -77,10 +77,14 @@ docs/         rewrite-plan.md, plan.md, design/spec.md, learning.md, onboarding.
 
 ## Git
 
-- Use the `git` CLI only, never `gh`.
-- Commit as `adityaongit`, email `74150665+adityaongit@users.noreply.github.com`. Check `git config user.email` before committing.
+- This checkout is the fork `KashyapRayas/pulse-mobile` (`origin`). Push, open PRs, publish releases and merge there
+  only, never to upstream `adityaongit/pulse-mobile`. `gh` is for the fork's PRs and releases; pass
+  `--repo KashyapRayas/pulse-mobile` every time.
+- Commit as `KashyapRayas`, email `kashyap.rayas@gmail.com`. Check `git config user.email` before committing.
 - Conventional commit messages, signed off (`git commit -s`).
-- Once typecheck, lint, test and the bundle check pass and the change has been tried on the phone, fast-forward `origin/main`. Never force-push.
+- Features go through `/feature` (`.claude/skills/feature/SKILL.md`): a worktree branch, a test APK the owner approves on
+  the phone (`scripts/test-apk.sh`), a PR reviewed against `docs/review-standard.md`, then a merge into the fork's
+  `main`. Never force-push.
 
 ## Testing
 
