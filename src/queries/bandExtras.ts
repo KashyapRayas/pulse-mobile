@@ -1,7 +1,9 @@
 // The band card's freshness (Settings › Live heart rate), Pulse only. Health Connect has no battery record and the
 // Fitbit Air offers no Bluetooth Battery Service, so Pulse can't show a charge level (docs/features/device-battery.md).
 // It can show how old the newest stored heart rate is, and say so when the band went quiet long before the last import:
-// a band that stopped sending for hours is likely flat, off the wrist or out of range.
+// a band that stopped sending for hours is likely flat, off the wrist or out of range. It is a hint, not a verdict:
+// Google Health can also hold the band's records back from Health Connect for a while, which is why the threshold is
+// hours and the copy says "may".
 import type { QueryCtx } from "./ctx";
 
 /** Quiet this long before the last import (seconds): the card says the band may need charging. */

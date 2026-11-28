@@ -27,10 +27,9 @@ flowchart LR
 
 ## Options
 
-1. **Band status card, no number (recommended).** Settings › Live heart rate (and the workout pre-start) gets a Fitbit
-   Air row with what Pulse truly knows: paired or not, live link state, and the last time Health Connect got data from
-   it ("Last data 12 min ago"). A "Battery in Google Health" action opens Google Health, which shows the level. No new
-   permission, no network, no fabricated number.
+1. **Band status card, no number (recommended, chosen).** Settings › Live heart rate's band card shows what Pulse
+   truly knows: how old the newest heart rate is, and a warning when the band has gone quiet. A button opens Google
+   Health, which shows the level. No new permission, no network, no fabricated number.
 2. **Cloud battery.** Sign in with Google and call the Google Health API for the device's battery, if it exposes one.
    This breaks two rules: no Google sign-in and no network source. It needs a Google Cloud project with OAuth set up,
    and it's still unconfirmed that the API returns battery at all.

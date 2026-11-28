@@ -1,7 +1,8 @@
 // Settings › Live heart rate (`/settings?s=live`), from halo src/screens/settings/liveHr.tsx (its behaviour and copy;
 // drawn with Pulse's kit). Three cards: the band (status, the remembered band, its latest heart rate, battery in Google
 // Health, auto-connect, Go live / Stop, Forget), the permissions, and Go live: the three steps in Google Health, then
-// the scan, the bands it finds and the connection. A scan runs only when asked: Search / Go live here, or once on arrival from Heart rate's Go live (`go=1`).
+// the scan, the bands it finds and the connection. A scan runs only when asked: Search / Go live here, or once on
+// arrival from Heart rate's Go live (`go=1`).
 //
 // The band shares heart rate with the standard Bluetooth Heart Rate Service once Google Health › Fitbit Air ›
 // Connections › Share heart rate is on (src/health/ble.ts). Live readings are for viewing only: scores keep using what
