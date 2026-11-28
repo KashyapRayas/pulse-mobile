@@ -1,7 +1,8 @@
 // Settings › Live heart rate (`/settings?s=live`), from halo src/screens/settings/liveHr.tsx (its behaviour and copy;
-// drawn with Pulse's kit). Three cards: the band (status, the remembered band, auto-connect, Go live / Stop, Forget),
-// the permissions, and Go live: the three steps in Google Health, then the scan, the bands it finds and the
-// connection. A scan runs only when asked: Search / Go live here, or once on arrival from Heart rate's Go live (`go=1`).
+// drawn with Pulse's kit). Three cards: the band (status, the remembered band, its latest heart rate, battery in Google
+// Health, auto-connect, Go live / Stop, Forget), the permissions, and Go live: the three steps in Google Health, then
+// the scan, the bands it finds and the connection. A scan runs only when asked: Search / Go live here, or once on
+// arrival from Heart rate's Go live (`go=1`).
 //
 // The band shares heart rate with the standard Bluetooth Heart Rate Service once Google Health › Fitbit Air ›
 // Connections › Share heart rate is on (src/health/ble.ts). Live readings are for viewing only: scores keep using what
@@ -14,7 +15,8 @@ import { BatteryMedium, Bluetooth, BluetoothOff, ChevronRight, ExternalLink, Inf
 import { BACKGROUND_GRACE_MS } from "@/health/ble";
 import { i18n } from "@/i18n/config";
 import { signalWord } from "@/health/bleHr";
-import { MISSING } from "@/lib/format";
+import { ago, MISSING } from "@/lib/format";
+import { getBandFreshness } from "@/queries/bandExtras";
 import { showsLive, useLiveBle, useLiveBleControl, type FoundDevice, type LiveControl, type LiveData } from "@/state/liveBle";
 import { Button } from "@/ui/Button";
 import { cn } from "@/ui/cn";
@@ -26,6 +28,7 @@ import { SectionShell } from "@/ui/shells/SectionShell";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { openApp } from "../../../modules/pulse-bt";
+import { useScreen } from "../useScreen";
 import { BODY, ConfirmDialog, HINT, ROW, ROW_LABEL, ROW_RULE, ROW_VALUE, Switch } from "./controls";
 
 type Live = LiveControl & LiveData;
@@ -92,6 +95,43 @@ function HrvRow() {
   return <Row rule label={t("live.hrv")} value={live.rmssd === null ? (live.rrMs.length ? t("live.measuring") : t("live.notSent")) : `${Math.round(live.rmssd)} ms`} />;
 }
 
+/**
+ * What Pulse knows about the band's charge. There is no battery number to show: Health Connect has no battery record and
+ * the Fitbit Air offers no Bluetooth Battery Service; Google Health reads it over Fitbit's own protocol
+ * (docs/features/device-battery.md). So: how old the newest heart rate is, a warning when the band went quiet hours
+ * before the last import, and a way to Google Health, which shows the level.
+ */
+function BatteryRows({ live }: { live: LiveControl }) {
+  const { t } = useTranslation("settings");
+  const { data } = useScreen(getBandFreshness, ["bandFreshness"]);
+  const last = data?.lastHrTs ?? null;
+  return (
+    <>
+      <Row rule label={t("live.latestHr")} value={data === undefined ? MISSING : last === null ? t("live.noHr") : ago(last * 1000, data.asOf * 1000)} />
+      <Row rule label={t("live.battery")} value={t("live.batteryInGoogleHealth")} />
+      {!!data?.stale && live.status !== "live" && (
+        <Text accessibilityRole="alert" className={cn(WARN, "pb-2")}>
+          {t("live.bandQuiet")}
+        </Text>
+      )}
+    </>
+  );
+}
+
+function CheckBatteryButton() {
+  const { t } = useTranslation("settings");
+  const [missing, setMissing] = useState(false);
+  return (
+    <>
+      <Button variant="secondary" onPress={() => setMissing(!openApp(GOOGLE_HEALTH))} accessibilityLabel={t("live.checkBattery")}>
+        <Icon icon={BatteryMedium} size={16} tone="secondary-foreground" strokeWidth={2.25} />
+        <Text className="text-meta font-medium tracking-normal text-secondary-foreground">{t("live.checkBattery")}</Text>
+      </Button>
+      {missing && <Text className={WARN}>{t("live.googleHealthFailed")}</Text>}
+    </>
+  );
+}
+
 function BandCard({ live, onFind }: { live: LiveControl; onFind: () => void }) {
   const { t } = useTranslation("settings");
   const [confirmForget, setConfirmForget] = useState(false);
@@ -105,6 +145,7 @@ function BandCard({ live, onFind }: { live: LiveControl; onFind: () => void }) {
         <StatusRow />
         <Row rule label={t("live.band")} value={remembered ? (remembered.name ?? t("live.unnamedBand")) : t("live.none")} />
         {live.status === "live" && <HrvRow />}
+        <BatteryRows live={live} />
         <View className={cn(ROW, ROW_RULE, !remembered && "opacity-disabled")}>
           <View className="min-w-0 flex-1 gap-1">
             <Text className={ROW_LABEL}>{t("live.autoConnect")}</Text>
@@ -124,6 +165,7 @@ function BandCard({ live, onFind }: { live: LiveControl; onFind: () => void }) {
         ) : (
           <GoLiveButton status={live.status} onPress={() => (remembered ? void live.connect(remembered.id) : onFind())} disabled={noRadio} />
         )}
+        <CheckBatteryButton />
         {remembered && (
           <Button variant="outline" textClassName="text-recovery-red-text" onPress={() => setConfirmForget(true)}>
             {t("live.forgetBand")}
