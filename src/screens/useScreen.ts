@@ -118,7 +118,10 @@ export function useScreen<T>(query: (ctx: QueryCtx) => Promise<T>, key: ScreenKe
   useEffect(() => {
     if (fresh(cache.get(k))) return;
     let live = true;
-    load(k, query).catch((e: unknown) => {
+    load(k, query).then(() => {
+      // Loaded: the next failure on this key gets its own retry.
+      if (live && retried.current === k) retried.current = null;
+    }, (e: unknown) => {
       if (!live) return;
       if (retried.current !== k) {
         retried.current = k;

@@ -185,7 +185,7 @@ class WorkoutRecorder {
     try { if (this.polling) await this.polling; await run(); return true; }
     catch (error) {
       const message = error instanceof Error ? error.message : "";
-      const known = ["nativeUnavailable", "activeWorkout", "bluetoothPermission", "bluetoothOff", "invalidSession", "notificationPermission", "healthPermission", "healthUnavailable"];
+      const known = ["nativeUnavailable", "activeWorkout", "bluetoothPermission", "bluetoothOff", "invalidSession", "notificationPermission", "healthPermission", "healthUnavailable", "logFailed"];
       const code = known.find((c) => message.includes(c)) ?? "commandFailed";
       // The person's own states (Bluetooth off, a permission refused) are not failures worth a report.
       if (code === "commandFailed" || code === "invalidSession" || code === "nativeUnavailable") void report("workout.command_failed", { code, kind: errorKind(error) });
@@ -283,7 +283,8 @@ class WorkoutRecorder {
       } catch (error) {
         void reportError("workout.log_failed", error);
         await deleteExercise(hcId).catch(() => {});
-        throw error;
+        // Already reported: a known code, so action() does not report it again as workout.command_failed.
+        throw new Error("logFailed");
       }
       saved = hcId;
       await this.storeImported(hcId, session).catch(() => {});

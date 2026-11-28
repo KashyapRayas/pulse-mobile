@@ -306,7 +306,7 @@ describe("logManual", () => {
     const r = await recorder();
     expect(await r.logManual(logged, "UTC")).toBeNull();
     expect(fake.deleteExercise).toHaveBeenCalledWith("hc-1");
-    expect(r.getSnapshot().error).toBe("commandFailed");
+    expect(r.getSnapshot().error).toBe("logFailed");
   });
 
   it("is deleted like a recording: from Health Connect, the imported activities and the phone", async () => {

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { checkDraft, draftFor, LOG_TYPES, overlapping, type LogDraft, type LogType, type ManualWorkout } from "@/live/manualWorkout";
 import { workoutRecorder } from "@/live/workoutRecorder";
 import { clock } from "@/lib/format";
+import { localDay } from "@/lib/time";
 import { activityHref, parseDay } from "@/lib/url";
 import { activityKind, ACTIVITY_NAME, type ExerciseRow } from "@/queries/common";
 import { DateTimeField } from "@/screens/log/DateTimeField";
@@ -31,13 +32,15 @@ export function LogActivityScreen() {
   const { d, type } = useLocalSearchParams<{ d?: string; type?: string }>();
   const demo = useApp((s) => s.source) === "demo";
   const { data: vm } = useScreen(
-    async (ctx) => ({ today: ctx.today, timeZone: ctx.timeZone, now: ctx.now, day: parseDay(d, ctx.today).d, exercises: await ctx.store.allExercises() }),
+    async (ctx) => ({ timeZone: ctx.timeZone, exercises: await ctx.store.allExercises() }),
     ["workoutLog", d],
   );
   const [draft, setDraft] = useState<LogDraft | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [confirm, setConfirm] = useState<{ workout: ManualWorkout; other: ExerciseRow } | null>(null);
+  // The clock when the form opened, not the query's: a cached result shown on a later visit carries the time it was read.
+  const [now] = useState(() => Math.floor(Date.now() / 1000));
 
   if (!vm)
     return (
@@ -46,7 +49,8 @@ export function LogActivityScreen() {
       </TaskPage>
     );
 
-  const form = draft ?? draftFor(vm.day, vm.today, vm.timeZone, vm.now, isLogType(type) ? type : "");
+  const today = localDay(now, vm.timeZone);
+  const form = draft ?? draftFor(parseDay(d, today).d, today, vm.timeZone, now, isLogType(type) ? type : "");
   const set = <K extends keyof LogDraft>(k: K) => (v: LogDraft[K]) => {
     setDraft({ ...form, [k]: v });
     setError(null);
