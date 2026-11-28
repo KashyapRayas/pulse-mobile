@@ -3,6 +3,8 @@
 // a long press copies it.
 import { useMemo } from "react";
 import { View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
+import { DURATION } from "@/ui/motion";
 import { parseProse, type Span } from "@/coach/prose";
 import { Text } from "@/ui/Text";
 
@@ -22,18 +24,24 @@ const Spans = ({ spans }: { spans: Span[] }) => (
   </>
 );
 
-/** `space-y-3 text-body`; lists `space-y-1.5`, faint markers. */
-export function Prose({ text }: { text: string }) {
+/**
+ * `space-y-3 text-body`; lists `space-y-1.5`, faint markers. `live` while the answer streams: each new paragraph or list
+ * fades in as it arrives (a block already shown keeps growing in place).
+ */
+export function Prose({ text, live }: { text: string; live?: boolean }) {
   const blocks = useMemo(() => parseProse(text), [text]);
+  const entering = live ? FadeIn.duration(DURATION.enter) : undefined;
   return (
     <View className="gap-3">
       {blocks.map((b, i) =>
         b.kind === "p" ? (
-          <Text key={i} selectable className={BODY}>
-            <Spans spans={b.spans} />
-          </Text>
+          <Animated.View key={i} entering={entering}>
+            <Text selectable className={BODY}>
+              <Spans spans={b.spans} />
+            </Text>
+          </Animated.View>
         ) : (
-          <View key={i} className="gap-1.5">
+          <Animated.View key={i} entering={entering} className="gap-1.5">
             {b.items.map((item, k) => (
               <View key={k} className="flex-row">
                 <Text className={b.kind === "ul" ? "w-5 text-body text-muted-foreground" : "w-6 font-numeric text-body font-semibold text-muted-foreground"}>{b.kind === "ul" ? "•" : `${k + 1}.`}</Text>
@@ -42,7 +50,7 @@ export function Prose({ text }: { text: string }) {
                 </Text>
               </View>
             ))}
-          </View>
+          </Animated.View>
         ),
       )}
     </View>

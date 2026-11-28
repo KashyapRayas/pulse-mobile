@@ -59,7 +59,10 @@
     "copyAnswer": "Copy answer",
     "copied": "Copied to clipboard",
     "jumpLatest": "Jump to the latest message",
-    "holdHint": "Touch and hold for Copy and Edit"
+    "holdHint": "Touch and hold for Copy and Edit",
+    "yourMessage": "Your message",
+    "followUpsLabel": "Follow-up questions",
+    "counter": "{{used}} / {{max}}"
   },
   "bar": {
     "chats": "Chats",
@@ -205,5 +208,53 @@
     "spokenAnalyzing": "Coach is analyzing this activity. Tap to open the chat.",
     "expand": "Expand this activity analysis.",
     "napQuestion": "Analyze my nap on {{day}} starting at {{time}}."
+  },
+  "tools": {
+    "open": "Ask about a topic",
+    "title": "Ask about",
+    "subtitle": "Pick a topic and the coach looks it up for you.",
+    "label": {
+      "today": "Today",
+      "sleep": "Last night",
+      "workouts": "Workouts",
+      "trends": "Trends",
+      "habits": "Habits",
+      "health": "Health Monitor"
+    },
+    "ask": {
+      "today": "Give me a rundown of today: Recovery, sleep and Strain.",
+      "sleep": "How did I sleep last night, and what does it mean for today?",
+      "workouts": "How did my workouts go over the past week?",
+      "trends": "How have my Recovery and HRV trended over the last two weeks?",
+      "habits": "Which journal habits affect my Recovery the most?",
+      "health": "Is anything off in my Health Monitor today?"
+    }
+  },
+  "steps": {
+    "get_day": "Looked at your day",
+    "get_sleep": "Read your sleep",
+    "get_activity": "Checked a workout",
+    "get_trend": "Checked your trends",
+    "get_activities": "Looked at your workouts",
+    "get_journal_impacts": "Read your journal",
+    "get_health": "Checked your Health Monitor",
+    "get_report": "Read your report",
+    "get_profile": "Checked your profile",
+    "default": "Looked at your data",
+    "summary_one": "Looked at {{count}} thing",
+    "summary_other": "Looked at {{count}} things"
+  },
+  "followUps": {
+    "dayTrain": "How should I train today?",
+    "dayRecover": "What would help my Recovery most?",
+    "sleepTonight": "How can I sleep better tonight?",
+    "sleepBedtime": "When should I go to bed tonight?",
+    "workoutNext": "What should my next workout be?",
+    "workoutWeek": "How does this week's training look?",
+    "trendWhy": "What's driving this trend?",
+    "trendMonth": "How does it compare with last month?",
+    "habitsFocus": "Which habit should I focus on?",
+    "healthWatch": "Is anything worth keeping an eye on?",
+    "reportFocus": "What should I focus on next?"
   }
 }
