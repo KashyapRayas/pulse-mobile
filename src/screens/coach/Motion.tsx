@@ -4,13 +4,17 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Animated, { cancelAnimation, Easing, interpolate, useAnimatedStyle, useReducedMotion, useSharedValue, withRepeat, withTiming } from "react-native-reanimated";
+import Animated, { cancelAnimation, Easing, interpolate, useAnimatedStyle, useReducedMotion, useSharedValue, withRepeat, withTiming, type SharedValue } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import { alpha } from "@/ui/color";
 import { useTheme } from "@/ui/theme";
 
+/** The coach's quick timings: arrivals in 180 ms and springs that land without lingering (snappier than the kit's 300 ms enter). */
+export const SNAP = 180;
+export const SNAP_SPRING = { damping: 24, stiffness: 420, mass: 0.7 } as const;
+
 /** One sweep of the shimmer, start to end. */
-const SWEEP_MS = 1700;
+const SWEEP_MS = 1200;
 /** How much of the text the veil hides outside the band of light. */
 const VEIL = 0.62;
 
@@ -59,7 +63,7 @@ export function Shimmer({ children }: { children: ReactNode }) {
 /** A 16 px ring with a coach-blue arc turning on it: a tool call in progress. Still (the arc parked) under reduced motion. */
 export function Spinner({ size = 16 }: { size?: number }) {
   const { c } = useTheme();
-  const { v } = useLoop(850, false, Easing.linear);
+  const { v } = useLoop(700, false, Easing.linear);
   const turn = useAnimatedStyle(() => ({ transform: [{ rotate: `${v.value * 360}deg` }] }));
   const stroke = 2;
   const r = (size - stroke) / 2;
@@ -76,16 +80,33 @@ export function Spinner({ size = 16 }: { size?: number }) {
 
 /** Its child grows and fades a little in and out, like breath: the coach mark while it thinks. */
 export function Breathing({ children }: { children: ReactNode }) {
-  const { v } = useLoop(1100, true);
+  const { v } = useLoop(800, true);
   const breathe = useAnimatedStyle(() => ({ opacity: interpolate(v.value, [0, 1], [1, 0.55]), transform: [{ scale: interpolate(v.value, [0, 1], [1, 0.88]) }] }));
   return <Animated.View style={breathe}>{children}</Animated.View>;
 }
 
-/** The dot at the end of an answer that is still streaming. */
-export function StreamCaret() {
-  const { v } = useLoop(650, true);
-  const pulse = useAnimatedStyle(() => ({ opacity: interpolate(v.value, [0, 1], [1, 0.25]) }));
-  return <Animated.View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" className="size-2 rounded-full bg-coach" style={pulse} />;
+/** One of TypingDots' dots: it hops and brightens when the wave passes it. */
+function Dot({ v, i, reduced }: { v: SharedValue<number>; i: number; reduced: boolean }) {
+  const hop = useAnimatedStyle(() => {
+    if (reduced) return { opacity: 0.6 };
+    // The wave reaches each dot a sixth of a cycle after the one before; a dot is up only for the first half of its turn.
+    const phase = (((v.value - i / 6) % 1) + 1) % 1;
+    const up = phase < 0.5 ? Math.sin(phase * 2 * Math.PI) : 0;
+    return { opacity: 0.35 + 0.65 * up, transform: [{ translateY: -3 * up }] };
+  });
+  return <Animated.View className="size-1.5 rounded-full bg-coach" style={hop} />;
+}
+
+/** Three coach-blue dots in a wave under an answer that is still arriving, as a chat app's typing indicator. */
+export function TypingDots() {
+  const { v, reduced } = useLoop(900, false, Easing.linear);
+  return (
+    <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" className="h-6 flex-row items-center gap-1">
+      {[0, 1, 2].map((i) => (
+        <Dot key={i} v={v} i={i} reduced={reduced} />
+      ))}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({ clip: { overflow: "hidden" } });

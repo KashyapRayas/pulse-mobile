@@ -26,13 +26,13 @@ const doneLabel = (name: string) => i18n.t(`coach:steps.${key(name)}` as "coach:
 export function ToolSteps({ steps }: { steps: Step[] }) {
   const { t } = useTranslation("coach");
   const [open, setOpen] = useState(false);
-  const turn = useDerivedValue(() => withTiming(open ? 180 : 0, { duration: DURATION.base, easing: EASE.standard }));
+  const turn = useDerivedValue(() => withTiming(open ? 180 : 0, { duration: DURATION.fast, easing: EASE.standard }));
   const chevron = useAnimatedStyle(() => ({ transform: [{ rotate: `${turn.value}deg` }] }));
   const running = steps.find((s) => s.state === "running");
 
   if (running)
     return (
-      <Animated.View key="running" entering={FadeIn.duration(DURATION.base)} accessibilityLiveRegion="polite" className="min-h-6 flex-row items-center gap-2">
+      <Animated.View key="running" entering={FadeIn.duration(DURATION.fast)} accessibilityLiveRegion="polite" className="min-h-6 flex-row items-center gap-2">
         <Spinner />
         <Shimmer>
           <Text className="text-meta text-foreground">{runningLabel(running.name)}</Text>
@@ -43,7 +43,7 @@ export function ToolSteps({ steps }: { steps: Step[] }) {
   const failed = steps.every((s) => s.state === "failed");
   const summary = steps.length === 1 ? doneLabel(steps[0].name) : t("steps.summary", { count: steps.length });
   return (
-    <Animated.View key="done" entering={FadeIn.duration(DURATION.base)} className="gap-1">
+    <Animated.View key="done" entering={FadeIn.duration(DURATION.fast)} className="gap-1">
       <Press
         accessibilityRole="button"
         accessibilityState={{ expanded: open }}
@@ -62,7 +62,7 @@ export function ToolSteps({ steps }: { steps: Step[] }) {
         </Animated.View>
       </Press>
       {open && (
-        <Animated.View entering={FadeIn.duration(DURATION.base)} exiting={FadeOut.duration(DURATION.fast)} className="ml-2 border-l border-border pl-4">
+        <Animated.View entering={FadeIn.duration(DURATION.fast)} exiting={FadeOut.duration(DURATION.fast)} className="ml-2 border-l border-border pl-4">
           {steps.map((s, i) => (
             <View key={i} className="min-h-7 flex-row items-center gap-2">
               <Icon icon={s.state === "failed" ? X : Check} size={13} tone={s.state === "failed" ? "recovery-red-text" : "optimal-text"} strokeWidth={2.25} />

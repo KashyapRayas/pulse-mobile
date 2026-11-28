@@ -1,6 +1,6 @@
-// The coach's floating sheet, after the Family wallet app's confirmations (docs/features/chat-experience.md): a card in
-// the popover material, held off the screen's edges with large corners, that springs up over a dim. A drag down, a tap
-// on the dim or Back closes it. Under reduced motion it fades instead of springing.
+// The coach's floating sheet (docs/features/chat-experience.md): Family's card held off the screen's edges that springs
+// up over a dim, laid out as a Linear sheet: a grabber, a left-aligned title over a muted line, a close circle, then the
+// content (grouped rows). A drag down, a tap on the dim or Back closes it. Under reduced motion it fades instead.
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, Pressable, StyleSheet, View } from "react-native";
@@ -15,9 +15,10 @@ import { DURATION, EASE } from "@/ui/motion";
 import { usePanelStyle } from "@/ui/Panel";
 import { Press } from "@/ui/Press";
 import { Text } from "@/ui/Text";
+import { TYPE } from "@/ui/type";
 
-/** Up with a little give, as Family's sheets land: a touch under critical damping. */
-const RISE = { damping: 22, stiffness: 260, mass: 0.9 } as const;
+/** Up quickly with the least give: a touch under critical damping, settled in about a quarter second. */
+const RISE = { damping: 28, stiffness: 520, mass: 0.7 } as const;
 /** Back into place after a drag that did not close it. */
 const SETTLE = { damping: 26, stiffness: 340, mass: 0.8 } as const;
 /** A drag further than this share of the card's height, or a flick faster than FLICK px/s, closes it. */
@@ -31,14 +32,12 @@ export type SheetProps = {
   onClose: () => void;
   title: string;
   subtitle?: string;
-  /** An icon in a coach-tinted tile above the title. */
-  icon?: LucideIcon;
   /** After the exit has played and the sheet is gone: the moment to focus a field under it. */
   onClosed?: () => void;
   children: ReactNode;
 };
 
-export function Sheet({ open, onClose, onClosed, title, subtitle, icon, children }: SheetProps) {
+export function Sheet({ open, onClose, onClosed, title, subtitle, children }: SheetProps) {
   const { t } = useTranslation("common");
   const insets = useSafeAreaInsets();
   const reduced = useReducedMotion();
@@ -66,7 +65,7 @@ export function Sheet({ open, onClose, onClosed, title, subtitle, icon, children
       p.set(reduced ? withTiming(1, { duration: DURATION.fast }) : withSpring(1, RISE));
     } else {
       p.set(
-        withTiming(0, { duration: DURATION.base, easing: EASE.inQuick }, (done) => {
+        withTiming(0, { duration: DURATION.fast, easing: EASE.inQuick }, (done) => {
           if (done) runOnJS(gone)();
         }),
       );
@@ -103,23 +102,20 @@ export function Sheet({ open, onClose, onClosed, title, subtitle, icon, children
           <Animated.View
             accessibilityViewIsModal
             onLayout={(e) => height.set(e.nativeEvent.layout.height)}
-            className="absolute overflow-hidden rounded-[32px] bg-popover px-5 pb-5 pt-2"
+            className="absolute overflow-hidden rounded-[28px] bg-popover px-4 pb-4 pt-2"
             style={[panel, { left: GAP, right: GAP, bottom: insets.bottom + GAP }, card]}
           >
-            <View className="mb-2 h-1 w-9 self-center rounded-full bg-border" />
-            <Press accessibilityRole="button" accessibilityLabel={t("actions.close")} onPress={onClose} activeScale={0.92} className="absolute right-4 top-4 size-9 items-center justify-center rounded-full bg-secondary">
-              <Icon icon={X} size={16} tone="foreground-secondary" strokeWidth={2} />
-            </Press>
-            <View className="items-center px-10 pb-5 pt-3">
-              {icon && (
-                <View className="mb-3 size-12 items-center justify-center rounded-2xl bg-coach/12">
-                  <Icon icon={icon} size={22} tone="coach-text" />
-                </View>
-              )}
-              <Text accessibilityRole="header" className="text-center text-heading font-semibold text-popover-foreground">
-                {title}
-              </Text>
-              {!!subtitle && <Text className="mt-1 text-center text-meta text-muted-foreground">{subtitle}</Text>}
+            <View className="h-1 w-9 self-center rounded-full bg-border" />
+            <View className="flex-row items-start gap-3 pb-4 pl-1 pt-2">
+              <View className="min-w-0 flex-1 gap-1 pt-1">
+                <Text accessibilityRole="header" className={cn(TYPE.navTitle, "text-popover-foreground")}>
+                  {title}
+                </Text>
+                {!!subtitle && <Text className={TYPE.rowSub}>{subtitle}</Text>}
+              </View>
+              <Press accessibilityRole="button" accessibilityLabel={t("actions.close")} onPress={onClose} activeBg="bg-fill-hover" activeScale={0.92} className="size-9 items-center justify-center rounded-full bg-secondary">
+                <Icon icon={X} size={16} tone="foreground-secondary" strokeWidth={2} />
+              </Press>
             </View>
             {children}
           </Animated.View>

@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useChat } from "@ai-sdk/react";
 import type { CoachActivity } from "@/coach/activity";
 import type { UIMessage } from "ai";
-import { Activity, ArrowDown, ArrowUp, Check, ChevronRight, Copy, CornerDownRight, Dumbbell, MessageSquare, Moon, Pencil, Plus, RefreshCw, RotateCcw, Share2, Square, type LucideIcon } from "lucide-react-native";
+import { Activity, ArrowDown, ArrowUp, Check, ChevronRight, Copy, CornerDownRight, Dumbbell, Moon, Pencil, Plus, RefreshCw, RotateCcw, Share2, Square, type LucideIcon } from "lucide-react-native";
 import type { CoachSuggestion as CoreSuggestion } from "@/core/algorithms/coachSuggestions";
 import { plainText } from "@/coach/chats";
 import { followUps } from "@/coach/followUps";
@@ -20,12 +20,12 @@ import { alpha } from "@/ui/color";
 import { Gradient } from "@/ui/Gradient";
 import { Icon } from "@/ui/Icon";
 import { useKeyboardInset } from "@/ui/keyboard";
-import { DURATION, EASE, SPRING } from "@/ui/motion";
+import { DURATION, EASE } from "@/ui/motion";
 import { Press } from "@/ui/Press";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { Evidence } from "./Evidence";
-import { Breathing, Shimmer, StreamCaret } from "./Motion";
+import { Breathing, Shimmer, SNAP, SNAP_SPRING, TypingDots } from "./Motion";
 import { Prose } from "./Prose";
 import { Sheet, SheetButton } from "./Sheet";
 import { ToolSteps } from "./ToolSteps";
@@ -78,7 +78,7 @@ export function CoachMark({ size }: { size: number }) {
 function Thinking() {
   const { t } = useTranslation("coach");
   return (
-    <Animated.View entering={FadeIn.duration(DURATION.base)} accessibilityLiveRegion="polite" className="min-h-6 flex-row items-center gap-2">
+    <Animated.View entering={FadeIn.duration(SNAP)} accessibilityLiveRegion="polite" className="min-h-6 flex-row items-center gap-2">
       <Breathing>
         <CoachMark size={22} />
       </Breathing>
@@ -115,7 +115,7 @@ function CopyAction({ text }: { text: string }) {
       activeScale={0.92}
       className="size-11 items-center justify-center rounded-full"
     >
-      <Animated.View key={copied ? "check" : "copy"} entering={ZoomIn.duration(DURATION.base)}>
+      <Animated.View key={copied ? "check" : "copy"} entering={ZoomIn.duration(DURATION.fast)}>
         <Icon icon={copied ? Check : Copy} size={17} strokeWidth={copied ? 2.25 : 1.75} tone={copied ? "optimal-text" : "muted-foreground"} />
       </Animated.View>
     </Press>
@@ -141,7 +141,7 @@ function UserMessage({ m, busy, fresh, onEdit, onEditing }: { m: UIMessage; busy
   const editAfter = useRef(false);
   if (draft !== null)
     return (
-      <Animated.View entering={FadeIn.duration(DURATION.base)} className="ml-8 gap-2" ref={onEditing} collapsable={false}>
+      <Animated.View entering={FadeIn.duration(SNAP)} className="ml-8 gap-2" ref={onEditing} collapsable={false}>
         <TextInput
           autoFocus
           multiline
@@ -171,7 +171,7 @@ function UserMessage({ m, busy, fresh, onEdit, onEditing }: { m: UIMessage; busy
   // Copy and Edit sit behind a long press on the bubble, as in the chat apps people know (ChatGPT, Claude), in a
   // floating sheet with the message on top; a screen reader gets both as actions.
   return (
-    <Animated.View entering={fresh ? FadeInDown.springify().damping(18).stiffness(220) : undefined} className="items-end pl-8">
+    <Animated.View entering={fresh ? FadeInDown.springify().damping(SNAP_SPRING.damping).stiffness(SNAP_SPRING.stiffness).mass(SNAP_SPRING.mass) : undefined} className="items-end pl-8">
       <Press
         accessibilityHint={t("chat.holdHint")}
         accessibilityActions={[{ name: "copy", label: t("chat.copy") }, ...(busy ? [] : [{ name: "edit", label: t("chat.editMessage") }])]}
@@ -191,7 +191,6 @@ function UserMessage({ m, busy, fresh, onEdit, onEditing }: { m: UIMessage; busy
           editAfter.current = false;
           setDraft(text);
         }}
-        icon={MessageSquare}
         title={t("chat.yourMessage")}
       >
         <View className="mb-4 rounded-2xl bg-secondary px-4 py-3">
@@ -223,7 +222,9 @@ function AssistantMessage({ m, done, live, onRegenerate }: { m: UIMessage; done:
   const blocks = answerBlocks(m.parts);
   // A turn that failed before saying or looking up anything has nothing to show: the error card below says what happened.
   if (!blocks.length) return null;
-  const endsInText = blocks.at(-1)?.kind === "text";
+  const tail = blocks.at(-1);
+  const endsInText = tail?.kind === "text";
+  const running = tail?.kind === "steps" && tail.steps.some((s) => s.state === "running");
   return (
     <View className="min-w-0 gap-3">
       {blocks.map((b, i) =>
@@ -232,13 +233,16 @@ function AssistantMessage({ m, done, live, onRegenerate }: { m: UIMessage; done:
         ) : (
           <View key={i} className="gap-3">
             <ToolSteps steps={b.steps} />
-            {b.steps.map((s, k) => (s.state === "done" ? <Animated.View key={k} entering={live ? FadeInDown.duration(DURATION.enter) : undefined}><Evidence name={s.name} output={s.output} /></Animated.View> : null))}
+            {b.steps.map((s, k) => (s.state === "done" ? <Animated.View key={k} entering={live ? FadeInDown.duration(SNAP) : undefined}><Evidence name={s.name} output={s.output} /></Animated.View> : null))}
           </View>
         ),
       )}
-      {live && endsInText && <StreamCaret />}
+      {/* Still arriving: dots under the words while text streams, "Thinking…" while it works out what to say after its
+          lookups (the stream is open but nothing new has come yet). */}
+      {live && endsInText && <TypingDots />}
+      {live && !endsInText && !running && <Thinking />}
       {done && (!!text || onRegenerate) && (
-        <Animated.View entering={FadeIn.duration(DURATION.base)} className="-ml-3 flex-row">
+        <Animated.View entering={FadeIn.duration(SNAP)} className="-ml-3 flex-row">
           {!!text && <CopyAction text={text} />}
           {!!text && <IconAction label={t("chat.shareAnswer")} icon={Share2} onPress={() => void Share.share({ message: text }).catch(() => {})} />}
           {onRegenerate && <IconAction label={t("chat.regenerate")} icon={RotateCcw} onPress={onRegenerate} />}
@@ -256,7 +260,7 @@ function FollowUps({ m, onAsk }: { m: UIMessage; onAsk: (text: string) => void }
   return (
     <View accessibilityLabel={t("chat.followUpsLabel")} className="-mt-2 gap-2">
       {keys.map((k, i) => (
-        <Animated.View key={k} entering={FadeInDown.delay(120 + i * 70).duration(DURATION.enter)} className="self-start">
+        <Animated.View key={k} entering={FadeInDown.delay(40 + i * 40).duration(SNAP)} className="self-start">
           <Press accessibilityRole="button" onPress={() => onAsk(t(`followUps.${k}` as "followUps.dayTrain"))} activeBg="bg-fill-hover" activeScale={0.97} className="min-h-10 flex-row items-center gap-2 rounded-full border border-border px-4 py-2">
             <Icon icon={CornerDownRight} size={15} tone="coach-text" />
             <Text className="shrink text-meta text-foreground">{t(`followUps.${k}` as "followUps.dayTrain")}</Text>
@@ -274,21 +278,21 @@ function Empty({ suggestions, onAsk }: { suggestions: CoachSuggestion[]; onAsk: 
   return (
     <View className="flex-1 justify-between gap-8 py-6">
       <View className="flex-1 items-center justify-center">
-        <Animated.View entering={ZoomIn.springify().damping(16).stiffness(200)}>
+        <Animated.View entering={ZoomIn.springify().damping(SNAP_SPRING.damping).stiffness(SNAP_SPRING.stiffness).mass(SNAP_SPRING.mass)}>
           <CoachMark size={48} />
         </Animated.View>
-        <Animated.View entering={FadeInDown.delay(80).duration(DURATION.enter)}>
+        <Animated.View entering={FadeInDown.delay(40).duration(SNAP)}>
           <Text accessibilityRole="header" className="mt-5 text-center text-title font-bold">
             {t("chat.emptyTitle")}
           </Text>
         </Animated.View>
-        <Animated.View entering={FadeInDown.delay(140).duration(DURATION.enter)}>
+        <Animated.View entering={FadeInDown.delay(70).duration(SNAP)}>
           <Text className="mt-2 max-w-[340px] text-center text-body text-foreground-secondary">{t("chat.emptyBody")}</Text>
         </Animated.View>
       </View>
       <View className="w-full gap-2">
         {suggestions.map((s, i) => (
-          <Animated.View key={s.key} entering={FadeInDown.delay(200 + i * 60).duration(DURATION.enter)}>
+          <Animated.View key={s.key} entering={FadeInDown.delay(100 + i * 35).duration(SNAP)}>
             <Press accessibilityRole="button" onPress={() => onAsk(s.text)} activeBg="bg-fill-hover" activeScale={0.98} className="min-h-14 flex-row items-center gap-3 rounded-2xl border border-border px-4 py-3">
               <Icon icon={SUGGESTION_ICONS[s.key]} size={20} tone="coach-text" />
               <Text className="flex-1 text-body text-foreground">{s.text}</Text>
@@ -310,8 +314,8 @@ function Composer({ input, setInput, busy, onSend, onStop, onTools }: { input: s
   const { c } = useTheme();
   const [focused, setFocused] = useState(false);
   const ready = !!input.trim();
-  const focus = useDerivedValue(() => withTiming(focused ? 1 : 0, { duration: DURATION.base, easing: EASE.standard }));
-  const lift = useDerivedValue(() => withSpring(ready ? 1 : 0, SPRING.lift));
+  const focus = useDerivedValue(() => withTiming(focused ? 1 : 0, { duration: DURATION.fast, easing: EASE.standard }));
+  const lift = useDerivedValue(() => withSpring(ready ? 1 : 0, SNAP_SPRING));
   const border = c.border;
   const lit = alpha(c.coach, 0.55);
   const edge = useAnimatedStyle(() => ({ borderColor: interpolateColor(focus.value, [0, 1], [border, lit]) }));
@@ -345,13 +349,13 @@ function Composer({ input, setInput, busy, onSend, onStop, onTools }: { input: s
           className="max-h-40 min-h-11 flex-1 py-3 pl-1 text-body text-foreground"
         />
         {busy ? (
-          <Animated.View key="stop" entering={ZoomIn.duration(DURATION.base)} exiting={ZoomOut.duration(DURATION.fast)}>
+          <Animated.View key="stop" entering={ZoomIn.duration(DURATION.fast)} exiting={ZoomOut.duration(DURATION.fast)}>
             <Press accessibilityRole="button" accessibilityLabel={t("chat.stop")} onPress={() => (haptic.tap(), onStop())} activeScale={0.9} className="size-11 items-center justify-center rounded-full bg-secondary">
               <Icon icon={Square} size={14} />
             </Press>
           </Animated.View>
         ) : (
-          <Animated.View key="send" entering={ZoomIn.duration(DURATION.base)} exiting={ZoomOut.duration(DURATION.fast)} style={send}>
+          <Animated.View key="send" entering={ZoomIn.duration(DURATION.fast)} exiting={ZoomOut.duration(DURATION.fast)} style={send}>
             <Press accessibilityRole="button" accessibilityLabel={t("chat.send")} accessibilityState={{ disabled: !ready }} disabled={!ready} onPress={onSend} activeScale={0.9} className="size-11 items-center justify-center rounded-full bg-primary">
               <Icon icon={ArrowUp} size={20} tone="primary-foreground" strokeWidth={2.25} />
             </Press>
@@ -516,7 +520,7 @@ export function Coach({ id, initial, prefill, auto, activity, suggestions, onSav
           </View>
         )}
         {!!error && (
-          <Animated.View entering={FadeInDown.duration(DURATION.enter)} accessibilityRole="alert" className="mt-6 flex-row items-center gap-3 rounded-xl border border-recovery-red/25 bg-recovery-red/12 py-2 pl-4 pr-2">
+          <Animated.View entering={FadeInDown.duration(SNAP)} accessibilityRole="alert" className="mt-6 flex-row items-center gap-3 rounded-xl border border-recovery-red/25 bg-recovery-red/12 py-2 pl-4 pr-2">
             <Text className="flex-1 py-1 text-meta text-foreground">{error}</Text>
             <Pill label={t("chat.retry")} disabled={busy} onPress={() => again()} icon={<Icon icon={RotateCcw} size={16} />} />
           </Animated.View>
@@ -527,7 +531,7 @@ export function Coach({ id, initial, prefill, auto, activity, suggestions, onSav
       {messages.length > 0 && (
         <View pointerEvents="box-none" className="items-center" style={{ marginTop: -56, height: 56 }}>
           {away && (
-            <Animated.View entering={ZoomIn.springify().damping(16).stiffness(260)} exiting={ZoomOut.duration(DURATION.fast)}>
+            <Animated.View entering={ZoomIn.springify().damping(SNAP_SPRING.damping).stiffness(SNAP_SPRING.stiffness).mass(SNAP_SPRING.mass)} exiting={ZoomOut.duration(DURATION.fast)}>
               <Press accessibilityRole="button" accessibilityLabel={t("chat.jumpLatest")} onPress={() => (haptic.select(), toEnd())} activeScale={0.9} className="size-10 items-center justify-center rounded-full border border-border bg-popover">
                 <Icon icon={ArrowDown} size={18} tone="foreground" />
               </Press>

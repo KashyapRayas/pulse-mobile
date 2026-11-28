@@ -4,7 +4,7 @@
 import { useMemo } from "react";
 import { View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
-import { DURATION } from "@/ui/motion";
+import { SNAP } from "./Motion";
 import { parseProse, type Span } from "@/coach/prose";
 import { Text } from "@/ui/Text";
 
@@ -30,7 +30,7 @@ const Spans = ({ spans }: { spans: Span[] }) => (
  */
 export function Prose({ text, live }: { text: string; live?: boolean }) {
   const blocks = useMemo(() => parseProse(text), [text]);
-  const entering = live ? FadeIn.duration(DURATION.enter) : undefined;
+  const entering = live ? FadeIn.duration(SNAP) : undefined;
   return (
     <View className="gap-3">
       {blocks.map((b, i) =>
