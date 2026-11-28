@@ -272,3 +272,58 @@ describe("WorkoutRecorder", () => {
     expect(fake.store.deleteExercises).not.toHaveBeenCalled();
   });
 });
+
+describe("logManual", () => {
+  const logged = { type: "yoga" as const, start: 1_000_000, end: 3_700_000, title: null };
+
+  it("saves the workout to Health Connect, then keeps it so Delete can find it", async () => {
+    const r = await recorder();
+    expect(await r.logManual(logged, "Asia/Kolkata")).toBe("hc-1");
+    expect(fake.saveExercise).toHaveBeenCalledWith(expect.objectContaining({ start: 1_000_000, end: 3_700_000, exerciseType: 83, title: "workouts:log.types.yoga" }));
+    const [row] = await store.list();
+    expect(row).toMatchObject({ manual: true, hcId: "hc-1", type: "other", exerciseType: 83, status: "completed", startedAt: 1_000_000, endedAt: 3_700_000, timeZone: "Asia/Kolkata" });
+    expect(row.id).toMatch(/^manual-[a-zA-Z0-9-]+$/);
+    expect(fake.saveExercise.mock.calls[0][0].clientRecordId).toBe(row.id);
+  });
+
+  it("writes the title the person typed", async () => {
+    const r = await recorder();
+    await r.logManual({ ...logged, title: "Morning flow" }, "UTC");
+    expect(fake.saveExercise).toHaveBeenCalledWith(expect.objectContaining({ title: "Morning flow" }));
+  });
+
+  it("keeps nothing without the write permission, and says why", async () => {
+    fake.writeAllowed = false;
+    const r = await recorder();
+    expect(await r.logManual(logged, "UTC")).toBeNull();
+    expect(r.getSnapshot().error).toBe("healthPermission");
+    expect(fake.saveExercise).not.toHaveBeenCalled();
+    expect(await store.list()).toEqual([]);
+  });
+
+  it("takes the Health Connect copy back out when the row cannot be kept", async () => {
+    vi.spyOn(store, "ingest").mockRejectedValueOnce(new Error("disk full"));
+    const r = await recorder();
+    expect(await r.logManual(logged, "UTC")).toBeNull();
+    expect(fake.deleteExercise).toHaveBeenCalledWith("hc-1");
+    expect(r.getSnapshot().error).toBe("commandFailed");
+  });
+
+  it("is deleted like a recording: from Health Connect, the imported activities and the phone", async () => {
+    const r = await recorder();
+    await r.logManual(logged, "UTC");
+    const [row] = await store.list();
+    expect(await r.discard(row.id)).toBe(true);
+    expect(fake.deleteExercise).toHaveBeenCalledWith("hc-1");
+    expect(fake.store.deleteExercises).toHaveBeenCalledWith(["hc-1"]);
+    expect(await store.list()).toEqual([]);
+  });
+
+  it("is never offered to the retry that saves recordings left on the phone", async () => {
+    const r = await recorder();
+    await r.logManual(logged, "UTC");
+    r.mount()();
+    await new Promise((res) => setTimeout(res, 0));
+    expect(fake.saveExercise).toHaveBeenCalledTimes(1);
+  });
+});

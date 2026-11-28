@@ -15,7 +15,7 @@ import type { QueryCtx } from "@/queries/ctx";
 import { addDays } from "@/lib/time";
 import { clock, DAY, formatDay, formatValue, MISSING, rangeLabel } from "@/lib/format";
 import { reasonCopy } from "@/lib/reasons";
-import { activityHref, dayHref, napHref } from "@/lib/url";
+import { activityHref, dayHref, napHref, workoutLogHref } from "@/lib/url";
 import { getHome } from "@/queries/home";
 import { dashboardKeys, getHomeDashboard, type HomeDashboard } from "@/queries/homeExtras";
 import type { HomeVM, KeyStat, StressLevel } from "@/queries/types";
@@ -43,7 +43,7 @@ import { useShellCalendar, useShellSync } from "@/ui/shells/ShellStatus";
 import { Text } from "@/ui/Text";
 import { ring } from "@/ui/shadow";
 import { useTheme } from "@/ui/theme";
-import { ADD_ACTIVITY_INFO, ENERGY_INFO, STRAIN_RECOVERY_INFO, TONIGHT_INFO } from "../_lib/info";
+import { ENERGY_INFO, STRAIN_RECOVERY_INFO, TONIGHT_INFO } from "../_lib/info";
 import { energySeries, statProps, stressSeries } from "../_lib/view";
 import { getMore } from "@/queries/settings";
 import { HEALTH_KEY, healthQuery } from "../health/HealthScreen";
@@ -187,12 +187,12 @@ function Home({ vm, timeZone }: { vm: HomePageVM; timeZone: string }) {
         ) : (
           <EmptyState body={vm.isToday ? t("activities.emptyToday") : t("activities.emptyDay")} />
         )}
-        {/* Add explains importing from Google; Start records one live on the phone (WHOOP's pair of buttons). */}
+        {/* Add logs a past one; Start records one live on the phone (WHOOP's pair of buttons). */}
         <View className="mt-3 flex-row gap-3">
           <View className="min-w-0 flex-1">
-            <InfoCardTrigger info={ADD_ACTIVITY_INFO} activeScale={0.96} className={vm.isToday ? `${CARD_BUTTON} px-3` : CARD_BUTTON}>
+            <Press accessibilityRole="link" activeScale={0.96} onPress={() => go(workoutLogHref({ day: vm.isToday ? undefined : d }))} className={vm.isToday ? `${CARD_BUTTON} px-3` : CARD_BUTTON}>
               <CardButtonContent icon={Plus} label={t("activities.add")} compact={vm.isToday} />
-            </InfoCardTrigger>
+            </Press>
           </View>
           {vm.isToday && <StartActivityButton />}
         </View>
@@ -306,7 +306,7 @@ function Home({ vm, timeZone }: { vm: HomePageVM; timeZone: string }) {
               </View>
             )}
             {day.length > 0 && (
-              <SectionShell variant="section" title={t("section.myDay")} action={<PlusKey label={vm.isToday ? t("add.today") : t("add.day", { day: formatDay(d, DAY.short) })} />}>
+              <SectionShell variant="section" title={t("section.myDay")} action={<PlusKey label={vm.isToday ? t("add.today") : t("add.day", { day: formatDay(d, DAY.short) })} day={vm.isToday ? undefined : d} />}>
                 <View className="gap-3">{day}</View>
               </SectionShell>
             )}

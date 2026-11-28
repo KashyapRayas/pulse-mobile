@@ -35,7 +35,7 @@ export function useRecordedRows(day: string, timeZone: string, imported: readonl
   const [rows, setRows] = useState<RecordedRow[]>([]);
   useEffect(() => {
     let live = true;
-    const sessions = state.history.filter((s) => s.status === "completed" && localDay(s.startedAt / 1000, timeZone) === day && !(s.hcId && imported.some((a) => a.id === s.hcId || overlaps(s, a))));
+    const sessions = state.history.filter((s) => s.status === "completed" && !s.manual && localDay(s.startedAt / 1000, timeZone) === day && !(s.hcId && imported.some((a) => a.id === s.hcId || overlaps(s, a))));
     void Promise.all(sessions.map(async (session) => ({ session, start: session.startedAt, strain: activityView(await appStore().workouts.samples(session.id), strainSetupOf(session), null).activityStrain })))
       .then((r) => { if (live) setRows(r); }).catch(() => {});
     return () => { live = false; };

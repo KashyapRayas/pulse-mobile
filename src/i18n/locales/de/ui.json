@@ -299,10 +299,7 @@
     "energyLow": "1-33: wird knapp.",
     "strainRecoveryTitle": "Strain & Recovery",
     "strainRecovery1": "Deine letzten 7 Tage nebeneinander: Day Strain in Blau auf der linken Skala, von 0 bis 100%, und Recovery auf der rechten Skala, von 0 bis 100%.",
-    "strainRecovery2": "Hoher Strain an einem Tag zeigt sich oft als niedrigere Recovery am nächsten Morgen. Tage ohne Score bleiben als Lücken.",
-    "addActivityTitle": "Aktivität hinzufügen",
-    "addActivity1": "Pulse liest deine Workouts über Health Connect aus Fitbit, daher kann hier keines hinzugefügt werden.",
-    "addActivity2": "Starte oder erfasse das Workout in der Fitbit-App. Es erscheint nach der nächsten Synchronisierung mit seinem Strain in deinen Aktivitäten."
+    "strainRecovery2": "Hoher Strain an einem Tag zeigt sich oft als niedrigere Recovery am nächsten Morgen. Tage ohne Score bleiben als Lücken."
   },
   "legend": {
     "todayVs": "<b>Heute</b> vs. {{period}}"

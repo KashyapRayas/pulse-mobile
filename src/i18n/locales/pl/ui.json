@@ -313,10 +313,7 @@
     "energyLow": "1-33: kończy się.",
     "strainRecoveryTitle": "Strain i regeneracja",
     "strainRecovery1": "Twoje ostatnie 7 dni obok siebie: Day Strain na niebiesko na lewej skali, od 0 do 100%, i Recovery na prawej skali, od 0 do 100%.",
-    "strainRecovery2": "Wysoki Strain jednego dnia często oznacza niższe Recovery następnego ranka. Dni bez wyniku zostają jako przerwy.",
-    "addActivityTitle": "Dodaj aktywność",
-    "addActivity1": "Pulse czyta Twoje treningi z Fitbit przez Health Connect, więc nie może ich tu dodać.",
-    "addActivity2": "Rozpocznij lub zapisz trening w aplikacji Fitbit. Pojawi się w Twoich aktywnościach po następnej synchronizacji, razem ze Strain."
+    "strainRecovery2": "Wysoki Strain jednego dnia często oznacza niższe Recovery następnego ranka. Dni bez wyniku zostają jako przerwy."
   },
   "legend": {
     "todayVs": "<b>Dziś</b> vs. {{period}}"

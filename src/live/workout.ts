@@ -37,6 +37,13 @@ export type RecordedWorkout = {
   body?: ActivityBody | null;
   /** The Health Connect id of the session Pulse wrote for it once finished (connect.ts saveExercise). */
   hcId?: string;
+  /**
+   * Logged by hand (`/workout/log`, manualWorkout.ts): no samples and no band, saved to Health Connect before the row is
+   * written, so it always has `hcId`. Kept only so the activity page can delete it; the recorder's screens skip it.
+   */
+  manual?: true;
+  /** The Health Connect exercise type it was saved with (manualWorkout.ts LOG_HC); `type` is the nearest of the six. */
+  exerciseType?: number;
 };
 
 /** Health Connect's ExerciseSessionRecord types for Pulse's workouts (androidx ExerciseSessionRecord constants). */

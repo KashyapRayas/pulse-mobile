@@ -299,10 +299,7 @@
     "energyLow": "1-33: running low.",
     "strainRecoveryTitle": "Strain & recovery",
     "strainRecovery1": "Your last 7 days side by side: Day Strain in blue on the left scale, from 0 to 100%, and Recovery on the right scale, from 0 to 100%.",
-    "strainRecovery2": "High strain on one day often shows up as lower Recovery the next morning. Days without a score are left as gaps.",
-    "addActivityTitle": "Add an activity",
-    "addActivity1": "Pulse reads your workouts from Fitbit through Health Connect, so it cannot add one here.",
-    "addActivity2": "Start or log the workout in the Fitbit app. It appears in your activities after the next sync, with its Strain."
+    "strainRecovery2": "High strain on one day often shows up as lower Recovery the next morning. Days without a score are left as gaps."
   },
   "legend": {
     "todayVs": "<b>Today</b> vs. {{period}}"

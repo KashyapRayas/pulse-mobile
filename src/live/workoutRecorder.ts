@@ -8,6 +8,7 @@ import { liveBle } from "@/health/ble";
 import { askNotificationPermission } from "@/background/notify";
 import { errorKind, report, reportError } from "@/lib/telemetry";
 import { workoutNative, workoutNativeAvailable } from "../../modules/pulse-workouts";
+import { LOG_HC, recorderType, type ManualWorkout } from "./manualWorkout";
 import { HC_EXERCISE, parseRecordedWorkout, parseWorkoutSample, type RecordedWorkout, type WorkoutSample, type WorkoutType } from "./workout";
 
 export type WorkoutCalibration = Pick<RecordedWorkout, "restingHr" | "maxHr" | "sex" | "estimatedMaxHr" | "timeZone">;
@@ -251,6 +252,45 @@ class WorkoutRecorder {
       this.discarding.delete(id);
     }
   });
+  /**
+   * Saves a workout logged by hand (manualWorkout.ts) and returns its Health Connect id, or null with `error` set. The
+   * session goes to Health Connect first (asking for the write permission), then the row is kept so Delete can find it,
+   * then it is imported back and its day rescored, as after a recording. A row that cannot be kept takes the session
+   * back out: Pulse would have no way left to delete it.
+   */
+  logManual = async (w: ManualWorkout, timeZone: string): Promise<string | null> => {
+    let saved: string | null = null;
+    const ok = await this.action(async () => {
+      if (!(await exerciseWriteAllowed(true))) throw new Error("healthPermission");
+      const id = `manual-${w.start}-${Math.random().toString(36).slice(2, 10)}`;
+      const hcId = await saveExercise({
+        clientRecordId: id,
+        start: w.start,
+        end: w.end,
+        exerciseType: LOG_HC[w.type],
+        title: w.title ?? i18n.t(`workouts:log.types.${w.type}`),
+      });
+      if (!hcId) throw new Error("healthPermission");
+      const now = Date.now();
+      const session: RecordedWorkout = {
+        schemaVersion: 1, id, type: recorderType(w.type), status: "completed", startedAt: w.start, endedAt: w.end,
+        updatedAt: now, activeMs: w.end - w.start, revision: 1, seq: 0, epoch: 0, deviceId: "", deviceName: null, timeZone,
+        restingHr: null, maxHr: null, sex: null, estimatedMaxHr: false, algorithmVersion: 1, link: "off", lastBpm: null,
+        lastSampleAt: null, error: null, hcId, manual: true, exerciseType: LOG_HC[w.type],
+      };
+      try {
+        await appStore().workouts.ingest(session, [], 0);
+      } catch (error) {
+        void reportError("workout.log_failed", error);
+        await deleteExercise(hcId).catch(() => {});
+        throw error;
+      }
+      saved = hcId;
+      await this.storeImported(hcId, session).catch(() => {});
+      void syncNow().catch(() => {});
+    });
+    return ok ? saved : null;
+  };
   private async requireNotification() {
     if (await askNotificationPermission() !== "granted" || !await workoutNative.notificationsEnabled()) {
       throw new Error("notificationPermission");

@@ -306,10 +306,7 @@
     "energyLow": "1-33: stai finendo le energie.",
     "strainRecoveryTitle": "Strain e recupero",
     "strainRecovery1": "I tuoi ultimi 7 giorni affiancati: Day Strain in blu sulla scala a sinistra, da 0 a 100%, e Recovery sulla scala a destra, da 0 a 100%.",
-    "strainRecovery2": "Uno Strain alto in un giorno spesso si vede come Recovery più basso la mattina dopo. I giorni senza punteggio restano vuoti.",
-    "addActivityTitle": "Aggiungi un’attività",
-    "addActivity1": "Pulse legge i tuoi allenamenti da Fitbit tramite Health Connect, quindi non può aggiungerne uno qui.",
-    "addActivity2": "Avvia o registra l’allenamento nell’app Fitbit. Compare tra le tue attività dopo la prossima sincronizzazione, con il suo Strain."
+    "strainRecovery2": "Uno Strain alto in un giorno spesso si vede come Recovery più basso la mattina dopo. I giorni senza punteggio restano vuoti."
   },
   "legend": {
     "todayVs": "<b>Oggi</b> vs. {{period}}"

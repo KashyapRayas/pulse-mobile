@@ -92,6 +92,13 @@ export function trendHref(key: string, o: { d?: string; today?: string; r?: stri
 
 /** `/activity/[id]`. Google's ids are resource names with slashes (`users/…/dataPoints/…`), so the id is encoded. */
 export const activityHref = (id: string) => `/activity/${encodeURIComponent(id)}`;
+/** `/workout/log`, the form for a past activity: on `day` (else today), with `type` chosen (manualWorkout.ts LOG_TYPES). */
+export function workoutLogHref(o: { day?: string; type?: string } = {}) {
+  const q = new URLSearchParams();
+  if (o.day) q.set("d", o.day);
+  if (o.type) q.set("type", o.type);
+  return `/workout/log${q.size ? `?${q}` : ""}`;
+}
 /** `/sleep/nap/[id]`, encoded like activityHref. */
 export const napHref = (id: string) => `/sleep/nap/${encodeURIComponent(id)}`;
 

@@ -1,6 +1,6 @@
 // My Day's "+": a white key that opens the action menu (the reference app, home-08), ported from pulse
 // (app)/_lib/PlusMenu.tsx. The key drops the kit's menu, as the web's dropdown; app/plus.tsx keeps the same actions as a
-// page for links that open it. Start activity records a workout on the phone
+// page for links that open it. Start activity records a workout on the phone, Add activity logs a past one
 // (docs/workout-tracker/whoop-ui.md); entries without a data source in Pulse (Strength trainer, Share live) are left out.
 import { View } from "react-native";
 import { router, type Href } from "expo-router";
@@ -10,11 +10,9 @@ import { Gradient } from "@/ui/Gradient";
 import { haptic } from "@/ui/haptics";
 import { Icon } from "@/ui/Icon";
 import { TaskPage } from "@/ui/shells/TaskPage";
-import { InfoDialog } from "@/ui/shells/InfoDialog";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
-import { useState } from "react";
-import { ADD_ACTIVITY_INFO } from "../_lib/info";
+import { workoutLogHref } from "@/lib/url";
 import { Press } from "@/ui/Press";
 import { push } from "@/ui/navigate";
 import { MenuPanel, useMenu } from "@/ui/Menu";
@@ -24,11 +22,10 @@ import { TYPE } from "@/ui/type";
  * The ~34 pt key with a soft top light; the hit area grows to 44 px without moving it. It drops the kit's menu under
  * itself (three actions do not need a page of their own); the day it adds to is in its label.
  */
-export function PlusKey({ label }: { label: string }) {
+export function PlusKey({ label, day }: { label: string; day?: string }) {
   const { c } = useTheme();
   const { t } = useTranslation(["home", "workouts"]);
   const { ref, anchor, open, close } = useMenu();
-  const [info, setInfo] = useState(false);
   const go = (href: string) => {
     close();
     push(href);
@@ -56,14 +53,10 @@ export function PlusKey({ label }: { label: string }) {
         <PlusRow
           icon={Plus}
           label={t("activities.add")}
-          onPress={() => {
-            close();
-            setInfo(true);
-          }}
+          onPress={() => go(workoutLogHref({ day }))}
         />
         <PlusRow icon={NotebookPen} label={t("add.completeJournal")} onPress={() => go("/checkin")} />
       </MenuPanel>
-      <InfoDialog open={info} onClose={() => setInfo(false)} {...ADD_ACTIVITY_INFO} />
     </>
   );
 }
@@ -77,10 +70,9 @@ function PlusRow({ icon, label, onPress }: { icon: LucideIcon; label: string; on
   );
 }
 
-/** The sheet's body: "Add activity" explains where workouts come from (§11 R2), "Complete your journal" opens the check-in. */
-export function PlusPage({ label }: { label: string }) {
+/** The sheet's body: "Add activity" opens the form for a past one, "Complete your journal" opens the check-in. */
+export function PlusPage({ label, day }: { label: string; day?: string }) {
   const { t } = useTranslation(["home", "workouts"]);
-  const [info, setInfo] = useState(false);
   const item = "h-12 flex-row items-center gap-3 rounded-xl px-3";
   return (
     <TaskPage title={label}>
@@ -90,7 +82,7 @@ export function PlusPage({ label }: { label: string }) {
           <Icon icon={Timer} size={20} tone="foreground-secondary" strokeWidth={1.75} />
           <Text className={TYPE.rowTitle}>{t("workouts:home.start")}</Text>
         </Press>
-        <Press activeBg="bg-fill-pressed" accessibilityRole="menuitem" onPress={() => setInfo(true)} className={item}>
+        <Press activeBg="bg-fill-pressed" accessibilityRole="menuitem" onPress={() => router.replace(workoutLogHref({ day }) as Href)} className={item}>
           <Icon icon={Plus} size={20} tone="foreground-secondary" strokeWidth={1.75} />
           <Text className={TYPE.rowTitle}>{t("activities.add")}</Text>
         </Press>
@@ -100,7 +92,6 @@ export function PlusPage({ label }: { label: string }) {
           <Text className={TYPE.rowTitle}>{t("add.completeJournal")}</Text>
         </Press>
       </View>
-      <InfoDialog open={info} onClose={() => setInfo(false)} {...ADD_ACTIVITY_INFO} />
     </TaskPage>
   );
 }

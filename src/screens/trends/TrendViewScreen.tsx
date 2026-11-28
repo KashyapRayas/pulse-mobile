@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft, ChevronRight, Info, Plus, Target } from "lucide-react-native";
 import { push } from "@/ui/navigate";
+import { workoutLogHref } from "@/lib/url";
 import { chartDef } from "@/queries/chart";
 import { chartHref } from "@/screens/chart/href";
 import { formatValue } from "@/lib/format";
@@ -16,13 +17,11 @@ import { Segmented } from "@/ui/Segmented";
 import { getTrendView, isTrendViewKey, priorLabel, type TrendViewKey, type TrendViewVM } from "@/queries/trendView";
 import { useScreen } from "@/screens/useScreen";
 import { STAT_ICON } from "@/screens/_lib/view";
-import { ADD_ACTIVITY_INFO } from "@/screens/_lib/info";
 import { BreakdownBar } from "@/ui/metrics/BreakdownBar";
 import { LABEL, StatusChip, ValueUnit } from "@/ui/metrics/primitives";
 import { TrendLegend } from "@/ui/metrics/TrendLegend";
 import { DetailShell } from "@/ui/shells/DetailShell";
 import { EmptyState } from "@/ui/shells/EmptyState";
-import { InfoCardTrigger } from "@/ui/shells/InfoButton";
 import { ActionLink, SectionShell } from "@/ui/shells/SectionShell";
 import { useSelectedDay } from "@/ui/shells/DateSwitcher";
 import { Text } from "@/ui/Text";
@@ -104,10 +103,10 @@ export default function TrendViewScreen() {
             </Press>
           )}
           {vm.actions.addActivity && (
-            <InfoCardTrigger info={ADD_ACTIVITY_INFO} activeScale={0.96} className={CARD_BUTTON}>
+            <Press accessibilityRole="link" activeScale={0.96} onPress={() => (haptic.tap(), push(workoutLogHref({ type: key === "strength" ? "strength" : undefined })))} className={CARD_BUTTON}>
               <Icon icon={Plus} size={20} tone="foreground" strokeWidth={2} />
               <Text className="text-meta font-medium tracking-normal">{t("addActivity")}</Text>
-            </InfoCardTrigger>
+            </Press>
           )}
         </View>
       }

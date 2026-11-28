@@ -101,15 +101,3 @@ export const STRAIN_RECOVERY_INFO: InfoContent = {
   },
 }
 
-/** "Add activity" (Home's card button and the "+" menu): Pulse imports workouts, so this explains where they come from (§11 R2). */
-export const ADD_ACTIVITY_INFO: InfoContent = {
-  get title() { return t("addActivityTitle") },
-  get body() {
-    return (
-      <>
-        <P>{t("addActivity1")}</P>
-        <P>{t("addActivity2")}</P>
-      </>
-    )
-  },
-}

@@ -36,7 +36,7 @@ export function StartActivityScreen() {
   const state = useSyncExternalStore(workoutRecorder.subscribe, workoutRecorder.getSnapshot, workoutRecorder.getSnapshot);
   const band = useLiveBle();
   const profile = useApp((s) => s.profile);
-  const recent = useMemo(() => [...new Set(state.history.map((w) => w.type))].slice(0, 4), [state.history]);
+  const recent = useMemo(() => [...new Set(state.history.filter((w) => !w.manual).map((w) => w.type))].slice(0, 4), [state.history]);
   // The last sport by default, as WHOOP opens on the most recent one.
   const [picked, setPicked] = useState<WorkoutType | null>(null);
   const type = picked ?? recent[0] ?? "walk";

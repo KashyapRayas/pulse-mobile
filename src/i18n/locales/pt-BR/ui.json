@@ -306,10 +306,7 @@
     "energyLow": "1-33: ficando baixo.",
     "strainRecoveryTitle": "Strain e Recovery",
     "strainRecovery1": "Seus últimos 7 dias lado a lado: Day Strain em azul na escala da esquerda, de 0 a 100%, e Recovery na escala da direita, de 0 a 100%.",
-    "strainRecovery2": "Um Strain alto em um dia costuma aparecer como Recovery mais baixa na manhã seguinte. Dias sem pontuação ficam como lacunas.",
-    "addActivityTitle": "Adicionar uma atividade",
-    "addActivity1": "O Pulse lê seus treinos do Fitbit pelo Health Connect, então não consegue adicionar um aqui.",
-    "addActivity2": "Inicie ou registre o treino no app Fitbit. Ele aparece nas suas atividades após a próxima sincronização, com seu Strain."
+    "strainRecovery2": "Um Strain alto em um dia costuma aparecer como Recovery mais baixa na manhã seguinte. Dias sem pontuação ficam como lacunas."
   },
   "legend": {
     "todayVs": "<b>Hoje</b> vs. {{period}}"
