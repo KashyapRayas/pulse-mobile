@@ -223,7 +223,7 @@
     },
     "ask": {
       "today": "Podsumuj mój dzień: Recovery, sen i Strain.",
-      "sleep": "Jak spałem ostatniej nocy i co to oznacza na dziś?",
+      "sleep": "Jak minęła moja ostatnia noc i co to oznacza na dziś?",
       "workouts": "Jak poszły moje treningi w ostatnim tygodniu?",
       "trends": "Jak zmieniały się moje Recovery i HRV w ostatnich dwóch tygodniach?",
       "habits": "Które nawyki z dziennika najbardziej wpływają na moje Recovery?",
@@ -247,16 +247,16 @@
     "summary_other": "Sprawdzono {{count}} rzeczy"
   },
   "followUps": {
-    "dayTrain": "Jak powinienem dziś trenować?",
+    "dayTrain": "Jak dziś trenować?",
     "dayRecover": "Co najbardziej pomogłoby mojemu Recovery?",
     "sleepTonight": "Jak mogę lepiej spać tej nocy?",
-    "sleepBedtime": "O której powinienem dziś iść spać?",
-    "workoutNext": "Jaki powinien być mój następny trening?",
+    "sleepBedtime": "O której dziś iść spać?",
+    "workoutNext": "Jaki trening zrobić następnym razem?",
     "workoutWeek": "Jak wygląda mój trening w tym tygodniu?",
     "trendWhy": "Co napędza ten trend?",
     "trendMonth": "Jak to wypada w porównaniu z zeszłym miesiącem?",
-    "habitsFocus": "Na którym nawyku powinienem się skupić?",
+    "habitsFocus": "Na którym nawyku się skupić?",
     "healthWatch": "Czy jest coś, na co warto uważać?",
-    "reportFocus": "Na czym powinienem się teraz skupić?"
+    "reportFocus": "Na czym się teraz skupić?"
   }
 }

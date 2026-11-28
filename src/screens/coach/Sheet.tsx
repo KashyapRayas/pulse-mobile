@@ -3,7 +3,7 @@
 // content (grouped rows). A drag down, a tap on the dim or Back closes it. Under reduced motion it fades instead.
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { Modal, Pressable, StyleSheet, View } from "react-native";
+import { Modal, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { Extrapolation, interpolate, runOnJS, useAnimatedStyle, useReducedMotion, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -38,27 +38,43 @@ export type SheetProps = {
 };
 
 export function Sheet({ open, onClose, onClosed, title, subtitle, children }: SheetProps) {
+  // Mounted from the moment it opens until its exit has played. Closed, it is nothing at all: every user message has a
+  // sheet, and the card's animated styles and gesture would otherwise each hold a UI-thread mapper for the whole chat.
+  const [shown, setShown] = useState(open);
+  if (open && !shown) setShown(true);
+  if (!shown) return null;
+  return (
+    <Card
+      open={open}
+      onClose={onClose}
+      onGone={() => {
+        setShown(false);
+        onClosed?.();
+      }}
+      title={title}
+      subtitle={subtitle}
+    >
+      {children}
+    </Card>
+  );
+}
+
+function Card({ open, onClose, onGone, title, subtitle, children }: Omit<SheetProps, "onClosed"> & { onGone: () => void }) {
   const { t } = useTranslation("common");
   const insets = useSafeAreaInsets();
   const reduced = useReducedMotion();
   const panel = usePanelStyle({ ring: "popover-ring" });
-  // Mounted from the moment it opens until its exit has played.
-  const [shown, setShown] = useState(open);
-  if (open && !shown) setShown(true);
   const p = useSharedValue(0);
   const drag = useSharedValue(0);
-  const height = useSharedValue(400);
-  const afterClose = useRef(onClosed);
+  // Until the card is measured its height is taken as the window's, so the first frame starts fully below the screen.
+  const height = useSharedValue(useWindowDimensions().height);
+  const gone = useRef(onGone);
   useEffect(() => {
-    afterClose.current = onClosed;
-  }, [onClosed]);
-  const gone = () => {
-    setShown(false);
-    afterClose.current?.();
-  };
+    gone.current = onGone;
+  }, [onGone]);
+  const finish = () => gone.current();
 
   useEffect(() => {
-    if (!shown) return;
     if (open) {
       drag.set(0);
       haptic.select();
@@ -66,11 +82,11 @@ export function Sheet({ open, onClose, onClosed, title, subtitle, children }: Sh
     } else {
       p.set(
         withTiming(0, { duration: DURATION.fast, easing: EASE.inQuick }, (done) => {
-          if (done) runOnJS(gone)();
+          if (done) runOnJS(finish)();
         }),
       );
     }
-  }, [open, shown, reduced, p, drag]);
+  }, [open, reduced, p, drag]);
 
   const pan = Gesture.Pan()
     .activeOffsetY(10)
@@ -91,7 +107,6 @@ export function Sheet({ open, onClose, onClosed, title, subtitle, children }: Sh
     return { transform: [{ translateY: (1 - p.value) * away + drag.value }, { scale: interpolate(p.value, [0, 1], [0.94, 1], Extrapolation.CLAMP) }] };
   });
 
-  if (!shown) return null;
   return (
     <Modal visible transparent animationType="none" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
       <GestureHandlerRootView style={styles.fill}>

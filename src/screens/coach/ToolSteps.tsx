@@ -40,8 +40,11 @@ export function ToolSteps({ steps }: { steps: Step[] }) {
       </Animated.View>
     );
 
-  const failed = steps.every((s) => s.state === "failed");
-  const summary = steps.length === 1 ? doneLabel(steps[0].name) : t("steps.summary", { count: steps.length });
+  // A failed lookup stays visible without opening the list: a red mark, and the failure line under the summary of the
+  // ones that worked (the old chat showed a line per failed tool).
+  const ok = steps.filter((s) => s.state !== "failed");
+  const failed = ok.length < steps.length;
+  const summary = !ok.length ? t("chat.toolFailed") : ok.length === 1 ? doneLabel(ok[0].name) : t("steps.summary", { count: ok.length });
   return (
     <Animated.View key="done" entering={FadeIn.duration(DURATION.fast)} className="gap-1">
       <Press
@@ -56,11 +59,12 @@ export function ToolSteps({ steps }: { steps: Step[] }) {
         <View className={cn("size-4 items-center justify-center rounded-full", failed ? "bg-recovery-red/15" : "bg-coach/15")}>
           <Icon icon={failed ? X : Check} size={11} tone={failed ? "recovery-red-text" : "coach-text"} strokeWidth={2.5} />
         </View>
-        <Text className="text-meta text-muted-foreground">{failed ? t("chat.toolFailed") : summary}</Text>
+        <Text className="text-meta text-muted-foreground">{summary}</Text>
         <Animated.View style={chevron}>
           <Icon icon={ChevronDown} size={14} tone="muted-foreground" />
         </Animated.View>
       </Press>
+      {failed && ok.length > 0 && <Text className="pl-6 text-meta text-recovery-red-text">{t("chat.toolFailed")}</Text>}
       {open && (
         <Animated.View entering={FadeIn.duration(DURATION.fast)} exiting={FadeOut.duration(DURATION.fast)} className="ml-2 border-l border-border pl-4">
           {steps.map((s, i) => (
