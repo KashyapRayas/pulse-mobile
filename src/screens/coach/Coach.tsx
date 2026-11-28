@@ -355,10 +355,13 @@ function Composer({ input, setInput, busy, onSend, onStop, onTools }: { input: s
             </Press>
           </Animated.View>
         ) : (
-          <Animated.View key="send" entering={ZoomIn.duration(DURATION.fast)} exiting={ZoomOut.duration(DURATION.fast)} style={send}>
-            <Press accessibilityRole="button" accessibilityLabel={t("chat.send")} accessibilityState={{ disabled: !ready }} disabled={!ready} onPress={onSend} activeScale={0.9} className="size-11 items-center justify-center rounded-full bg-primary">
-              <Icon icon={ArrowUp} size={20} tone="primary-foreground" strokeWidth={2.25} />
-            </Press>
+          // The zoom in and out on the outer view, the ready scale on the inner one: one view's transform cannot carry both.
+          <Animated.View key="send" entering={ZoomIn.duration(DURATION.fast)} exiting={ZoomOut.duration(DURATION.fast)}>
+            <Animated.View style={send}>
+              <Press accessibilityRole="button" accessibilityLabel={t("chat.send")} accessibilityState={{ disabled: !ready }} disabled={!ready} onPress={onSend} activeScale={0.9} className="size-11 items-center justify-center rounded-full bg-primary">
+                <Icon icon={ArrowUp} size={20} tone="primary-foreground" strokeWidth={2.25} />
+              </Press>
+            </Animated.View>
           </Animated.View>
         )}
       </Animated.View>
