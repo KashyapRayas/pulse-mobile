@@ -5,6 +5,7 @@ import { X } from "lucide-react-native";
 import type { ChipTone } from "@/lib/bands";
 import { Button } from "../Button";
 import { StatusChip } from "../metrics/primitives";
+import { P } from "../Prose";
 import { Text } from "../Text";
 import { usePanelStyle } from "../Panel";
 import { useTheme } from "../theme";
@@ -42,13 +43,13 @@ export function InfoDialog({ open, onClose, title, body, icon, chip, action }: I
         >
           <ScrollView contentContainerClassName="p-6" showsVerticalScrollIndicator={false}>
             {!!icon && <View className="mb-4">{icon}</View>}
-            <View className="mb-3 flex-row items-start gap-2.5 pr-8">
+            <View className="mb-3 flex-row items-start gap-2 pr-8">
               {chip && <StatusChip tone={chip.tone}>{chip.text}</StatusChip>}
-              <Text accessibilityRole="header" className="shrink text-[15px] font-bold uppercase leading-5 tracking-[0.1em] text-popover-foreground">
+              <Text accessibilityRole="header" className="shrink text-body font-medium tracking-normal text-popover-foreground">
                 {title}
               </Text>
             </View>
-            <View className="gap-4">{typeof body === "string" ? <Text className="text-[15px] leading-[22px] text-foreground-body">{body}</Text> : body}</View>
+            <View className="gap-4">{typeof body === "string" ? <P>{body}</P> : body}</View>
             {action && (
               <Button
                 variant="outline-pill"

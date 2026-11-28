@@ -6,6 +6,7 @@ import { TextInput, View } from "react-native";
 import { cn } from "@/ui/cn";
 import { FACES } from "@/ui/fontClasses";
 import { haptic } from "@/ui/haptics";
+import { FieldLabel } from "@/ui/Field";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { Press } from "@/ui/Press";
@@ -20,21 +21,18 @@ export function Input({ className, style, ...props }: ComponentProps<typeof Text
       placeholderTextColor={c["muted-foreground"]}
       selectionColor={c.foreground}
       // A multiline field (the notes) brings its own height, corners, border colour and padding: classes are written once, never overridden.
-      className={cn("min-w-0 border text-base text-foreground", !props.multiline && "h-11 rounded-lg border-input px-2.5 py-1", className)}
+      className={cn("min-w-0 border text-body text-foreground", !props.multiline && "h-11 rounded-lg border-input px-3 py-1", className)}
       style={[{ fontFamily: FACES.sans.regular, backgroundColor: c["input-fill"] }, style]}
       {...props}
     />
   );
 }
 
-/** A label over its control: 15 px medium, the hint beside it regular and muted. */
+/** A label over its control, the hint beside it at the same size (src/ui/Field.tsx). */
 export function Field({ label, hint, children, className }: { label: string; hint?: string; children: ReactNode; className?: string }) {
   return (
     <View className={cn("min-w-0 gap-2", className)}>
-      <Text className="text-[15px] font-medium leading-[22px]">
-        {label}
-        {!!hint && <Text className="font-normal text-muted-foreground"> {hint}</Text>}
-      </Text>
+      <FieldLabel label={label} qualifier={hint} />
       {children}
     </View>
   );
@@ -69,7 +67,7 @@ export function Chips({
           onPress={() => press(v)}
           className={cn("h-11 items-center justify-center rounded-full border px-4", on(v) ? "border-foreground bg-foreground" : "border-border")}
         >
-          <Text className={cn("text-[15px] font-medium leading-[22px]", on(v) ? "text-background" : "text-foreground")}>{l}</Text>
+          <Text className={cn("text-body font-medium", on(v) ? "text-background" : "text-foreground")}>{l}</Text>
         </Press>
       ))}
     </View>
@@ -80,7 +78,7 @@ export function Chips({
 export function FormAlert({ children }: { children: ReactNode }) {
   return (
     <View accessibilityRole="alert" className="rounded-lg bg-recovery-red/15 px-3 py-2">
-      {typeof children === "string" ? <Text className="text-sm leading-5 text-recovery-red-text">{children}</Text> : children}
+      {typeof children === "string" ? <Text className="text-meta text-recovery-red-text">{children}</Text> : children}
     </View>
   );
 }

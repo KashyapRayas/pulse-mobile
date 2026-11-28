@@ -40,7 +40,7 @@ function DownloadLink({ kind, format, busy, setBusy }: { kind: ExportKind; forma
       }}
     >
       <Icon icon={Download} size={20} tone="secondary-foreground" />
-      <Text className="text-[13px] font-bold uppercase tracking-[0.1em] text-secondary-foreground">{busy === id ? t("data.preparing") : format.toUpperCase()}</Text>
+      <Text className="text-meta font-medium tracking-normal text-secondary-foreground">{busy === id ? t("data.preparing") : format.toUpperCase()}</Text>
     </Button>
   );
 }

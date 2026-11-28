@@ -15,7 +15,6 @@ import { todayOf } from "@/queries/common";
 import { latestReport } from "@/queries/home";
 import { getReport, type ReportPageVM } from "@/queries/reports";
 import { useWeeklyPlan } from "@/state/weeklyPlan";
-import { Button } from "@/ui/Button";
 import type { KeyStat, ReportVM } from "@/queries/types";
 import { Divided, LoadError } from "@/screens/trends/parts";
 import { useScreen } from "@/screens/useScreen";
@@ -38,6 +37,7 @@ import { Text } from "@/ui/Text";
 import { push } from "@/ui/navigate";
 import { Press } from "@/ui/Press";
 import { reportShareText, STAT_FORMAT } from "./share";
+import { HeaderButton } from "@/ui/shells/Header";
 
 const WEEK = /^\d{4}-W\d{2}$/;
 const MONTH = /^\d{4}-\d{2}$/;
@@ -70,7 +70,7 @@ function PeriodSwitcher({ vm }: { vm: ReportVM }) {
   return (
     <View className="h-9 flex-row items-center self-center rounded-full bg-secondary">
       {step(vm.prev, "prev")}
-      <Text className="min-w-24 whitespace-nowrap px-3 text-center text-[11px] font-bold uppercase leading-4 tracking-[0.1em] tabular-nums">{periodLabel(vm.kind, vm.start, vm.end)}</Text>
+      <Text className="min-w-24 whitespace-nowrap px-3 text-center text-label font-medium tracking-normal tabular-nums">{periodLabel(vm.kind, vm.start, vm.end)}</Text>
       {step(vm.next, "next")}
     </View>
   );
@@ -87,7 +87,7 @@ function KindToggle({ kind, week, month }: { kind: "week" | "month"; week: strin
       onPress={() => to && kind !== k && (haptic.select(), router.setParams({ period: to }))}
       className={cn(SEGMENT, "min-w-11 px-3", kind === k && SEGMENT_ON, !to && "opacity-40")}
     >
-      <Text className={cn("text-[13px] font-bold uppercase tracking-[0.1em]", kind === k ? "text-foreground" : "text-muted-foreground")}>{label}</Text>
+      <Text className={cn("text-meta font-medium tracking-normal", kind === k ? "text-foreground" : "text-muted-foreground")}>{label}</Text>
     </Pressable>
   );
   return (
@@ -165,9 +165,9 @@ function ShareButton({ vm }: { vm: ReportPageVM }) {
     Share.share({ message: reportShareText(vm) }, { dialogTitle: vm.kind === "week" ? t("page.shareWeekly") : t("page.shareMonthly") }).catch(() => {});
   };
   return (
-    <Button variant="ghost" size="icon-touch" onPress={share} accessibilityLabel={vm.kind === "week" ? t("page.shareWeekA11y") : t("page.shareMonthA11y")}>
-      <Icon icon={Share2} size={22} tone="foreground" strokeWidth={1.75} />
-    </Button>
+    <HeaderButton accessibilityRole="button" onPress={share} accessibilityLabel={vm.kind === "week" ? t("page.shareWeekA11y") : t("page.shareMonthA11y")}>
+      <Icon icon={Share2} size={20} tone="foreground" strokeWidth={1.75} />
+    </HeaderButton>
   );
 }
 
@@ -228,9 +228,9 @@ export default function ReportScreen() {
         <SectionShell key="balance" variant="card" title={t("page.trainingBalance")} info={cardInfo("Training balance")}>
           {vm.trainingBalance.value ? (
             <View className="gap-1">
-              <Text className={cn("font-numeric text-xl font-bold leading-6", BALANCE_TONE[vm.trainingBalance.value.status])}>{vm.trainingBalance.value.word}</Text>
+              <Text className={cn("font-numeric text-value font-bold leading-6", BALANCE_TONE[vm.trainingBalance.value.status])}>{vm.trainingBalance.value.word}</Text>
               <Text className={cn(CAPTION, "tabular-nums")}>{t("page.fatigueFitness", { value: formatValue("decimal2", vm.trainingBalance.value.acwr) })}</Text>
-              <Text className="pt-2 text-[15px] leading-[22px] text-foreground-secondary">{vm.trainingBalance.value.line}</Text>
+              <Text className="pt-2 text-body text-foreground-secondary">{vm.trainingBalance.value.line}</Text>
             </View>
           ) : (
             <EmptyState body={t("page.noBalance")} className="py-4" />
@@ -259,7 +259,7 @@ export default function ReportScreen() {
                       <View accessibilityElementsHidden className="flex-row items-center gap-4">
                         <ScoreDial variant="recovery" size="sm" value={b.recovery} />
                         <View className="w-12 items-end">
-                          <Text className="font-numeric text-xl font-bold leading-6 tabular-nums text-strain-text">{formatValue("pct", b.strain)}</Text>
+                          <Text className="font-numeric text-value font-bold leading-6 tabular-nums text-strain-text">{formatValue("pct", b.strain)}</Text>
                           <Text className={CAPTION}>{t("page.strain")}</Text>
                         </View>
                       </View>
@@ -364,7 +364,7 @@ function Loading() {
             <View className="flex-row gap-0.5 rounded-lg bg-muted p-0.5">
               {[t("week"), t("month")].map((l) => (
                 <View key={l} className="h-10 min-w-11 justify-center px-3">
-                  <Text className="text-[13px] font-bold uppercase tracking-[0.1em] text-muted-foreground">{l}</Text>
+                  <Text className="text-meta font-medium tracking-normal text-muted-foreground">{l}</Text>
                 </View>
               ))}
             </View>

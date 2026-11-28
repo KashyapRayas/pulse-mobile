@@ -31,16 +31,16 @@ export function LiveWorkoutBar() {
       className={paused ? "h-12 flex-row items-center gap-3 rounded-2xl bg-secondary px-4" : "h-12 flex-row items-center gap-3 rounded-2xl bg-strain px-4"}
     >
       <View className={paused ? "size-2 rounded-full bg-warning" : "size-2 rounded-full bg-on-strain"} />
-      <Text className={paused ? "flex-1 text-[13px] font-bold uppercase tracking-[0.1em] text-foreground" : "flex-1 text-[13px] font-bold uppercase tracking-[0.1em] text-on-strain"} numberOfLines={1}>
+      <Text className={paused ? "flex-1 text-meta font-medium tracking-normal text-foreground" : "flex-1 text-meta font-medium tracking-normal text-on-strain"} numberOfLines={1}>
         {paused ? i18n.t("workouts:live.pausedBar", { name }) : name}
       </Text>
       {!paused && active.lastBpm !== null && (
         <View className="flex-row items-center gap-1">
           <Heart size={14} color={c["on-strain"]} fill={c["on-strain"]} />
-          <Text className="font-numeric text-[15px] font-bold text-on-strain">{active.lastBpm}</Text>
+          <Text className="font-numeric text-body font-bold text-on-strain">{active.lastBpm}</Text>
         </View>
       )}
-      <Text className={paused ? "font-numeric text-[15px] font-bold tabular-nums text-foreground" : "font-numeric text-[15px] font-bold tabular-nums text-on-strain"}>{clock(active.activeMs)}</Text>
+      <Text className={paused ? "font-numeric text-body font-bold tabular-nums text-foreground" : "font-numeric text-body font-bold tabular-nums text-on-strain"}>{clock(active.activeMs)}</Text>
       <ChevronUp size={18} color={paused ? c.foreground : c["on-strain"]} />
     </Press>
   );

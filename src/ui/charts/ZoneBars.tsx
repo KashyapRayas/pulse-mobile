@@ -61,7 +61,7 @@ function Rows({ zones, note, noteLink }: { zones: ZoneRow[]; note?: string; note
   if (!total && lowest)
     return (
       <View>
-        <Text className={cn(SECONDARY_ROW, "px-3 py-3 text-[15px] leading-[22px] text-foreground-secondary")}>
+        <Text className={cn(SECONDARY_ROW, "px-3 py-3 text-body text-foreground-secondary")}>
           {i18n.t("ui:zones.underAll", { label: lowest.label, min: lowest.min })}
         </Text>
         <Note note={note} link={noteLink} />
@@ -77,9 +77,9 @@ function Rows({ zones, note, noteLink }: { zones: ZoneRow[]; note?: string; note
         </View>
         <View className="flex-row items-baseline gap-2">
           <Text className={cn(LABEL, "text-muted-foreground")}>{i18n.t("ui:sleepStages.duration")}</Text>
-          <Text className="font-numeric text-[15px] font-bold leading-5 tabular-nums text-foreground">
+          <Text className="font-numeric text-body font-bold tabular-nums text-foreground">
             {hmm(Math.floor(T / 60))}
-            <Text className="text-xs text-muted-foreground">{`:${String(T % 60).padStart(2, "0")}`}</Text>
+            <Text className="text-caption text-muted-foreground">{`:${String(T % 60).padStart(2, "0")}`}</Text>
           </Text>
         </View>
       </View>
@@ -99,16 +99,16 @@ function Rows({ zones, note, noteLink }: { zones: ZoneRow[]; note?: string; note
               key={z.zone}
               accessible
               accessibilityLabel={i18n.t("ui:zones.zoneAria", { label: z.label, range: spoken, duration: durationWords(minutes), share: sh === "<1%" ? i18n.t("ui:zones.shareUnder1") : i18n.t("ui:zones.sharePct", { value: sh.replace("%", "") }) })}
-              className={cn(SECONDARY_ROW, "gap-2 px-3 py-2.5", !z.seconds && "opacity-40")}
+              className={cn(SECONDARY_ROW, "gap-2 px-3 py-3", !z.seconds && "opacity-40")}
             >
               <View className="flex-row items-baseline gap-2">
                 <Text className={cn(LABEL)}>{z.label}</Text>
                 <Text className={cn(LABEL, "font-numeric text-muted-foreground")}>{range}</Text>
                 {/* The share in the zone's colour, 0% included; Zones 0 and 1 stay white. */}
                 <Text className={cn(LABEL, "font-numeric tabular-nums", color && z.zone > 1 ? color.text : "text-foreground")}>{sh}</Text>
-                <Text className="ml-auto font-numeric text-lg font-bold leading-6 tabular-nums">
+                <Text className="ml-auto font-numeric text-heading font-bold tabular-nums">
                   {hmm(minutes)}
-                  <Text className="text-xs text-muted-foreground">{`:${String(t % 60).padStart(2, "0")}`}</Text>
+                  <Text className="text-caption text-muted-foreground">{`:${String(t % 60).padStart(2, "0")}`}</Text>
                 </Text>
               </View>
               <Hatch accessibilityElementsHidden className="h-3 rounded-xs">
@@ -133,7 +133,7 @@ function Rows({ zones, note, noteLink }: { zones: ZoneRow[]; note?: string; note
 function Note({ note, link }: { note?: string; link?: { label: string; href: string } }) {
   if (!note) return null;
   return (
-    <Text className="mt-3 text-xs font-medium leading-4 text-muted-foreground">
+    <Text className="mt-3 text-caption font-medium text-muted-foreground">
       {note}
       {link && (
         <>
@@ -161,7 +161,7 @@ function Stacked({ segments, unit }: { segments: StackedSegment[]; unit: "days" 
         {segments.map((s) => (
           <View key={s.key} accessible accessibilityLabel={i18n.t("ui:zones.segmentAria", { label: s.label, value: unit === "days" ? i18n.t("ui:zones.days", { count: s.count }) : durationWords(s.count) })} className="flex-row items-center gap-3">
             <View className={cn("size-2.5 shrink-0 rounded-sm", DATA_COLORS[s.color].bg)} />
-            <Text className="w-12 font-numeric text-[15px] font-bold leading-5 tabular-nums">{count(s.count)}</Text>
+            <Text className="w-12 font-numeric text-body font-bold tabular-nums">{count(s.count)}</Text>
             <Text className={cn(LABEL, "text-muted-foreground")}>{s.label}</Text>
           </View>
         ))}
@@ -192,7 +192,7 @@ export function ZoneBarsSkeleton({ variant }: { variant: "rows" | "stacked" }) {
       // Each zone row's own box: the real zone name, bars for range and time, the hatched track.
       <View accessibilityElementsHidden className="gap-2">
         {["Zone 5", "Zone 4", "Zone 3", "Zone 2", "Zone 1", "Zone 0"].map((k) => (
-          <View key={k} className={cn(SECONDARY_ROW, "gap-2 px-3 py-2.5")}>
+          <View key={k} className={cn(SECONDARY_ROW, "gap-2 px-3 py-3")}>
             <View className="flex-row items-center gap-3">
               <Text className={LABEL}>{k}</Text>
               <SkeletonText className="w-20" />

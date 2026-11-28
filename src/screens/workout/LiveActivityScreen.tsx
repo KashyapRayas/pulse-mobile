@@ -16,6 +16,8 @@ import { markerSlices, ringShare } from "@/lib/charts";
 import { arcPath, polar } from "@/ui/charts/geometry";
 import { ZoneBars, type ZoneRow } from "@/ui/charts/ZoneBars";
 import { CARD_CLASS } from "@/ui/Card";
+import { TYPE } from "@/ui/type";
+import { HeaderButton } from "@/ui/shells/Header";
 import { cn } from "@/ui/cn";
 import { Mark } from "@/ui/brand";
 import { ARC_FROM, ARC_SWEEP } from "@/ui/metrics/MiniRing";
@@ -95,24 +97,24 @@ export function LiveActivityScreen() {
     <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
       {/* Header: minimise (the workout keeps recording), the activity and its time, the menu (Discard). */}
       <View className="h-16 flex-row items-center px-2">
-        <Press accessibilityRole="button" accessibilityLabel={t("live.minimise")} onPress={() => router.replace("/(tabs)" as Href)} hitSlop={8} className="size-11 items-center justify-center">
-          <ChevronDown size={26} color={c.foreground} strokeWidth={2} />
-        </Press>
+        <HeaderButton accessibilityRole="button" accessibilityLabel={t("live.minimise")} onPress={() => router.replace("/(tabs)" as Href)}>
+          <ChevronDown size={22} color={c.foreground} strokeWidth={2} />
+        </HeaderButton>
         {/* The time is the headline, as WHOOP's bar has it; the activity sits small above it. */}
         <View className="flex-1 items-center">
-          <Text className={cn("text-[12px] text-muted-foreground", CAPS)}>{paused ? t("live.pausedName", { name: activityName(session.type) }) : activityName(session.type)}</Text>
-          <Text className={cn("font-numeric text-[24px] font-bold leading-7 tabular-nums", paused ? "text-warning-text" : "text-foreground")}>{barClock(session.activeMs)}</Text>
+          <Text className={cn("text-caption text-muted-foreground", CAPS)}>{paused ? t("live.pausedName", { name: activityName(session.type) }) : activityName(session.type)}</Text>
+          <Text className={cn("font-numeric text-title font-bold leading-7 tabular-nums", paused ? "text-warning-text" : "text-foreground")}>{barClock(session.activeMs)}</Text>
         </View>
-        <Press accessibilityRole="button" accessibilityLabel={t("live.discard")} onPress={() => setAsk("discard")} hitSlop={8} className="size-11 items-center justify-center">
-          <Ellipsis size={24} color={c.foreground} strokeWidth={2} />
-        </Press>
+        <HeaderButton accessibilityRole="button" accessibilityLabel={t("live.discard")} onPress={() => setAsk("discard")}>
+          <Ellipsis size={22} color={c.foreground} strokeWidth={2} />
+        </HeaderButton>
       </View>
 
       {/* Tabs: ACTIVITY STRAIN, HEART RATE. */}
       <View className="flex-row border-b border-border" accessibilityRole="tablist">
         {(["strain", "hr"] as const).map((k) => (
           <Press key={k} accessibilityRole="tab" accessibilityState={{ selected: tab === k }} onPress={() => setTab(k)} className="h-11 flex-1 items-center justify-end">
-            <Text numberOfLines={1} adjustsFontSizeToFit className={cn("mb-2.5 px-1 text-[11px] font-bold uppercase tracking-[0.06em]", tab === k ? "text-foreground" : "text-muted-foreground")}>{t(k === "strain" ? "live.tabStrain" : "live.tabHr")}</Text>
+            <Text numberOfLines={1} adjustsFontSizeToFit className={cn("mb-3 px-1", TYPE.tab, tab === k ? "text-foreground" : "text-muted-foreground")}>{t(k === "strain" ? "live.tabStrain" : "live.tabHr")}</Text>
             <View className={cn("h-0.5 w-2/3 rounded-full", tab === k ? "bg-foreground" : "bg-transparent")} />
           </Press>
         ))}
@@ -143,7 +145,7 @@ export function LiveActivityScreen() {
               { icon: "flame", label: t("live.calories"), value: view.kcal },
             ]} />
             <View className={cn(CARD_CLASS, "px-4 pb-2 pt-4")}>
-              <Text className={cn("mb-3 text-[13px] text-foreground", CAPS)}>{t("live.timeInZones")}</Text>
+              <Text className={cn("mb-3 text-meta text-foreground", CAPS)}>{t("live.timeInZones")}</Text>
               <ZoneBars variant="rows" data={{ value: zoneRows(maxHr, view.zoneSeconds), reason: null, provisional: true }} />
             </View>
           </>
@@ -152,12 +154,12 @@ export function LiveActivityScreen() {
 
       {/* The foot: Pause or Resume, and Finish. */}
       <View className="flex-row gap-3 border-t border-border px-4 pt-3" style={{ paddingBottom: insets.bottom + 12 }}>
-        {!!state.error && <Text accessibilityLiveRegion="assertive" className="absolute inset-x-4 -top-7 text-center text-[13px] text-destructive">{t(`recorder.errors.${state.error}`, { defaultValue: t("recorder.errors.commandFailed") })}</Text>}
+        {!!state.error && <Text accessibilityLiveRegion="assertive" className="absolute inset-x-4 -top-7 text-center text-meta text-destructive">{t(`recorder.errors.${state.error}`, { defaultValue: t("recorder.errors.commandFailed") })}</Text>}
         <Press accessibilityRole="button" disabled={state.busy} onPress={toggle} className={cn("h-13 flex-1 items-center justify-center rounded-full", paused ? "bg-strain" : "bg-secondary", state.busy && "opacity-45")}>
-          <Text className={cn("text-[14px]", CAPS, paused ? "text-on-strain" : "text-foreground")}>{t(paused ? "live.resume" : "live.pause")}</Text>
+          <Text className={cn("text-meta", CAPS, paused ? "text-on-strain" : "text-foreground")}>{t(paused ? "live.resume" : "live.pause")}</Text>
         </Press>
         <Press accessibilityRole="button" disabled={state.busy} onPress={() => setAsk("finish")} className={cn("h-13 flex-1 items-center justify-center rounded-full", paused ? "bg-secondary" : "bg-strain", state.busy && "opacity-45")}>
-          <Text className={cn("text-[14px]", CAPS, paused ? "text-foreground" : "text-on-strain")}>{t("live.finish")}</Text>
+          <Text className={cn("text-meta", CAPS, paused ? "text-foreground" : "text-on-strain")}>{t("live.finish")}</Text>
         </Press>
       </View>
 
@@ -235,17 +237,17 @@ function StrainDial({ view, target, paused }: { view: ReturnType<typeof activity
         {paused ? (
           <>
             <Pause size={d * 0.09} color={c["warning-text"]} fill={c["warning-text"]} />
-            <Text className={cn("mt-3 text-center text-[13px] text-warning-text", CAPS)}>{t("live.pausedDial")}</Text>
-            <Text className="mt-1 text-center text-[13px] text-muted-foreground">{t("live.strainSoFar", { strain: Math.round(view.activityStrain) })}</Text>
+            <Text className={cn("mt-3 text-center text-meta text-warning-text", CAPS)}>{t("live.pausedDial")}</Text>
+            <Text className="mt-1 text-center text-meta text-muted-foreground">{t("live.strainSoFar", { strain: Math.round(view.activityStrain) })}</Text>
           </>
         ) : (
           <>
-            <Text className={cn("text-[12px] text-muted-foreground", CAPS)}>{t("live.activityStrain")}</Text>
+            <Text className={cn("text-caption text-muted-foreground", CAPS)}>{t("live.activityStrain")}</Text>
             <Text className="font-numeric font-bold tabular-nums text-foreground" style={{ fontSize: d * 0.22, lineHeight: d * 0.25 }}>
               {Math.round(view.activityStrain)}<Text className="font-numeric font-bold text-foreground" style={{ fontSize: d * 0.08 }}>%</Text>
             </Text>
-            <Text className={cn("text-[12px]", CAPS, word === "optimal" ? "text-optimal-text" : word === "overreaching" ? "text-warning-text" : "text-muted-foreground")}>{t(`live.word.${word}`)}</Text>
-            <Text className="mt-1 text-[12px] text-muted-foreground">{t("live.dayStrain", { strain: Math.round(view.dayNow) })}</Text>
+            <Text className={cn("text-caption", CAPS, word === "optimal" ? "text-optimal-text" : word === "overreaching" ? "text-warning-text" : "text-muted-foreground")}>{t(`live.word.${word}`)}</Text>
+            <Text className="mt-1 text-caption text-muted-foreground">{t("live.dayStrain", { strain: Math.round(view.dayNow) })}</Text>
           </>
         )}
       </View>
@@ -266,10 +268,10 @@ function HeartRateCard({ bpm, maxHr }: { bpm: number | null; maxHr: number }) {
     <View className={cn(CARD_CLASS, "gap-3 px-4 pb-4 pt-4")}>
       <View className="flex-row items-center gap-2">
         <Heart size={16} color={c["recovery-red"]} fill={c["recovery-red"]} />
-        <Text className={cn("text-[13px] text-foreground", CAPS)}>{t("live.heartRate")}</Text>
+        <Text className={cn("text-meta text-foreground", CAPS)}>{t("live.heartRate")}</Text>
       </View>
-      <Text className="font-numeric text-[40px] font-bold leading-[44px] tabular-nums text-foreground">
-        {bpm ?? "--"}<Text className="text-[15px] font-semibold text-muted-foreground"> {t("live.bpm")}</Text>
+      <Text className="font-numeric text-hero font-bold leading-[44px] tabular-nums text-foreground">
+        {bpm ?? "--"}<Text className="text-body font-semibold text-muted-foreground"> {t("live.bpm")}</Text>
       </Text>
       <ZoneBar bpm={bpm} maxHr={maxHr} />
     </View>
@@ -288,7 +290,7 @@ function HrDisc({ bpm, maxHr }: { bpm: number | null; maxHr: number }) {
       <View className="items-center justify-center rounded-full bg-background" style={{ width: disc, height: disc }}>
         <Heart size={20} color={c["recovery-red"]} fill={c["recovery-red"]} />
         <Text className="font-numeric font-bold tabular-nums text-foreground" style={{ fontSize: disc * 0.32, lineHeight: disc * 0.38 }}>{bpm ?? "--"}</Text>
-        {bpm !== null && <Text className="text-[13px] font-semibold text-muted-foreground">{t("live.zone", { zone: zonePosition(bpm, maxHr).zone })}</Text>}
+        {bpm !== null && <Text className="text-meta font-semibold text-muted-foreground">{t("live.zone", { zone: zonePosition(bpm, maxHr).zone })}</Text>}
       </View>
     </View>
   );
@@ -342,8 +344,8 @@ function StatsCard({ items }: { items: { icon: StatIcon; label: string; value: n
       {items.map((it, i) => (
         <View key={it.label} className={cn("flex-1 gap-2 px-4", i > 0 && "border-l border-border")}>
           {glyph(it.icon)}
-          <Text className={cn("text-[11px] text-muted-foreground", CAPS)}>{it.label}</Text>
-          <Text className="font-numeric text-[28px] font-bold leading-[32px] tabular-nums text-foreground">{it.value === null ? "--" : it.text ?? `${it.value}${it.unit ?? ""}`}{it.value !== null && it.text && it.unit ? <Text className="text-[13px] font-semibold text-muted-foreground">{it.unit}</Text> : null}</Text>
+          <Text className={cn("text-label text-muted-foreground", CAPS)}>{it.label}</Text>
+          <Text className="font-numeric text-display font-bold leading-[32px] tabular-nums text-foreground">{it.value === null ? "--" : it.text ?? `${it.value}${it.unit ?? ""}`}{it.value !== null && it.text && it.unit ? <Text className="text-meta font-semibold text-muted-foreground">{it.unit}</Text> : null}</Text>
         </View>
       ))}
     </View>

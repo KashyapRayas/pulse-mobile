@@ -50,7 +50,8 @@ function Chart({ e }: { e: EnergySeries }) {
   return (
     <ChartFigure summary={summary} height={HEIGHT}>
       {({ width, height }) => {
-        const x0 = 28;
+        // Room for "100" at 13 px (about 23 px) right of the card's edge.
+        const x0 = 38;
         const x1 = width - 8;
         const y0 = 18;
         const y1 = height - AXIS_H;
@@ -86,7 +87,7 @@ function Chart({ e }: { e: EnergySeries }) {
             </PlotCanvas>
             <SpanHeads spans={naps} x={tx} x0={x0} x1={x1} y0={y0} />
             {[33, 67, 100].map((v) => (
-              <ChartLabel key={v} x={yTickX(x0, 4)} y={y(v)} anchor="end" w={24}>{String(v)}</ChartLabel>
+              <ChartLabel key={v} x={yTickX(x0, 4)} y={y(v)} anchor="end" w={30}>{String(v)}</ChartLabel>
             ))}
             {ticks.map(({ t, x }) => (
               <ChartLabel key={t} x={x} y={xTickY(y1)}>{clockTick(t, tz)}</ChartLabel>

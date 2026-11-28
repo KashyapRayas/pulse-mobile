@@ -227,7 +227,7 @@
     "title": "Journal",
     "selectBehaviours": "Select behaviours",
     "saved": "Saved",
-    "savedBody": "Have a great day!",
+    "savedBody": "Your answers are in today’s journal.",
     "saveFailed": "Couldn’t save. Check your connection and try again.",
     "saving": "Saving…",
     "save": "Save journal",
@@ -295,7 +295,7 @@
   "insights": {
     "footer": "Effects are differences in averages, not proof of cause. Change one habit at a time to see what it really does.",
     "outcome": "Outcome",
-    "unlockTitle": "Keep logging to unlock",
+    "unlockTitle": "Log more days to see these",
     "unlockBody": "Log a behaviour as Yes on at least 5 days and No on at least 5 to see how it changes your next-day {{word}}.",
     "progress": "{{label}}: {{have}} of 10 days logged",
     "split": "{{yes}} of 5 days with, {{no}} of 5 without"

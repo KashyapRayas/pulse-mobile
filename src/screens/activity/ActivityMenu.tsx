@@ -28,7 +28,7 @@ export function ActivityMenu({ strainHref, settingsHref, activityId }: { strainH
   const item = (icon: LucideIcon, label: string, href: string) => (
     <Press activeBg="bg-fill-pressed" accessibilityRole="link" onPress={() => go(href)} className="h-12 flex-row items-center gap-3 rounded-xl px-3">
       <Icon icon={icon} size={20} tone="foreground-secondary" strokeWidth={1.75} />
-      <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em]">{label}</Text>
+      <Text className="text-meta font-medium tracking-normal">{label}</Text>
     </Press>
   )
   return (
@@ -42,7 +42,7 @@ export function ActivityMenu({ strainHref, settingsHref, activityId }: { strainH
         {!!recorded.id && (
           <Press activeBg="bg-fill-pressed" accessibilityRole="button" onPress={() => { close(); setAsking(true) }} className="h-12 flex-row items-center gap-3 rounded-xl px-3">
             <Icon icon={Trash2} size={20} tone="destructive" strokeWidth={1.75} />
-            <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em] text-destructive">{t("workouts:detail.delete")}</Text>
+            <Text className="text-meta font-medium tracking-normal text-destructive">{t("workouts:detail.delete")}</Text>
           </Press>
         )}
       </MenuPanel>

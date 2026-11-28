@@ -41,7 +41,7 @@ function TargetField({ icon, label, on, error, hint, field, rule }: { icon: Luci
         <View className={BOX_WIDTH}>{field}</View>
       </View>
       {error ? (
-        <Text accessibilityRole="alert" className="pl-8 pt-1 text-[13px] font-medium leading-[18px] text-recovery-red-text">{error}</Text>
+        <Text accessibilityRole="alert" className="pl-8 pt-1 text-meta font-medium text-recovery-red-text">{error}</Text>
       ) : hint ? (
         <Text className={cn(HINT, "pl-8 pt-1")}>{hint}</Text>
       ) : null}
@@ -81,7 +81,7 @@ function NumberField({ value, unit, onChange, onBlur, invalid, label, decimals }
       keyboardType={decimals ? "decimal-pad" : "number-pad"}
       accessibilityLabel={label}
       invalid={invalid}
-      right={value ? <Text className="pl-1 pr-2 text-[13px] leading-[18px] text-muted-foreground">{unitLabel(unit)}</Text> : undefined}
+      right={value ? <Text className="pl-1 pr-2 text-meta text-muted-foreground">{unitLabel(unit)}</Text> : undefined}
     />
   );
 }
@@ -102,7 +102,7 @@ function SleepChoice({ goals, update }: Pick<ReturnType<typeof useGoals>, "goals
   return (
     <View ref={ref} collapsable={false}>
       <Press activeBg="bg-fill-pressed" accessibilityRole="button" accessibilityLabel={t("settings.sleepChoiceAria", { choice: on.label })} accessibilityState={{ expanded: !!anchor }} onPress={() => (haptic.tap(), open())} className="h-9 flex-row items-center justify-end gap-1 rounded-lg border border-input px-2 dark:bg-input/30">
-        <Text numberOfLines={1} className={cn("shrink text-[15px]", value === "off" && "text-muted-foreground")}>{value === "need" ? t("settings.need") : on.label}</Text>
+        <Text numberOfLines={1} className={cn("shrink text-body", value === "off" && "text-muted-foreground")}>{value === "need" ? t("settings.need") : on.label}</Text>
         <Icon icon={ChevronDown} size={16} tone="muted-foreground" strokeWidth={2} />
       </Press>
       <ChoiceMenu anchor={anchor} close={close} value={value} options={options} onChange={pick} />

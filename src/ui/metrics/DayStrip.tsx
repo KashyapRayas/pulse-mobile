@@ -82,10 +82,10 @@ function Strip({ indicator, days, variant = "tile", value: controlled, onSelect 
             className={cn("items-center justify-center", pill ? "w-12 gap-1.5 rounded-full py-3" : "w-11 gap-1 rounded-xl py-2", pill ? "bg-foreground/[0.07]" : on && "bg-fill-pressed")}
             style={pill && on ? { boxShadow: ring(c.foreground, { width: 2 }) } : undefined}
           >
-            <Text accessible={false} className={cn("font-semibold leading-3 text-muted-foreground", pill ? "text-xs" : "text-[11px]")}>
+            <Text accessible={false} className={cn("font-semibold leading-3 text-muted-foreground", pill ? "text-caption" : "text-label")}>
               {formatDay(day.date, { weekday: pill ? "short" : "narrow" })}
             </Text>
-            <Text accessible={false} className="font-numeric text-[17px] font-semibold leading-5 tabular-nums">
+            <Text accessible={false} className="font-numeric text-heading font-semibold tabular-nums">
               {formatDay(day.date, { day: "numeric" })}
             </Text>
             {indicator === "recovery" ? (

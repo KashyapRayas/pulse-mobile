@@ -50,6 +50,10 @@ describe("Trend View chart layout", () => {
     // One tick per calendar month, each on the first day from the 14th (or the first key of an edge month).
     expect(new Set(ticks.map((k) => k.slice(0, 7))).size).toBe(ticks.length);
     expect(ticks.slice(1, -1).every((k) => k.slice(8) === "14")).toBe(true);
+    // A range that enters its first month on the 26th leaves that month unlabelled rather than 19 days from June's label.
+    const late = xTickKeys(days("2026-05-26", 183), "6m", false);
+    expect(late[0]).toBe("2026-06-14");
+    expect(late.every((k, i) => i === 0 || (Date.parse(k) - Date.parse(late[i - 1])) / 864e5 >= 22)).toBe(true);
   });
 
   it("a line chart has a tight axis; bars stand on zero with 15 % headroom", () => {

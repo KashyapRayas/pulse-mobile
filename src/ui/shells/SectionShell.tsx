@@ -10,6 +10,7 @@ import { InfoButton, type InfoContent } from "./InfoButton";
 import { ScrollAnchor } from "./ScreenScroll";
 import { push } from "../navigate";
 import { Press } from "../Press";
+import { TYPE } from "../type";
 
 export type SectionShellProps = {
   variant: "section" | "card";
@@ -36,7 +37,7 @@ const go = (href: string) => push(href);
 export function ActionLink({ label, href }: { label: string; href: string }) {
   return (
     <Press activeOpacity={0.7} accessibilityRole="link" onPress={() => go(href)} hitSlop={{ top: 14, bottom: 14, left: 8, right: 8 }} className="flex-row items-center gap-0.5">
-      <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-foreground-secondary">{label}</Text>
+      <Text className="text-caption font-medium tracking-normal text-foreground-secondary">{label}</Text>
       <Icon icon={ChevronRight} size={14} tone="foreground-secondary" strokeWidth={2} />
     </Press>
   );
@@ -66,12 +67,12 @@ function Shell({ variant, title, info, action, aside, icon, href, fill, classNam
       <View className={cn("min-w-0", className)}>
         {/* Equal header heights keep neighbouring card bodies aligned. */}
         <View className="mb-3 min-h-[34px] flex-row items-center justify-between gap-3">
-          <Text accessibilityRole="header" className="shrink text-[22px] font-semibold leading-7 tracking-[-0.01em]">
+          <Text accessibilityRole="header" className={cn("shrink", TYPE.section)}>
             {title}
           </Text>
           {!!(aside || actionNode) && (
             <View className="shrink-0 flex-row items-center gap-3">
-              {typeof aside === "string" || typeof aside === "number" ? <Text className="text-xs font-medium leading-4 text-muted-foreground">{aside}</Text> : aside}
+              {typeof aside === "string" || typeof aside === "number" ? <Text className="text-caption font-medium text-muted-foreground">{aside}</Text> : aside}
               {actionNode}
             </View>
           )}
@@ -88,16 +89,16 @@ function Shell({ variant, title, info, action, aside, icon, href, fill, classNam
         {!!icon && <View className="size-5 items-center justify-center">{icon}</View>}
         {/* One line, as the reference app's card titles: a title too long for a narrow card (Health Monitor beside Stress
             Monitor) shrinks slightly rather than wrapping, so cards side by side keep matching headers. */}
-        <Text accessibilityRole="header" numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} className="shrink text-xs font-bold uppercase leading-4 tracking-[0.1em]">
+        <Text accessibilityRole="header" numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} className={cn("shrink", TYPE.cardTitle)}>
           {title}
         </Text>
       </View>
       <View className="shrink-0 flex-row items-center gap-2">
-        {/* A plain-text aside takes the card's own text (the web card's `text-sm text-card-foreground`); bare text in a View is an error in React Native. */}
-        {typeof aside === "string" || typeof aside === "number" ? <Text className="text-sm leading-5 text-card-foreground">{aside}</Text> : aside}
+        {/* A plain-text aside takes the card's own text (the web card's `text-meta text-card-foreground`); bare text in a View is an error in React Native. */}
+        {typeof aside === "string" || typeof aside === "number" ? <Text className="text-meta text-card-foreground">{aside}</Text> : aside}
         {/* Pulled into the padding by the glyph's own inset, so the visible arrow sits on the 16 px edge and "Health Monitor" fits one line at 390 px. */}
         {href ? (
-          <View className="-mr-2.5">
+          <View className="-mr-3">
             <Icon icon={ChevronRight} size={18} tone="foreground-secondary" />
           </View>
         ) : (

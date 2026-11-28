@@ -62,7 +62,7 @@
     "s0R3Detail": "The value in Settings; else 220 − your age. Zone 1 starts at 50% of it, then 60, 70, 80 and 90%.",
     "s1Title": "How it is weighted",
     "s1P0": "Each second of heart rate earns units by its zone, rising smoothly across the zone: the harder your heart works, the faster units add up.",
-    "s1R0Term": "Below Zone 1",
+    "s1R0Term": "Below zone 1",
     "s1R0Detail": "0 to 1 unit a second (workouts only)",
     "s1R1Term": "Zone 1",
     "s1R1Detail": "2 units a second",
@@ -107,7 +107,7 @@
     "s2R2Detail": "More strain than today’s Recovery suggests; expect it to show tomorrow.",
     "s3Title": "A worked example",
     "s3P0": "Take 14 days of past Strain, oldest first: 45, 50, 20, 55, 48, 40, 60, 47, 52, 25, 50, 45, 55, 50. Today's own Strain is left out. Folded day by day, the base comes to 47.9.",
-    "s3P1": "Today's Recovery is 72%, so the centre is 47.9 × 1.13 = 54.2. The range runs from 54.2 − 8.6 to 54.2 + 24.4: a target of 46 - 79%. With the same history and a Recovery of 30%, the centre drops to 42.2 and the target to 36 - 58%.",
+    "s3P1": "Today's Recovery is 72%, so the centre is 47.9 × 1.13 = 54.2. The range runs from 54.2 − 8.6 to 54.2 + 24.4: a target of 46 to 79%. With the same history and a Recovery of 30%, the centre drops to 42.2 and the target to 36 to 58%.",
     "s4Title": "Limits",
     "s4P0": "With fewer than 14 days of Strain the base folds what there is, so the first weeks read as an estimate. The target does not know your training plan, races or injuries. It is a guide, not a prescription."
   },
@@ -414,7 +414,7 @@
     "s2R1Detail": "You are carrying fatigue from recent training.",
     "s3Title": "A worked example",
     "s3P0": "Take 14 days of daily load: 30, 45, 0, 50, 40, 35, 55, then 45, 60, 0, 50, 55, 40, 65. The zeros are rest days.",
-    "s3P1": "Fatigue moves a quarter of the way to each day's load, so it ends at 47.0 after the 65 on day 14. Fitness moves 2/43 of the way, so it has only reached 20.4. Form is Fitness minus Fatigue: 20.4 - 47.0 = -26.6.",
+    "s3P1": "Fatigue moves a quarter of the way to each day's load, so it ends at 47.0 after the 65 on day 14. Fitness moves 2/43 of the way, so it has only reached 20.4. Form is Fitness minus Fatigue: 20.4 − 47.0 = −26.6.",
     "s3P2": "A negative Form means recent load is heavier than the longer-term average. Fitness only settles after several weeks, so read the first few weeks as a rough guide.",
     "s4Title": "Limits",
     "s4P0": "Heart rate is its only input, so load that barely raises heart rate is missed. Until you have trained regularly for a few weeks the status shows as calibrating."

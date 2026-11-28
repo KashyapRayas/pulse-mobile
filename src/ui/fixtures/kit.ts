@@ -85,9 +85,9 @@ export const sleepRows = [
 ] satisfies { key: string; label: string; metric: Metric<number>; status: SleepStatus }[]
 
 export const vitals = [
-  { key: "rr", label: "Respiratory rate", metric: ok(16.8), unit: "rpm", format: "decimal1", chip: { tone: "optimal", text: "within 16.1 - 16.9" } },
-  { key: "spo2", label: "Blood oxygen", metric: ok(92), unit: "%", format: "int", chip: { tone: "warning", text: "below 95 - 100" } },
-  { key: "rhr", label: "Resting heart rate", metric: ok(58, { provisional: true }), unit: "bpm", format: "int", chip: { tone: "alert", text: "above 50 - 54" } },
+  { key: "rr", label: "Respiratory rate", metric: ok(16.8), unit: "rpm", format: "decimal1", chip: { tone: "optimal", text: "Within 16.1\u00a0to\u00a016.9" } },
+  { key: "spo2", label: "Blood oxygen", metric: ok(92), unit: "%", format: "int", chip: { tone: "warning", text: "Below 95\u00a0to\u00a0100" } },
+  { key: "rhr", label: "Resting heart rate", metric: ok(58, { provisional: true }), unit: "bpm", format: "int", chip: { tone: "alert", text: "Above 50\u00a0to\u00a054" } },
   { key: "hrv", label: "Heart rate variability", metric: why<number>("no_hrv_last_night"), unit: "ms", format: "int" },
   { key: "temp", label: "Skin temperature", metric: ok(-0.6), unit: "°C", format: "signed1", chip: { tone: "neutral", text: "low < −0.4" } },
 ] satisfies Keyed<Omit<KeyStatRowProps, "variant" | "direction">>[]

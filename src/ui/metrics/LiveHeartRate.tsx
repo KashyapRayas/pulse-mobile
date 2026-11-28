@@ -63,11 +63,11 @@ export function LivePill({ name, lost = false, className }: { name: string | nul
     <View
       accessible
       accessibilityLabel={lost ? t("live.reconnectingAria") : name ? t("live.liveFrom", { name }) : t("live.liveFromBand")}
-      className={cn("h-6 max-w-full flex-row items-center gap-1.5 self-start rounded-full px-2.5", className)}
+      className={cn("h-6 max-w-full flex-row items-center gap-1.5 self-start rounded-full px-3", className)}
       style={{ backgroundColor: alpha(tint, 0.14) }}
     >
       <View className="size-1.5 rounded-full" style={{ backgroundColor: tint }} />
-      <Text numberOfLines={1} className="shrink text-xs font-bold uppercase leading-4 tracking-[0.1em]" style={{ color: tint }}>
+      <Text numberOfLines={1} className="shrink text-caption font-medium tracking-normal" style={{ color: tint }}>
         {lost ? t("live.reconnecting") : t("live.pill", { name: name ?? t("live.band") })}
       </Text>
     </View>
@@ -99,7 +99,7 @@ export function GoLiveButton({ status, onPress, disabled, className }: { status:
   return (
     <Button onPress={onPress} disabled={disabled} className={className} accessibilityLabel={t("live.buttonAria", { label })}>
       {busy ? <ActivityIndicator size="small" color={c["primary-foreground"]} /> : <Icon icon={Bluetooth} size={16} tone="primary-foreground" strokeWidth={2.25} />}
-      <Text className="text-[13px] font-bold uppercase tracking-[0.1em] text-primary-foreground">{label}</Text>
+      <Text className="text-meta font-medium tracking-normal text-primary-foreground">{label}</Text>
     </Button>
   );
 }
@@ -110,7 +110,7 @@ export function StopLiveButton({ onPress, className }: { onPress: () => void; cl
   return (
     <Button variant="outline" haptic onPress={onPress} className={className} accessibilityLabel={t("live.stopAria")}>
       <Icon icon={Square} size={12} tone="recovery-red-text" strokeWidth={2} />
-      <Text className="text-[13px] font-bold uppercase tracking-[0.1em] text-recovery-red-text">{t("live.stop")}</Text>
+      <Text className="text-meta font-medium tracking-normal text-recovery-red-text">{t("live.stop")}</Text>
     </Button>
   );
 }

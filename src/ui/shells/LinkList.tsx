@@ -10,6 +10,7 @@ import { SkeletonText } from "../Skeleton";
 import { Text } from "../Text";
 import { push } from "../navigate";
 import { Press } from "../Press";
+import { TYPE } from "../type";
 
 export type LinkListRow = {
   label: string;
@@ -26,42 +27,46 @@ export type LinkListRow = {
 /** List-like pages (More, Settings): one centred column. */
 export const MORE_COLUMN = "w-full gap-6";
 
-/** The reference app's section label over a group of rows (spec §11 F22): 13 px caps, tracking 0.1em. */
-export const GROUP_LABEL = "px-1 text-[13px] font-bold uppercase leading-4 tracking-[0.1em] text-foreground-body";
-const ROW = "min-h-14 flex-row items-center gap-3 px-4 py-2";
-const ROW_LABEL = "text-xs font-bold uppercase leading-4 tracking-[0.1em]";
+/** The label over a group of rows (TYPE.group), as Linear's "Favorites" and "Teams". */
+export const GROUP_LABEL = `px-1 ${TYPE.group}`;
+const ROW = "min-h-14 flex-row items-center gap-3 px-4 py-3";
+/** The hairline between two rows starts where the row's text does: after the icon when the group has icons (Linear's inset list). */
+const Rule = ({ inset }: { inset: boolean }) => <View className={cn("h-px bg-border", inset ? "ml-[50px]" : "ml-4")} />;
 
 /**
- * The reference app's settings rows (spec §7.14 v2): a caps group label, then one 56 px card per row with an icon, a
- * caps label and a chevron. (The web's two-column layout from 1280 px is a laptop concern and is not ported.)
+ * A group of rows (More, Settings, How it works): the group label, then one card holding the rows, a hairline between
+ * each, as Linear's grouped lists. Each row: an icon, its title (TYPE.rowTitle), an optional second line, an aside and a
+ * chevron. (The web's two-column layout from 1280 px is a laptop concern and is not ported.)
  */
 export function LinkList({ title, rows, className }: { title: string; rows: LinkListRow[]; className?: string }) {
   const shadow = useCardStyle();
+  const inset = rows.some((r) => r.icon);
   return (
     <View accessibilityLabel={title} className={cn("min-w-0 gap-2", className)}>
       <Text accessibilityRole="header" className={GROUP_LABEL}>
         {title}
       </Text>
-      <View className="gap-2">
-        {rows.map((r) => (
-          <Press
-            activeScale={0.96}
-            key={r.href}
-            accessibilityRole="link"
-            accessibilityHint={r.external ? i18n.t("ui:linkList.external") : undefined}
-            onPress={() => (r.external ? Linking.openURL(r.href) : push(r.href))}
-            className={cn(CARD_CLASS, ROW)}
-            style={shadow}
-          >
-            <CardFill />
-            {r.icon && <Icon icon={r.icon} size={22} tone="foreground-secondary" strokeWidth={1.5} />}
-            <View className="min-w-0 flex-1">
-              <Text className={ROW_LABEL}>{r.label}</Text>
-              {!!r.description && <Text className="mt-0.5 text-[13px] leading-[18px] text-muted-foreground">{r.description}</Text>}
-            </View>
-            {typeof r.aside === "string" ? <Text className="shrink-0 font-numeric text-xs font-medium leading-4 tabular-nums text-muted-foreground">{r.aside}</Text> : r.aside}
-            <Icon icon={r.external ? ArrowUpRight : ChevronRight} size={20} tone="muted-foreground" />
-          </Press>
+      <View className={CARD_CLASS} style={shadow}>
+        <CardFill />
+        {rows.map((r, i) => (
+          <View key={r.href}>
+            {i > 0 && <Rule inset={inset} />}
+            <Press
+              activeBg="bg-fill-hover"
+              accessibilityRole="link"
+              accessibilityHint={r.external ? i18n.t("ui:linkList.external") : undefined}
+              onPress={() => (r.external ? Linking.openURL(r.href) : push(r.href))}
+              className={ROW}
+            >
+              {r.icon && <Icon icon={r.icon} size={22} tone="foreground-secondary" strokeWidth={1.5} />}
+              <View className="min-w-0 flex-1 gap-1">
+                <Text className={TYPE.rowTitle}>{r.label}</Text>
+                {!!r.description && <Text className={TYPE.rowSub}>{r.description}</Text>}
+              </View>
+              {typeof r.aside === "string" ? <Text className={cn("shrink-0", TYPE.rowAside)}>{r.aside}</Text> : r.aside}
+              <Icon icon={r.external ? ArrowUpRight : ChevronRight} size={20} tone="muted-foreground" />
+            </Press>
+          </View>
         ))}
       </View>
     </View>
@@ -71,19 +76,23 @@ export function LinkList({ title, rows, className }: { title: string; rows: Link
 /** Loading shape (spec §5.19): the real group label and row labels; only asides are bars. */
 export function LinkListSkeleton({ title, rows }: { title: string; rows: Omit<LinkListRow, "href" | "aside">[] }) {
   const shadow = useCardStyle();
+  const inset = rows.some((r) => r.icon);
   return (
     <View accessibilityElementsHidden className="min-w-0 gap-2">
       <Text className={GROUP_LABEL}>{title}</Text>
-      <View className="gap-2">
+      <View className={CARD_CLASS} style={shadow}>
+        <CardFill />
         {rows.map((r, i) => (
-          <View key={i} className={cn(CARD_CLASS, ROW)} style={shadow}>
-            <CardFill />
-            {r.icon && <Icon icon={r.icon} size={22} tone="foreground-secondary" strokeWidth={1.5} />}
-            <View className="min-w-0 flex-1">
-              {r.label ? <Text className={ROW_LABEL}>{r.label}</Text> : <SkeletonText className="w-28" />}
-              {!!r.description && <Text className="mt-0.5 text-[13px] leading-[18px] text-muted-foreground">{r.description}</Text>}
+          <View key={i}>
+            {i > 0 && <Rule inset={inset} />}
+            <View className={ROW}>
+              {r.icon && <Icon icon={r.icon} size={22} tone="foreground-secondary" strokeWidth={1.5} />}
+              <View className="min-w-0 flex-1 gap-1">
+                {r.label ? <Text className={TYPE.rowTitle}>{r.label}</Text> : <SkeletonText className="w-28" />}
+                {!!r.description && <Text className={TYPE.rowSub}>{r.description}</Text>}
+              </View>
+              <Icon icon={ChevronRight} size={20} tone="muted-foreground" />
             </View>
-            <Icon icon={ChevronRight} size={20} tone="muted-foreground" />
           </View>
         ))}
       </View>

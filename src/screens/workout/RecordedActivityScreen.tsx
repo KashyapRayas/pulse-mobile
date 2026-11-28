@@ -16,7 +16,6 @@ import { summarizeWorkout, type RecordedWorkout, type WorkoutSample } from "@/li
 import { clockDuration } from "@/live/sessions";
 import { cn } from "@/ui/cn";
 import { Icon } from "@/ui/Icon";
-import { Press } from "@/ui/Press";
 import { Text } from "@/ui/Text";
 import { IntradayHrChart } from "@/ui/charts/IntradayHrChart";
 import { ZoneBars } from "@/ui/charts/ZoneBars";
@@ -28,13 +27,14 @@ import { ACTIVITY_GLYPH, activityName } from "./activityKit";
 import { strainSetupOf, zoneRows } from "./LiveActivityScreen";
 import { ActivitySkeleton } from "../activity/ActivityScreen";
 import { ConfirmDialog } from "@/screens/settings/controls";
+import { HeaderButton } from "@/ui/shells/Header";
 
 /** How long a just-finished workout shows the activity page loading while it is saved and imported. */
 const IMPORT_WAIT_MS = 20_000;
 /** How long it waits for the save itself before showing the phone-only page. */
 const SAVE_WAIT_MS = 4_000;
 
-const STAT_LABEL = "text-xs leading-4 font-bold tracking-[0.1em] text-foreground-secondary uppercase";
+const STAT_LABEL = "text-caption font-medium tracking-normal text-foreground-secondary";
 
 export function RecordedActivityScreen() {
   const { t } = useTranslation("workouts");
@@ -97,25 +97,25 @@ export function RecordedActivityScreen() {
       titleIcon={<Icon icon={ACTIVITY_GLYPH[session.type]} size={24} tone="foreground" strokeWidth={1.75} />}
       backHref="/(tabs)"
       action={
-        <Press accessibilityRole="button" accessibilityLabel={t("detail.delete")} onPress={() => setAsking(true)} hitSlop={10} className="size-10 items-center justify-center">
-          <Icon icon={Trash2} size={22} tone="foreground" strokeWidth={1.75} />
-        </Press>
+        <HeaderButton accessibilityRole="button" accessibilityLabel={t("detail.delete")} onPress={() => setAsking(true)}>
+          <Icon icon={Trash2} size={20} tone="foreground" strokeWidth={1.75} />
+        </HeaderButton>
       }
       hero={
         <View className="w-full flex-row items-end gap-x-10">
           <View>
-            <Text className="font-numeric text-[34px] font-bold leading-none tabular-nums text-strain-text">{formatValue("pct", view.activityStrain)}</Text>
+            <Text className="font-numeric text-display font-bold leading-none tabular-nums text-strain-text">{formatValue("pct", view.activityStrain)}</Text>
             <Text className={cn(STAT_LABEL, "mt-2")}>{t("detail.activityStrain")}</Text>
           </View>
           <View>
-            <Text className="font-numeric text-[34px] font-bold leading-none tabular-nums text-foreground">{clockDuration(summary.activeMs)}</Text>
+            <Text className="font-numeric text-display font-bold leading-none tabular-nums text-foreground">{clockDuration(summary.activeMs)}</Text>
             <Text className={cn(STAT_LABEL, "mt-2")}>{t("detail.duration")}</Text>
           </View>
         </View>
       }
       primary={
         <View className="gap-6">
-          <Text className="text-[13px] leading-5 text-muted-foreground">{t(session.hcId ? "detail.importing" : "detail.phoneOnly")}</Text>
+          <Text className="text-meta text-muted-foreground">{t(session.hcId ? "detail.importing" : "detail.phoneOnly")}</Text>
           <IntradayHrChart variant="activity" data={{ value: hasHr ? { points: summary.trace } : null, reason: hasHr ? null : "no_data", provisional: false }} />
           <ZoneBars variant="rows" data={{ value: zoneRows(maxHr, view.zoneSeconds), reason: null, provisional: false }} note={t("detail.zoneNote", { maxHr })} />
         </View>

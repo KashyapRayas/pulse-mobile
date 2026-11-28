@@ -82,7 +82,7 @@ export function TimeZonePicker({ value, onChange, invalid, inputRef, compact }: 
       {open && (
         <View accessibilityLabel={t("zone.list")} className="overflow-hidden rounded-xl bg-field p-1" style={{ height: matches.length ? Math.min(LIST, matches.length * ROW + 8) : undefined }}>
           {matches.length === 0 ? (
-            <Text className="px-3 py-3 text-[15px] leading-5 text-muted-foreground">{t("zone.noMatch", { query })}</Text>
+            <Text className="px-3 py-3 text-body text-muted-foreground">{t("zone.noMatch", { query })}</Text>
           ) : (
             // A plain ScrollView, not a FlatList: a virtualized list may not nest inside the form's scroll view. About 420
             // rows at most, drawn only while the list is open. ponytail: move the list into its own sheet if opening it hitches.
@@ -108,11 +108,11 @@ export function TimeZonePicker({ value, onChange, invalid, inputRef, compact }: 
                     onPress={() => pick(z)}
                     className={cn("h-12 flex-row items-center gap-3 rounded-lg px-3", i === active ? "bg-fill-hover" : "bg-transparent")}
                   >
-                    <Text numberOfLines={1} className="min-w-0 flex-1 text-[15px] leading-5">
-                      <Text className={cn("text-[15px] leading-5 text-foreground", selected ? "font-semibold" : "font-medium")}>{z.city}</Text>
-                      <Text className="text-[15px] leading-5 text-muted-foreground"> · {z.region}</Text>
+                    <Text numberOfLines={1} className="min-w-0 flex-1 text-body">
+                      <Text className={cn("text-body text-foreground", selected ? "font-semibold" : "font-medium")}>{z.city}</Text>
+                      <Text className="text-body text-muted-foreground">, {z.region}</Text>
                     </Text>
-                    <Text className="shrink-0 font-numeric text-[13px] leading-[18px] tabular-nums text-foreground-secondary">{z.offset}</Text>
+                    <Text className="shrink-0 font-numeric text-meta tabular-nums text-foreground-secondary">{z.offset}</Text>
                     <View style={{ opacity: selected ? 1 : 0 }}>
                       <Icon icon={Check} size={16} tone="foreground" strokeWidth={2.25} />
                     </View>

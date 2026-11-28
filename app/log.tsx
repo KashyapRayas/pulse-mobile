@@ -52,6 +52,7 @@ export default function LogPage() {
     );
 
   const time = at ?? defaultAt(vm);
+  const untouched = JSON.stringify(form) === JSON.stringify(EMPTY[kind]);
   const now = wallNow(vm.timeZone);
 
   const send = async (input: LogInput, close = true) => {
@@ -81,7 +82,7 @@ export default function LogPage() {
   );
   const field = (k: string, label: string, hint: string | undefined, o: { mode: "numeric" | "decimal" | "text"; placeholder?: string; maxLength?: number; className?: string }) => (
     <Field key={k} label={label} hint={hint} className={o.className}>
-      <Input accessibilityLabel={label} inputMode={o.mode} placeholder={o.placeholder} maxLength={o.maxLength} value={form[k] as string} onChangeText={set(k)} className={o.mode === "text" ? "text-base" : "text-base tabular-nums"} returnKeyType="done" />
+      <Input accessibilityLabel={label} inputMode={o.mode} placeholder={o.placeholder} maxLength={o.maxLength} value={form[k] as string} onChangeText={set(k)} className={o.mode === "text" ? "text-body" : "text-body tabular-nums"} returnKeyType="done" />
     </Field>
   );
   const when = (children: React.ReactNode) => <Section title={t("logForm.when")}>{children}</Section>;
@@ -93,7 +94,8 @@ export default function LogPage() {
       footer={
         <>
           {!!error && <FormAlert>{error}</FormAlert>}
-          <Button onPress={save} disabled={saving}>
+          {/* Nothing typed yet: nothing to save (the quick adds above save on their own). Typed but invalid: Save says why. */}
+          <Button onPress={save} disabled={saving || untouched}>
             {saving ? t("logForm.saving") : t("actions.save", { ns: "common" })}
           </Button>
         </>
@@ -107,7 +109,7 @@ export default function LogPage() {
                   {waterSteps().map((step) => (
                     <Button key={step} variant="secondary" disabled={saving} className="h-14 flex-1 gap-2" onPress={() => void send({ kind: "water", ml: Math.round(water.stored(step)), at: time }, false)}>
                       <Icon icon={Droplet} size={20} strokeWidth={1.75} tone="secondary-foreground" />
-                      <Text className="text-[15px] font-bold uppercase tracking-[0.1em] text-secondary-foreground">+{step} {water.unit}</Text>
+                      <Text className="text-body font-medium tracking-normal text-secondary-foreground">+{step} {water.unit}</Text>
                     </Button>
                   ))}
                 </View>

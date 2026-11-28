@@ -40,7 +40,7 @@ function MacroRing({ share, color, children }: { share: number | null; color: Da
         <Path d={arcPath(D / 2, D / 2, r, ARC_FROM, ARC_FROM + ARC_SWEEP)} stroke={c["dial-track"]} strokeWidth={STROKE} fill="none" />
         {!!share && <Path d={arcPath(D / 2, D / 2, r, ARC_FROM, ARC_FROM + ARC_SWEEP * ringShare(share, 1))} stroke={css(DATA_COLORS[color].css)} strokeWidth={STROKE} fill="none" />}
       </Svg>
-      <Text className={cn("font-numeric text-[17px] font-bold leading-5 tabular-nums", share === null && "text-muted-foreground")}>{children}</Text>
+      <Text className={cn("font-numeric text-heading font-bold tabular-nums", share === null && "text-muted-foreground")}>{children}</Text>
     </View>
   );
 }
@@ -63,7 +63,7 @@ export function Today({ vm }: { vm: NutritionVM }) {
         </View>
         <View className="items-center gap-1">
           <Text className={LABEL}>{t.kcal === null ? tr("today.nothing") : tr("today.soFar")}</Text>
-          <Text className="text-sm font-medium leading-5 text-muted-foreground">{tr("today.ofTarget", { target: grouped(kcal) })}</Text>
+          <Text className="text-meta font-medium text-muted-foreground">{tr("today.ofTarget", { target: grouped(kcal) })}</Text>
           <Text className={cn(CAPTION, "text-center")}>{left > 0 ? tr("today.left", { kcal: grouped(left) }) : left < 0 ? tr("today.over", { kcal: grouped(-left) }) : tr("today.reached")}</Text>
         </View>
       </View>
@@ -79,7 +79,7 @@ export function Today({ vm }: { vm: NutritionVM }) {
               <MacroRing share={progressOf(t[key], targets[key].value)} color={color}>
                 {show(t[key], grams)}
               </MacroRing>
-              <Text className={cn(LABEL, "text-[10px] leading-3")} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>
+              <Text className={cn(LABEL, "text-label")} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>
                 {tr(`target.${key}`)}
               </Text>
               <Text className={cn(CAPTION, "tabular-nums")}>{tr("today.macroOf", { target: grams(targets[key].value) }).trim()}</Text>

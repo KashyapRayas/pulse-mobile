@@ -61,7 +61,7 @@ describe("getTrendView", () => {
     expect(back.to).toBe(dayAt(120));
     expect(now.prior).toBeCloseTo(back.value!, 6);
     expect(now.typical![0]).toBeLessThan(now.typical![1]);
-    expect(now.period).toMatch(/^\w{3} \d+ - \w{3} \d+, \d{2}$/);
+    expect(now.period).toMatch(/^\w{3} \d+ to \w{3} \d+, \d{2}$/);
   });
 
   it("6M has month segments; weekly metrics total by week", async () => {

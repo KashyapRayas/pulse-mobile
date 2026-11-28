@@ -1,7 +1,7 @@
 {
   "title": "Home",
   "sync": {
-    "progress": "Sincronizzazione · {{percent}}%",
+    "progress": "Sincronizzazione, {{percent}}%",
     "syncing": "Sincronizzazione…"
   },
   "noBand": {
@@ -92,7 +92,7 @@
     "wokeAt": "Sveglio alle <t>{{time}}</t> con <t>{{level}}%</t>",
     "charged": "Ricarica",
     "drained": "Consumo",
-    "drainAt": "{{label}} alle <t>{{time}}</t> · <t>{{amount}}</t>"
+    "drainAt": "{{label}} alle <t>{{time}}</t>, <t>{{amount}}</t>"
   },
   "heartRate": {
     "title": "Frequenza cardiaca",
@@ -150,11 +150,11 @@
     "highStress": "Hai passato {{duration}} in stress elevato."
   },
   "edit": {
-    "customizeLabel": "Personalizza la mia dashboard",
-    "customize": "Personalizza",
-    "pageTitle": "Personalizza la dashboard",
-    "success": "Fatto",
-    "saved": "Le tue preferenze sono state salvate.",
+    "customizeLabel": "Modifica La mia dashboard",
+    "customize": "Modifica",
+    "pageTitle": "Modifica La mia dashboard",
+    "success": "Salvato",
+    "saved": "La mia dashboard ora mostra queste metriche.",
     "saveFailed": "Impossibile salvare la tua dashboard. Riprova.",
     "saving": "Salvataggio…",
     "myDashboard": "La mia dashboard",
@@ -175,5 +175,169 @@
     "moved": "{{label}} spostato alla posizione {{position}} di {{total}}",
     "removed": "{{label}} rimosso dalla Home",
     "added": "{{label}} aggiunto alla posizione {{position}}"
+  },
+  "review": {
+    "headline": {
+      "target": "Strain Target da {{low}} a {{high}}%",
+      "plan": "Il tuo piano per oggi",
+      "red": "Recupero basso. Tieni la giornata leggera",
+      "yellow": "Recupero medio. Allenati con cautela",
+      "shortSleep": "Poco sonno. Vai con calma",
+      "green": "Ben recuperato. Pronto per una giornata dura",
+      "past": "Hai superato il tuo Strain Target",
+      "inTarget": "Sei rientrato nel tuo Strain Target",
+      "lighter": "Una giornata più leggera del tuo obiettivo",
+      "strain": "Day Strain {{value}}%",
+      "recovery": "Recovery {{value}}%",
+      "day": "La tua giornata"
+    },
+    "score": {
+      "sleep": "Sonno",
+      "recovery": "Recovery",
+      "strain": "Strain"
+    },
+    "noData": "nessun dato",
+    "openHint": "Apre la sintesi completa della giornata",
+    "noAverage": "Ancora nessuna media a 7 giorni",
+    "nearAverage": "Vicino alla tua media a 7 giorni",
+    "aboveAverage": "{{amount}} sopra la tua media a 7 giorni",
+    "belowAverage": "{{amount}} sotto la tua media a 7 giorni",
+    "strain": "Strain",
+    "strainSoFar": "Strain finora",
+    "ofTarget": "su <t>{{low}}</t> a <t>{{high}}%</t>",
+    "target": {
+      "above": "Sopra l’obiettivo",
+      "in": "Nell’obiettivo",
+      "below": "Sotto l’obiettivo"
+    },
+    "drivers": "Cosa ha mosso la Recovery",
+    "driverSpoken": "{{label}}, {{points}}",
+    "stress": "Stress",
+    "stressLevels": "Tempo per livello (ore)",
+    "started": "Inizio",
+    "nowAt": "Ora al <t>{{level}}%</t>",
+    "endedAt": "Giornata chiusa al <t>{{level}}%</t>",
+    "lastNight": "Stanotte",
+    "nightBefore": "La notte prima",
+    "sleepOf": "<b>{{asleep}}</b> su <t>{{need}}</t> necessarie",
+    "bedWake": "{{bed}} alle {{wake}}",
+    "short": "<t>{{short}}</t> sotto il tuo fabbisogno.",
+    "metNeed": "Hai coperto il tuo fabbisogno di sonno.",
+    "debt": "Debito di sonno <t>{{debt}}</t>.",
+    "stages": "Fasi (ore)",
+    "open": "Apri {{name}}",
+    "nothing": "In questo giorno non è stato misurato nulla."
+  },
+  "search": {
+    "open": "Cerca metriche",
+    "title": "Cerca",
+    "placeholder": "Cerca metriche e pagine",
+    "label": "Cerca metriche e pagine",
+    "clear": "Cancella ricerca",
+    "tabs": {
+      "all": "Tutto",
+      "commands": "Pagine e azioni"
+    },
+    "recent": "Recenti",
+    "offUsual": "Fuori dal solito oggi",
+    "offUsualDay": "Fuori dal solito quel giorno",
+    "metrics": "Metriche",
+    "pages": "Pagine",
+    "actions": "Azioni",
+    "noData": "Nessun dato",
+    "noMatch": "Nessun risultato per «{{query}}».",
+    "hint": "Qui compaiono le metriche che apri, insieme a quelle più lontane dal solito.",
+    "valueSpoken": "{{label}}, {{value}}",
+    "noDataSpoken": "{{label}}, nessun dato",
+    "page": {
+      "home": "Home",
+      "recovery": "Recovery",
+      "sleep": "Sonno",
+      "strain": "Strain",
+      "health": "Salute",
+      "pulseAge": "Pulse Age",
+      "monitor": "Health Monitor",
+      "stress": "Stress Monitor",
+      "fitness": "Forma fisica",
+      "heartRate": "Frequenza cardiaca",
+      "journal": "Diario",
+      "insights": "Approfondimenti sulle abitudini",
+      "trends": "Tendenze",
+      "reports": "Report",
+      "activities": "Attività",
+      "coach": "Coach",
+      "settings": "Impostazioni",
+      "checkIn": "Registra",
+      "customize": "Personalizza la Home",
+      "review": "Sintesi della giornata"
+    }
+  },
+  "customize": {
+    "open": "Personalizza la Home",
+    "title": "Personalizza la Home",
+    "intro": "I tuoi punteggi restano sempre in cima. Spegni ciò che non usi e metti il resto nell’ordine in cui lo leggi.",
+    "area": {
+      "top": "Sotto gli indicatori",
+      "day": "La mia giornata",
+      "side": "Dashboard"
+    },
+    "section": {
+      "heartRate": {
+        "label": "Frequenza cardiaca",
+        "hint": "La lettura in diretta o l’ultima di oggi"
+      },
+      "monitors": {
+        "label": "Health Monitor e Stress Monitor",
+        "hint": "Le due schede sotto gli indicatori, o i conteggi del telefono"
+      },
+      "coach": {
+        "label": "Schede del Coach",
+        "hint": "Le note di oggi su sforzo, recupero e sonno"
+      },
+      "day": {
+        "label": "Previsioni e sintesi della giornata",
+        "hint": "Piano al mattino, riepilogo la sera"
+      },
+      "activities": {
+        "label": "Attività",
+        "hint": "Allenamenti, sonno e pisolini"
+      },
+      "tonight": {
+        "label": "Il sonno di stanotte",
+        "hint": "Ora di dormire dal Sleep Planner"
+      },
+      "journal": {
+        "label": "Il mio diario",
+        "hint": "Le registrazioni di questa settimana"
+      },
+      "energy": {
+        "label": "Energy Bank",
+        "hint": "Carica e consumo durante il giorno"
+      },
+      "dashboard": {
+        "label": "La mia dashboard",
+        "hint": "Le metriche che hai scelto"
+      },
+      "strainRecovery": {
+        "label": "Grafico Strain e recupero",
+        "hint": "Gli ultimi 7 giorni"
+      },
+      "week": {
+        "label": "Sintesi della settimana",
+        "hint": "Link all’ultimo report settimanale"
+      }
+    },
+    "show": "Mostra {{label}}",
+    "moveUp": "Sposta su {{label}}",
+    "moveDown": "Sposta giù {{label}}",
+    "shown": "{{label}} visibile",
+    "hidden": "{{label}} nascosto",
+    "moved": "{{label}} in posizione {{position}} di {{total}}",
+    "saving": "Salvataggio",
+    "reset": "Ripristina predefinito",
+    "savedTitle": "Salvato",
+    "savedBody": "La Home ora mostra la tua disposizione.",
+    "saveFailed": "Impossibile salvare la disposizione della Home. Riprova.",
+    "onlyScores": "La Home mostrerà solo i tuoi punteggi."
   }
 }

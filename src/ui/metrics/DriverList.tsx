@@ -59,7 +59,7 @@ function sentence(i: DriverItem, variant: DriverListProps["variant"], unit: Driv
 function Header({ variant, unit, provisional }: { variant: DriverListProps["variant"]; unit: DriverListProps["unit"]; provisional: boolean }) {
   const { t } = useTranslation("ui");
   const [left, mid, right] = variant === "recovery" ? [t("driver.lowered"), t("driver.points"), t("driver.raised")] : [t("driver.hurts"), unit === "SD" ? t("driver.impactSd") : t("driver.impactPct"), t("driver.helps")];
-  const cap = "text-xs font-bold uppercase leading-4 tracking-[0.1em]";
+  const cap = "text-caption font-medium tracking-normal";
   return (
     <View accessibilityElementsHidden className="mb-2 flex-row items-center justify-between gap-2">
       <View className="flex-1 flex-row items-center gap-2">
@@ -88,7 +88,7 @@ function Item({ i, max, p }: { i: DriverItem; max: number; p: DriverListProps })
   const shadow = useCardStyle();
   const { c } = useTheme();
   const impact = p.variant === "impact";
-  const value = <Text className={cn("shrink-0 font-numeric text-base font-bold tabular-nums", e === "positive" ? "text-optimal-text" : e === "negative" ? "text-warning-text" : "text-foreground-secondary")}>{fmt(i.delta, p.unit)}</Text>;
+  const value = <Text className={cn("shrink-0 font-numeric text-body font-bold tabular-nums", e === "positive" ? "text-optimal-text" : e === "negative" ? "text-warning-text" : "text-foreground-secondary")}>{fmt(i.delta, p.unit)}</Text>;
   const track = (
     <Hatch className={cn("h-2", BAR_CORNERS, impact && "flex-1")}>
       {i.delta !== 0 && <View className={cn("absolute inset-y-0", BAR_CORNERS, i.delta > 0 ? "left-1/2" : "right-1/2", e === "positive" ? "bg-optimal" : e === "negative" ? "bg-warning" : "bg-muted-foreground")} style={{ width: `${(Math.abs(i.delta) / (max || 1)) * 50}%` }} />}
@@ -100,12 +100,12 @@ function Item({ i, max, p }: { i: DriverItem; max: number; p: DriverListProps })
       {impact ? (
         // The reference app's behaviour rows: the name in sentence case with a chevron, the % at the track's end (spec §11 F17).
         <View className="flex-row items-center justify-between gap-3">
-          <Text className="min-w-0 flex-1 text-[15px] font-medium leading-5">{i.label}</Text>
+          <Text className="min-w-0 flex-1 text-body font-medium">{i.label}</Text>
           {p.onSelect && <Icon icon={ChevronRight} size={20} tone="foreground-secondary" />}
         </View>
       ) : (
         <View className="flex-row items-baseline justify-between gap-3">
-          <Text className="min-w-0 flex-1 text-xs font-bold uppercase leading-4 tracking-[0.1em]">{i.label}</Text>
+          <Text className="min-w-0 flex-1 text-caption font-medium tracking-normal">{i.label}</Text>
           {value}
         </View>
       )}
@@ -118,7 +118,7 @@ function Item({ i, max, p }: { i: DriverItem; max: number; p: DriverListProps })
         track
       )}
       {impact && i.yes !== undefined && i.no !== undefined && (
-        <Text className="text-xs font-medium leading-4 tabular-nums text-muted-foreground">
+        <Text className="text-caption font-medium tabular-nums text-muted-foreground">
           {i.ci
             ? t("driver.evidenceCi", { yes: i.yes, no: i.no, low: fmt(i.ci[0], p.unit).replace(/^\+/, ""), high: fmt(i.ci[1], p.unit).replace(/^\+/, "") })
             : t("driver.evidence", { yes: i.yes, no: i.no })}

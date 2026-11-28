@@ -7,11 +7,12 @@ import { Icon } from "@/ui/Icon";
 import { Text } from "@/ui/Text";
 import { push } from "@/ui/navigate";
 import { Press } from "@/ui/Press";
+import { LineIcon } from "@/ui/LineIcon";
 
 export function CardButton({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Press activeScale={0.96} accessibilityRole="link" onPress={() => push(href)} className={CARD_BUTTON}>
-      <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em]">{children}</Text>
+      <Text className="text-meta font-medium tracking-normal">{children}</Text>
     </Press>
   );
 }
@@ -19,9 +20,9 @@ export function CardButton({ href, children }: { href: string; children: ReactNo
 /** "View trend →": the web's hit area reaches 14 px above and below. */
 export function TextLink({ href, children }: { href: string; children: string }) {
   return (
-    <Pressable accessibilityRole="link" onPress={() => push(href)} hitSlop={{ top: 14, bottom: 14, left: 4, right: 4 }} className="flex-row items-center gap-1.5 self-start">
-      <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-coach-text">{children}</Text>
-      <Icon icon={ArrowRight} size={14} tone="coach-text" strokeWidth={2} />
+    <Pressable accessibilityRole="link" onPress={() => push(href)} hitSlop={{ top: 14, bottom: 14, left: 4, right: 4 }} className="flex-row items-start gap-1.5 self-start">
+      <Text className="text-caption font-medium tracking-normal text-coach-text">{children}</Text>
+      <LineIcon step="caption"><Icon icon={ArrowRight} size={14} tone="coach-text" strokeWidth={2} /></LineIcon>
     </Pressable>
   );
 }

@@ -1,4 +1,5 @@
 // Home `/` (spec §7.1). Ported from Pulse's src/server/queries/home.ts.
+import { valueRange } from "@/lib/format";
 import { i18n } from "@/i18n/config";
 import { inUnits, shownValue } from "@/lib/units";
 import { addDays, localMinutes } from "@/lib/time";
@@ -165,7 +166,7 @@ type DayScores = { recovery: Metric<number>; strain: Metric<number>; target: [nu
 export function outlookOf(ctx: QueryCtx, row: DayRow | undefined, s: DayScores, isToday: boolean): HomeVM["outlook"] {
   const review = !isToday || localMinutes(ctx.now, ctx.timeZone) >= REVIEW_FROM_MIN;
   const rec = s.recovery.value;
-  const target = s.target ? `${Math.round(s.target[0])} - ${pct(s.target[1])}` : null;
+  const target = s.target ? valueRange(Math.round(s.target[0]), pct(s.target[1])) : null;
   const parts: string[] = [];
   if (!review) {
     if (rec != null) parts.push(i18n.t("home:outlook.recovery", { value: Math.round(rec), band: i18n.t(`home:outlook.band.${recoveryBand(rec)}`) }));

@@ -95,7 +95,7 @@
     "tooShortBody": "An activity needs at least 2 minutes to be saved. Keep recording, or discard this one.",
     "open": "{{name}} recording. Open the live screen",
     "pausedBar": "{{name}} paused",
-    "pausedName": "{{name}} · paused",
+    "pausedName": "{{name}}, paused",
     "pausedDial": "Paused",
     "strainSoFar": "Activity strain {{strain}}% so far"
   },
@@ -113,5 +113,58 @@
     "deleting": "Deleting…",
     "importing": "Saved to Health Connect and Google Health. The full activity opens here once Pulse imports it on the next sync.",
     "phoneOnly": "Kept on this phone only: Pulse needs permission to write workouts to Health Connect to save it to Google Health."
+  },
+  "log": {
+    "title": "Log activity",
+    "description": "Saved to Health Connect, so Google Health shows it too.",
+    "activity": "Activity",
+    "when": "When",
+    "start": "Start",
+    "duration": "Duration",
+    "minutesHint": "(min)",
+    "details": "Details",
+    "name": "Name",
+    "optional": "(optional)",
+    "strainNote": "Strain and heart-rate zones come from your band's heart rate during this time. Without the band on, the activity shows no Strain.",
+    "demo": "Sample data is on. Connect Health Connect in Settings to log your own activities.",
+    "saving": "Saving…",
+    "saved": "Activity saved",
+    "saveAnyway": "Save anyway",
+    "overlapTitle": "Already recorded?",
+    "overlapBody": "{{name}} from {{start}} to {{end}} is already in your activities. Save this one as well?",
+    "types": {
+      "walk": "Walking",
+      "run": "Running",
+      "cycle": "Cycling",
+      "strength": "Strength",
+      "hiit": "HIIT",
+      "weights": "Weightlifting",
+      "yoga": "Yoga",
+      "pilates": "Pilates",
+      "swim": "Swimming",
+      "hike": "Hiking",
+      "row": "Rowing",
+      "elliptical": "Elliptical",
+      "stairs": "Stair climbing",
+      "tennis": "Tennis",
+      "soccer": "Football (soccer)",
+      "dance": "Dancing",
+      "climb": "Climbing",
+      "other": "Other workout"
+    },
+    "problems": {
+      "type": "Choose an activity.",
+      "start": "Choose when it started.",
+      "minutes": "Enter the duration in whole minutes.",
+      "short": "An activity needs at least 2 minutes.",
+      "long": "An activity can last at most 24 hours.",
+      "future": "It ends in the future. Log it once it's over.",
+      "old": "Pulse keeps the last 180 days. Choose a later day."
+    },
+    "errors": {
+      "healthPermission": "Allow Pulse to write exercise in Health Connect to save this activity.",
+      "healthUnavailable": "Health Connect isn't available. Open Health Connect, then try again.",
+      "failed": "The activity could not be saved. Try again."
+    }
   }
 }

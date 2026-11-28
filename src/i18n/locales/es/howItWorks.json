@@ -107,7 +107,7 @@
     "s2R2Detail": "Más Strain del que sugiere el Recovery de hoy; espera notarlo mañana.",
     "s3Title": "Un ejemplo resuelto",
     "s3P0": "Toma 14 días de Strain pasado, del más antiguo al más reciente: 45, 50, 20, 55, 48, 40, 60, 47, 52, 25, 50, 45, 55, 50. El Strain de hoy no se incluye. Combinados día a día, la base llega a 47.9.",
-    "s3P1": "El Recovery de hoy es 72%, así que el centro es 47.9 × 1.13 = 54.2. El rango va de 54.2 − 8.6 a 54.2 + 24.4: un objetivo de 46 - 79%. Con el mismo historial y un Recovery de 30%, el centro baja a 42.2 y el objetivo a 36 - 58%.",
+    "s3P1": "El Recovery de hoy es 72%, así que el centro es 47.9 × 1.13 = 54.2. El rango va de 54.2 − 8.6 a 54.2 + 24.4: un objetivo de 46 a 79%. Con el mismo historial y un Recovery de 30%, el centro baja a 42.2 y el objetivo a 36 a 58%.",
     "s4Title": "Límites",
     "s4P0": "Con menos de 14 días de Strain, la base combina lo que hay, así que las primeras semanas son una estimación. El objetivo no conoce tu plan de entrenamiento, tus competencias ni tus lesiones. Es una guía, no una prescripción."
   },
@@ -414,7 +414,7 @@
     "s2R1Detail": "Arrastras fatiga del entrenamiento reciente.",
     "s3Title": "Un ejemplo resuelto",
     "s3P0": "Toma 14 días de carga diaria: 30, 45, 0, 50, 40, 35, 55, luego 45, 60, 0, 50, 55, 40, 65. Los ceros son días de descanso.",
-    "s3P1": "La Fatiga avanza un cuarto del camino hacia la carga de cada día, así que termina en 47.0 tras el 65 del día 14. La Condición avanza 2/43 del camino, así que apenas llegó a 20.4. La Forma es Condición menos Fatiga: 20.4 - 47.0 = -26.6.",
+    "s3P1": "La Fatiga avanza un cuarto del camino hacia la carga de cada día, así que termina en 47.0 tras el 65 del día 14. La Condición avanza 2/43 del camino, así que apenas llegó a 20.4. La Forma es Condición menos Fatiga: 20.4 a 47.0 = -26.6.",
     "s3P2": "Una Forma negativa significa que la carga reciente es mayor que el promedio a más largo plazo. La Condición solo se estabiliza tras varias semanas, así que toma las primeras semanas como una guía aproximada.",
     "s4Title": "Límites",
     "s4P0": "La frecuencia cardíaca es su único dato, así que la carga que apenas la sube no se capta. Hasta que entrenes con regularidad unas semanas, el estado aparece como calibrando."

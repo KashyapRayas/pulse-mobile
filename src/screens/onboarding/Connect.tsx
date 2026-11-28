@@ -67,10 +67,10 @@ export function ConnectFlow({ sample, onCancel }: { sample?: boolean; onCancel: 
         <View accessibilityLiveRegion="polite" className="items-center gap-5">
           <ActivityIndicator size="large" color={c["foreground-secondary"]} />
           <View className="items-center gap-2">
-            <Text accessibilityRole="header" className="text-center text-[22px] font-semibold leading-7 tracking-[-0.01em]">
+            <Text accessibilityRole="header" className="text-center text-title font-semibold leading-7 tracking-[-0.01em]">
               {t("connect.waitingTitle")}
             </Text>
-            <Text className="max-w-[300px] text-center text-[15px] leading-[22px] text-foreground-secondary">{t("connect.waitingBody")}</Text>
+            <Text className="max-w-[300px] text-center text-body text-foreground-secondary">{t("connect.waitingBody")}</Text>
           </View>
         </View>
       </Frame>
@@ -88,10 +88,10 @@ export function ConnectFlow({ sample, onCancel }: { sample?: boolean; onCancel: 
         }
       >
         <View className="items-center gap-2">
-          <Text accessibilityRole="header" className="text-center text-[22px] font-semibold leading-7 tracking-[-0.01em]">
+          <Text accessibilityRole="header" className="text-center text-title font-semibold leading-7 tracking-[-0.01em]">
             {t("connect.refusedTitle")}
           </Text>
-          <Text className="max-w-[300px] text-center text-[15px] leading-[22px] text-foreground-secondary">
+          <Text className="max-w-[300px] text-center text-body text-foreground-secondary">
             {t("connect.refusedBody")}
           </Text>
         </View>
@@ -103,7 +103,7 @@ export function ConnectFlow({ sample, onCancel }: { sample?: boolean; onCancel: 
       footer={
         <>
           {!!(error ?? unavailable) && (
-            <Text accessibilityRole="alert" className="mb-2 text-center text-[13px] font-medium leading-[18px] text-recovery-red-text">
+            <Text accessibilityRole="alert" className="mb-2 text-center text-meta font-medium text-recovery-red-text">
               {error ?? unavailable}
             </Text>
           )}
@@ -112,18 +112,18 @@ export function ConnectFlow({ sample, onCancel }: { sample?: boolean; onCancel: 
         </>
       }
     >
-      <Text accessibilityRole="header" className="text-[28px] font-bold leading-[34px] tracking-[-0.02em]">
+      <Text accessibilityRole="header" className="text-display font-bold leading-[34px] tracking-[-0.02em]">
         {t("connect.title")}
       </Text>
-      <Text className="mt-2 text-[15px] leading-[22px] text-foreground-secondary">
+      <Text className="mt-2 text-body text-foreground-secondary">
         {sample ? t("connect.introSample") : t("connect.intro")}
       </Text>
       <Card className="mt-6 px-4 py-1">
         <Divided>
           {READS.map((r) => (
-            <View key={r.key} className="min-h-12 flex-row items-center gap-3.5 py-2.5">
+            <View key={r.key} className="min-h-12 flex-row items-center gap-4 py-3">
               <Icon icon={r.icon} size={20} tone="foreground-secondary" />
-              <Text className="min-w-0 flex-1 text-[15px] font-medium leading-5">{t(`connect.${r.key}`)}</Text>
+              <Text className="min-w-0 flex-1 text-body font-medium">{t(`connect.${r.key}`)}</Text>
             </View>
           ))}
         </Divided>

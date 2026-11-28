@@ -184,8 +184,8 @@
   },
   "costCaption": {
     "notEnough": "Jeszcze za mało danych: {{have}} z {{needed}}",
-    "based": "{{bounce}} · {{sessions}}",
-    "early": "{{bounce}} · {{sessions}}, wstępne oszacowanie"
+    "based": "{{bounce}}, {{sessions}}",
+    "early": "{{bounce}}, {{sessions}}, wstępne oszacowanie"
   },
   "costSentence": {
     "needs": "Pulse potrzebuje {{needed}} z Recovery następnego ranka, aby zmierzyć, ile Cię kosztują; na razie ma {{have}}.",
@@ -218,8 +218,8 @@
   "detected": {
     "spoken": "Wykryta aktywność, prawdopodobnie {{label}}, średnie tętno {{hr}} bpm, {{start}} do {{end}}. To nie zapisany trening.",
     "title": "Wykryta",
-    "line": "{{label}} · śr. {{hr}} bpm",
-    "lineSteps": "{{label}} · śr. {{hr}} bpm · {{steps}} kroków",
+    "line": "{{label}}, śr. {{hr}} bpm",
+    "lineSteps": "{{label}}, śr. {{hr}} bpm, {{steps}} kroków",
     "note": "Wykryta aktywność: 12 minut lub więcej podwyższonego tętna bez zapisanego treningu, nazwana na podstawie Twoich kroków. Pokazana dla orientacji i nic nie dodaje do Twoich wyników."
   },
   "menu": {
@@ -290,7 +290,7 @@
   },
   "target": {
     "label": "Strain Target",
-    "range": "{{low}} - {{high}}",
+    "range": "{{low}}–{{high}}",
     "spoken": "Strain Target od {{low}} do {{high}}",
     "spokenReason": "Strain Target: {{reason}}"
   },
@@ -349,7 +349,7 @@
     "noHrBand": "Opaska nie była noszona, więc nie ma tętna, stref ani Strain dla tej aktywności.",
     "noHrData": "Za mało danych o tętnie, by pokazać tętno, strefy lub Strain dla tej aktywności.",
     "hrrNone": "Za mało danych o tętnie po treningu.",
-    "hrrNote": "Spadek w pierwszych 60 sekundach po zatrzymaniu się. Powyżej 20 jest typowe dla sprawnych dorosłych."
+    "hrrNote": "Największy spadek w ciągu 2 minut od zatrzymania. 22 bpm lub mniej to mało; powyżej 22 to typowo."
   },
   "live": {
     "title": "Trening na żywo",
@@ -379,11 +379,11 @@
     "belowZone1": "Poniżej Zone 1",
     "zone": "Zone {{zone}}",
     "waiting": "Czekam na uderzenie",
-    "zoneWithBand": "{{zone}} · dzisiejsze pasmo {{floor}}–{{ceiling}} bpm",
+    "zoneWithBand": "{{zone}}, dzisiejsze pasmo {{floor}}–{{ceiling}} bpm",
     "today": "Dziś",
     "readError": "Nie udało się odczytać dzisiejszych wyników.",
     "reading": "Odczyt dzisiejszych wyników…",
-    "targetLine": "Dzisiejszy cel to {{low}} - {{high}}.",
+    "targetLine": "Dzisiejszy cel to {{low}}–{{high}}.",
     "noTarget": "Dziś jeszcze brak Strain Target: wymaga dzisiejszego Recovery. Coach korzysta tylko z Twojego pasma tętna.",
     "recoveryLine": "Recovery {{value}}% ustala, jak mocno Coach pozwala Ci pracować.",
     "notSynced": "Dzisiejsze tętno jeszcze się nie zsynchronizowało, więc Day Strain zaczyna się od tego treningu.",
@@ -392,7 +392,7 @@
     "noHeartRate": "Na razie brak tętna",
     "workoutStrain": "Strain treningu",
     "time": "Czas",
-    "avgMax": "śr. {{avg}} · maks. {{max}}",
+    "avgMax": "śr. {{avg}}, maks. {{max}}",
     "verdictPast": "Powyżej dzisiejszego celu: postaw dziś na sen.",
     "verdictInside": "W dzisiejszym celu.",
     "verdictBelow": "{{value}} poniżej dzisiejszego celu.",
@@ -403,7 +403,7 @@
     "keptOnPhone": "Zapisane na tym telefonie; sam trening Fitbit synchronizuje z Twoimi wynikami.",
     "when": "{{day}}, {{time}}",
     "recentSpoken": "{{when}}: {{duration}}, Strain treningu {{value}} procent",
-    "recentLine": "{{duration}} · śr. {{bpm}} bpm",
+    "recentLine": "{{duration}}, śr. {{bpm}} bpm",
     "strain": "Strain"
   }
 }

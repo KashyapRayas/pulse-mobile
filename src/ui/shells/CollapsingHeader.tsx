@@ -24,8 +24,8 @@ function Stat({ stat, progress }: { stat?: HeaderStat; progress: DerivedValue<nu
   if (!stat) return <View className="flex-1" />;
   return (
     <Animated.View style={[style, { flex: 1, alignItems: "center", gap: 2 }]}>
-      <Text className={cn("font-numeric text-xl font-bold leading-6 tabular-nums", stat.tone === "optimal" ? "text-optimal-text" : stat.tone === "warning" ? "text-warning-text" : "text-foreground")}>{stat.value}</Text>
-      <Text className="text-center text-xs font-bold uppercase leading-4 tracking-[0.1em] text-muted-foreground">{stat.label}</Text>
+      <Text className={cn("font-numeric text-value font-bold leading-6 tabular-nums", stat.tone === "optimal" ? "text-optimal-text" : stat.tone === "warning" ? "text-warning-text" : "text-foreground")}>{stat.value}</Text>
+      <Text className="text-center text-caption font-medium tracking-normal text-muted-foreground">{stat.label}</Text>
     </Animated.View>
   );
 }

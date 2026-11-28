@@ -107,7 +107,7 @@
     "s2R2Detail": "Mehr Strain, als die heutige Recovery nahelegt; rechne damit, dass es sich morgen zeigt.",
     "s3Title": "Ein durchgerechnetes Beispiel",
     "s3P0": "Nimm 14 Tage vergangenen Strain, der älteste zuerst: 45, 50, 20, 55, 48, 40, 60, 47, 52, 25, 50, 45, 55, 50. Der heutige Strain bleibt außen vor. Tag für Tag verrechnet, ergibt die Basis 47,9.",
-    "s3P1": "Die heutige Recovery ist 72%, also ist das Zentrum 47,9 × 1,13 = 54,2. Der Bereich reicht von 54,2 − 8,6 bis 54,2 + 24,4: ein Ziel von 46 - 79%. Mit demselben Verlauf und einer Recovery von 30% sinkt das Zentrum auf 42,2 und das Ziel auf 36 - 58%.",
+    "s3P1": "Die heutige Recovery ist 72%, also ist das Zentrum 47,9 × 1,13 = 54,2. Der Bereich reicht von 54,2 − 8,6 bis 54,2 + 24,4: ein Ziel von 46 bis 79%. Mit demselben Verlauf und einer Recovery von 30% sinkt das Zentrum auf 42,2 und das Ziel auf 36 bis 58%.",
     "s4Title": "Grenzen",
     "s4P0": "Bei weniger als 14 Tagen Strain verrechnet die Basis, was da ist, daher gelten die ersten Wochen als Schätzung. Das Ziel kennt deinen Trainingsplan, Wettkämpfe oder Verletzungen nicht. Es ist eine Orientierung, keine Vorschrift."
   },
@@ -414,7 +414,7 @@
     "s2R1Detail": "Du trägst Ermüdung vom jüngsten Training mit dir.",
     "s3Title": "Ein durchgerechnetes Beispiel",
     "s3P0": "Nimm 14 Tage Tagesbelastung: 30, 45, 0, 50, 40, 35, 55, dann 45, 60, 0, 50, 55, 40, 65. Die Nullen sind Ruhetage.",
-    "s3P1": "Die Ermüdung bewegt sich ein Viertel des Wegs zur Belastung jedes Tages, endet also nach den 65 an Tag 14 bei 47,0. Die Fitness bewegt sich 2/43 des Wegs und hat erst 20,4 erreicht. Form ist Fitness minus Ermüdung: 20,4 - 47,0 = -26,6.",
+    "s3P1": "Die Ermüdung bewegt sich ein Viertel des Wegs zur Belastung jedes Tages, endet also nach den 65 an Tag 14 bei 47,0. Die Fitness bewegt sich 2/43 des Wegs und hat erst 20,4 erreicht. Form ist Fitness minus Ermüdung: 20,4 bis 47,0 = -26,6.",
     "s3P2": "Eine negative Form bedeutet, dass die jüngste Belastung schwerer ist als der längerfristige Durchschnitt. Die Fitness pendelt sich erst nach mehreren Wochen ein, sieh die ersten Wochen also als grobe Orientierung.",
     "s4Title": "Grenzen",
     "s4P0": "Die Herzfrequenz ist die einzige Eingabe, daher wird Belastung übersehen, die sie kaum erhöht. Bis du einige Wochen regelmäßig trainiert hast, zeigt der Status Kalibrierung."

@@ -50,7 +50,7 @@ function TrendPlot({ history }: { history: BloodPressurePoint[] }) {
   if (!pointsWithData.length) {
     return (
       <View className="h-28 items-center justify-center rounded-lg bg-secondary/30 px-4">
-        <Text className="text-center text-xs font-medium text-muted-foreground">
+        <Text className="text-center text-caption font-medium text-muted-foreground">
           {t("bloodPressure.noReadings30d")}
         </Text>
       </View>
@@ -131,13 +131,13 @@ function TrendPlot({ history }: { history: BloodPressurePoint[] }) {
             {/* Reference labels on the right gutter */}
             <Text
               style={{ position: "absolute", right: 2, top: y120 - 7 }}
-              className="text-[9px] font-semibold text-muted-foreground"
+              className="text-label font-semibold text-muted-foreground"
             >
               120
             </Text>
             <Text
               style={{ position: "absolute", right: 2, top: y80 - 7 }}
-              className="text-[9px] font-semibold text-muted-foreground"
+              className="text-label font-semibold text-muted-foreground"
             >
               80
             </Text>
@@ -186,12 +186,12 @@ export function BloodPressureCard({
       >
         <View className="flex-row items-center gap-2">
           <Icon icon={Stethoscope} size={20} tone="muted-foreground" strokeWidth={1.75} />
-          <Text className="text-xs font-bold uppercase tracking-[0.1em] text-foreground-secondary">
+          <Text className="text-caption font-medium tracking-normal text-foreground-secondary">
             {t("title.bloodPressure")}
           </Text>
         </View>
         <View className="flex-row items-center gap-1">
-          <Text className="text-xs font-medium text-muted-foreground">{t("bloodPressure.detail")}</Text>
+          <Text className="text-caption font-medium text-muted-foreground">{t("bloodPressure.detail")}</Text>
           <Icon icon={ChevronRight} size={16} tone="muted-foreground" />
         </View>
       </Press>
@@ -203,44 +203,44 @@ export function BloodPressureCard({
             <ValueUnit
               value={`${latest.systolic}/${latest.diastolic}`}
               unit={UNIT_MMHG}
-              className="font-numeric text-4xl font-bold leading-10 tracking-[-0.01em]"
-              unitClassName="text-sm font-medium leading-5 text-foreground-secondary"
+              className="font-numeric text-hero font-bold leading-10 tracking-[-0.01em]"
+              unitClassName="text-meta font-medium text-foreground-secondary"
             />
             {chip && (
-              <StatusChip tone={chip.tone} textClassName="text-xs font-bold">
+              <StatusChip tone={chip.tone} textClassName="text-caption font-bold">
                 {chip.text}
               </StatusChip>
             )}
           </View>
 
           {/* Reading metadata */}
-          <Text className="text-xs font-medium leading-4 text-muted-foreground">
+          <Text className="text-caption font-medium text-muted-foreground">
             {t("bloodPressure.readingMeta", {
               date: summary.isToday ? t("common:today") : formatDay(day, DAY.short),
               time: latest.time,
             })}
-            {latest.bodyPosition ? ` · ${latest.bodyPosition}` : ""}
-            {latest.measurementLocation ? ` · ${latest.measurementLocation}` : ""}
-            {summary.readings.length > 1 ? t("bloodPressure.readingsOnDay", { count: summary.readings.length }) : ` · ${t("bloodPressure.singleReading")}`}
+            {latest.bodyPosition ? `, ${latest.bodyPosition}` : ""}
+            {latest.measurementLocation ? `, ${latest.measurementLocation}` : ""}
+            {summary.readings.length > 1 ? t("bloodPressure.readingsOnDay", { count: summary.readings.length }) : `, ${t("bloodPressure.singleReading")}`}
           </Text>
         </View>
       ) : (
         <View className="gap-1.5 py-1">
           <View className="flex-row items-baseline justify-between">
-            <Text className="font-numeric text-3xl font-bold text-muted-foreground">--/--</Text>
+            <Text className="font-numeric text-display font-bold text-muted-foreground">--/--</Text>
             {summary.latestPrior ? (
-              <StatusChip tone="neutral" textClassName="text-xs">
+              <StatusChip tone="neutral" textClassName="text-caption">
                 {t("bloodPressure.prior", {
                   value: `${summary.latestPrior.systolic}/${summary.latestPrior.diastolic}`,
                 })}
               </StatusChip>
             ) : (
-              <StatusChip tone="neutral" textClassName="text-xs">
+              <StatusChip tone="neutral" textClassName="text-caption">
                 {t("bloodPressure.noData")}
               </StatusChip>
             )}
           </View>
-          <Text className="text-xs font-medium leading-4 text-muted-foreground">
+          <Text className="text-caption font-medium text-muted-foreground">
             {summary.latestPrior
               ? t("bloodPressure.noReadingWithPrior", {
                   date: formatDay(day, DAY.short),
@@ -255,19 +255,19 @@ export function BloodPressureCard({
       {/* 30-Day Trend Visualization */}
       <View className="gap-2">
         <View className="flex-row items-center justify-between">
-          <Text className="text-xs font-bold uppercase tracking-[0.08em] text-foreground-secondary">
+          <Text className="text-caption font-medium tracking-normal text-foreground-secondary">
             {t("title.trend30")}
           </Text>
           <View className="flex-row items-center gap-3">
             <View className="flex-row items-center gap-1">
               <View className="size-2 rounded-full bg-bp-systolic" />
-              <Text className="text-[10px] font-semibold text-muted-foreground">
+              <Text className="text-label font-semibold text-muted-foreground">
                 {t("bloodPressure.systolic")}
               </Text>
             </View>
             <View className="flex-row items-center gap-1">
               <View className="size-2 rounded-full bg-bp-diastolic" />
-              <Text className="text-[10px] font-semibold text-muted-foreground">
+              <Text className="text-label font-semibold text-muted-foreground">
                 {t("bloodPressure.diastolic")}
               </Text>
             </View>
@@ -279,33 +279,33 @@ export function BloodPressureCard({
 
       {/* 30-Day Category Distribution (when historical readings exist) */}
       {totalInWindow > 0 && (
-        <View className="gap-1.5 rounded-lg bg-secondary/30 p-2.5">
-          <Text className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+        <View className="gap-1.5 rounded-lg bg-secondary/30 p-3">
+          <Text className="text-label font-medium tracking-normal text-muted-foreground">
             {t("bloodPressure.breakdown", { count: totalInWindow })}
           </Text>
           <View className="flex-row flex-wrap gap-2 pt-1">
             {summary.distribution.normal > 0 && (
-              <Text className="text-xs font-medium text-optimal-text">
+              <Text className="text-caption font-medium text-optimal-text">
                 {`${summary.distribution.normal} ${categoryLabel("normal")}`}
               </Text>
             )}
             {summary.distribution.elevated > 0 && (
-              <Text className="text-xs font-medium text-warning-text">
+              <Text className="text-caption font-medium text-warning-text">
                 {`${summary.distribution.elevated} ${categoryLabel("elevated")}`}
               </Text>
             )}
             {summary.distribution.stage1 > 0 && (
-              <Text className="text-xs font-medium text-warning-text">
+              <Text className="text-caption font-medium text-warning-text">
                 {`${summary.distribution.stage1} ${categoryLabel("stage1")}`}
               </Text>
             )}
             {summary.distribution.stage2 > 0 && (
-              <Text className="text-xs font-medium text-recovery-red-text">
+              <Text className="text-caption font-medium text-recovery-red-text">
                 {`${summary.distribution.stage2} ${categoryLabel("stage2")}`}
               </Text>
             )}
             {summary.distribution.crisis > 0 && (
-              <Text className="text-xs font-medium text-recovery-red-text">
+              <Text className="text-caption font-medium text-recovery-red-text">
                 {`${summary.distribution.crisis} ${categoryLabel("crisis")}`}
               </Text>
             )}
@@ -316,7 +316,7 @@ export function BloodPressureCard({
       {/* Day Readings List (if multiple readings on the day) */}
       {summary.readings.length > 1 && (
         <View className="gap-2 border-t border-border pt-3">
-          <Text className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <Text className="text-caption font-medium tracking-normal text-muted-foreground">
             {t("bloodPressure.readingsOnDate", { date: formatDay(day, DAY.short) })}
           </Text>
           <View className="gap-1.5">
@@ -326,13 +326,13 @@ export function BloodPressureCard({
               return (
                 <View key={r.id} className="flex-row items-center justify-between py-1">
                   <View className="flex-row items-center gap-2">
-                    <Text className="font-numeric text-sm font-semibold">{r.time}</Text>
-                    <Text className="font-numeric text-base font-bold text-foreground">
+                    <Text className="font-numeric text-meta font-semibold">{r.time}</Text>
+                    <Text className="font-numeric text-body font-bold text-foreground">
                       {`${r.systolic}/${r.diastolic} `}
-                      <Text className="text-xs font-normal text-muted-foreground">{UNIT_MMHG}</Text>
+                      <Text className="text-caption font-normal text-muted-foreground">{UNIT_MMHG}</Text>
                     </Text>
                   </View>
-                  <StatusChip tone={rTone} textClassName="text-[10px]">
+                  <StatusChip tone={rTone} textClassName="text-label">
                     {rLabel}
                   </StatusChip>
                 </View>
@@ -350,10 +350,10 @@ export function BloodPressureCard({
           onPress={() => setShowGuidelines((prev) => !prev)}
           className="flex-row items-center justify-between py-1"
         >
-          <Text className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <Text className="text-caption font-medium tracking-normal text-muted-foreground">
             {t("bloodPressure.guidelines")}
           </Text>
-          <Text className="text-xs font-medium text-foreground-secondary">
+          <Text className="text-caption font-medium text-foreground-secondary">
             {showGuidelines ? t("bloodPressure.hide") : t("bloodPressure.show")}
           </Text>
         </Press>
@@ -364,11 +364,11 @@ export function BloodPressureCard({
               <View key={cat} className="flex-row items-center justify-between py-1 border-b border-border/50">
                 <View className="flex-row items-center gap-2">
                   <View className="size-2 rounded-full" style={{ backgroundColor: c[CATEGORY_DOT[cat]] }} />
-                  <Text className="text-xs font-semibold">
+                  <Text className="text-caption font-semibold">
                     {cat === "crisis" ? t("bloodPressure.category.hypertensiveCrisis") : categoryLabel(cat)}
                   </Text>
                 </View>
-                <Text className="font-numeric text-xs text-muted-foreground">
+                <Text className="font-numeric text-caption text-muted-foreground">
                   {t(`bloodPressure.stageRange.${cat}`)}
                 </Text>
               </View>
@@ -378,11 +378,11 @@ export function BloodPressureCard({
       </View>
 
       {/* Medical Safety Disclaimer (Mandatory) */}
-      <View className="flex-row items-start gap-2.5 rounded-lg border border-border/80 bg-secondary/20 p-3">
+      <View className="flex-row items-start gap-2 rounded-lg border border-border/80 bg-secondary/20 p-3">
         <View className="mt-0.5">
           <Icon icon={Info} size={15} tone="muted-foreground" />
         </View>
-        <Text className="flex-1 text-[11px] leading-4 text-muted-foreground">
+        <Text className="flex-1 text-label text-muted-foreground">
           {t("bloodPressure.disclaimer")}
         </Text>
       </View>

@@ -126,7 +126,7 @@ export function HomeHeader({ rings, progress, right, streak }: { rings?: HeaderR
                   <MiniRing variant={key} value={value} />
                   {/* 11 px, the reference app's ring-row label (spec §11 F5). One word: it never wraps; at 320 px "Recovery"
                       overflows its third by 5 px a side into the neighbours' slack, as the web's column outgrows 1fr. */}
-                  <Text className="whitespace-nowrap text-[11px] font-bold uppercase leading-4 tracking-[0.1em]">{label}</Text>
+                  <Text className="whitespace-nowrap text-label font-medium tracking-normal">{label}</Text>
                 </Press>
               </View>
             );

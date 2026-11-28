@@ -60,8 +60,8 @@ describe("reportShareText", () => {
   it("lays the report out as titled sections", () => {
     expect(reportShareText(VM)).toBe(
       [
-        "Pulse · Weekly performance assessment",
-        "Sep 21 - Sep 27, 2026",
+        "Weekly performance assessment from Pulse",
+        "Sep 21 to 27, 2026",
         "",
         "Averages vs last week",
         "• Recovery 64% (+5)",
@@ -70,7 +70,7 @@ describe("reportShareText", () => {
         "• Heart rate variability 54 ms (+4)",
         "",
         "Sleep",
-        "• Hours slept 7:12 a night (−0:25) · need 7:50 a night",
+        "• Hours slept 7:12 a night (−0:25), need 7:50 a night",
         "• Nights at sleep need 3 of 7",
         "• Sleep consistency 78% (−12)",
         "",
@@ -93,7 +93,7 @@ describe("reportShareText", () => {
   it("a month in progress, with no changes or focus, drops those sections", () => {
     const month: ReportPageVM = { ...VM, kind: "month", period: "2026-10", start: "2026-10-01", end: "2026-10-31", partial: true, performance: { ...VM.performance, improved: [], declined: [], focus: [] } };
     const text = reportShareText(month);
-    expect(text.split("\n").slice(0, 2)).toEqual(["Pulse · Monthly performance assessment", "October 2026 (so far)"]);
+    expect(text.split("\n").slice(0, 2)).toEqual(["Monthly performance assessment from Pulse", "October 2026 (so far)"]);
     expect(text).toContain("Averages vs last month");
     expect(text).not.toContain("Biggest changes");
     expect(text).not.toContain("Focus");
@@ -104,6 +104,6 @@ describe("reportShareText", () => {
     expect(statLine(stat("rhr", "Resting heart rate", 51.6, 53.2, { direction: "down" }))).toBe("Resting heart rate 52 bpm (−2)");
     expect(statLine(stat("steps", "Daily steps", 7000, 8200, { format: "grouped" }), " a day")).toBe("Daily steps 7,000 a day (−1,200)");
     expect(statLine(stat("hrv", "HRV", null, 50))).toBeNull();
-    expect(periodText({ kind: "week", start: "2025-12-29", end: "2026-01-04" })).toBe("Dec 29 - Jan 4, 2026");
+    expect(periodText({ kind: "week", start: "2025-12-29", end: "2026-01-04" })).toBe("Dec 29 to Jan 4, 2026");
   });
 });

@@ -20,6 +20,7 @@ import { useTheme } from "../theme";
 import { DeltaMark, LABEL } from "./primitives";
 import { ReasonPlaceholder } from "./ReasonPlaceholder";
 import { BAR_CORNERS } from "@/ui/radius";
+import { TYPE } from "../type";
 
 type Stage = "awake" | "rem" | "light" | "deep";
 export type SleepStagesNight = {
@@ -43,7 +44,7 @@ export type SleepStagesProps = {
 
 // The reference app's order, top to bottom.
 const ORDER: Stage[] = ["awake", "light", "deep", "rem"];
-const HERO = "font-numeric text-[32px] font-bold leading-9 tracking-[-0.01em]";
+const HERO = "font-numeric text-display font-bold leading-9 tracking-[-0.01em]";
 
 /** The reference app's "Hours of sleep": time asleep, the arrow against the prior 30 nights and their mean under it. */
 function HoursHero({ h }: { h: SleepHours }) {
@@ -62,7 +63,7 @@ function HoursHero({ h }: { h: SleepHours }) {
       <View className="mt-1.5 flex-row gap-2 self-start">
         <View>
           <Text className={cn(HERO, "tabular-nums")}>{hmm(h.asleepMin)}</Text>
-          {h.average !== null && <Text className="font-numeric text-[13px] font-medium leading-4 tabular-nums text-muted-foreground">{hmm(h.average)}</Text>}
+          {h.average !== null && <Text className="font-numeric text-meta font-medium tabular-nums text-muted-foreground">{hmm(h.average)}</Text>}
         </View>
         <View className="h-9 w-2 items-center justify-center">{t && <DeltaMark dir={t.dir} tone={t.tone} />}</View>
       </View>
@@ -100,11 +101,11 @@ function RestorativeRow({ r }: { r: { minutes: number; average: number | null; s
       <View className="size-4 shrink-0 overflow-hidden rounded-[3px]">
         <Gradient from={c["stage-deep"]} to={c["stage-rem"]} angle="xy" />
       </View>
-      <Text className={cn(LABEL, "min-w-0 flex-1 text-[13px]")}>{tr("sleepStages.restorative")}</Text>
+      <Text className={cn(TYPE.rowTitle, "min-w-0 flex-1")}>{tr("sleepStages.restorative")}</Text>
       <View className="flex-row gap-2">
         <View className="items-end">
-          <Text className="font-numeric text-[22px] font-bold leading-7 tabular-nums">{hmm(r.minutes)}</Text>
-          {r.average !== null && <Text className="font-numeric text-[13px] font-medium leading-4 tabular-nums text-muted-foreground">{hmm(r.average)}</Text>}
+          <Text className="font-numeric text-title font-bold leading-7 tabular-nums">{hmm(r.minutes)}</Text>
+          {r.average !== null && <Text className="font-numeric text-meta font-medium tabular-nums text-muted-foreground">{hmm(r.average)}</Text>}
         </View>
         <View className="h-7 w-2 items-center justify-center">{t && <DeltaMark dir={t.dir} tone={t.tone} />}</View>
       </View>
@@ -126,7 +127,7 @@ function Rows({ night, selected, onSelect, restorative }: { night: SleepStagesNi
   return (
     <View className="gap-4">
       {/* One view at a time: the stage breakdown (WHOOP's rows) or the night's timeline (the hypnogram). */}
-      <Segmented label={t("sleepStages.stagesView")} value={tab} options={TABS} onChange={setTab} fill textClassName="text-[13px] font-bold uppercase tracking-[0.1em]" />
+      <Segmented label={t("sleepStages.stagesView")} value={tab} options={TABS} onChange={setTab} fill textClassName="text-meta font-medium tracking-normal" />
       {/* One baseline for the label and "Duration 6:59" (the 17 px value sets it). */}
       <View className="flex-row items-baseline justify-between gap-2">
         {tab === "breakdown" ? (
@@ -144,7 +145,7 @@ function Rows({ night, selected, onSelect, restorative }: { night: SleepStagesNi
         )}
         <View className="flex-row items-baseline gap-2">
           <Text className={cn(LABEL, "text-muted-foreground")}>{t("sleepStages.duration")}</Text>
-          <Text className="font-numeric text-[17px] font-bold leading-5 tabular-nums text-foreground">{hmm(span / 60_000)}</Text>
+          <Text className="font-numeric text-heading font-bold tabular-nums text-foreground">{hmm(span / 60_000)}</Text>
         </View>
       </View>
       {tab === "timeline" ? (
@@ -170,11 +171,11 @@ function Rows({ night, selected, onSelect, restorative }: { night: SleepStagesNi
                 <View className="flex-row items-center gap-3">
                   {/* The reference app's radio: a white ring, filled white with a dark centre when chosen. */}
                   <View className={cn("size-5 shrink-0 items-center justify-center rounded-full border-2", on ? "border-foreground bg-foreground" : "border-foreground/90")}>{on && <View className="size-2 rounded-full bg-background" />}</View>
-                  <View className="min-w-0 flex-1 flex-row items-baseline gap-2.5">
-                    <Text className={cn(LABEL, "text-[13px]")}>{ROW_LABEL[r.stage]}</Text>
-                    <Text className={cn("font-numeric text-[15px] font-bold leading-5 tabular-nums", color.text)}>{`${Math.round(r.pct)}%`}</Text>
+                  <View className="min-w-0 flex-1 flex-row items-baseline gap-2">
+                    <Text className={cn(TYPE.rowTitle)}>{ROW_LABEL[r.stage]}</Text>
+                    <Text className={cn("font-numeric text-body font-bold tabular-nums", color.text)}>{`${Math.round(r.pct)}%`}</Text>
                   </View>
-                  <Text className="font-numeric text-[22px] font-bold leading-7 tabular-nums">{hmm(r.minutes)}</Text>
+                  <Text className="font-numeric text-title font-bold leading-7 tabular-nums">{hmm(r.minutes)}</Text>
                 </View>
                 {/* WHOOP's row: the stage's share of the night filled over the hatched track, the typical range boxed. */}
                 <Hatch className={cn("h-3.5", BAR_CORNERS)} style={{ overflow: "visible" }}>
@@ -238,10 +239,10 @@ function StageRowsSkeleton() {
         </View>
       </View>
       {ORDER.map((s) => ROW_LABEL[s]).map((l) => (
-        <View key={l} className="gap-2.5">
+        <View key={l} className="gap-2">
           <View className="flex-row items-center gap-3">
             <View className="size-5 rounded-full border-2 border-foreground/30" />
-            <Text className={cn(LABEL, "flex-1")}>{l}</Text>
+            <Text className={cn(TYPE.rowTitle, "flex-1")}>{l}</Text>
             <View className="w-12">
               <SkeletonText lh={24} fs={20} />
             </View>

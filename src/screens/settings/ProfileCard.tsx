@@ -39,10 +39,10 @@ export function ProfileCard({ profile }: { profile: SettingsVM["profile"] }) {
       <View className="min-h-11 flex-row items-center gap-3">
         <UserAvatar size={56} />
         <View className="min-w-0 flex-1">
-          <Text numberOfLines={1} className="text-[15px] font-semibold leading-[22px]">
+          <Text numberOfLines={1} className="text-body font-semibold">
             {name || t("profile.noName")}
           </Text>
-          <Text numberOfLines={1} className="text-[13px] leading-[18px] text-muted-foreground">
+          <Text numberOfLines={1} className="text-meta text-muted-foreground">
             {t("profile.photoStays")}
           </Text>
         </View>
@@ -97,7 +97,7 @@ function PhotoButtons() {
       className="h-12 flex-row items-center gap-3 rounded-xl px-3"
     >
       <Icon icon={icon} size={20} tone={danger ? "recovery-red-text" : "foreground-secondary"} strokeWidth={1.75} />
-      <Text className={cn("text-[15px] font-medium", danger && "text-recovery-red-text")}>{label}</Text>
+      <Text className={cn("text-body font-medium", danger && "text-recovery-red-text")}>{label}</Text>
     </Press>
   );
   return (

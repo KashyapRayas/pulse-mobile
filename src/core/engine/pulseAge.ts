@@ -1,8 +1,10 @@
 // Pulse Age: chronological age plus the years nine physiological factors add or take away, each a hazard ratio from a
 // 28-day window turned into years as 10·ln(HR). Reference study, biological-age-muscular.md § Physiological factors and
 // § Composite. Nutrition, alcohol, smoking and blood (PhenoAge) are left out: Health Connect has no data for them.
-// Fix 9: the source summed the factors present and let missing ones count as zero; the Pulse engine scales the sum to
-// all nine (the mean present factor stands in for each missing one) and shows nothing below five factors.
+// Missing factors count as zero, as the source did, and nothing shows below five factors. (An earlier fix scaled the sum to
+// all nine, letting the mean present factor stand in for each missing one; that assumes a missing input deviates like the
+// present ones, and on a phone without body-fat readings it inflated every other factor by 9/8.) Strength counts only
+// when the window holds a strength workout: a month with none logged is unknown, not zero minutes of strength work.
 import { clamp, mean } from "./math";
 import type { Sex } from "./sleep";
 
@@ -141,6 +143,9 @@ export function pulseAge(a: { age: number; sex: Sex; days: readonly PulseAgeDay[
   inputs.vo2max = { x: vo2, conf: vo2 == null ? 0 : 1 };
   inputs.leanMass = { x: lean, conf: lean == null ? 0 : 1 };
 
+  // "Never logged" is not "never trained": without a single strength workout in the window the factor is unknown.
+  if (!daily("strengthMin").some((v) => v > 0)) inputs.strength = { x: null, conf: 0 };
+
   const factors: FactorResult[] = PULSE_AGE_FACTORS.map((key) => {
     const { x, conf } = inputs[key];
     const hr = x == null ? null : hazard(key, x, a.age, a.sex);
@@ -148,8 +153,6 @@ export function pulseAge(a: { age: number; sex: Sex; days: readonly PulseAgeDay[
   });
   const present = factors.filter((f) => f.years != null);
   if (present.length < MIN_FACTORS) return null;
-  const scale = PULSE_AGE_FACTORS.length / present.length;
-  for (const f of present) f.years = f.years! * scale;
   const delta = present.reduce((s, f) => s + f.years!, 0);
   const pulse = clamp(a.age + delta, 0, 150);
   return { pulseAge: pulse, deltaYears: pulse - a.age, confidence: mean(factors.map((f) => f.confidence))!, present: present.length, factors };

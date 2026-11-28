@@ -12,7 +12,7 @@ describe("widget projection", () => {
     expect(widgetMetric("steps", { value: 0, reason: null, provisional: false })).toMatchObject({ value: 0, display: "0", reason: null });
     expect(widgetMetric("strain", { value: 129, reason: null, provisional: true })).toMatchObject({ value: 129, display: "129", progress: 100, provisional: true });
   });
-  it.each([[33, "#f20024"], [34, "#e5c300"], [66, "#e5c300"], [67, "#12c805"]] as const)("matches the recovery dial color at %s", (value, color) => {
+  it.each([[33, "#e5484d"], [34, "#d9a915"], [66, "#d9a915"], [67, "#2f9e64"]] as const)("matches the recovery dial color at %s", (value, color) => {
     expect(widgetMetric("recovery", { value, reason: null, provisional: false }).color).toBe(color);
   });
   it("sends only colours the native widget maps to a theme resource", () => {

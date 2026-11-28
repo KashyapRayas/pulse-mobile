@@ -113,8 +113,8 @@ export default function MetricScreen() {
       footer={
         <SectionShell variant="card" title={t("metricScreen.about", { label: vm.label.toLowerCase() })}>
           <View className="gap-2">
-            <Text className="text-[15px] leading-[22px] text-foreground-secondary">{vm.about}</Text>
-            <Text className="text-[15px] leading-[22px] text-foreground-secondary">{vm.source}</Text>
+            <Text className="text-body text-foreground-secondary">{vm.about}</Text>
+            <Text className="text-body text-foreground-secondary">{vm.source}</Text>
           </View>
         </SectionShell>
       }
@@ -139,7 +139,7 @@ function Hero({ vm }: { vm: MetricDetailVM }) {
           const diff = avg !== null ? value - avg : null;
           return (
             <>
-              <ValueUnit value={formatValue(vm.format, value)} unit={vm.unit} className="font-numeric text-[64px] font-bold leading-[64px] tracking-[-0.02em]" unitClassName="text-xl font-semibold leading-7 text-foreground-secondary" />
+              <ValueUnit value={formatValue(vm.format, value)} unit={vm.unit} className="font-numeric text-giant font-bold leading-[64px] tracking-[-0.02em]" unitClassName="text-value font-semibold leading-7 text-foreground-secondary" />
               {/* A running total against whole days would always read "below": today shows the average alone. */}
               {t && diff !== null && !vm.soFar && (
                 <StatusChip tone={t.tone === "good" ? "optimal" : t.tone === "bad" ? "warning" : "neutral"} delta={t.dir} className="mt-1 self-center">

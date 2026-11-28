@@ -6,14 +6,14 @@
   "exploreInsights": "Explore your recovery insights",
   "weeklyTitle": {
     "recovery": "Recovery",
-    "hrv": "Heart Rate Variability",
-    "rhr": "Resting Heart Rate",
-    "resp": "Respiratory Rate",
+    "hrv": "Heart rate variability",
+    "rhr": "Resting heart rate",
+    "resp": "Respiratory rate",
     "sleep": "Sleep Performance"
   },
   "behaviors": {
-    "title": "Behavior insights",
-    "body": "Some of your behaviors from yesterday may have affected your Recovery score today.",
+    "title": "Behaviour insights",
+    "body": "Some of your behaviours from yesterday may have affected your Recovery score today.",
     "spokenUp": "{{label}}, went with higher Recovery",
     "spokenDown": "{{label}}, went with lower Recovery",
     "spokenNeutral": "{{label}}, no clear effect"

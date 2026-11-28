@@ -13,6 +13,7 @@ import { capTrim } from "./primitives";
 import { push } from "../navigate";
 import { Press } from "../Press";
 import { SECONDARY_ROW } from "../Card";
+import { TYPE } from "../type";
 
 /** The chip's 20 px value, cap-trimmed as the web's CAP_TRIM. */
 const VALUE_TRIM = capTrim(20, "numeric");
@@ -78,17 +79,17 @@ export function TimelineRow({
   return (
     <Press activeScale={0.96} activeBg="bg-accent" accessibilityRole="link" accessibilityLabel={label} onPress={() => push(href)} className={ROW}>
       <View className={cn(CHIP, chipClass)}>{chip}</View>
-      <View className="min-w-0 flex-1">
-        <Text className="text-[15px] font-bold uppercase leading-5 tracking-[0.1em]">{name}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className={TYPE.rowTitle}>{name}</Text>
         {!!caption && (
-          <Text className="text-xs font-medium leading-4 text-muted-foreground" numberOfLines={1}>
+          <Text className={TYPE.rowSub} numberOfLines={1}>
             {caption}
           </Text>
         )}
       </View>
       <View className="shrink-0 items-end">
-        <Text className="font-numeric text-xs font-medium leading-4 tabular-nums text-foreground-secondary">{start}</Text>
-        <Text className="font-numeric text-xs font-medium leading-4 tabular-nums text-foreground-secondary">{end}</Text>
+        <Text className="font-numeric text-caption font-medium tabular-nums text-foreground-secondary">{start}</Text>
+        <Text className="font-numeric text-caption font-medium tabular-nums text-foreground-secondary">{end}</Text>
       </View>
       <View accessibilityElementsHidden className={cn("-ml-1 h-7 w-0.5 shrink-0 rounded-full", barClass)} />
     </Press>
@@ -114,7 +115,7 @@ export function ActivityCard({ name, kind, strain, start, end, href, timeZone, d
       chip={
         <>
           <Icon icon={glyph} size={16} tone="foreground" strokeWidth={1.75} />
-          <Text className={cn("font-numeric text-xl font-bold tabular-nums", noStrain && "text-foreground-secondary")} style={VALUE_TRIM}>{value}</Text>
+          <Text className={cn("font-numeric text-value font-bold tabular-nums", noStrain && "text-foreground-secondary")} style={VALUE_TRIM}>{value}</Text>
         </>
       }
       name={name}

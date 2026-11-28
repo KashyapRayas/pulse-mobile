@@ -32,9 +32,9 @@ const KIND_LABEL: Record<Kind, () => string> = {
   strength: () => i18n.t("strain:activities.kindStrength"),
   workout: () => i18n.t("strain:activities.kindWorkout"),
 }
-const STAT_LABEL = "text-xs leading-4 font-bold tracking-[0.1em] text-foreground-secondary uppercase"
+const STAT_LABEL = "text-caption font-medium tracking-normal text-foreground-secondary"
 const PILL = "h-9 shrink-0 items-center justify-center rounded-full px-4"
-const PILL_TEXT = "text-xs font-bold tracking-[0.1em] uppercase"
+const PILL_TEXT = "text-caption font-medium tracking-normal"
 
 type Group = ActivitiesVM["groups"][number]
 
@@ -97,7 +97,7 @@ export function ActivitiesScreen() {
           {!items.length && groups.length <= 1 && !vm.older && <EmptyState body={t("activities.empty")} />}
           {vm.older ? (
             <Press activeBg="bg-fill-faint" accessibilityRole="link" onPress={() => setQuery({ days: days + ACTIVITY_PAGE_DAYS, kind })} className="h-11 items-center justify-center self-center rounded-full px-5">
-              <Text className="text-xs font-bold uppercase tracking-[0.1em] text-foreground-body">{t("activities.showOlder")}</Text>
+              <Text className="text-caption font-medium tracking-normal text-foreground-body">{t("activities.showOlder")}</Text>
             </Press>
           ) : (
             items.length > 0 && <Text className={cn(CAPTION, "text-center")}>{t("activities.noOlder")}</Text>
@@ -116,7 +116,7 @@ function Summary({ items, days }: { items: Group["items"]; days: number }) {
   const avg = strains.length ? strains.reduce((a, b) => a + b, 0) / strains.length : null
   const stat = (value: ReactNode, label: string) => (
     <View className="min-w-0 flex-1 gap-1">
-      <Text className="font-numeric text-2xl font-bold leading-7 tabular-nums">{value}</Text>
+      <Text className="font-numeric text-title font-bold leading-7 tabular-nums">{value}</Text>
       <Text className={STAT_LABEL}>{label}</Text>
     </View>
   )
@@ -142,9 +142,9 @@ function Day({ g, today, timeZone }: { g: Group; today: string; timeZone: string
         <Text accessibilityRole="header" className={GROUP_LABEL.replace("px-1 ", "")}>
           {dayLabel(g.day, today)}
         </Text>
-        <Text className="shrink font-numeric text-xs font-medium leading-4 tabular-nums text-muted-foreground" numberOfLines={1}>
+        <Text className="shrink font-numeric text-caption font-medium tabular-nums text-muted-foreground" numberOfLines={1}>
           {g.steps !== null && t("activities.steps", { value: formatValue("grouped", g.steps) })}
-          {g.steps !== null && g.dayStrain !== null && " · "}
+          {g.steps !== null && g.dayStrain !== null && ", "}
           {g.dayStrain !== null && (
             <Trans t={t} i18nKey="activities.dayStrain" values={{ value: formatValue("pct", g.dayStrain) }} components={{ b: <Text className="font-bold text-strain-text" /> }} />
           )}

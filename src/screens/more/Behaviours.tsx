@@ -80,11 +80,11 @@ function Behaviours({ vm }: { vm: BehavioursVM }) {
         bodySkeleton={<LoadingPrimary />}
         primary={
           <View className="w-full gap-6">
-            <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("behaviours.intro")}</Text>
+            <Text className="text-body text-foreground-secondary">{t("behaviours.intro")}</Text>
             <BehaviorPicker tags={vm.tags} initial={initial} selected={selected} onChange={setSelected} />
             <SectionShell variant="card" title={t("behaviours.ownTitle")} info={false}>
               <View className="gap-2">
-                <Text className="text-[15px] font-medium leading-[22px]">{t("behaviours.addTitle")}</Text>
+                <Text className="text-body font-medium">{t("behaviours.addTitle")}</Text>
                 <View className="flex-row gap-2">
                   <View className="min-w-0 flex-1">
                     <TextField
@@ -110,7 +110,7 @@ function Behaviours({ vm }: { vm: BehavioursVM }) {
                   </Button>
                 </View>
                 {!!addError && (
-                  <Text accessibilityRole="alert" className="text-xs font-medium leading-4 text-recovery-red-text">
+                  <Text accessibilityRole="alert" className="text-caption font-medium text-recovery-red-text">
                     {addError}
                   </Text>
                 )}
@@ -135,10 +135,10 @@ function LoadingPrimary() {
   const { t } = useTranslation("more");
   return (
   <View accessibilityElementsHidden className="w-full gap-6">
-    <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("behaviours.intro")}</Text>
+    <Text className="text-body text-foreground-secondary">{t("behaviours.intro")}</Text>
     <View>
       <Skeleton className="h-12 rounded-xl" />
-      <View className="mt-3 h-11 flex-row items-center gap-6 overflow-hidden px-2.5">
+      <View className="mt-3 h-11 flex-row items-center gap-6 overflow-hidden px-3">
         {["w-6", "w-36", "w-36", "w-28"].map((w, i) => (
           <SkeletonText key={i} className={`${w} shrink-0`} />
         ))}

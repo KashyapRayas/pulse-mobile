@@ -40,7 +40,7 @@ export function ReportPage() {
     >
       <View className="gap-3">
         <TextField accessibilityLabel={t("report.title")} value={text} onChangeText={setText} multiline maxLength={MAX} autoFocus placeholder={t("report.placeholder")} />
-        <Text className="text-[13px] leading-5 text-muted-foreground">{t("report.description")}</Text>
+        <Text className="text-meta text-muted-foreground">{t("report.description")}</Text>
       </View>
     </TaskPage>
   );

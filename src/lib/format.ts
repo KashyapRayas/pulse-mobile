@@ -123,8 +123,14 @@ export function pillLabel(date: string, today: string) {
   return `${formatDay(date, { weekday: "short" })}., ${month}${dot} ${formatDay(date, { day: "numeric" })}`;
 }
 
-/** "Sep 22 - Sep 28". */
-export const rangeLabel = (from: string, to: string) => `${formatDay(from, DAY.monthDay)} - ${formatDay(to, DAY.monthDay)}`;
+/** Two values as one range that never breaks across lines: "5.6 to 7.6" (non-breaking spaces; "5,6–7,6" where the language writes it so). */
+export const valueRange = (from: string | number, to: string | number) => i18n.t("common:range", { from: String(from), to: String(to) });
+
+/** "Sep 22 to 28", or "Sep 29 to Oct 5" across a month. Languages other than English print both dates in full. */
+export function rangeLabel(from: string, to: string) {
+  const sameMonth = from.slice(0, 7) === to.slice(0, 7) && i18n.language === "en";
+  return i18n.t("common:dateRange", { from: formatDay(from, DAY.monthDay), to: formatDay(to, sameMonth ? { day: "numeric" } : DAY.monthDay) });
+}
 
 const clocks = new Map<string, Intl.DateTimeFormat>();
 /** The local hour (0-23) and minute of `ms` in `timeZone` (default: the runtime zone). */

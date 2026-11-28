@@ -4,16 +4,35 @@ import { LinearGradient as NativeGradient } from "expo-linear-gradient";
 import Animated, { useAnimatedStyle, type DerivedValue } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { cn } from "../cn";
+import { Glass } from "../Glass";
+import { Press, type PressProps } from "../Press";
 import { alpha } from "../color";
 import { Ground, groundColorAt, HealthspanGround } from "../Ground";
 import { Text } from "../Text";
 import { useTheme } from "../theme";
 import { DateSwitcher, type DateSwitcherProps } from "./DateSwitcher";
+import { TYPE } from "../type";
 
 // The pieces every header shares (spec §4.3, §4.4): the ground fill, the 24 px fade, the three-slot row.
 
-/** Detail header title, date pill label and tab-root title roles (spec §3.4): 12 px caps. */
-export const HEADER_TITLE = "text-xs font-bold uppercase leading-5 tracking-[0.1em]";
+/** A detail screen's centred title (spec §3.4, LN9): the body step, semibold. */
+export const HEADER_TITLE = TYPE.navTitle;
+/** A tab root's title (LN9): Linear's left-aligned, bold screen title. */
+export const ROOT_TITLE = TYPE.screenTitle;
+
+/**
+ * A header control as Linear draws them (LN9): a 40 px glass circle inside a 44 px hit area, lifting under the finger.
+ * Back, close and the info "i" use it; pass the icon as the child.
+ */
+export function HeaderButton({ children, className, ...press }: PressProps) {
+  return (
+    <Press activeScale={1.06} className={cn("size-11 items-center justify-center", className)} {...press}>
+      <Glass radius={20} style={{ width: 40, height: 40, alignItems: "center", justifyContent: "center" }}>
+        {children}
+      </Glass>
+    </Press>
+  );
+}
 /** A header row is 44 px tall. */
 export const HEADER_ROW = 44;
 /** The lower 24 px fade content scrolls into. */
@@ -75,10 +94,26 @@ export function HeaderFrame({ children, rows = HEADER_ROW, expanded, extra = 0, 
   );
 }
 
+/**
+ * Several header controls in one glass capsule (LN9), as Linear groups an issue's actions: 40 px tall, each control a
+ * 40 px round target inside it. `actions` in reading order; each one an icon, its spoken label and what it does.
+ */
+export function HeaderActions({ actions }: { actions: { icon: ReactNode; label: string; onPress: () => void }[] }) {
+  return (
+    <Glass radius={20} style={{ height: 40, flexDirection: "row", alignItems: "center", paddingHorizontal: 2 }}>
+      {actions.map((a) => (
+        <Press key={a.label} accessibilityRole="button" accessibilityLabel={a.label} onPress={a.onPress} activeBg="bg-fill-hover" className="size-10 items-center justify-center rounded-full">
+          {a.icon}
+        </Press>
+      ))}
+    </Glass>
+  );
+}
+
 /** A three-slot header row: left, centred title, right. */
 export function HeaderRow({ left, center, right, className, tall }: { left?: ReactNode; center: ReactNode; right?: ReactNode; className?: string; tall?: boolean }) {
   return (
-    <View className={cn("flex-row items-center gap-2 px-2", tall ? "min-h-11 items-start pb-1" : "h-11", className)}>
+    <View className={cn("flex-row items-center gap-2 px-3", tall ? "min-h-11 items-start pb-1" : "h-11", className)}>
       <View className="min-w-0 flex-1 flex-row items-center justify-start">{left}</View>
       <View className="min-w-0 shrink items-center">{center}</View>
       <View className="min-w-0 flex-1 flex-row items-center justify-end">{right}</View>
@@ -86,11 +121,17 @@ export function HeaderRow({ left, center, right, className, tall }: { left?: Rea
   );
 }
 
-/** Health, Journal and More (spec §4.3 "Other tab roots"): centred title, optional right slot (sync status), optional date pill under it. */
+/**
+ * Health, Journal and More (spec §4.3 "Other tab roots", LN9): the title left-aligned and bold, as Linear's Inbox and My
+ * issues, an optional right slot (sync status), an optional date pill under it.
+ */
 export function TitleHeader({ title, dateSwitcher, right }: { title: string; dateSwitcher?: DateSwitcherProps; right?: ReactNode }) {
   return (
     <HeaderFrame rows={HEADER_ROW + (dateSwitcher ? 40 : 0)}>
-      <HeaderRow center={<Text accessibilityRole="header" className={cn(HEADER_TITLE, "px-2")} numberOfLines={1}>{title}</Text>} right={right} className="px-4" />
+      <View className="h-11 flex-row items-center gap-2 pl-4 pr-3">
+        <Text accessibilityRole="header" className={cn(ROOT_TITLE, "min-w-0 flex-1")} numberOfLines={1}>{title}</Text>
+        {!!right && <View className="shrink-0 flex-row items-center justify-end">{right}</View>}
+      </View>
       {dateSwitcher && (
         <View className="items-center pt-1">
           <DateSwitcher {...dateSwitcher} />

@@ -12,10 +12,11 @@ import { MetricState, type MetricMeta } from "../shells/MetricState";
 import { SkeletonText } from "../Skeleton";
 import { Text } from "../Text";
 import { useTheme } from "../theme";
-import { CAPTION, LABEL, ValueUnit } from "./primitives";
+import { CAPTION, ValueUnit } from "./primitives";
 import { push } from "../navigate";
 import { Press } from "../Press";
 import { BAR_CORNERS } from "@/ui/radius";
+import { TYPE } from "../type";
 
 type Common = {
   icon?: ReactNode;
@@ -56,9 +57,9 @@ function Header({ p, value, right }: { p: Common; value: number | null; right?: 
     <View className="flex-row items-center gap-3">
       {!!p.icon && <View className="size-5 shrink-0 items-center justify-center">{p.icon}</View>}
       {/* Long labels must wrap because tracked capitals can exceed narrow phone widths. */}
-      <Text className={cn(LABEL, "min-w-0 flex-1")}>{p.label}</Text>
+      <Text className={cn(TYPE.rowTitle, "min-w-0 flex-1")}>{p.label}</Text>
       <View className="shrink-0 flex-row items-center gap-2">
-        <ValueUnit value={formatValue(p.format, value)} unit={p.unit} className={cn("font-numeric text-xl font-bold leading-6", value === null && "text-muted-foreground")} />
+        <ValueUnit value={formatValue(p.format, value)} unit={p.unit} className={cn("font-numeric text-value font-bold leading-6", value === null && "text-muted-foreground")} />
         {right}
       </View>
     </View>
@@ -93,9 +94,9 @@ function RecoveryRow({ p, value, meta }: { p: Extract<ContributorRowProps, { var
         value={value}
         right={
           pts !== null && (
-            <Text className={cn("font-numeric text-base font-bold tabular-nums", pts > 0 ? "text-optimal-text" : pts < 0 ? "text-warning-text" : "text-muted-foreground")}>
+            <Text className={cn("font-numeric text-body font-bold tabular-nums", pts > 0 ? "text-optimal-text" : pts < 0 ? "text-warning-text" : "text-muted-foreground")}>
               {formatValue("signedInt", pts)}
-              <Text className="text-[13px] font-semibold leading-4 text-foreground-secondary">{t("contributor.pts")}</Text>
+              <Text className="text-meta font-semibold text-foreground-secondary">{t("contributor.pts")}</Text>
             </Text>
           )
         }
@@ -165,14 +166,14 @@ function HealthspanRow({ p, value, meta }: { p: Extract<ContributorRowProps, { v
     <View accessible accessibilityLabel={sentence} className="gap-1">
       <View className="flex-row items-center gap-3">
         {!!p.icon && <View className="size-5 shrink-0 items-center justify-center">{p.icon}</View>}
-        <Text className={cn(LABEL, "min-w-0 flex-1")}>{p.label}</Text>
+        <Text className={cn(TYPE.rowTitle, "min-w-0 flex-1")}>{p.label}</Text>
       </View>
       <View className="flex-row items-center gap-4">
         <View className="min-w-0 flex-1 pb-10 pt-11" onLayout={(e) => setTrack(e.nativeEvent.layout.width)}>
           {value !== null && (
             <MarkerLabel at={at(value)} track={track} edge="top">
-              <Text className="text-xs font-medium leading-4 text-foreground-secondary">{t("contributor.avg6m")}</Text>
-              <Text className="font-numeric text-[15px] font-bold leading-5 tabular-nums">{withUnit(value)}</Text>
+              <Text className="text-caption font-medium text-foreground-secondary">{t("contributor.avg6m")}</Text>
+              <Text className="font-numeric text-body font-bold tabular-nums">{withUnit(value)}</Text>
               <Triangle size={10} color={c.foreground} fill={c.foreground} strokeWidth={0} style={{ transform: [{ rotate: "180deg" }] }} />
             </MarkerLabel>
           )}
@@ -181,26 +182,26 @@ function HealthspanRow({ p, value, meta }: { p: Extract<ContributorRowProps, { v
               const good = p.higherIsBetter ? i / (SEGMENTS - 1) : 1 - i / (SEGMENTS - 1);
               return <View key={i} className={cn("flex-1", i === lit && "bg-foreground/45")} style={i === lit ? undefined : { backgroundColor: mix(c.optimal, c.warning, good), opacity: 0.35 }} />;
             })}
-            <Text className={cn("absolute left-1.5 top-1.5 font-numeric text-[11px] font-bold leading-3 tabular-nums", lit === 0 ? "text-foreground" : p.higherIsBetter ? "text-warning-text" : "text-optimal-text")}>{loText}</Text>
-            <Text className={cn("absolute right-1.5 top-1.5 font-numeric text-[11px] font-bold leading-3 tabular-nums", lit === SEGMENTS - 1 ? "text-foreground" : p.higherIsBetter ? "text-optimal-text" : "text-warning-text")}>{hiText}</Text>
+            <Text className={cn("absolute left-1.5 top-1.5 font-numeric text-label font-bold tabular-nums", lit === 0 ? "text-foreground" : p.higherIsBetter ? "text-warning-text" : "text-optimal-text")}>{loText}</Text>
+            <Text className={cn("absolute right-1.5 top-1.5 font-numeric text-label font-bold tabular-nums", lit === SEGMENTS - 1 ? "text-foreground" : p.higherIsBetter ? "text-optimal-text" : "text-warning-text")}>{hiText}</Text>
           </View>
           {recent !== null && (
             <MarkerLabel at={at(recent)} track={track} edge="bottom">
               <Triangle size={10} color={c["muted-foreground"]} fill={c["muted-foreground"]} strokeWidth={0} />
-              <Text className="font-numeric text-[15px] font-bold leading-5 tabular-nums">{withUnit(recent)}</Text>
-              <Text className="text-xs font-medium leading-4 text-foreground-secondary">{t("contributor.avg30d")}</Text>
+              <Text className="font-numeric text-body font-bold tabular-nums">{withUnit(recent)}</Text>
+              <Text className="text-caption font-medium text-foreground-secondary">{t("contributor.avg30d")}</Text>
             </MarkerLabel>
           )}
         </View>
         <View className="w-12 shrink-0 items-end">
-          <Text className={cn("font-numeric text-xl font-bold leading-6 tabular-nums", years === null ? "text-muted-foreground" : years < 0 ? "text-optimal-text" : years > 0 ? "text-warning-text" : "text-foreground-secondary")}>
+          <Text className={cn("font-numeric text-value font-bold leading-6 tabular-nums", years === null ? "text-muted-foreground" : years < 0 ? "text-optimal-text" : years > 0 ? "text-warning-text" : "text-foreground-secondary")}>
             {years === null ? MISSING : formatValue("decimal1", years)}
           </Text>
-          <Text className="text-[13px] font-semibold leading-4 text-foreground-secondary">{t("contributor.years")}</Text>
+          <Text className="text-meta font-semibold text-foreground-secondary">{t("contributor.years")}</Text>
         </View>
       </View>
       {/* Reason copy can be a sentence; it gets its own line. */}
-      {value === null && <Text className="text-xs font-medium leading-4 text-muted-foreground">{noData}</Text>}
+      {value === null && <Text className="text-caption font-medium text-muted-foreground">{noData}</Text>}
     </View>
   );
   if (p.onSelect)

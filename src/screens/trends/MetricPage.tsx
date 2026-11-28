@@ -33,8 +33,8 @@ export function MetricPicker({ current, r }: { current?: TrendMetricKey; r?: str
       className="min-h-14 w-full flex-row items-center gap-3 px-4 py-2"
     >
       <View className="min-w-0 flex-1">
-        <Text className="text-xs font-medium leading-4 text-muted-foreground">{groupLabel(metric.group as GroupKey)}</Text>
-        <Text numberOfLines={1} className="text-[15px] font-semibold leading-[22px]">{metric.label}</Text>
+        <Text className="text-caption font-medium text-muted-foreground">{groupLabel(metric.group as GroupKey)}</Text>
+        <Text numberOfLines={1} className="text-body font-semibold">{metric.label}</Text>
       </View>
       <Icon icon={ChevronsUpDown} size={20} tone="muted-foreground" strokeWidth={1.75} />
     </CardButton>
@@ -56,9 +56,9 @@ export function MetricPageBody({ current, r }: { current?: string; r?: string })
           return (
             <View key={group} className={cn("border-b border-border", i === GROUPS.length - 1 && "border-b-0")}>
               <Pressable accessibilityRole="button" accessibilityState={{ expanded: on }} onPress={() => (!on && haptic.toggle(true), setExpanded(group))} className="min-h-[52px] flex-row items-center justify-between gap-3 rounded-lg">
-                <Text className="text-[15px] font-semibold leading-[22px]">{groupLabel(group as GroupKey)}</Text>
+                <Text className="text-body font-semibold">{groupLabel(group as GroupKey)}</Text>
                 <View className="flex-row items-center gap-2">
-                  <Text className="text-[13px] font-medium text-muted-foreground">{metrics.length}</Text>
+                  <Text className="text-meta font-medium text-muted-foreground">{metrics.length}</Text>
                   <Turn on={on}>
                     <Icon icon={ChevronDown} size={20} tone="muted-foreground" strokeWidth={1.75} />
                   </Turn>
@@ -70,7 +70,7 @@ export function MetricPageBody({ current, r }: { current?: string; r?: string })
                     const current = m.key === metric.key;
                     return (
                       <Press activeScale={0.96} key={m.key} accessibilityRole="button" accessibilityState={{ selected: current }} onPress={() => (haptic.tap(), choose(m.key))} className={cn("h-10 flex-row items-center rounded-full px-4", current ? "bg-foreground" : "bg-muted")}>
-                        <Text className={cn("text-[14px] font-medium leading-5", current ? "text-background" : "text-foreground")}>{m.label}</Text>
+                        <Text className={cn("text-meta font-medium", current ? "text-background" : "text-foreground")}>{m.label}</Text>
                       </Press>
                     );
                   })}

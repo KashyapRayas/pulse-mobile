@@ -44,7 +44,7 @@ export function DeleteEverything() {
           // Outlined in red: easy to find, clearly destructive, still quieter than the everyday buttons above.
           className="h-11 items-center justify-center rounded-full border border-recovery-red/45 px-5"
         >
-          <Text className="text-[13px] font-bold uppercase tracking-[0.06em] text-recovery-red-text">{t("delete.button")}</Text>
+          <Text className="text-meta font-medium tracking-normal text-recovery-red-text">{t("delete.button")}</Text>
         </Press>
       </View>
       <ConfirmDialog

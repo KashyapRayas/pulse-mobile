@@ -107,7 +107,7 @@
     "s2R2Detail": "Plus de Strain que ne le suggère la Recovery du jour ; attends-toi à le sentir demain.",
     "s3Title": "Un exemple chiffré",
     "s3P0": "Prends 14 jours de Strain passé, du plus ancien au plus récent : 45, 50, 20, 55, 48, 40, 60, 47, 52, 25, 50, 45, 55, 50. Le Day Strain est exclu. Fondue jour après jour, la base donne 47,9.",
-    "s3P1": "La Recovery du jour est de 72%, donc le centre est 47,9 × 1,13 = 54,2. La plage va de 54,2 − 8,6 à 54,2 + 24,4 : une cible de 46 - 79%. Avec le même historique et une Recovery de 30%, le centre tombe à 42,2 et la cible à 36 - 58%.",
+    "s3P1": "La Recovery du jour est de 72%, donc le centre est 47,9 × 1,13 = 54,2. La plage va de 54,2 − 8,6 à 54,2 + 24,4 : une cible de 46 à 79%. Avec le même historique et une Recovery de 30%, le centre tombe à 42,2 et la cible à 36 à 58%.",
     "s4Title": "Limites",
     "s4P0": "Avec moins de 14 jours de Strain, la base fond ce qu’il y a, donc les premières semaines sont une estimation. La cible ne connaît ni ton plan d’entraînement, ni tes courses, ni tes blessures. C’est un repère, pas une prescription."
   },
@@ -414,7 +414,7 @@
     "s2R1Detail": "Tu portes de la fatigue due à l’entraînement récent.",
     "s3Title": "Un exemple chiffré",
     "s3P0": "Prends 14 jours de charge quotidienne : 30, 45, 0, 50, 40, 35, 55, puis 45, 60, 0, 50, 55, 40, 65. Les zéros sont des jours de repos.",
-    "s3P1": "La fatigue avance d’un quart vers la charge de chaque jour, elle finit donc à 47,0 après le 65 du jour 14. La forme avance de 2/43, elle n’a donc atteint que 20,4. La fraîcheur est la forme moins la fatigue : 20,4 - 47,0 = -26,6.",
+    "s3P1": "La fatigue avance d’un quart vers la charge de chaque jour, elle finit donc à 47,0 après le 65 du jour 14. La forme avance de 2/43, elle n’a donc atteint que 20,4. La fraîcheur est la forme moins la fatigue : 20,4 à 47,0 = -26,6.",
     "s3P2": "Une fraîcheur négative signifie que la charge récente est plus lourde que la moyenne à plus long terme. La forme ne se stabilise qu’après plusieurs semaines, donc lis les premières semaines comme un repère approximatif.",
     "s4Title": "Limites",
     "s4P0": "La fréquence cardiaque est sa seule entrée, donc une charge qui la fait à peine monter passe inaperçue. Tant que tu ne t’es pas entraîné régulièrement pendant quelques semaines, le statut s’affiche en calibrage."

@@ -49,7 +49,7 @@ function FitTags({ tags }: { tags: string[] }) {
             <TagBadge>{t}</TagBadge>
           </View>
         ))}
-      {measured && more > 0 && <Text className="shrink-0 self-center font-numeric text-[13px] font-semibold tabular-nums text-muted-foreground">+{more}</Text>}
+      {measured && more > 0 && <Text className="shrink-0 self-center font-numeric text-meta font-semibold tabular-nums text-muted-foreground">+{more}</Text>}
     </View>
   );
 }
@@ -76,12 +76,12 @@ export function History({ history, day, today, onSelect }: { history: JournalVM[
               >
                 {/* The selected day's 3 px marker at the row's left edge. */}
                 {selected && <View accessibilityElementsHidden className="absolute inset-y-3.5 left-0 w-[3px] rounded-full bg-foreground" />}
-                <Text className="w-28 shrink-0 text-xs font-bold uppercase leading-4 tracking-[0.1em] tabular-nums">{dayLabel(h.day, today)}</Text>
+                <Text className="w-28 shrink-0 text-caption font-medium tracking-normal tabular-nums">{dayLabel(h.day, today)}</Text>
                 {h.yes.length ? (
                   <FitTags tags={h.yes} />
                 ) : (
                   <View accessibilityElementsHidden className="min-w-0 flex-1 flex-row justify-end">
-                    <Text className="text-xs font-medium leading-4 text-muted-foreground">{t("history.none")}</Text>
+                    <Text className="text-caption font-medium text-muted-foreground">{t("history.none")}</Text>
                   </View>
                 )}
                 <Icon icon={ChevronRight} size={16} tone="muted-foreground" strokeWidth={1.75} />
@@ -92,7 +92,7 @@ export function History({ history, day, today, onSelect }: { history: JournalVM[
       </View>
       {history.length > RECENT && (
         <Press activeBg="bg-accent" accessibilityRole="button" onPress={() => setAll(!all)} className="-mx-2 mb-1 h-11 items-center justify-center rounded-lg border-t border-border">
-          <Text className="text-xs font-bold uppercase tracking-[0.1em] text-foreground-body">{all ? t("history.showWeek") : t("history.show30")}</Text>
+          <Text className="text-caption font-medium tracking-normal text-foreground-body">{all ? t("history.showWeek") : t("history.show30")}</Text>
         </Press>
       )}
     </Card>

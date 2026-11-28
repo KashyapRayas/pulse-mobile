@@ -546,7 +546,7 @@ export function AgeOrb({ age, deltaYears, provisional = false, size: sizeProp, r
           </Text>
         </Animated.View>
         <Animated.View entering={entering(300)} style={{ marginTop: small ? 2 : 6 }}>
-          <Text className="text-center font-bold uppercase" style={{ fontSize: caption, lineHeight: small ? caption : caption * 1.25, letterSpacing: 0.1 * caption, color: c["orb-text-muted"] }}>
+          <Text className="text-center font-medium" style={{ fontSize: caption, lineHeight: small ? caption : caption * 1.25, color: c["orb-text-muted"] }}>
             {AGE_LABEL}
           </Text>
         </Animated.View>

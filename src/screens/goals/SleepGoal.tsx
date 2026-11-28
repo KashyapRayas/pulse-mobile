@@ -54,7 +54,7 @@ function ManualGoal({ hours }: { hours: number }) {
         <Text className={cn(HINT, "flex-1")}>{unitLabel("min")}</Text>
         <SmallButton solid label={t("actions.save", { ns: "common" })} accessibilityLabel={t("sleepGoal.saveAria")} onPress={() => "hours" in r && void save(r.hours, "manual")} />
       </View>
-      {!!error && <Text accessibilityRole="alert" className="pt-1 text-[13px] font-medium leading-[18px] text-recovery-red-text">{error}</Text>}
+      {!!error && <Text accessibilityRole="alert" className="pt-1 text-meta font-medium text-recovery-red-text">{error}</Text>}
     </View>
   );
 }

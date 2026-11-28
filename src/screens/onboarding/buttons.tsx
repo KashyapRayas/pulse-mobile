@@ -1,7 +1,7 @@
-// Onboarding's two buttons. Connect is an outline pill in the shape of Google's sign-in button (sentence case, a thin
-// rim) with Health Connect's official icon, so the step reads as Health Connect's. Its rim and label are theme
-// tokens (the kit's outline button), so it reads on the light and the dark ground. The second action is a quiet text button. Both hug their label at
-// 44 px tall, smaller than the app's sheet buttons: this screen asks, it does not push.
+// Onboarding's buttons, stacked as Linear's sign-in choices (LN12): full-width, 48 px, 8 px apart, so the gaps between them
+// are equal. Connect is an outline button with Health Connect's official icon, so the step reads as Health Connect's; a
+// second choice ("Explore with sample data") is a filled secondary button; a way out ("Not now") is a text button
+// under them. Labels are 16 px, the app's row size.
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, View } from "react-native";
 import { haptic } from "@/ui/haptics";
@@ -24,20 +24,29 @@ export function ConnectButton({ label, pending, onPress }: { label?: string; pen
         haptic.tap();
         onPress();
       }}
-      className="h-11 flex-row items-center justify-center gap-2.5 self-center rounded-full border border-border bg-background pl-4 pr-5 dark:border-input dark:bg-input/30"
+      className="h-12 w-full flex-row items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 dark:border-input dark:bg-input/30"
     >
       {pending ? <ActivityIndicator size="small" color={c.foreground} /> : <HealthConnectMark size={20} />}
-      <Text className="text-[14px] font-semibold leading-5 text-foreground">{label ?? t("connect.button")}</Text>
+      <Text className="text-body font-semibold text-foreground">{label ?? t("connect.button")}</Text>
     </Press>
   );
 }
 
-/** The second action ("Explore with sample data", "Not now"): text only, a 44 px tall target. */
+/** A second choice beside Connect ("Explore with sample data"): full-width, filled, the same 48 px. */
+export function SecondaryButton({ label, onPress, disabled }: { label: string; onPress: () => void; disabled?: boolean }) {
+  return (
+    <Press accessibilityRole="button" disabled={disabled} activeScale={0.96} onPress={onPress} className="h-12 w-full items-center justify-center rounded-xl bg-secondary px-4">
+      <Text className="text-body font-semibold text-foreground">{label}</Text>
+    </Press>
+  );
+}
+
+/** A way out under the buttons ("Not now", "Start workout"): text only, a 48 px tall target. */
 export function TextButton({ label, onPress, disabled }: { label: string; onPress: () => void; disabled?: boolean }) {
   return (
     <View className="items-center">
-      <Press accessibilityRole="button" disabled={disabled} activeOpacity={0.6} onPress={onPress} className="h-11 justify-center px-4">
-        <Text className="text-[14px] font-semibold leading-5 text-foreground-secondary">{label}</Text>
+      <Press accessibilityRole="button" disabled={disabled} activeOpacity={0.6} onPress={onPress} className="h-12 justify-center px-4">
+        <Text className="text-body font-medium text-foreground-secondary">{label}</Text>
       </Press>
     </View>
   );

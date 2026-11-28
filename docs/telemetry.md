@@ -82,6 +82,8 @@ well inside the free tier's 5M spans; logs are a handful per sync, well inside i
 | `workout.command_failed` | `code`, `kind` | A workout start, pause, resume or finish failed |
 | `workout.storage_failed` | `kind` | The recorder could not read or write its storage |
 | `workout.ingest_failed` | `kind` | Recorded samples could not be stored |
+| `workout.export_failed` | `kind` | A finished recording could not be saved to Health Connect |
+| `workout.log_failed` | `kind` | A logged activity was saved to Health Connect but could not be kept on the phone, so it was taken back out |
 | `widgets.publish_failed` | `kind` | The widget summary could not be published |
 | `update.check_failed` | `status` | The daily update check got an error from GitHub |
 | `render.screen` | | A screen's error boundary caught a render error (sent as a crash) |

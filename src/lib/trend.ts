@@ -40,7 +40,7 @@ export function periodWindow(end: string, range: TrendViewRange, offset = 0, agg
 export function periodLabel(from: string, to: string) {
   const md = (d: string) => formatDay(d, { month: "short", day: "numeric" });
   const yy = (d: string) => d.slice(2, 4);
-  return `${md(from)}${yy(from) === yy(to) ? "" : `, ${yy(from)}`} - ${md(to)}, ${yy(to)}`;
+  return i18n.t("common:dateRange", { from: `${md(from)}${yy(from) === yy(to) ? "" : `, ${yy(from)}`}`, to: `${md(to)}, ${yy(to)}` });
 }
 
 /** Whole-percent change of `now` against `prior`; null when there is no prior or it is zero with a non-zero now. */

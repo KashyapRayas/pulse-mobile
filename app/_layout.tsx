@@ -3,24 +3,24 @@ import "../global.css";
 import { useEffect, useMemo } from "react";
 import * as Sentry from "@sentry/react-native";
 import { useFonts } from "expo-font";
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useNavigationContainerRef } from "expo-router";
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useNavigationContainerRef, usePathname } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import * as SystemUI from "expo-system-ui";
 import { StatusBar } from "expo-status-bar";
 import { colorScheme } from "nativewind";
 import { Platform, Text, View } from "react-native";
 import { enableFreeze } from "react-native-screens";
-import { Barlow_500Medium } from "@expo-google-fonts/barlow/500Medium";
-import { Barlow_600SemiBold } from "@expo-google-fonts/barlow/600SemiBold";
-import { Barlow_700Bold } from "@expo-google-fonts/barlow/700Bold";
-import { Figtree_400Regular } from "@expo-google-fonts/figtree/400Regular";
-import { Figtree_500Medium } from "@expo-google-fonts/figtree/500Medium";
-import { Figtree_600SemiBold } from "@expo-google-fonts/figtree/600SemiBold";
-import { Figtree_700Bold } from "@expo-google-fonts/figtree/700Bold";
+import { Inter_400Regular } from "@expo-google-fonts/inter/400Regular";
+import { Inter_500Medium } from "@expo-google-fonts/inter/500Medium";
+import { Inter_600SemiBold } from "@expo-google-fonts/inter/600SemiBold";
+import { Inter_700Bold } from "@expo-google-fonts/inter/700Bold";
 
 import { i18n } from "@/i18n/config";
 import { useLanguage } from "@/i18n/useLanguage";
 import { useNotificationDeepLinks, useTabLinks } from "@/background/links";
+import { pushRecentMetric } from "@/actions/recentMetrics";
+import { metricOfPath } from "@/lib/search";
+import { isDashboardKey } from "@/lib/dashboard";
 import { Opening } from "@/screens/Opening";
 import { ScreenError } from "@/screens/ScreenError";
 import { ShellData } from "@/screens/ShellData";
@@ -48,9 +48,9 @@ SplashScreen.setOptions({ duration: 0, fade: false });
 export const unstable_settings = { anchor: "(tabs)", screenErrorBoundary: ScreenError };
 
 function RootLayout() {
-  // Fonts: Figtree for text, Barlow for numerals, as the web (pulse src/app/layout.tsx). Each weight is its own file
-  // and its own family name; src/ui/Text.tsx picks the name from the web's font classes.
-  const [fonts, fontError] = useFonts({ Figtree_400Regular, Figtree_500Medium, Figtree_600SemiBold, Figtree_700Bold, Barlow_500Medium, Barlow_600SemiBold, Barlow_700Bold });
+  // Fonts: Inter for text and numerals, as Linear sets it (numerals take tabular figures in src/ui/Text.tsx). Each
+  // weight is its own file and its own family name; src/ui/Text.tsx picks the name from the web's font classes.
+  const [fonts, fontError] = useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
   // Boot opens the database and reads the profile, the source and the saved theme (src/state/app.ts); the stored theme is
   // applied before the first frame, so a dark-mode person never sees a light flash.
   useEffect(() => void boot((theme) => colorScheme.set(theme as "light" | "dark" | "system")), []);
@@ -61,6 +61,13 @@ function RootLayout() {
   }, [navigationRef]);
   const status = useApp((s) => s.status);
   const opened = useApp((s) => s.store !== null);
+  const theme = useApp((s) => s.theme);
+  // Back from a tab root closes the activity but keeps this JS runtime, so `boot` does not run again when Pulse is
+  // reopened, while Android starts the new activity in the phone's light or dark: the saved choice is applied again on
+  // every mount of the root, not only at boot.
+  useEffect(() => {
+    if (opened) colorScheme.set(theme);
+  }, [opened, theme]);
   // Onboarded: a profile, a source and a first completed run (pulse's (app) layout sends anyone else to onboarding).
   const onboarded = useApp((s) => s.onboarded);
   const bootError = useApp((s) => (s.store ? null : s.error));
@@ -101,6 +108,12 @@ function Screens({ onboarded }: { onboarded: boolean }) {
   // A tapped notification opens its screen once the navigator exists, a cold start included (src/background/links.ts).
   useNotificationDeepLinks();
   useTabLinks();
+  // Opening a metric's screen, however you got there, puts it first in search's Recent (src/actions/recentMetrics.ts).
+  const pathname = usePathname();
+  useEffect(() => {
+    const key = metricOfPath(pathname);
+    if (key && key !== "stress" && isDashboardKey(key)) void pushRecentMetric(key);
+  }, [pathname]);
   // Without a theme React Navigation paints its own white card and light grey ground while a screen slides in or out, and the
   // window itself is the system's default: a white flash on every push, back and sheet. Both are the app's ground instead.
   const theme = useMemo(() => {
@@ -153,6 +166,7 @@ function Screens({ onboarded }: { onboarded: boolean }) {
           <Stack.Screen name="trends" />
           <Stack.Screen name="workout/start" options={{ animation: "slide_from_bottom" }} />
           <Stack.Screen name="workout/live" options={{ gestureEnabled: false }} />
+          <Stack.Screen name="workout/log" />
           <Stack.Screen name="workout/[id]" />
           <Stack.Screen name="dev/kit" />
           <Stack.Screen name="dev/kit/charts" />
@@ -161,6 +175,9 @@ function Screens({ onboarded }: { onboarded: boolean }) {
           <Stack.Screen name="dev/kit/metrics" />
           {/* Task pages (the web's drawers) are ordinary pages: a route in app/ rendering <TaskPage>, opened with push(). */}
           <Stack.Screen name="dashboard" />
+          <Stack.Screen name="customize-home" />
+          <Stack.Screen name="day-review" />
+          <Stack.Screen name="search" options={{ animation: "fade_from_bottom" }} />
           <Stack.Screen name="plus" />
           <Stack.Screen name="trends-metric" />
           <Stack.Screen name="ecg" />

@@ -9,6 +9,7 @@ import { DriverListSkeleton } from "@/ui/metrics/DriverList";
 import { DetailShell } from "@/ui/shells/DetailShell";
 import { Skeleton, SkeletonText } from "@/ui/Skeleton";
 import { Text } from "@/ui/Text";
+import { TYPE } from "@/ui/type";
 
 /** Journal Insights `/journal/insights?m=` (spec §7.12, journey 7). */
 export default function JournalInsights() {
@@ -32,14 +33,14 @@ export default function JournalInsights() {
                   <SkeletonText className="w-full" lh={22} fs={15} />
                   <SkeletonText className="w-1/3" lh={22} fs={15} />
                 </View>
-                <Text className="text-xs font-medium leading-4 text-muted-foreground">{t("app.updatedDaily")}</Text>
+                <Text className="text-caption font-medium text-muted-foreground">{t("app.updatedDaily")}</Text>
               </View>
               <Skeleton className="h-11 w-[140px] rounded-lg" />
             </View>
           )
         }
         summary={error ? <LoadError retry={reload} /> : <DriverListSkeleton rows={6} />}
-        footer={error ? undefined : <Text className="text-xs font-medium leading-4 text-muted-foreground">{FOOTER}</Text>}
+        footer={error ? undefined : <Text className="text-caption font-medium text-muted-foreground">{FOOTER}</Text>}
       />
     );
 
@@ -49,11 +50,11 @@ export default function JournalInsights() {
       hero={
         <View className="w-full gap-4">
           <View className="gap-2">
-            <Text accessibilityRole="header" className="text-[22px] font-semibold leading-7 tracking-[-0.01em]">
+            <Text accessibilityRole="header" className={TYPE.section}>
               {t("app.impactHeading", { metric: TITLE[metric] })}
             </Text>
-            <Text className="max-w-[65ch] text-[15px] leading-[22px] text-foreground-secondary">{t("app.impactIntro", { word: WORD[metric] })}</Text>
-            <Text className="text-xs font-medium leading-4 text-muted-foreground">{t("app.updatedDaily")}</Text>
+            <Text className="max-w-[65ch] text-body text-foreground-secondary">{t("app.impactIntro", { word: WORD[metric] })}</Text>
+            <Text className="text-caption font-medium text-muted-foreground">{t("app.updatedDaily")}</Text>
           </View>
           <MetricToggle metric={metric} />
         </View>
@@ -62,7 +63,7 @@ export default function JournalInsights() {
       footer={
         <>
           {vm.needsMore.length > 0 && <Unlock needsMore={vm.needsMore} word={WORD[metric]} />}
-          <Text className="text-xs font-medium leading-4 text-muted-foreground">{FOOTER}</Text>
+          <Text className="text-caption font-medium text-muted-foreground">{FOOTER}</Text>
         </>
       }
     />

@@ -92,7 +92,7 @@
     "nap": "Cochilo",
     "sleep": "Sono",
     "sleepAria": "{{name}}, {{duration}}, das {{start}} às {{end}}",
-    "distanceNoStrain": "{{distance}} · Sem Strain",
+    "distanceNoStrain": "{{distance}}, Sem Strain",
     "noStrainReason": "Sem Strain: dados de frequência cardíaca insuficientes",
     "spokenDistance": ", {{distance}}",
     "spokenDistancePace": ", {{distance}} a {{pace}}",
@@ -107,7 +107,7 @@
     "liveFrom": "Ao vivo de {{name}}",
     "liveFromBand": "Ao vivo da pulseira",
     "reconnecting": "Reconectando…",
-    "pill": "Ao vivo · {{name}}",
+    "pill": "Ao vivo, {{name}}",
     "band": "Pulseira",
     "traceAria": "Frequência cardíaca ao vivo nos últimos 2 minutos",
     "traceCaption": "Últimos 2 min",
@@ -288,8 +288,8 @@
     "strainTitle": "Como o Strain funciona",
     "strainIntro": "O Strain é a carga do seu dia em porcentagem: de 0 a 100 na maioria dos dias, acima de 100 em um dia muito intenso. Ele cresce com o tempo que você passa nas zonas de frequência cardíaca mais altas e com os passos que dá acordado, e cada ponto é mais difícil de ganhar que o anterior.",
     "strainLight": "Leve: até 40%",
-    "strainModerate": "Moderado: 41 - 60%",
-    "strainStrenuous": "Intenso: 61 - 79%",
+    "strainModerate": "Moderado: 41 a 60%",
+    "strainStrenuous": "Intenso: 61 a 79%",
     "strainAllOut": "Máximo: 80% ou mais",
     "strainNote": "Seu Strain Target é uma faixa para hoje, definida a partir da sua Recovery e da sua Training Load recente. O Strain de hoje é um total corrente até a meia-noite.",
     "strainTargetTitle": "Strain Target",
@@ -306,10 +306,7 @@
     "energyLow": "1-33: ficando baixo.",
     "strainRecoveryTitle": "Strain e Recovery",
     "strainRecovery1": "Seus últimos 7 dias lado a lado: Day Strain em azul na escala da esquerda, de 0 a 100%, e Recovery na escala da direita, de 0 a 100%.",
-    "strainRecovery2": "Um Strain alto em um dia costuma aparecer como Recovery mais baixa na manhã seguinte. Dias sem pontuação ficam como lacunas.",
-    "addActivityTitle": "Adicionar uma atividade",
-    "addActivity1": "O Pulse lê seus treinos do Fitbit pelo Health Connect, então não consegue adicionar um aqui.",
-    "addActivity2": "Inicie ou registre o treino no app Fitbit. Ele aparece nas suas atividades após a próxima sincronização, com seu Strain."
+    "strainRecovery2": "Um Strain alto em um dia costuma aparecer como Recovery mais baixa na manhã seguinte. Dias sem pontuação ficam como lacunas."
   },
   "legend": {
     "todayVs": "<b>Hoje</b> vs. {{period}}"
@@ -342,17 +339,17 @@
     "topUp": "Complete",
     "exhaleSlowly": "Expire devagar",
     "resonanceTitle": "Ressonância",
-    "resonanceSubtitle": "5,5 respirações por minuto · entrada e saída iguais",
+    "resonanceSubtitle": "5,5 respirações por minuto, entrada e saída iguais",
     "resonanceEdu": "Respiração lenta e uniforme, a cerca de 5,5 respirações por minuto, perto do ritmo de ressonância da maioria das pessoas: o coração acelera ao inspirar e desacelera ao expirar, e nesse ritmo essa oscilação é a maior. Um jeito constante de se acalmar.",
     "boxTitle": "Box 4-4-4-4",
-    "boxSubtitle": "Respiração quadrada · foco constante",
+    "boxSubtitle": "Respiração quadrada, foco constante",
     "boxEdu": "Respiração quadrada (box): inspire, segure, expire, segure, cada etapa por 4 segundos. Um ritmo estruturado muito usado para foco e para se acalmar sob estresse. Sente-se confortavelmente e mantenha as contagens iguais.",
     "p478Title": "4-7-8",
-    "p478Subtitle": "Inspire 4 · segure 7 · expire 8",
+    "p478Subtitle": "Inspire 4, segure 7, expire 8",
     "p478Edu": "O clássico 4-7-8: uma inspiração silenciosa pelo nariz por 4, segurar por 7, uma expiração longa pela boca por 8. Muito usado para desacelerar. Comece com poucos ciclos; pare se sentir tontura.",
     "p478Caution": "Se sentir tontura ou desconforto, pare e respire normalmente.",
     "sighTitle": "Suspiro fisiológico",
-    "sighSubtitle": "Duas inspirações · uma expiração longa",
+    "sighSubtitle": "Duas inspirações, uma expiração longa",
     "sighEdu": "Inspire pelo nariz, puxe um segundo gole curto de ar para encher os pulmões e depois solte tudo devagar pela boca. Cinco minutos por dia desse suspiro cíclico reduziram o estresse e a frequência respiratória em repouso em um estudo de Stanford (Balban et al., 2023)."
   },
   "guidance": {
@@ -410,7 +407,7 @@
       "within": "dentro de"
     },
     "noData": "Sem dados de {{label}} {{period}}.",
-    "typical": "Sua média de {{label}} neste período de 7 dias ficou {{where}} sua faixa típica ({{lo}} - {{hi}}).",
+    "typical": "Sua média de {{label}} neste período de 7 dias ficou {{where}} sua faixa típica ({{lo}} a {{hi}}).",
     "weeklyWeek": "Neste período de 7 dias, seu total de {{label}} ({{value}}) ficou {{cmp}} seu total anterior de 7 dias, {{prior}}.",
     "weeklyWeekNoPrior": "Neste período de 7 dias, seu total de {{label}} foi {{value}}.",
     "weekly": "Sua média semanal de {{label}} {{period}} ({{value}}) ficou {{cmp}} sua média {{priorName}} de {{prior}}.",
@@ -485,5 +482,9 @@
     "bootDatabase": "Não foi possível abrir o banco de dados: {{error}}",
     "profileTitle": "Perfil"
   },
-  "trainingLoad": "Training Load"
+  "trainingLoad": "Training Load",
+  "prose": {
+    "more": "Mais",
+    "less": "Menos"
+  }
 }

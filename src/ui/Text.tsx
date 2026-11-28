@@ -9,12 +9,18 @@ import { FACES, hasColorClass, readFont, type Face } from "./fontClasses";
 // and sets `fontFamily` itself. Nested <Text> inherits the family and weight of its parent unless it names its own,
 // as CSS does. Everything else in `className` (size, colour, tracking ...) goes to NativeWind untouched.
 
-/** Ascent plus descent, in em, of both families (Barlow 1.0 + 0.2, Figtree 0.95 + 0.25): the font's own line height. */
-const NATURAL = 1.2;
+/** Ascent plus descent, in em, of Inter (0.97 + 0.24, its hhea metrics): the font's own line height. */
+const NATURAL = 1.21;
 
-/** Type scales down on phones narrower than the iPhone 17 (402 pt), linearly to 92 % at 360 pt and below; 402 and up are unchanged. */
+/** Numerals line up in columns: Inter's tabular figures, as Linear sets numbers. */
+const TABULAR: TextStyle = { fontVariant: ["tabular-nums"] };
+
+/**
+ * Type eases down on phones narrower than the iPhone 17 (402 pt), linearly to 96 % at 360 pt and below; 402 and up are
+ * unchanged. Only 4 %: the scale is already a phone's (16 px rows), and a smaller phone is held no further from the eye.
+ */
 export function typeScale(width: number) {
-  return Math.min(1, Math.max(0.92, 0.92 + ((width - 360) / 42) * 0.08));
+  return Math.min(1, Math.max(0.96, 0.96 + ((width - 360) / 42) * 0.04));
 }
 
 /**
@@ -60,7 +66,11 @@ export function Text({ className, style, numberOfLines, ...props }: ComponentPro
           drop={!nested}
           className={nested || hasColorClass(rest) ? rest : `${rest} text-foreground`}
           numberOfLines={numberOfLines ?? lines}
-          style={[{ fontFamily: FACES[face.family][face.weight], flexShrink: nested ? undefined : shrink }, style]}
+          style={[
+            { fontFamily: FACES[face.family][face.weight], flexShrink: nested ? undefined : shrink },
+            face.family === "numeric" && TABULAR,
+            style,
+          ]}
         />
       </FaceContext.Provider>
     </NestedContext.Provider>

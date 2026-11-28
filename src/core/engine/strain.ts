@@ -82,22 +82,25 @@ export const workoutStrain = (u: number) => 66 * Math.atan(u / 20000);
 export const strainRing = (v: number) => Math.min(1, Math.max(0, v / 100));
 
 const BANISTER_B = { male: 1.92, female: 1.67 } as const;
+/** Banister's weighting k·e^(b·x): k 0.64 for men, 0.86 for women (Morton, Fitz-Clarke & Banister 1990). */
+const BANISTER_K = { male: 0.64, female: 0.86 } as const;
 
 /**
- * Banister TRIMP of a workout: Σ 0.64·e^(b·x)·x·minutes over its segments, x = (round(bpm) − rest) / (max − rest), at
+ * Banister TRIMP of a workout: Σ k·e^(b·x)·x·minutes over its segments, x = (round(bpm) − rest) / (max − rest), at
  * least 0. Summed in time order in doubles (fix 16; the source summed per-bpm bins in hash order in Float32). `rest` is
- * the 60-day resting-HR baseline; null without one.
+ * the 60-day resting-HR baseline; null without one. The source used the men's k (0.64) for women too.
  */
 export function trimp(segs: readonly Seg[], rest: number | null, maxHr: number, sex: "male" | "female"): number | null {
   if (rest == null || !segs.length) return null;
   const b = BANISTER_B[sex];
+  const k = BANISTER_K[sex];
   const d = maxHr - rest;
   let total = 0;
   for (const s of segs) {
     let x = (roundHalfAway(s.bpm) - rest) / d;
     if (!Number.isFinite(x)) continue;
     if (x <= 0) x = 0;
-    total += 0.64 * Math.exp(b * x) * x * (s.seconds / 60);
+    total += k * Math.exp(b * x) * x * (s.seconds / 60);
   }
   return Number.isFinite(total) ? total : 0;
 }

@@ -61,7 +61,7 @@ export function MetricToggle({ metric }: { metric: ImpactMetricKey }) {
             }}
             className={cn(SEGMENT, "min-w-11 px-2", on && SEGMENT_ON)}
           >
-            <Text className={cn("text-[13px] font-bold uppercase tracking-[0.1em]", on ? "text-foreground" : "text-muted-foreground")}>{t(`metricTitle.${value}`)}</Text>
+            <Text className={cn("text-meta font-medium tracking-normal", on ? "text-foreground" : "text-muted-foreground")}>{t(`metricTitle.${value}`)}</Text>
           </Pressable>
         );
       })}
@@ -96,27 +96,27 @@ export function Unlock({ needsMore, word }: { needsMore: JournalInsightsVM["need
   return (
     <View accessibilityLabel={t("insights.unlockTitle")} className="gap-3">
       <View className="gap-1">
-        <Text accessibilityRole="header" className="text-xs font-bold uppercase leading-4 tracking-[0.1em]">
+        <Text accessibilityRole="header" className="text-caption font-medium tracking-normal">
           {t("insights.unlockTitle")}
         </Text>
-        <Text className="max-w-[65ch] text-[15px] leading-[22px] text-muted-foreground">{t("insights.unlockBody", { word })}</Text>
+        <Text className="max-w-[65ch] text-body text-muted-foreground">{t("insights.unlockBody", { word })}</Text>
       </View>
       <View className="gap-2">
         {needsMore.map((n) => {
           const have = Math.min(5, n.yes) + Math.min(5, n.no);
           return (
-            <View key={n.key} className={cn(CARD_CLASS, "gap-2.5 p-4")} style={shadow}>
+            <View key={n.key} className={cn(CARD_CLASS, "gap-2 p-4")} style={shadow}>
               <CardFill />
               <View className="flex-row items-baseline justify-between gap-3">
-                <Text numberOfLines={1} className="min-w-0 shrink text-xs font-bold uppercase leading-4 tracking-[0.1em]">
+                <Text numberOfLines={1} className="min-w-0 shrink text-caption font-medium tracking-normal">
                   {n.label}
                 </Text>
-                <Text className="shrink-0 font-numeric text-[13px] font-semibold leading-4 tabular-nums text-foreground-secondary">{have}/10</Text>
+                <Text className="shrink-0 font-numeric text-meta font-semibold tabular-nums text-foreground-secondary">{have}/10</Text>
               </View>
               <View accessible accessibilityRole="progressbar" accessibilityLabel={t("insights.progress", { label: n.label, have })} accessibilityValue={{ min: 0, max: 10, now: have }} className={cn("h-1.5 overflow-hidden bg-muted", BAR_CORNERS)}>
                 <View className="h-full bg-optimal" style={{ width: `${(have / 10) * 100}%` }} />
               </View>
-              <Text className="text-xs font-medium leading-4 tabular-nums text-muted-foreground">
+              <Text className="text-caption font-medium tabular-nums text-muted-foreground">
                 {t("insights.split", { yes: Math.min(5, n.yes), no: Math.min(5, n.no) })}
               </Text>
             </View>

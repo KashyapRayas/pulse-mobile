@@ -20,11 +20,12 @@ import { Icon } from "@/ui/Icon";
 import { Text } from "@/ui/Text";
 import { ConnectFlow } from "./Connect";
 import { Frame } from "./Frame";
-import { ConnectButton, TextButton } from "./buttons";
+import { ConnectButton, SecondaryButton, TextButton } from "./buttons";
 import { HeartbeatMark } from "./HeartbeatMark";
 import { ProfileForm, SaveButton } from "./ProfileForm";
 import { cn } from "@/ui/cn";
 import { BAR_CORNERS } from "@/ui/radius";
+import { LineIcon } from "@/ui/LineIcon";
 
 type Step = "welcome" | "profile" | "connect";
 
@@ -52,7 +53,7 @@ function ProgressFooter({ progress, fallback }: { progress: Progress | null; fal
       <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: 100, now: pct }} className={cn("h-2 w-full overflow-hidden bg-fill-pressed", BAR_CORNERS)}>
         <View className="h-full bg-primary" style={{ width: `${pct}%` }} />
       </View>
-      <Text className="text-[13px] leading-[18px] text-foreground-secondary">{progress ? stepLabel(progress.step) : fallback}…</Text>
+      <Text className="text-meta text-foreground-secondary">{progress ? stepLabel(progress.step) : fallback}…</Text>
     </View>
   );
 }
@@ -86,16 +87,16 @@ function Welcome({ onConnect }: { onConnect: () => void }) {
         ) : (
           <>
             {!!error && (
-              <Text accessibilityRole="alert" className="mb-2 text-center text-[13px] font-medium leading-[18px] text-recovery-red-text">
+              <Text accessibilityRole="alert" className="mb-2 text-center text-meta font-medium text-recovery-red-text">
                 {error}
               </Text>
             )}
             <ConnectButton onPress={onConnect} />
-            <TextButton label={t("welcome.exploreSample")} onPress={explore} />
+            <SecondaryButton label={t("welcome.exploreSample")} onPress={explore} />
             <TextButton label={i18n.t("workouts:recorder.start")} onPress={() => push("/workout-live")} />
-            <View className="mt-2 flex-row items-center justify-center gap-1.5">
-              <Icon icon={Lock} size={13} tone="muted-foreground" strokeWidth={2} />
-              <Text className="text-[13px] leading-[18px] text-muted-foreground">{t("welcome.private")}</Text>
+            <View className="mt-2 flex-row items-start justify-center gap-2">
+              <LineIcon step="meta"><Icon icon={Lock} size={14} tone="muted-foreground" strokeWidth={2} /></LineIcon>
+              <Text className="shrink text-meta text-muted-foreground">{t("welcome.private")}</Text>
             </View>
           </>
         )
@@ -104,10 +105,10 @@ function Welcome({ onConnect }: { onConnect: () => void }) {
       <View className="items-center gap-8">
         <HeartbeatMark />
         <View className="items-center gap-2">
-          <Text accessibilityRole="header" className="text-center text-[24px] font-bold leading-[30px] tracking-[-0.02em]">
+          <Text accessibilityRole="header" className="text-center text-title font-bold leading-[30px] tracking-[-0.02em]">
             {t("welcome.title")}
           </Text>
-          <Text className="max-w-[300px] text-center text-[15px] leading-[22px] text-foreground-secondary">{t("welcome.subtitle")}</Text>
+          <Text className="max-w-[300px] text-center text-body text-foreground-secondary">{t("welcome.subtitle")}</Text>
         </View>
       </View>
     </Frame>
@@ -118,10 +119,10 @@ function Profile({ onSaved }: { onSaved: () => void }) {
   const { t } = useTranslation("onboarding");
   return (
     <Frame>
-      <Text accessibilityRole="header" className="text-[28px] font-bold leading-[34px] tracking-[-0.02em]">
+      <Text accessibilityRole="header" className="text-display font-bold leading-[34px] tracking-[-0.02em]">
         {t("profile.title")}
       </Text>
-      <Text className="mb-7 mt-2 text-base leading-6 text-foreground-secondary">{t("profile.intro")}</Text>
+      <Text className="mb-7 mt-2 text-body text-foreground-secondary">{t("profile.intro")}</Text>
       <ProfileForm
         onboarding
         defaults={{ birthDate: "", sex: null, maxHr: null, heightCm: null, timeZone: null }}
@@ -150,7 +151,7 @@ function Importing({ sample }: { sample: boolean }) {
       footer={
         error ? (
           <>
-            <Text accessibilityRole="alert" className="mb-2 text-center text-[13px] font-medium leading-[18px] text-recovery-red-text">
+            <Text accessibilityRole="alert" className="mb-2 text-center text-meta font-medium text-recovery-red-text">
               {error}
             </Text>
             <ConnectButton label={t("actions.tryAgain", { ns: "common" })} onPress={() => void refresh()} />
@@ -161,10 +162,10 @@ function Importing({ sample }: { sample: boolean }) {
       }
     >
       <View className="items-center gap-2">
-        <Text accessibilityRole="header" className="text-center text-[22px] font-semibold leading-7 tracking-[-0.01em]">
+        <Text accessibilityRole="header" className="text-center text-title font-semibold leading-7 tracking-[-0.01em]">
           {error ? t("importing.stopped") : sample ? t("importing.titleSample") : t("importing.title")}
         </Text>
-        <Text className="max-w-[300px] text-center text-[15px] leading-[22px] text-foreground-secondary">
+        <Text className="max-w-[300px] text-center text-body text-foreground-secondary">
           {sample ? t("importing.bodySample") : t("importing.body")}
         </Text>
       </View>
@@ -199,8 +200,8 @@ function BackgroundOffer() {
   const done = on && unrestricted !== false;
   return (
     <Card className="mt-8 gap-3 p-4">
-      <Text className="text-[15px] font-semibold leading-5">{done ? t("background.titleOn") : t("background.title")}</Text>
-      <Text className="text-[13px] leading-[18px] text-foreground-secondary">
+      <Text className="text-body font-semibold">{done ? t("background.titleOn") : t("background.title")}</Text>
+      <Text className="text-meta text-foreground-secondary">
         {done
           ? t("background.bodyOn")
           : on

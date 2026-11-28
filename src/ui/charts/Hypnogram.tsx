@@ -80,7 +80,7 @@ export function HypnogramChart({ night }: { night: HypnogramNight }) {
               {seg && t !== null && <DashedLine x1={x!} x2={x!} y1={y0} y2={y1} color={c["chart-cursor"]} />}
             </PlotCanvas>
             {[0, 1, 2, 3].map((lane) => (
-              <ChartLabel key={lane} x={x0 - 8} y={y(lane)} anchor="end" w={x0 - 8} className="text-[11px] font-bold" color={css(DATA_COLORS[`stage-${LANE_STAGE[lane]}`].css)}>{stageName(LANE_STAGE[lane])}</ChartLabel>
+              <ChartLabel key={lane} x={x0 - 8} y={y(lane)} anchor="end" w={x0 - 8} className="text-label font-bold" color={css(DATA_COLORS[`stage-${LANE_STAGE[lane]}`].css)}>{stageName(LANE_STAGE[lane])}</ChartLabel>
             ))}
             {/* Bed and wake times at the ends, bold (WHOOP), and the whole hours between that keep clear of them. */}
             <ChartLabel x={x0} y={y1 + 16} anchor="start" className="font-bold text-foreground">{clock(night.bed, tz)}</ChartLabel>

@@ -40,7 +40,7 @@ function MeasureSkeleton({ rows: labels }: { rows: string[] }) {
         {labels.map((l) => (
           <View key={l} className="flex-row items-center gap-3">
             <View className="size-3 shrink-0 rounded-[3px] bg-secondary" />
-            <Text className="flex-1 text-[13px] font-medium leading-4 text-foreground-secondary">{l}</Text>
+            <Text className="flex-1 text-meta font-medium text-foreground-secondary">{l}</Text>
             <SkeletonText className="w-12" />
           </View>
         ))}

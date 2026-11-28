@@ -20,3 +20,13 @@ export const EASE = {
   outExpo: Easing.bezier(0.16, 1, 0.3, 1),
   inQuick: Easing.bezier(0.4, 0, 1, 1),
 };
+
+/**
+ * Springs for things the finger moves (docs/design/linear-mobile.md "Motion"). `snappy`: the tab lens gliding to the
+ * tapped tab, critically damped so it lands without a wobble. `lift`: Linear's glass controls rise a touch under the
+ * finger and settle back with a small, quick pulse.
+ */
+export const SPRING = {
+  snappy: { damping: 26, stiffness: 340, mass: 0.8 },
+  lift: { damping: 15, stiffness: 420, mass: 0.6 },
+} as const;

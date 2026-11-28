@@ -107,7 +107,7 @@
     "s2R2Detail": "Więcej Strain, niż sugeruje dzisiejsze Recovery; spodziewaj się, że pokaże się jutro.",
     "s3Title": "Przykład krok po kroku",
     "s3P0": "Weź 14 dni minionego Strain, od najstarszego: 45, 50, 20, 55, 48, 40, 60, 47, 52, 25, 50, 45, 55, 50. Własny Strain z dziś jest pominięty. Złożona dzień po dniu baza wychodzi 47,9.",
-    "s3P1": "Dzisiejsze Recovery to 72%, więc środek to 47,9 × 1,13 = 54,2. Zakres biegnie od 54,2 − 8,6 do 54,2 + 24,4: cel 46 - 79%. Przy tej samej historii i Recovery 30% środek spada do 42,2, a cel do 36 - 58%.",
+    "s3P1": "Dzisiejsze Recovery to 72%, więc środek to 47,9 × 1,13 = 54,2. Zakres biegnie od 54,2 − 8,6 do 54,2 + 24,4: cel 46–79%. Przy tej samej historii i Recovery 30% środek spada do 42,2, a cel do 36–58%.",
     "s4Title": "Ograniczenia",
     "s4P0": "Przy mniej niż 14 dniach Strain baza składa to, co jest, więc pierwsze tygodnie czytaj jako szacunek. Cel nie zna Twojego planu treningowego, zawodów ani kontuzji. To wskazówka, nie zalecenie."
   },
@@ -414,7 +414,7 @@
     "s2R1Detail": "Niesiesz zmęczenie z niedawnego treningu.",
     "s3Title": "Przykład krok po kroku",
     "s3P0": "Weź 14 dni dziennego obciążenia: 30, 45, 0, 50, 40, 35, 55, potem 45, 60, 0, 50, 55, 40, 65. Zera to dni odpoczynku.",
-    "s3P1": "Zmęczenie przesuwa się o jedną czwartą drogi do obciążenia każdego dnia, więc kończy na 47,0 po 65 w dniu 14. Kondycja przesuwa się o 2/43 drogi, więc doszła tylko do 20,4. Forma to Kondycja minus Zmęczenie: 20,4 - 47,0 = -26,6.",
+    "s3P1": "Zmęczenie przesuwa się o jedną czwartą drogi do obciążenia każdego dnia, więc kończy na 47,0 po 65 w dniu 14. Kondycja przesuwa się o 2/43 drogi, więc doszła tylko do 20,4. Forma to Kondycja minus Zmęczenie: 20,4–47,0 = -26,6.",
     "s3P2": "Ujemna Forma oznacza, że ostatnie obciążenie jest cięższe niż długoterminowa średnia. Kondycja ustabilizuje się dopiero po kilku tygodniach, więc pierwsze tygodnie czytaj jako przybliżoną wskazówkę.",
     "s4Title": "Ograniczenia",
     "s4P0": "Tętno jest jedynym wejściem, więc obciążenie, które ledwo podnosi tętno, jest pomijane. Dopóki nie trenujesz regularnie przez kilka tygodni, status pokazuje kalibrację."

@@ -202,16 +202,16 @@ function Plot({ p, m, width, height }: { p: TrendViewChartProps; m: Model; width
       )}
       {/* Time in bed: bed time over the bar, wake time under it. */}
       {range && rows.map((r, i) => (r.span ? (
-        <ChartLabel key={r.key} x={xs[i]} y={y(r.span[0]) - 11} w={48} className="text-[11px] font-bold" color={single}>{clockOf(r.parts!.bed)}</ChartLabel>
+        <ChartLabel key={r.key} x={xs[i]} y={y(r.span[0]) - 11} w={48} className="text-label font-bold" color={single}>{clockOf(r.parts!.bed)}</ChartLabel>
       ) : null))}
       {range && rows.map((r, i) => (r.span ? (
-        <ChartLabel key={`w${r.key}`} x={xs[i]} y={y(r.span[1]) + 11} w={48} className="text-[11px] font-bold" color={single}>{clockOf(r.parts!.wake)}</ChartLabel>
+        <ChartLabel key={`w${r.key}`} x={xs[i]} y={y(r.span[1]) + 11} w={48} className="text-label font-bold" color={single}>{clockOf(r.parts!.wake)}</ChartLabel>
       ) : null))}
       {/* 6M segments: the month's value above its level, the change under it, when the segment is wide enough. */}
       {segs.map((s) =>
         s.x2 - s.x1 < 34 ? null : (
           <Fragment key={s.month}>
-            <ChartLabel x={s.mid} y={s.cy - 14} w={s.x2 - s.x1} className="text-[13px] font-bold text-foreground">{fmt(s.value)}</ChartLabel>
+            <ChartLabel x={s.mid} y={s.cy - 14} w={s.x2 - s.x1} className="text-meta font-bold text-foreground">{fmt(s.value)}</ChartLabel>
             {s.change !== null && s.change !== 0 && (
               <ChartLabel x={s.mid} y={s.cy + 14} w={s.x2 - s.x1} className="font-bold" color={SEG_COLOR[s.tone](c)} halo={halo}>
                 {`${s.change > 0 ? "+" : ""}${s.change}%`}

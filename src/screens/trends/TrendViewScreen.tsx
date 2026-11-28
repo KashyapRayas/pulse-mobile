@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft, ChevronRight, Info, Plus, Target } from "lucide-react-native";
 import { push } from "@/ui/navigate";
+import { workoutLogHref } from "@/lib/url";
 import { chartDef } from "@/queries/chart";
 import { chartHref } from "@/screens/chart/href";
 import { formatValue } from "@/lib/format";
@@ -16,13 +17,11 @@ import { Segmented } from "@/ui/Segmented";
 import { getTrendView, isTrendViewKey, priorLabel, type TrendViewKey, type TrendViewVM } from "@/queries/trendView";
 import { useScreen } from "@/screens/useScreen";
 import { STAT_ICON } from "@/screens/_lib/view";
-import { ADD_ACTIVITY_INFO } from "@/screens/_lib/info";
 import { BreakdownBar } from "@/ui/metrics/BreakdownBar";
 import { LABEL, StatusChip, ValueUnit } from "@/ui/metrics/primitives";
 import { TrendLegend } from "@/ui/metrics/TrendLegend";
 import { DetailShell } from "@/ui/shells/DetailShell";
 import { EmptyState } from "@/ui/shells/EmptyState";
-import { InfoCardTrigger } from "@/ui/shells/InfoButton";
 import { ActionLink, SectionShell } from "@/ui/shells/SectionShell";
 import { useSelectedDay } from "@/ui/shells/DateSwitcher";
 import { Text } from "@/ui/Text";
@@ -64,7 +63,7 @@ export default function TrendViewScreen() {
             onSelect={(k) => router.setParams({ key: k, p: "" })}
           />
           <Headline vm={vm} />
-          <Text className="text-[17px] font-medium leading-6">{vm.verdict}</Text>
+          <Text className="text-heading font-medium">{vm.verdict}</Text>
           <View className="min-w-0">
             <TrendLegend chart={vm.chart} series={vm.series} typical={!!vm.typical} />
             <TrendViewChart
@@ -91,7 +90,7 @@ export default function TrendViewScreen() {
             {!!vm.footnote && (
               <View className="mt-3 flex-row items-start gap-2">
                 <View className="mt-0.5"><Icon icon={Info} size={16} tone="muted-foreground" strokeWidth={2} /></View>
-                <Text className="flex-1 text-[13px] leading-5 text-muted-foreground">{vm.footnote}</Text>
+                <Text className="flex-1 text-meta text-muted-foreground">{vm.footnote}</Text>
               </View>
             )}
           </View>
@@ -100,14 +99,14 @@ export default function TrendViewScreen() {
           {!!vm.actions.goal && (
             <Press accessibilityRole="link" activeScale={0.96} onPress={() => (haptic.tap(), push("/settings?s=goals"))} className={CARD_BUTTON}>
               <Icon icon={Target} size={20} tone="foreground" strokeWidth={2} />
-              <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em]">{vm.actions.goal}</Text>
+              <Text className="text-meta font-medium tracking-normal">{vm.actions.goal}</Text>
             </Press>
           )}
           {vm.actions.addActivity && (
-            <InfoCardTrigger info={ADD_ACTIVITY_INFO} activeScale={0.96} className={CARD_BUTTON}>
+            <Press accessibilityRole="link" activeScale={0.96} onPress={() => (haptic.tap(), push(workoutLogHref({ type: key === "strength" ? "strength" : undefined })))} className={CARD_BUTTON}>
               <Icon icon={Plus} size={20} tone="foreground" strokeWidth={2} />
-              <Text className="text-[13px] font-bold uppercase leading-4 tracking-[0.1em]">{t("addActivity")}</Text>
-            </InfoCardTrigger>
+              <Text className="text-meta font-medium tracking-normal">{t("addActivity")}</Text>
+            </Press>
           )}
         </View>
       }
@@ -116,7 +115,7 @@ export default function TrendViewScreen() {
         <SectionShell key="about" variant="card" title={vm.about.title}>
           <View className="gap-3">
             {vm.about.body.map((para) => (
-              <Text key={para} className="text-[15px] leading-[22px] text-foreground-secondary">{para}</Text>
+              <Text key={para} className="text-body text-foreground-secondary">{para}</Text>
             ))}
           </View>
         </SectionShell>,
@@ -133,7 +132,7 @@ function Headline({ vm }: { vm: TrendViewVM }) {
     <View className="flex-row items-start gap-x-3">
       <View className="min-w-0 flex-1">
         <Text className={cn(LABEL, "text-muted-foreground")}>{vm.caption}</Text>
-        <ValueUnit value={formatValue(vm.format, vm.value)} unit={vm.format === "duration" ? "hr" : vm.unit} className="font-numeric text-[34px] font-bold leading-10" fit />
+        <ValueUnit value={formatValue(vm.format, vm.value)} unit={vm.format === "duration" ? "hr" : vm.unit} className="font-numeric text-display font-bold leading-10" fit />
         {vm.change !== null && (
           <StatusChip tone={vm.tone === "good" ? "optimal" : vm.tone === "bad" ? "warning" : "neutral"} delta={vm.change > 0 ? "up" : vm.change < 0 ? "down" : "flat"} className="mt-1">
             {Math.abs(vm.change)}% {priorLabel(vm.range)}
@@ -147,7 +146,7 @@ function Headline({ vm }: { vm: TrendViewVM }) {
         </View>
         <View accessibilityRole="toolbar" accessibilityLabel={t("period")} className="flex-row items-center gap-1">
           <PeriodStep dir="prev" enabled={vm.canPrev} onPress={() => go({ p: vm.offset + 1 })} className={arrow} color={c.foreground} dim={c["muted-foreground"]} />
-          <Text className="whitespace-nowrap font-numeric text-[13px] font-bold uppercase leading-4 tracking-[0.06em] tabular-nums">{vm.period}</Text>
+          <Text className="whitespace-nowrap font-numeric text-meta font-medium tracking-normal tabular-nums">{vm.period}</Text>
           <PeriodStep dir="next" enabled={vm.offset > 0} onPress={() => go({ p: vm.offset - 1 })} className={arrow} color={c.foreground} dim={c["muted-foreground"]} />
         </View>
       </View>

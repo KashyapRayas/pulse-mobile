@@ -1,15 +1,10 @@
 // The Health screens' info-card copy, from pulse's pages, reworded for the Pulse engine. The web's <p> is a <Text> styled as
 // the info card's body (the same as src/screens/_lib/info.tsx's, which does not export it). Each card is an object of
 // getters, so the text resolves when the card opens, in the language then in use.
-import type { ReactNode } from "react";
 import { View } from "react-native";
 import { i18n } from "@/i18n/config";
-import { Text } from "@/ui/Text";
+import { P } from "@/ui/Prose";
 import type { InfoContent } from "@/ui/shells/InfoButton";
-
-function P({ children }: { children: ReactNode }) {
-  return <Text className="text-[15px] leading-[22px] text-foreground-body">{children}</Text>;
-}
 
 export const MONITOR_INFO: InfoContent = {
   get title() {

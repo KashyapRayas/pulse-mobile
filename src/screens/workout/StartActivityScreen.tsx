@@ -1,6 +1,7 @@
 // Start an activity `/workout/start` (docs/workout-tracker/whoop-ui.md § Pre-start, reference/prestart-android.jpg):
 // X, the sport and a caret over a dark blue gradient; the live heart rate in a blue bubble that beats with it; a white
 // sheet with the Strain Target row and the START ACTIVITY pill. The caret opens the picker.
+import { valueRange } from "@/lib/format";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Animated, Linking, ScrollView, TextInput, useWindowDimensions, View } from "react-native";
 import { Switch } from "@/screens/settings/controls";
@@ -11,6 +12,7 @@ import { ChevronDown, ChevronUp, Heart, Search, X } from "lucide-react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { arcPath } from "@/ui/charts/geometry";
 import { Gradient } from "@/ui/Gradient";
+import { HeaderButton } from "@/ui/shells/Header";
 import { Press } from "@/ui/Press";
 import { Text } from "@/ui/Text";
 import { queryCtx, useApp } from "@/state/app";
@@ -25,6 +27,7 @@ import { workoutNativeAvailable } from "../../../modules/pulse-workouts";
 import { useTheme } from "@/ui/theme";
 import { cn } from "@/ui/cn";
 import { ACTIVITY_GLYPH, activityName, CAPS, usePulse } from "./activityKit";
+import { TYPE } from "@/ui/type";
 
 export function StartActivityScreen() {
   const { t } = useTranslation("workouts");
@@ -33,7 +36,7 @@ export function StartActivityScreen() {
   const state = useSyncExternalStore(workoutRecorder.subscribe, workoutRecorder.getSnapshot, workoutRecorder.getSnapshot);
   const band = useLiveBle();
   const profile = useApp((s) => s.profile);
-  const recent = useMemo(() => [...new Set(state.history.map((w) => w.type))].slice(0, 4), [state.history]);
+  const recent = useMemo(() => [...new Set(state.history.filter((w) => !w.manual).map((w) => w.type))].slice(0, 4), [state.history]);
   // The last sport by default, as WHOOP opens on the most recent one.
   const [picked, setPicked] = useState<WorkoutType | null>(null);
   const type = picked ?? recent[0] ?? "walk";
@@ -81,14 +84,15 @@ export function StartActivityScreen() {
     <View className="flex-1 bg-background">
       <Gradient from={c["strain-band-4"]} to={c.background} angle="y" />
       {/* Header: X, the sport and its caret (the picker). */}
-      <View className="bg-background" style={{ paddingTop: insets.top }}>
-        <View className="h-16 flex-row items-center px-4">
-          <Press accessibilityRole="button" accessibilityLabel={t("start.close")} onPress={() => router.back()} hitSlop={12} className="mr-5">
-            <X size={28} color={c.foreground} strokeWidth={2} />
-          </Press>
+      {/* Clear over the gradient, so the blue runs up under the status bar with no band; solid while the picker shows. */}
+      <View className={picking ? "bg-background" : undefined} style={{ paddingTop: insets.top }}>
+        <View className="h-16 flex-row items-center gap-3 px-3">
+          <HeaderButton accessibilityRole="button" accessibilityLabel={t("start.close")} onPress={() => router.back()}>
+            <X size={22} color={c.foreground} strokeWidth={2} />
+          </HeaderButton>
           <Press accessibilityRole="button" accessibilityLabel={t("start.choose", { name: activityName(type) })} onPress={() => setPicking((p) => !p)} className="flex-1 flex-row items-center">
             <Glyph size={26} color={c.foreground} strokeWidth={2} />
-            <Text className={cn("ml-3 flex-1 text-[15px] text-foreground", CAPS)}>{activityName(type)}</Text>
+            <Text className={cn("ml-3 flex-1 text-body text-foreground", CAPS)}>{activityName(type)}</Text>
             {picking ? <ChevronUp size={24} color={c.foreground} /> : <ChevronDown size={24} color={c.foreground} />}
           </Press>
         </View>
@@ -105,7 +109,7 @@ export function StartActivityScreen() {
                 <Heart size={22} color={c["on-strain"]} fill={c["on-strain"]} />
                 <Text className="font-numeric font-bold text-on-strain" style={{ fontSize: disc * 0.36, lineHeight: disc * 0.42 }}>{live ? band.bpm : "--"}</Text>
                 {/* The zone, as the live Heart Rate tab's disc shows it. */}
-                {live && start && <Text className="text-[13px] font-semibold text-on-strain/80">{t("live.zone", { zone: zonePosition(band.bpm!, start.strainSetup.maxHr).zone })}</Text>}
+                {live && start && <Text className="text-meta font-semibold text-on-strain/80">{t("live.zone", { zone: zonePosition(band.bpm!, start.strainSetup.maxHr).zone })}</Text>}
               </View>
             </Animated.View>
             {!live && <Connect band={band} />}
@@ -113,20 +117,20 @@ export function StartActivityScreen() {
 
           {/* The sheet, on Pulse's card: the Strain Target row, then START ACTIVITY. */}
           <View className="rounded-t-3xl bg-card" style={{ paddingBottom: insets.bottom + 16 }}>
-            <View className="items-center pt-2.5"><View className="h-1 w-10 rounded-full bg-foreground/20" /></View>
+            <View className="items-center pt-3"><View className="h-1 w-10 rounded-full bg-foreground/20" /></View>
             <View className="mx-4 mt-3 h-16 flex-row items-center rounded-2xl bg-secondary px-4">
               <TargetRing value={target?.[0] ?? null} on={targetOn} />
               <View className="ml-3 flex-1">
-                <Text className={cn("text-[12px] text-muted-foreground", CAPS)}>{t("start.strainTarget")}</Text>
-                <Text className="font-numeric text-[20px] font-bold leading-6 tabular-nums text-foreground">{target ? `${Math.round(target[0])}–${Math.round(target[1])}%` : "--"}</Text>
+                <Text className={cn("text-caption text-muted-foreground", CAPS)}>{t("start.strainTarget")}</Text>
+                <Text className="font-numeric text-value font-bold leading-6 tabular-nums text-foreground">{target ? valueRange(Math.round(target[0]), `${Math.round(target[1])}%`) : "--"}</Text>
               </View>
               <Switch value={targetOn && !!target} disabled={!target} onValueChange={setTargetOn} label={t("start.strainTarget")} />
             </View>
             <View className="px-4 pt-4">
-              {!!state.error && <Text accessibilityLiveRegion="assertive" className="mb-3 text-center text-[13px] text-destructive">{t(`recorder.errors.${state.error}`, { defaultValue: t("recorder.errors.commandFailed") })}</Text>}
-              {state.error === "notificationPermission" && <Press onPress={() => void Linking.openSettings()} className="mb-3 items-center"><Text className={cn("text-[12px] text-strain", CAPS)}>{t("recorder.notificationSettings")}</Text></Press>}
+              {!!state.error && <Text accessibilityLiveRegion="assertive" className="mb-3 text-center text-meta text-destructive">{t(`recorder.errors.${state.error}`, { defaultValue: t("recorder.errors.commandFailed") })}</Text>}
+              {state.error === "notificationPermission" && <Press onPress={() => void Linking.openSettings()} className="mb-3 items-center"><Text className={cn("text-caption text-strain", CAPS)}>{t("recorder.notificationSettings")}</Text></Press>}
               <Press accessibilityRole="button" disabled={!ready} onPress={() => void begin()} className={cn("h-14 items-center justify-center rounded-full bg-strain", !ready && "opacity-45")}>
-                <Text className={cn("text-[14px] text-on-strain", CAPS)}>{t(state.busy ? "start.starting" : "start.start")}</Text>
+                <Text className={cn("text-meta text-on-strain", CAPS)}>{t(state.busy ? "start.starting" : "start.start")}</Text>
               </Press>
             </View>
           </View>
@@ -156,16 +160,16 @@ function Connect({ band }: { band: ReturnType<typeof useLiveBle> }) {
   const busy = band.status === "connecting" || band.status === "scanning";
   return (
     <View className="mt-8 w-full items-center gap-3 px-8">
-      <Text className="text-center text-[13px] leading-5 text-muted-foreground">{band.status === "connecting" ? t("start.connecting") : t("recorder.sharingHint")}</Text>
+      <Text className="text-center text-meta text-muted-foreground">{band.status === "connecting" ? t("start.connecting") : t("recorder.sharingHint")}</Text>
       {known.map((d) => (
         <Press key={d.id} accessibilityRole="button" disabled={busy} onPress={() => void band.connect(d.id)} className={cn("h-11 w-full items-center justify-center rounded-full border border-foreground", busy && "opacity-50")}>
-          <Text className={cn("text-[13px] text-foreground", CAPS)}>{d.name ?? t("recorder.sensor")}</Text>
+          <Text className={cn("text-meta text-foreground", CAPS)}>{d.name ?? t("recorder.sensor")}</Text>
         </Press>
       ))}
       <Press accessibilityRole="button" disabled={busy} onPress={() => void band.scan()} className="h-11 items-center justify-center px-4">
-        <Text className={cn("text-[13px] text-strain", CAPS)}>{t(band.status === "scanning" ? "recorder.scanning" : "recorder.findSensor")}</Text>
+        <Text className={cn("text-meta text-strain", CAPS)}>{t(band.status === "scanning" ? "recorder.scanning" : "recorder.findSensor")}</Text>
       </Press>
-      {!!band.error && <Text className="text-center text-[13px] text-destructive">{band.error}</Text>}
+      {!!band.error && <Text className="text-center text-meta text-destructive">{band.error}</Text>}
     </View>
   );
 }
@@ -181,7 +185,7 @@ function Picker({ type, recent, onPick }: { type: WorkoutType; recent: WorkoutTy
     <ScrollView className="flex-1 bg-background" keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
       <View className="mx-4 mt-3 h-11 flex-row items-center rounded-xl bg-card px-3">
         <Search size={18} color={c["muted-foreground"]} />
-        <TextInput value={q} onChangeText={setQ} placeholder={t("start.search")} placeholderTextColor={c["muted-foreground"]} className="ml-2 flex-1 text-[16px] text-foreground" accessibilityLabel={t("start.search")} />
+        <TextInput value={q} onChangeText={setQ} placeholder={t("start.search")} placeholderTextColor={c["muted-foreground"]} className="ml-2 flex-1 text-body text-foreground" accessibilityLabel={t("start.search")} />
       </View>
       {!q && recent.length > 0 && <><PickerHeading label={t("start.recent")} />{recent.map((k) => <PickerRow key={`r-${k}`} k={k} on={k === type} onPick={onPick} />)}</>}
       <PickerHeading label={t("start.all")} />
@@ -196,7 +200,7 @@ function PickerRow({ k, on, onPick }: { k: WorkoutType; on: boolean; onPick: (t:
   return (
     <Press accessibilityRole="button" accessibilityState={{ selected: on }} onPress={() => onPick(k)} className="h-14 flex-row items-center px-5">
       <View className="w-9 items-center"><Glyph size={24} color={on ? c.strain : c.foreground} strokeWidth={2} /></View>
-      <Text className={cn("ml-4 text-[14px]", CAPS, on ? "text-strain" : "text-foreground")}>{activityName(k)}</Text>
+      <Text className={cn("ml-4 text-meta", CAPS, on ? "text-strain" : "text-foreground")}>{activityName(k)}</Text>
     </Press>
   );
 }
@@ -204,8 +208,7 @@ function PickerRow({ k, on, onPick }: { k: WorkoutType; on: boolean; onPick: (t:
 function PickerHeading({ label }: { label: string }) {
   return (
     <View className="mt-3 flex-row items-center px-5">
-      <Text className={cn("text-[11px] text-muted-foreground", CAPS)}>{label}</Text>
-      <View className="ml-3 h-px flex-1 bg-border" />
+      <Text accessibilityRole="header" className={TYPE.group}>{label}</Text>
     </View>
   );
 }

@@ -185,9 +185,9 @@ describe("text", () => {
     const ds = ["2025-12-30", "2026-01-02"];
     expect(pointLabels("daily", [0, 1], ds, "2026-10-07")).toEqual(["Tue, Dec 30, 2025", "Fri, Jan 2"]);
     expect(pointLabels("day", [60, 845], null, "2026-10-07")).toEqual(["01:00", "14:05"]);
-    expect(windowText("daily", -0.5, 1.5, ds, "2026-10-07")).toBe("Dec 30, 2025 – Jan 2, 2026");
-    expect(windowText("daily", 0, 1, ["2026-09-03", "2026-10-07"], "2026-10-07")).toBe("Sep 3 – Oct 7");
-    expect(windowText("day", 360, 870, null, "2026-10-07")).toBe("06:00 – 14:30");
+    expect(windowText("daily", -0.5, 1.5, ds, "2026-10-07")).toBe("Dec 30, 2025 to Jan 2, 2026");
+    expect(windowText("daily", 0, 1, ["2026-09-03", "2026-10-07"], "2026-10-07")).toBe("Sep 3 to Oct 7");
+    expect(windowText("day", 360, 870, null, "2026-10-07")).toBe("06:00 to 14:30");
   });
 });
 
@@ -243,7 +243,7 @@ describe("day views", () => {
       { stage: "deep" as const, from: -20, to: 30 },
       { stage: "rem" as const, from: 35, to: 70 },
     ];
-    expect(stageNotes([-80, -60, -21, 0, 32, 40, 80], stages, -65, 70)).toEqual(["Before sleep", "Light · 23:00–23:40", "Light · 23:00–23:40", "Deep · 23:40–00:30", "", "REM · 00:35–01:10", "After waking"]);
+    expect(stageNotes([-80, -60, -21, 0, 32, 40, 80], stages, -65, 70)).toEqual(["Before sleep", "Light, 23:00 to 23:40", "Light, 23:00 to 23:40", "Deep, 23:40 to 00:30", "", "REM, 00:35 to 01:10", "After waking"]);
   });
 
   it("reads a running total by what it gained and where it stood", () => {
@@ -267,7 +267,7 @@ describe("day views", () => {
       { kind: "workout" as const, label: "Ride", from: 1080, to: 1175 },
     ];
     expect(inWorkouts([410, 420, 440, 465, 470], spans)).toEqual([false, true, true, true, false]);
-    expect(workoutNotes([300, 440, 1100], spans)).toEqual([null, "Run · 45 min", "Ride · 1 h 35 min"]);
+    expect(workoutNotes([300, 440, 1100], spans)).toEqual([null, "Run, 45 min", "Ride, 1 h 35 min"]);
     expect(workoutWindow(spans, { min: 0, max: 1440 })).toEqual({ start: 360, span: 875 });
     // A late workout's window stays inside the day; no workouts, no window.
     expect(workoutWindow([{ kind: "workout", label: "Run", from: 1400, to: 1420 }], { min: 0, max: 1440 })).toEqual({ start: 1300, span: 140 });
@@ -277,8 +277,8 @@ describe("day views", () => {
   });
 
   it("ends a whole day at 24:00: the window, the last point's readout and the axis' last tick", () => {
-    expect(windowText("day", 0, 1440, null, "2026-10-07")).toBe("00:00 – 24:00");
-    expect(windowText("day", -65, 430, null, "2026-10-07")).toBe("22:55 – 07:10");
+    expect(windowText("day", 0, 1440, null, "2026-10-07")).toBe("00:00 to 24:00");
+    expect(windowText("day", -65, 430, null, "2026-10-07")).toBe("22:55 to 07:10");
     expect(pointLabels("day", [0, 845, 1440], null, "2026-10-07")).toEqual(["00:00", "14:05", "24:00"]);
     const sixHourly = levelsFor("day", null, 0, 1440).find((l) => l.step === 360)!;
     expect(sixHourly.ticks.map((t) => t.text)).toEqual(["00:00", "06:00", "12:00", "18:00", "24:00"]);

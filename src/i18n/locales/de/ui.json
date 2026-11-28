@@ -90,7 +90,7 @@
     "nap": "Nickerchen",
     "sleep": "Schlaf",
     "sleepAria": "{{name}}, {{duration}}, {{start}} bis {{end}}",
-    "distanceNoStrain": "{{distance}} · Kein Strain",
+    "distanceNoStrain": "{{distance}}, Kein Strain",
     "noStrainReason": "Kein Strain: nicht genug Herzfrequenzdaten",
     "spokenDistance": ", {{distance}}",
     "spokenDistancePace": ", {{distance}} mit {{pace}}",
@@ -105,7 +105,7 @@
     "liveFrom": "Live von {{name}}",
     "liveFromBand": "Live vom Band",
     "reconnecting": "Verbinde erneut…",
-    "pill": "Live · {{name}}",
+    "pill": "Live, {{name}}",
     "band": "Armband",
     "traceAria": "Live-Herzfrequenz der letzten 2 Minuten",
     "traceCaption": "Letzte 2 Min.",
@@ -281,8 +281,8 @@
     "strainTitle": "So funktioniert Strain",
     "strainIntro": "Strain ist die Belastung deines Tages in Prozent: 0 bis 100 an den meisten Tagen, über 100 an einem sehr großen Tag. Er baut sich aus der Zeit in höheren Herzfrequenzzonen und den Schritten im Wachzustand auf, und jeder Punkt ist schwerer zu verdienen als der vorige.",
     "strainLight": "Leicht: bis 40%",
-    "strainModerate": "Moderat: 41 - 60%",
-    "strainStrenuous": "Anstrengend: 61 - 79%",
+    "strainModerate": "Moderat: 41 bis 60%",
+    "strainStrenuous": "Anstrengend: 61 bis 79%",
     "strainAllOut": "Volle Kraft: 80% und mehr",
     "strainNote": "Dein Strain Target ist ein Bereich für heute, abgeleitet aus deiner Recovery und deinem jüngsten Training Load. Der heutige Strain ist eine laufende Summe bis Mitternacht.",
     "strainTargetTitle": "Strain Target",
@@ -299,10 +299,7 @@
     "energyLow": "1-33: wird knapp.",
     "strainRecoveryTitle": "Strain & Recovery",
     "strainRecovery1": "Deine letzten 7 Tage nebeneinander: Day Strain in Blau auf der linken Skala, von 0 bis 100%, und Recovery auf der rechten Skala, von 0 bis 100%.",
-    "strainRecovery2": "Hoher Strain an einem Tag zeigt sich oft als niedrigere Recovery am nächsten Morgen. Tage ohne Score bleiben als Lücken.",
-    "addActivityTitle": "Aktivität hinzufügen",
-    "addActivity1": "Pulse liest deine Workouts über Health Connect aus Fitbit, daher kann hier keines hinzugefügt werden.",
-    "addActivity2": "Starte oder erfasse das Workout in der Fitbit-App. Es erscheint nach der nächsten Synchronisierung mit seinem Strain in deinen Aktivitäten."
+    "strainRecovery2": "Hoher Strain an einem Tag zeigt sich oft als niedrigere Recovery am nächsten Morgen. Tage ohne Score bleiben als Lücken."
   },
   "legend": {
     "todayVs": "<b>Heute</b> vs. {{period}}"
@@ -335,17 +332,17 @@
     "topUp": "Nachatmen",
     "exhaleSlowly": "Langsam ausatmen",
     "resonanceTitle": "Resonanz",
-    "resonanceSubtitle": "5,5 Atemzüge pro Minute · gleichmäßig ein und aus",
+    "resonanceSubtitle": "5,5 Atemzüge pro Minute, gleichmäßig ein und aus",
     "resonanceEdu": "Langsames, gleichmäßiges Atmen mit etwa 5,5 Atemzügen pro Minute, nahe dem Resonanztempo der meisten Menschen: Das Herz schlägt beim Einatmen schneller und beim Ausatmen langsamer, und bei diesem Tempo ist dieser Ausschlag am größten. Ein stetiger Weg, um zur Ruhe zu kommen.",
     "boxTitle": "Box 4-4-4-4",
-    "boxSubtitle": "Quadratatmung · ruhiger Fokus",
+    "boxSubtitle": "Quadratatmung, ruhiger Fokus",
     "boxEdu": "Box-Atmung (Quadratatmung): einatmen, halten, ausatmen, halten, jeweils 4 Sekunden. Ein strukturierter Rhythmus, oft für Fokus und Beruhigung unter Stress genutzt. Setz dich bequem hin und halte die Zeiten gleich.",
     "p478Title": "4-7-8",
-    "p478Subtitle": "Einatmen 4 · halten 7 · ausatmen 8",
+    "p478Subtitle": "Einatmen 4, halten 7, ausatmen 8",
     "p478Edu": "Klassisch 4-7-8: ruhig durch die Nase 4 einatmen, 7 halten, lang durch den Mund 8 ausatmen. Oft zum Runterkommen genutzt. Beginne mit ein paar Durchgängen; hör auf, wenn dir schwindelig wird.",
     "p478Caution": "Wenn dir schwindelig oder unwohl wird, hör auf und atme normal.",
     "sighTitle": "Physiologischer Seufzer",
-    "sighSubtitle": "Zweimal einatmen · einmal lang ausatmen",
+    "sighSubtitle": "Zweimal einatmen, einmal lang ausatmen",
     "sighEdu": "Atme durch die Nase ein, nimm einen zweiten kurzen Zug Luft, um die Lunge zu füllen, und lass dann alles langsam durch den Mund los. Fünf Minuten dieses zyklischen Seufzens am Tag senkten in einer Stanford-Studie Stress und Ruheatemfrequenz (Balban et al., 2023)."
   },
   "guidance": {
@@ -402,7 +399,7 @@
       "within": "innerhalb"
     },
     "noData": "Keine {{label}}-Daten {{period}}.",
-    "typical": "Dein durchschnittlicher {{label}} lag in diesen 7 Tagen {{where}} seines typischen Bereichs ({{lo}} - {{hi}}).",
+    "typical": "Dein durchschnittlicher {{label}} lag in diesen 7 Tagen {{where}} seines typischen Bereichs ({{lo}} bis {{hi}}).",
     "weeklyWeek": "In diesen 7 Tagen lag deine {{label}}-Summe ({{value}}) {{cmp}} deiner vorherigen 7-Tage-Summe von {{prior}}.",
     "weeklyWeekNoPrior": "In diesen 7 Tagen lag deine {{label}}-Summe bei {{value}}.",
     "weekly": "Dein durchschnittlicher wöchentlicher {{label}} {{period}} ({{value}}) lag {{cmp}} {{priorName}} von {{prior}}.",
@@ -477,5 +474,9 @@
     "bootDatabase": "Die Datenbank konnte nicht geöffnet werden: {{error}}",
     "profileTitle": "Profil"
   },
-  "trainingLoad": "Training Load"
+  "trainingLoad": "Training Load",
+  "prose": {
+    "more": "Mehr",
+    "less": "Weniger"
+  }
 }

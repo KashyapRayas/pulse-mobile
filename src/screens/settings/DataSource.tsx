@@ -27,6 +27,7 @@ import { toast } from "@/ui/Toast";
 import { useTheme } from "@/ui/theme";
 import { DURATION } from "@/ui/motion";
 import { BODY, ConfirmDialog, HINT, ProgressBar, ROW_LABEL, ROW_RULE } from "./controls";
+import { LineIcon } from "@/ui/LineIcon";
 
 /** Health Connect's record types as Settings lists them: the key of each label in `settings:recordType`. The words resolve at use. */
 const TYPE_KEY = {
@@ -93,7 +94,7 @@ function DataTypes({ perms }: { perms: PermissionState }) {
       >
         <Text className={ROW_LABEL}>{t("source.dataTypes")}</Text>
         <View className="shrink flex-row items-center gap-2">
-          <Text className={cn("text-[13px] leading-[18px]", missing ? "text-warning-text" : "text-muted-foreground")}>{summary}</Text>
+          <Text className={cn("text-meta", missing ? "text-warning-text" : "text-muted-foreground")}>{summary}</Text>
           <Animated.View style={chevron}>
             <Icon icon={ChevronDown} size={16} tone="muted-foreground" strokeWidth={2} />
           </Animated.View>
@@ -103,7 +104,7 @@ function DataTypes({ perms }: { perms: PermissionState }) {
         <View className="border-t border-border">
           {rows.map((r, i) => (
             <View key={r.key} accessible accessibilityLabel={t("source.rowLabel", { label: r.label, state: r.ok ? t("source.allowed") : t("source.notAllowed") })} className={cn("min-h-12 flex-row items-center gap-3 py-2", i > 0 && ROW_RULE)}>
-              <Text numberOfLines={1} className="min-w-0 flex-1 text-[15px] leading-[22px]">
+              <Text numberOfLines={1} className="min-w-0 flex-1 text-body">
                 {r.label}
               </Text>
               <Text className={cn(CAPTION, "shrink-0", !r.ok && "text-warning-text")}>{r.ok ? t("source.allowed") : t("source.notAllowed")}</Text>
@@ -116,7 +117,7 @@ function DataTypes({ perms }: { perms: PermissionState }) {
   );
 }
 
-const LABEL = "text-[13px] font-bold uppercase tracking-[0.1em]";
+const LABEL = "text-meta font-medium tracking-normal";
 
 function Spinner({ spinning }: { spinning: boolean }) {
   const turn = useSharedValue(0);
@@ -165,7 +166,7 @@ function SyncProgress() {
   if (!progress || progress.total <= 0) return null;
   return (
     <View accessibilityLiveRegion="polite" className="mt-4 gap-2">
-      <Text className="text-[15px] leading-[22px] tabular-nums">
+      <Text className="text-body tabular-nums">
         {t("source.stepProgress", { step: stepLabel(progress.step), percent: Math.floor((progress.done / progress.total) * 100) })}
       </Text>
       <ProgressBar value={(progress.done / progress.total) * 100} label={t("source.syncProgress")} />
@@ -230,9 +231,9 @@ export function DataSource({ now }: { now: number }) {
         <View accessibilityElementsHidden className="size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-fill-faint">
           {sample ? <BandIcon size={24} color={c.foreground} /> : <HealthConnectMark size={26} />}
         </View>
-        <View className="min-w-0 flex-1">
-          <Text className="text-[15px] font-semibold leading-[22px]">{label}</Text>
-          <Text numberOfLines={1} className={cn("text-[13px] leading-[18px] tabular-nums text-muted-foreground", state.tone)}>
+        <View className="min-w-0 flex-1 gap-1">
+          <Text className="text-body font-semibold">{label}</Text>
+          <Text numberOfLines={1} className={cn("text-meta tabular-nums text-muted-foreground", state.tone)}>
             {state.line}
           </Text>
         </View>
@@ -336,9 +337,9 @@ export function DataSource({ now }: { now: number }) {
 function Callout({ title, body, children }: { title: string; body: string; children?: ReactNode }) {
   return (
     <View accessibilityRole="summary" className="mt-4 rounded-xl bg-foreground/[0.04] p-4">
-      <View className="flex-row items-center gap-2">
-        <Icon icon={TriangleAlert} size={16} tone="warning-text" strokeWidth={2} />
-        <Text accessibilityRole="header" className="shrink text-[15px] font-semibold leading-[22px]">
+      <View className="flex-row items-start gap-2">
+        <LineIcon step="body"><Icon icon={TriangleAlert} size={16} tone="warning-text" strokeWidth={2} /></LineIcon>
+        <Text accessibilityRole="header" className="shrink text-body font-semibold">
           {title}
         </Text>
       </View>

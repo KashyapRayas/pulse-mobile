@@ -6,7 +6,7 @@ import { View } from "react-native";
 import { parseProse, type Span } from "@/coach/prose";
 import { Text } from "@/ui/Text";
 
-const BODY = "text-[15px] leading-6 text-foreground";
+const BODY = "text-body text-foreground";
 
 const Spans = ({ spans }: { spans: Span[] }) => (
   <>
@@ -22,7 +22,7 @@ const Spans = ({ spans }: { spans: Span[] }) => (
   </>
 );
 
-/** `space-y-3 text-[15px] leading-6`; lists `space-y-1.5`, faint markers. */
+/** `space-y-3 text-body`; lists `space-y-1.5`, faint markers. */
 export function Prose({ text }: { text: string }) {
   const blocks = useMemo(() => parseProse(text), [text]);
   return (
@@ -36,7 +36,7 @@ export function Prose({ text }: { text: string }) {
           <View key={i} className="gap-1.5">
             {b.items.map((item, k) => (
               <View key={k} className="flex-row">
-                <Text className={b.kind === "ul" ? "w-5 text-[15px] leading-6 text-muted-foreground" : "w-6 font-numeric text-[15px] font-semibold leading-6 text-muted-foreground"}>{b.kind === "ul" ? "•" : `${k + 1}.`}</Text>
+                <Text className={b.kind === "ul" ? "w-5 text-body text-muted-foreground" : "w-6 font-numeric text-body font-semibold text-muted-foreground"}>{b.kind === "ul" ? "•" : `${k + 1}.`}</Text>
                 <Text selectable className={`${BODY} flex-1`}>
                   <Spans spans={item} />
                 </Text>

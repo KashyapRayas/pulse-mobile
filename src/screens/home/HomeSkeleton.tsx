@@ -16,6 +16,8 @@ import { SectionShell } from "@/ui/shells/SectionShell";
 import { Skeleton, SkeletonText } from "@/ui/Skeleton";
 import { ENERGY_INFO, STRAIN_RECOVERY_INFO, TONIGHT_INFO } from "../_lib/info";
 import { statIcon } from "../_lib/view";
+import { useSelectedDay } from "@/ui/shells/DateSwitcher";
+import { HomeHeaderActions } from "./HeaderActions";
 
 const rows = (n: number, Row: (i: number) => React.ReactNode) => Array.from({ length: n }, (_, i) => <Fragment key={i}>{Row(i)}</Fragment>);
 
@@ -46,12 +48,14 @@ function InsightSkeleton() {
   return (
     <View accessibilityElementsHidden className="pb-2">
       <View className="absolute inset-x-5 bottom-0 h-8 rounded-b-2xl bg-card-peek" />
-      <View className={`${CARD_CLASS} gap-0.5 p-5 pr-12`} style={shadow}>
+      <View className={`${CARD_CLASS} gap-1 p-4 pr-12`} style={shadow}>
         <CardFill />
-        <SkeletonText lh={22} fs={16} className="w-40" />
-        <SkeletonText lh={20} fs={15} className="w-full" />
-        <SkeletonText lh={20} fs={15} className="w-2/3" />
-        <SkeletonText lh={20} fs={15} className="w-1/2" />
+        <SkeletonText lh={20} fs={15} className="w-40" />
+        <View>
+          <SkeletonText lh={18} fs={13} className="w-full" />
+          <SkeletonText lh={18} fs={13} className="w-2/3" />
+          <SkeletonText lh={18} fs={13} className="w-1/2" />
+        </View>
         <View className="absolute right-2 top-2 h-12 w-6 rounded-lg bg-fill-hover" />
       </View>
     </View>
@@ -61,11 +65,13 @@ function InsightSkeleton() {
 /** `stats`: My Dashboard's chosen metrics (getHome's order), so the skeleton has as many rows as the page will. */
 export function HomeSkeleton({ stats = DASHBOARD_DEFAULT }: { stats?: DashboardKey[] }) {
   const { t } = useTranslation("home");
+  const [day] = useSelectedDay();
   return (
     <PageShell
       loading
       title={t("title")}
       layout="home"
+      headerRight={<HomeHeaderActions d={day} />}
       slots={{
         top: (
           <View accessibilityState={{ busy: true }} className="-mt-2">
@@ -100,9 +106,9 @@ export function HomeSkeleton({ stats = DASHBOARD_DEFAULT }: { stats?: DashboardK
               </View>
               <InsightSkeleton />
             </View>
-            <SectionShell variant="section" title={t("section.myDay")} action={<View accessibilityElementsHidden className="size-[34px] rounded-lg bg-foreground/90" />}>
+            <SectionShell variant="section" title={t("section.myDay")} action={<View accessibilityElementsHidden className="size-10 rounded-full bg-muted" />}>
               <View className="gap-3">
-                <BannerSkeleton />
+                <Skeleton className="h-24 rounded-2xl" />
                 <SectionShell variant="card" title={t("activities.today")} action={ICON_SLOT}>
                   <TimelineSkeleton />
                   <Skeleton className="mt-3 h-12 rounded-xl" />

@@ -52,7 +52,7 @@ export function JournalSkeleton() {
         <SectionShell
           variant="section"
           title={t("page.insights")}
-          action={<Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-foreground-secondary">{t("page.seeAll")}</Text>}
+          action={<Text className="text-caption font-medium tracking-normal text-foreground-secondary">{t("page.seeAll")}</Text>}
         >
           <InsightCardSkeleton action />
         </SectionShell>

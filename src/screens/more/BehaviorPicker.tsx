@@ -5,7 +5,7 @@
 import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import { Check, Search } from "lucide-react-native";
+import { Check, Search, X } from "lucide-react-native";
 import { saveBehaviors } from "@/actions/journal";
 import { i18n } from "@/i18n/config";
 import { MAX_TAGS } from "@/queries/journal";
@@ -21,6 +21,7 @@ import { TaskSection } from "@/ui/shells/TaskPage";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { TextField } from "../settings/controls";
+import { TYPE } from "@/ui/type";
 
 type Tab = "all" | BehaviorCategory | "custom";
 type Item = { key: string; label: string; question: string; category: BehaviorCategory | "custom" };
@@ -65,9 +66,16 @@ export function BehaviorPicker({ tags, initial, selected, onChange }: { tags: Be
         value={query}
         onChangeText={setQuery}
         left={
-          <View className="w-11 justify-center pl-3.5" pointerEvents="none">
+          <View className="w-11 justify-center pl-4" pointerEvents="none">
             <Icon icon={Search} size={20} tone="muted-foreground" strokeWidth={1.75} />
           </View>
+        }
+        right={
+          query ? (
+            <Pressable accessibilityRole="button" accessibilityLabel={t("behaviours.clearSearch")} hitSlop={8} onPress={() => setQuery("")} className="size-11 items-center justify-center">
+              <Icon icon={X} size={18} tone="muted-foreground" strokeWidth={1.75} />
+            </Pressable>
+          ) : undefined
         }
       />
       {/* Category tabs in one scrolling row, the chosen one underlined (journal-04, journal-06). */}
@@ -87,7 +95,7 @@ export function BehaviorPicker({ tags, initial, selected, onChange }: { tags: Be
                 }}
                 className="h-11 justify-center px-2"
               >
-                <Text className={cn("text-xs font-bold uppercase leading-4 tracking-[0.1em]", on ? "text-foreground" : "text-muted-foreground")}>{t.label}</Text>
+                <Text className={cn(TYPE.tab, on ? "text-foreground" : "text-muted-foreground")}>{t.label}</Text>
                 <View className={cn("absolute inset-x-2.5 bottom-1.5 h-0.5 rounded-full bg-foreground", !on && "opacity-0")} />
               </Pressable>
             );
@@ -98,7 +106,7 @@ export function BehaviorPicker({ tags, initial, selected, onChange }: { tags: Be
         <Gradient from={alpha(c["background-mid"], 0)} to={c["background-mid"]} />
       </View>
       </View>
-      {shown.length === 0 && <Text className="py-8 text-center text-[15px] leading-[22px] text-foreground-secondary">{t("behaviours.noMatch", { query: query.trim() })}</Text>}
+      {shown.length === 0 && <Text className="py-8 text-center text-body text-foreground-secondary">{t("behaviours.noMatch", { query: query.trim() })}</Text>}
       {groups.map(
         (g) =>
           g.rows.length > 0 && (
@@ -119,9 +127,9 @@ export function BehaviorPicker({ tags, initial, selected, onChange }: { tags: Be
                       }}
                       className="min-h-16 flex-row items-center gap-4 py-2"
                     >
-                      <View className="min-w-0 flex-1">
-                        <Text className="text-[17px] font-semibold leading-6">{i.label}</Text>
-                        <Text className="text-[15px] leading-[22px] text-muted-foreground">{i.question}</Text>
+                      <View className="min-w-0 flex-1 gap-1">
+                        <Text className={cn(TYPE.rowTitle, "font-medium")}>{i.label}</Text>
+                        <Text className={TYPE.rowSub}>{i.question}</Text>
                       </View>
                       <View className={cn("size-7 items-center justify-center rounded-lg border-2", on ? "border-answer-yes bg-answer-yes" : "border-foreground/80")}>
                         {on && <Icon icon={Check} size={16} tone="on-color" strokeWidth={3} />}

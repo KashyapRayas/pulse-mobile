@@ -20,11 +20,11 @@ export function BehaviorInsights({ chips, href }: { chips: BehaviorChip[]; href:
   if (!chips.length) return null
   return (
     <SectionShell variant="card" title={t("behaviors.title")} info={false} href={href} icon={<Icon icon={Lightbulb} size={20} tone="foreground" />}>
-      <Text className="text-[15px] leading-[22px] text-foreground-secondary">{t("behaviors.body")}</Text>
+      <Text className="text-body text-foreground-secondary">{t("behaviors.body")}</Text>
       <View className="mt-3 flex-row flex-wrap gap-2">
         {chips.map((c) => (
           <View key={c.key} accessible accessibilityLabel={t(SPOKEN[c.effect], { label: c.label })}>
-            <StatusChip tone={TONE[c.effect]} delta={DIR[c.effect]} className="min-h-8 rounded-lg px-3" textClassName="text-[13px]">
+            <StatusChip tone={TONE[c.effect]} delta={DIR[c.effect]} className="min-h-8 rounded-lg px-3" textClassName="text-meta">
               {c.label}
             </StatusChip>
           </View>

@@ -16,9 +16,9 @@ export function SampleCard() {
   return (
     <Card className="mb-6 gap-1 px-4">
       <Text className={LABEL}>{t("sample.title")}</Text>
-      <Text className="text-[13px] leading-[18px] text-foreground-secondary">{t("sample.body")}</Text>
+      <Text className="text-meta text-foreground-secondary">{t("sample.body")}</Text>
       <Press activeOpacity={0.7} accessibilityRole="link" onPress={() => push("/connect")} className="mt-2 min-h-11 flex-row items-center justify-between">
-        <Text className="text-[15px] font-semibold leading-5">{t("sample.connect")}</Text>
+        <Text className="text-body font-semibold">{t("sample.connect")}</Text>
         <Icon icon={ArrowUpRight} size={18} tone="foreground-secondary" strokeWidth={1.75} />
       </Press>
     </Card>

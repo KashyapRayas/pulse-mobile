@@ -204,7 +204,7 @@ export function ExplorerChart(p: ExplorerChartProps) {
   const nameFont = fonts.sans(600, 11);
   const laneFont = fonts.sans(700, 11);
   const timeFont = fonts.num(600, 11);
-  const laneNames = React.useMemo(() => STAGE_ORDER.map((s) => STAGE_NAME[s].toUpperCase()), []);
+  const laneNames = React.useMemo(() => STAGE_ORDER.map((s) => STAGE_NAME[s]), []);
   const laneW = React.useMemo(() => Math.max(...laneNames.map((t) => measure(laneFont, t))), [laneNames, laneFont]);
 
   // --- Layout: the night's lanes need room for their names; a day names its stretches in a lane over the plot ---

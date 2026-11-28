@@ -29,6 +29,7 @@ import { DismissDialog, dismissIsQuiet } from "./DismissDialog";
 import { Slider } from "./Slider";
 import { goBack, push } from "@/ui/navigate";
 import { Press } from "@/ui/Press";
+import { HeaderButton } from "@/ui/shells/Header";
 
 /** A behaviour with the question the check-in asks and its section, from the catalogue (src/lib/behaviors.ts). */
 type Tag = JournalTag & { question: string; section: JournalSection };
@@ -235,8 +236,7 @@ export function CheckInPage() {
         glow
         onClose={close}
         action={
-          <Press
-            activeBg="bg-fill-hover"
+          <HeaderButton
             accessibilityRole="button"
             accessibilityLabel={tr("checkIn.selectBehaviours")}
             onPress={() => {
@@ -244,10 +244,9 @@ export function CheckInPage() {
               picked.current = true;
               push("/more/behaviours");
             }}
-            className="size-11 items-center justify-center rounded-full"
           >
-            <Pencil size={22} color={c.foreground} strokeWidth={1.75} />
-          </Press>
+            <Pencil size={20} color={c.foreground} strokeWidth={1.75} />
+          </HeaderButton>
         }
         done={done ? { title: tr("checkIn.saved"), body: tr("checkIn.savedBody"), onDone: finish } : null}
         footer={
@@ -266,7 +265,7 @@ export function CheckInPage() {
           <Button variant="ghost" size="icon-touch" accessibilityLabel={tr("checkIn.previousDay", { day: formatDay(prev, DAY.long) })} onPress={() => go(prev)}>
             <ChevronLeft size={20} color={c.foreground} strokeWidth={2} />
           </Button>
-          <Text className="min-w-28 text-center text-xs font-bold uppercase leading-4 tracking-[0.1em]">{dayLabel(day, today)}</Text>
+          <Text className="min-w-28 text-center text-caption font-medium tracking-normal">{dayLabel(day, today)}</Text>
           <Button variant="ghost" size="icon-touch" accessibilityLabel={tr("checkIn.nextDay", { day: formatDay(next, DAY.long) })} disabled={next > today} onPress={() => go(next)}>
             <ChevronRight size={20} color={c.foreground} strokeWidth={2} />
           </Button>
@@ -277,7 +276,7 @@ export function CheckInPage() {
           </View>
         )}
         {/* The web caps the line at 16ch; React Native has no ch unit, so 285 px is 16 zeros of Figtree at 30 px. */}
-        <Text className="mt-6 text-[30px] font-semibold leading-9 tracking-[-0.01em]" style={{ maxWidth: 285 }}>
+        <Text className="mt-6 text-display font-semibold leading-9 tracking-[-0.01em]" style={{ maxWidth: 285 }}>
           {heading(day, today)}
         </Text>
 
@@ -286,7 +285,7 @@ export function CheckInPage() {
             <View className="mt-6">
               <FormAlert>
                 <View className="flex-row items-center justify-between gap-3">
-                  <Text className="shrink text-sm leading-5 text-recovery-red-text">{tr("checkIn.loadFailed")}</Text>
+                  <Text className="shrink text-meta text-recovery-red-text">{tr("checkIn.loadFailed")}</Text>
                   <Button variant="secondary" onPress={() => load(day)}>
                     {tr("actions.tryAgain", { ns: "common" })}
                   </Button>
@@ -313,7 +312,7 @@ export function CheckInPage() {
                     return (
                       <View key={t.tag} className="rounded-2xl bg-foreground/[0.07] px-4">
                         <View className="min-h-18 flex-row items-center gap-3 py-3">
-                          <Text className="min-w-0 flex-1 text-[17px] leading-6">{t.question}</Text>
+                          <Text className="min-w-0 flex-1 text-heading">{t.question}</Text>
                           <View accessibilityRole="radiogroup" accessibilityLabel={t.question} className="flex-row gap-2">
                             <Answer kind="no" label={tr("checkIn.no")} on={v === 0} onPress={() => answer(t.tag, v === 0 ? undefined : 0)} />
                             <Answer kind="yes" label={tr("checkIn.yes")} on={v !== undefined && v > 0} onPress={() => answer(t.tag, v !== undefined && v > 0 ? undefined : 1)} />
@@ -323,8 +322,8 @@ export function CheckInPage() {
                         {DETAILS && f && v !== undefined && v > 0 && (
                           <View className="border-t border-border pb-1 pt-3">
                             <View className="flex-row items-baseline justify-between gap-3 px-2">
-                              <Text className="shrink text-[15px] leading-[22px] text-foreground-secondary">{f.question}</Text>
-                              <Text className="font-numeric text-[15px] font-semibold leading-[22px] tabular-nums">{d === undefined ? MISSING : followUpText(f, d)}</Text>
+                              <Text className="shrink text-body text-foreground-secondary">{f.question}</Text>
+                              <Text className="font-numeric text-body font-semibold tabular-nums">{d === undefined ? MISSING : followUpText(f, d)}</Text>
                             </View>
                             <View className="px-2">
                               <Slider label={f.question} valueText={d === undefined ? tr("checkIn.notSet") : followUpText(f, d)} min={f.min} max={f.max} step={f.step} value={d ?? f.min} onChange={(x) => setDetails((s) => ({ ...s, [t.tag]: x }))} />
@@ -337,7 +336,7 @@ export function CheckInPage() {
                 </View>
                 {g.key === "custom" && (
                   <View className="mt-4 gap-2">
-                    <Text className="text-[15px] font-medium leading-[22px]">{tr("checkIn.addTitle")}</Text>
+                    <Text className="text-body font-medium">{tr("checkIn.addTitle")}</Text>
                     <View className="flex-row gap-2">
                       <Input
                         ref={input}
@@ -351,7 +350,7 @@ export function CheckInPage() {
                         onSubmitEditing={() => void add()}
                         placeholder={tr("checkIn.addPlaceholder")}
                         maxLength={32}
-                        className="flex-1 text-base"
+                        className="flex-1 text-body"
                       />
                       {/* "Add" fits beside the field on a phone; the name says what it adds (label in name). */}
                       <Button variant="secondary" disabled={adding || !label.trim()} accessibilityLabel={adding ? undefined : tr("checkIn.addLabel")} onPress={() => void add()}>
@@ -359,7 +358,7 @@ export function CheckInPage() {
                       </Button>
                     </View>
                     {!!addError && (
-                      <Text accessibilityRole="alert" className="text-xs font-medium leading-4 text-recovery-red-text">
+                      <Text accessibilityRole="alert" className="text-caption font-medium text-recovery-red-text">
                         {addError}
                       </Text>
                     )}
@@ -379,7 +378,7 @@ export function CheckInPage() {
               maxLength={2000}
               multiline
               textAlignVertical="top"
-              className="mt-3 min-h-14 w-full rounded-2xl border-border px-4 py-3.5"
+              className="mt-3 min-h-14 w-full rounded-2xl border-border px-4 py-4"
               style={{ lineHeight: 24 }}
             />
           </View>

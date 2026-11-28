@@ -54,6 +54,8 @@ describe("TRIMP", () => {
     const x = 100 / 140;
     expect(trimp([{ bpm: 150, seconds: 3600 }], 50, 190, "male")).toBeCloseTo(0.64 * Math.exp(1.92 * x) * x * 60, 10);
     expect(trimp([{ bpm: 40, seconds: 3600 }], 50, 190, "female")).toBe(0);
+    // Women: k 0.86 with b 1.67 (Morton, Fitz-Clarke & Banister 1990), not the men's 0.64.
+    expect(trimp([{ bpm: 150, seconds: 3600 }], 50, 190, "female")).toBeCloseTo(0.86 * Math.exp(1.67 * x) * x * 60, 10);
     expect(trimp([{ bpm: 150, seconds: 60 }], null, 190, "male")).toBeNull();
   });
   it("sums in doubles in time order (fix 16, fix 18): not a Float32 value", () => {

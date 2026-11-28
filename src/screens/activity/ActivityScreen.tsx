@@ -37,7 +37,7 @@ import { ActivityCoach } from "../coach/ActivityCoach"
 import { coachReady } from "@/coach/providers"
 import { useCoachSetup } from "@/coach/session"
 
-const STAT_LABEL = "text-xs leading-4 font-bold tracking-[0.1em] text-foreground-secondary uppercase"
+const STAT_LABEL = "text-caption font-medium tracking-normal text-foreground-secondary"
 /** The profile, where max heart rate (and so the zones) is set. */
 const HR_SETTINGS = "/settings?s=account"
 
@@ -177,7 +177,7 @@ function HeroStat({ label, value, raw, average, format, valueClass }: { label: s
   return (
     <View>
       <View className="flex-row items-center gap-2">
-        <Text className={cn("font-numeric text-[34px] font-bold leading-none tabular-nums", valueClass)}>{value}</Text>
+        <Text className={cn("font-numeric text-display font-bold leading-none tabular-nums", valueClass)}>{value}</Text>
         {dir && average !== null && (
           <View accessible accessibilityLabel={t("activity.spokenAverage", { value: formatValue(format, average) })}>
             <StatusChip tone="neutral" delta={dir} className="self-center">
@@ -202,7 +202,7 @@ function HeartRateRecovery({ hrr }: { hrr: ActivityVM["hrr"] }) {
   return (
     <View className="gap-3">
       <View className="flex-row flex-wrap items-center gap-3">
-        <ValueUnit value={formatValue("int", hrr.value.value)} unit="bpm" className="font-numeric text-4xl font-bold leading-10 tracking-[-0.01em]" />
+        <ValueUnit value={formatValue("int", hrr.value.value)} unit="bpm" className="font-numeric text-hero font-bold leading-10 tracking-[-0.01em]" />
         <StatusChip tone={hrr.value.tone} className="self-center">{hrr.value.label}</StatusChip>
       </View>
       <Text className={CAPTION}>{t("activity.hrrNote")}</Text>

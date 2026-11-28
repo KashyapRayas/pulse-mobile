@@ -61,7 +61,7 @@ function Tile({ k, vm }: { k: LogKind; vm: LogVM }) {
   const { t: tr } = useTranslation("journal");
   const shadow = useCardStyle();
   const t = tileValue(k, vm);
-  // Short names fit the 96 px tile on one line.
+  // Short names fit the 112 px tile on one line.
   const label = k === "ovulation" || k === "spo2" ? tr(`kindShort.${k}`) : KIND_LABEL[k];
   const name = label.toLocaleLowerCase(i18n.language);
   return (
@@ -70,7 +70,7 @@ function Tile({ k, vm }: { k: LogKind; vm: LogVM }) {
       accessibilityRole="button"
       accessibilityLabel={t ? (t.sub ? tr("tiles.ariaDated", { label, value: t.value, date: t.sub, name }) : tr("tiles.aria", { label, value: t.value, name })) : tr("tiles.log", { name })}
       onPress={() => push(logHref(k, vm))}
-      className={`${CARD_CLASS} h-24 w-24 justify-between p-3`}
+      className={`${CARD_CLASS} h-24 w-28 justify-between p-3`}
       style={shadow}
     >
       <CardFill />
@@ -80,11 +80,11 @@ function Tile({ k, vm }: { k: LogKind; vm: LogVM }) {
       </View>
       <View className="min-w-0">
         {t && (
-          <Text numberOfLines={1} className="font-numeric text-[15px] font-bold leading-5 tabular-nums">
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} className="font-numeric text-body font-bold tabular-nums">
             {t.value}
           </Text>
         )}
-        <Text className="text-[13px] font-semibold leading-[18px]">{label}</Text>
+        <Text className="text-meta font-semibold">{label}</Text>
       </View>
     </Press>
   );
@@ -93,7 +93,7 @@ function Tile({ k, vm }: { k: LogKind; vm: LogVM }) {
 export function LogTiles({ vm }: { vm: LogVM }) {
   const { t } = useTranslation("journal");
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} snapToInterval={104} decelerationRate="fast" accessibilityLabel={t("tiles.scroll")} className="-mx-4" contentContainerClassName="gap-2 px-4 pb-1">
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} snapToInterval={120} decelerationRate="fast" accessibilityLabel={t("tiles.scroll")} className="-mx-4" contentContainerClassName="gap-2 px-4 pb-1">
       {vm.kinds.map((k) => (
         <Tile key={k} k={k} vm={vm} />
       ))}

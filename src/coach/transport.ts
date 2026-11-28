@@ -16,7 +16,7 @@ import { selectedActivity } from "./activityChat";
 /** What a turn can fail with before any answer streams; the screen maps each to a sentence (Coach.tsx ERRORS). */
 export type CoachProblem = "limit" | "key" | "profile" | "bad_request";
 /** What a failure while streaming becomes (the UI stream's errorText). */
-export type StreamProblem = "provider" | "network";
+export type StreamProblem = "provider" | "server" | "network";
 
 export type CoachModel = { model: LanguageModel; provider: string; instructions: string | null; cacheKey?: string };
 
@@ -52,8 +52,11 @@ export function rateGuard(perMinute = PER_MINUTE) {
 export const allowRequest = rateGuard();
 
 /** A stream failure as a problem code: the provider answered with an error, or it could not be reached. */
-export function streamProblem(e: unknown): StreamProblem {
-  if (APICallError.isInstance(e)) return e.statusCode === undefined ? "network" : "provider";
+export function streamProblem(error: unknown): StreamProblem {
+  // After its retries the SDK throws a RetryError around the last failure: classify that one.
+  const e = RetryError.isInstance(error) ? error.lastError : error;
+  // A 5xx is the provider's own trouble, not the person's key or billing: it gets its own sentence ("try again").
+  if (APICallError.isInstance(e)) return e.statusCode === undefined ? "network" : e.statusCode >= 500 ? "server" : "provider";
   if (e instanceof TypeError) return "network";
   return "provider";
 }

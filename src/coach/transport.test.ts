@@ -153,6 +153,11 @@ describe("coach turn", () => {
     expect(await errorText(new APICallError({ message: "Unauthorized", url: "https://api.openai.com/v1/responses", requestBodyValues: {}, statusCode: 401, responseBody: "secret echo" }))).toBe("provider");
     expect(await errorText(new TypeError("Network request failed"))).toBe("network");
     expect(streamProblem(new Error("x"))).toBe("provider");
+    // A 5xx is the provider's own trouble, also after the SDK's retries, not the person's key or billing.
+    const { RetryError } = await import("ai");
+    const down = new APICallError({ message: "Service unavailable", url: "https://api.openai.com/v1/responses", requestBodyValues: {}, statusCode: 503 });
+    expect(streamProblem(down)).toBe("server");
+    expect(streamProblem(new RetryError({ message: "Failed after 3 attempts", reason: "maxRetriesExceeded", errors: [down, down, down] }))).toBe("server");
   });
 
   it("carries the saved summary checkpoint forward, so a long chat is not summarised again every turn", async () => {

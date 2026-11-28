@@ -68,7 +68,7 @@ export const zoneBars = (m: Metric<ZoneRow[]>): Metric<ZoneBarRow[]> =>
 
 export { CAPTION, LABEL } from "@/ui/metrics/primitives"
 /** The inset legend strip under a summary card (spec §7.2, §7.3, §7.5). */
-export const LEGEND = `${INSET_ROW} mt-1 mb-3 py-2 text-xs leading-4 font-medium text-foreground-secondary`
+export const LEGEND = `${INSET_ROW} mt-1 mb-3 py-2 text-caption font-medium text-foreground-secondary`
 
 /** The strip under a score's rows: the two arrows and "Today vs. prior 30 days" (Strain) or "last 30 days" (Recovery). */
 export function TodayVsLegend({ period }: { period: string }) {
@@ -78,8 +78,8 @@ export function TodayVsLegend({ period }: { period: string }) {
         <DeltaMark dir="up" tone="good" />
         <DeltaMark dir="down" tone="bad" />
       </View>
-      <Text className="text-xs font-medium leading-4 text-foreground-secondary">
-        <Trans ns="ui" i18nKey="legend.todayVs" values={{ period }} components={{ b: <Text className="text-xs font-semibold leading-4 text-foreground" /> }} />
+      <Text className="text-caption font-medium text-foreground-secondary">
+        <Trans ns="ui" i18nKey="legend.todayVs" values={{ period }} components={{ b: <Text className="text-caption font-semibold text-foreground" /> }} />
       </Text>
     </View>
   )

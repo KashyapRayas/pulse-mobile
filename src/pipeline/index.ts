@@ -28,8 +28,12 @@ export const lastRun = { stage1Days: [] as string[], stage2From: "", ms: 0, stag
 export const resolveMaxHr = (profile: Pick<Profile, "birthDate" | "maxHr">, today: string, learned: number | null = null) =>
   profile.maxHr ?? Math.max(Math.round(208 - 0.7 * wholeYears(profile.birthDate, today)), learned ?? 0);
 
-/** The Pulse engine's max HR: the profile's own, else 220 − age (whole years on `today`). */
-export const engineMaxHr = (profile: Pick<Profile, "birthDate" | "maxHr">, today: string) => profile.maxHr ?? 220 - wholeYears(profile.birthDate, today);
+/**
+ * The Pulse engine's max HR: the profile's own, else Tanaka (208 − 0.7 × age, whole years on `today`), as the rest of the
+ * app. The study used 220 − age, which overestimates max HR in younger adults and underestimates it in older ones.
+ */
+export const engineMaxHr = (profile: Pick<Profile, "birthDate" | "maxHr">, today: string) =>
+  profile.maxHr ?? Math.round(208 - 0.7 * wholeYears(profile.birthDate, today));
 
 /** daily_values keys (on day "latest") holding the learned max HR and the day it was last checked (epoch days). */
 export const LEARNED_MAX_HR_KEY = "learned_max_hr";

@@ -53,7 +53,7 @@ export function ThemeToggle() {
       label="Theme"
       value={pref}
       options={THEMES}
-      textClassName="text-[13px] font-bold"
+      textClassName="text-meta font-bold"
       onChange={(p) => {
         setPref(p);
         setColorScheme(p);
@@ -77,10 +77,10 @@ export function KitScreen({ title, blurb, children }: { title: string; blurb?: s
               </Press>
               <ThemeToggle />
             </View>
-            <Text accessibilityRole="header" className="text-[28px] font-semibold leading-9 tracking-[-0.01em]">
+            <Text accessibilityRole="header" className="text-display font-semibold leading-9 tracking-[-0.01em]">
               {title}
             </Text>
-            {!!blurb && <Text className="text-[15px] leading-[22px] text-foreground-secondary">{blurb}</Text>}
+            {!!blurb && <Text className="text-body text-foreground-secondary">{blurb}</Text>}
           </View>
           <View className="gap-12 px-4">{children}</View>
         </ScrollView>
@@ -94,10 +94,10 @@ export function Group({ title, blurb, children }: { title: string; blurb?: strin
   return (
     <View className="gap-8">
       <View className="gap-2 border-b border-border pb-4">
-        <Text accessibilityRole="header" className="text-2xl font-semibold leading-8 tracking-[-0.01em]">
+        <Text accessibilityRole="header" className="text-title font-semibold leading-8 tracking-[-0.01em]">
           {title}
         </Text>
-        {!!blurb && <Text className="text-[15px] leading-[22px] text-foreground-secondary">{blurb}</Text>}
+        {!!blurb && <Text className="text-body text-foreground-secondary">{blurb}</Text>}
       </View>
       {children}
     </View>
@@ -109,16 +109,16 @@ export function Entry({ name, file, use, props = [], children }: { name: string;
   return (
     <View className="gap-4">
       <View className="gap-2">
-        <Text accessibilityRole="header" className="text-[17px] font-semibold leading-6">
+        <Text accessibilityRole="header" className="text-heading font-semibold">
           {name}
         </Text>
-        <Text className="text-xs leading-4 text-muted-foreground">{file}</Text>
-        <Text className="text-[15px] leading-[22px] text-foreground-secondary">{use}</Text>
+        <Text className="text-caption text-muted-foreground">{file}</Text>
+        <Text className="text-body text-foreground-secondary">{use}</Text>
         {props.length > 0 && (
           <View className="flex-row flex-wrap gap-1.5">
             {props.map((p) => (
               <View key={p} className="rounded-md bg-fill-faint px-1.5 py-0.5">
-                <Text className="text-xs leading-4 text-foreground-secondary">{p}</Text>
+                <Text className="text-caption text-foreground-secondary">{p}</Text>
               </View>
             ))}
           </View>
@@ -134,8 +134,8 @@ export function Frame({ name, narrow, center, children }: { name: string; narrow
   return (
     <View className="overflow-hidden rounded-2xl border border-border">
       <View className="flex-row items-baseline justify-between gap-3 border-b border-border px-3 py-2">
-        <Text className="shrink text-xs font-medium leading-4 text-muted-foreground">{name}</Text>
-        {narrow && <Text className="shrink-0 font-numeric text-xs leading-4 tabular-nums text-muted-foreground">320 px</Text>}
+        <Text className="shrink text-caption font-medium text-muted-foreground">{name}</Text>
+        {narrow && <Text className="shrink-0 font-numeric text-caption tabular-nums text-muted-foreground">320 px</Text>}
       </View>
       <View className={cn("p-3", center && "items-center")}>{narrow ? <View className="w-[320px] max-w-full self-center border border-dashed border-border">{children}</View> : children}</View>
     </View>

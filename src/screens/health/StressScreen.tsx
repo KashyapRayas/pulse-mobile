@@ -1,5 +1,7 @@
 // Stress Monitor `/health/stress` for `d` (spec §7.9). Ported from pulse src/app/(app)/health/stress/page.tsx and
 // loading.tsx (the skeleton shows while the query runs).
+import { useSelectedDay } from "@/ui/shells/DateSwitcher";
+import { useShellCalendar } from "@/ui/shells/ShellStatus";
 import { View } from "react-native";
 import { Trans, useTranslation } from "react-i18next";
 import { i18n } from "@/i18n/config";
@@ -24,7 +26,7 @@ import { BreatheCard } from "../breathe/BreatheScreen";
 import { STRESS_INFO } from "./info";
 import { BAR_CORNERS } from "@/ui/radius";
 
-const LABEL = "text-xs font-bold uppercase leading-4 tracking-[0.1em]";
+const LABEL = "text-caption font-medium tracking-normal";
 
 const LEVEL_KEYS = [
   { key: "lowMin", level: "low", bar: "bg-stress-low", text: "text-stress-low-text" },
@@ -72,21 +74,21 @@ function TotalDay({ l, day }: { l: NonNullable<StressVM["levels"]["value"]>; day
                 ? t("stress.levelAriaTypical", { word: i18n.t(`common:stressLevel.${k.level}`), duration: durationWords(Math.round(l[k.key])), typical: durationWords(Math.round(l.typical[k.key])) })
                 : t("stress.levelAria", { word: i18n.t(`common:stressLevel.${k.level}`), duration: durationWords(Math.round(l[k.key])) })
             } className="flex-1">
-            <Text accessibilityElementsHidden className={cn("font-numeric text-xl font-bold leading-6 tabular-nums", k.text)}>
+            <Text accessibilityElementsHidden className={cn("font-numeric text-value font-bold leading-6 tabular-nums", k.text)}>
               {hmm(l[k.key])}
             </Text>
             <Text accessibilityElementsHidden className={cn(LABEL, "mt-1")}>
               {i18n.t(`common:stressLevel.${k.level}`)}
             </Text>
             {l.typical && (
-              <Text accessibilityElementsHidden className="mt-0.5 font-numeric text-xs font-medium leading-4 tabular-nums text-muted-foreground">
+              <Text accessibilityElementsHidden className="mt-0.5 font-numeric text-caption font-medium tabular-nums text-muted-foreground">
                 {t("stress.typicalValue", { value: hmm(l.typical[k.key]) })}
               </Text>
             )}
           </View>
         ))}
       </View>
-      {!!line && <Text className="text-xs font-medium leading-4 text-muted-foreground">{line}</Text>}
+      {!!line && <Text className="text-caption font-medium text-muted-foreground">{line}</Text>}
     </View>
   );
 }
@@ -102,7 +104,7 @@ export function StressScreen() {
   return (
     <DetailShell
       title="Stress Monitor"
-      bodySkeleton={bodySkeleton()}
+      bodySkeleton={bodySkeleton(dayWord)}
       dateSwitcher={{ mode: "day" }}
       info={STRESS_INFO}
       hero={
@@ -115,7 +117,7 @@ export function StressScreen() {
             provisional={g.provisional}
             caption={g.value ? (g.value.dayAverage || !vm.isToday ? t("stress.dayAverage") : g.value.at ? t("stress.lastUpdated", { time: clock(g.value.at, timeZone) }) : undefined) : undefined}
           />
-          {g.reason === "no_data" && <Text className="max-w-72 text-center text-xs font-medium leading-4 text-muted-foreground">{t("stress.empty")}</Text>}
+          {g.reason === "no_data" && <Text className="max-w-72 text-center text-caption font-medium text-muted-foreground">{t("stress.empty")}</Text>}
         </View>
       }
       insight={vm.insight ? <InsightCard body={vm.insight} /> : undefined}
@@ -139,8 +141,9 @@ export function StressScreen() {
   );
 }
 
-const loadingPrimary = () => (
-  <SectionShell variant="card" title={i18n.t("common:today")}>
+/** The day's chart card; titled with the day being loaded ("Today", "Yesterday", "Mon, Sep 28"), as the loaded card is. */
+const loadingPrimary = (title: string) => (
+  <SectionShell variant="card" title={title}>
     <StressChartSkeleton variant="full" />
   </SectionShell>
 );
@@ -171,9 +174,9 @@ const loadingSecondary = () => [
 ];
 
 /** Below the fold while a cold push slides in: the loading state's first sections. */
-const bodySkeleton = () => (
+const bodySkeleton = (title: string) => (
   <>
-    {loadingPrimary()}
+    {loadingPrimary(title)}
     <View className="gap-3">{loadingSecondary().slice(0, 2)}</View>
   </>
 );
@@ -183,6 +186,9 @@ const bodySkeleton = () => (
  * and the 30-day trend.
  */
 function StressLoading() {
+  const [d] = useSelectedDay();
+  const { today } = useShellCalendar();
+  const dayTitle = dayLabel(d, today);
   return (
     <DetailShell
       loading
@@ -190,8 +196,8 @@ function StressLoading() {
       dateSwitcher={{ mode: "day" }}
       hero={<ScoreDialSkeleton variant="gauge" size="lg" />}
       insight={<InsightCardSkeleton />}
-      primary={loadingPrimary()}
-      bodySkeleton={bodySkeleton()}
+      primary={loadingPrimary(dayTitle)}
+      bodySkeleton={bodySkeleton(dayTitle)}
       secondary={loadingSecondary()}
     />
   );

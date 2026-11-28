@@ -1,4 +1,5 @@
 // Strain `/strain` (spec §7.3). Ported from Pulse's src/server/queries/strain.ts.
+import { valueRange } from "@/lib/format";
 import { i18n } from "@/i18n/config";
 import { inUnits } from "@/lib/units";
 import { addDays } from "@/lib/time";
@@ -135,7 +136,7 @@ const pct = (x: number) => `${Math.round(x)}%`;
 export function coach(strain: Metric<number>, target: { low: number; high: number } | null, row: DayRow | undefined): string | null {
   if (strain.value == null || !target) return null;
   const { low, high } = target;
-  const range = `${Math.round(low)} - ${pct(high)}`;
+  const range = valueRange(Math.round(low), pct(high));
   if (row?.recovery?.value != null && row.recovery.value < 34) return i18n.t("strain:coach.rest", { low: Math.round(low), high: pct(high) });
   if (strain.value < low) {
     // ponytail: about 1.7 minutes of moderate activity per strain percent near the target; a rough guide, not a model.

@@ -116,9 +116,9 @@ function Stat({ label, value, format, unit, text }: { label: string; value: numb
   return (
     <View accessible accessibilityLabel={t("statAria", { label, value: has ? (text ?? valueText(value, format, unit)) : t("noValue") })} className="min-w-0 flex-1">
       <Text className={cn(LABEL, "text-muted-foreground")}>{label}</Text>
-      <Text className="font-numeric text-[28px] font-bold leading-8 tabular-nums" numberOfLines={1}>
+      <Text className="font-numeric text-display font-bold leading-8 tabular-nums" numberOfLines={1}>
         {has ? s : MISSING}
-        {has && unit ? <Text className="text-[13px] font-semibold text-muted-foreground">{unitText(unit)}</Text> : null}
+        {has && unit ? <Text className="text-meta font-semibold text-muted-foreground">{unitText(unit)}</Text> : null}
       </Text>
     </View>
   );
@@ -138,7 +138,7 @@ function LegendKey({ color, label, mark = "line" }: { color: string; label: stri
       )}
       {mark === "block" && <View className="size-2.5 rounded-xs" style={{ backgroundColor: color }} />}
       {mark === "dot" && <View className="size-2.5 rounded-full" style={{ backgroundColor: color }} />}
-      <Text className={cn(LABEL, "text-[11px] text-foreground-secondary")}>{label}</Text>
+      <Text className={cn(LABEL, "text-label text-foreground-secondary")}>{label}</Text>
     </View>
   );
 }
@@ -331,7 +331,7 @@ export default function ChartExplorer() {
         backHref="/"
         action={
           <Press activeScale={0.96} accessibilityRole="button" accessibilityLabel={t("changeMetricNamed", { label: def.label })} onPress={() => (haptic.tap(), pick("metric"))} hitSlop={8} className="h-9 flex-row items-center gap-1 rounded-full bg-secondary px-3">
-            <Text className="text-[13px] font-semibold">{t("metricButton")}</Text>
+            <Text className="text-meta font-semibold">{t("metricButton")}</Text>
             <Icon icon={ChevronsUpDown} size={16} tone="foreground-secondary" strokeWidth={2} />
           </Press>
         }
@@ -346,7 +346,7 @@ export default function ChartExplorer() {
           )}
           {/* The visible window's numbers (refreshed when a gesture settles), as Trend View's headline. */}
           <View className="gap-3">
-            <Text className="text-[13px] font-medium leading-[18px] tabular-nums text-foreground-secondary">{windowLabel || " "}</Text>
+            <Text className="text-meta font-medium tabular-nums text-foreground-secondary">{windowLabel || " "}</Text>
             <View className="flex-row gap-3">{stats}</View>
           </View>
         </View>
@@ -420,7 +420,7 @@ export default function ChartExplorer() {
               (cmp ? (
                 <Press activeScale={0.96} accessibilityRole="button" accessibilityLabel={t("stopComparing", { name: compareName })} onPress={() => (haptic.tap(), clearCompare())} className={cn(COMPARE, "shrink")}>
                   <View style={{ width: 12, height: 3, borderRadius: 1.5, backgroundColor: model?.compareBands ? model.compareBands[model.compareBands.length - 1].color : (model?.comparePaint ?? c["chart-4"]) }} />
-                  <Text className={cn(LABEL, "shrink text-[11px] text-foreground-secondary")}>
+                  <Text className={cn(LABEL, "shrink text-label text-foreground-secondary")}>
                     {compareName}
                     {axes?.cStats?.avg != null && model?.compare ? (
                       <Text className="text-muted-foreground">{t("compareAvg", { value: valueText(axes.cStats.avg, model.compare.format, model.compare.unit) })}</Text>
@@ -432,12 +432,12 @@ export default function ChartExplorer() {
                 </Press>
               ) : (
                 <Press activeScale={0.96} accessibilityRole="button" accessibilityLabel={t("compareAria")} onPress={() => (haptic.tap(), pick("compare"))} className={COMPARE}>
-                  <Text className={cn(LABEL, "text-[13px]")}>{t("compare")}</Text>
+                  <Text className={cn(LABEL, "text-meta")}>{t("compare")}</Text>
                   <Icon icon={Plus} size={16} tone="foreground" strokeWidth={2.25} />
                 </Press>
               ))}
           </View>
-          {model?.shade && <Text className="text-[13px] leading-5 text-muted-foreground">{model.shade.label}</Text>}
+          {model?.shade && <Text className="text-meta text-muted-foreground">{model.shade.label}</Text>}
         </View>
       </View>
     </View>

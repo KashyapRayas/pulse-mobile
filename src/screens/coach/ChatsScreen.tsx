@@ -81,7 +81,7 @@ export function ChatsScreen() {
         <View className="gap-6">
           <Press accessibilityRole="button" onPress={() => open(`/coach?n=${generateId()}`)} className="h-12 flex-row items-center gap-2 self-start rounded-xl bg-secondary px-4">
             <Icon icon={SquarePen} size={18} />
-            <Text className="text-[15px] font-semibold">{t("bar.newChat")}</Text>
+            <Text className="text-body font-semibold">{t("bar.newChat")}</Text>
           </Press>
           {failed ? (
             <Text className={BODY}>{t("chats.loadFailed")}</Text>
@@ -95,7 +95,7 @@ export function ChatsScreen() {
                   {g.chats.map((chat, i) => (
                     <View key={chat.id} className={i > 0 ? "flex-row items-center border-t border-border" : "flex-row items-center"}>
                       <Press accessibilityRole="link" onPress={() => open(`/coach?c=${encodeURIComponent(chat.id)}`)} className="min-h-13 flex-1 justify-center py-3 pl-4">
-                        <Text numberOfLines={1} className="text-[15px] font-medium leading-5">
+                        <Text numberOfLines={1} className="text-body font-medium">
                           {chatTitle(chat.title)}
                         </Text>
                       </Press>

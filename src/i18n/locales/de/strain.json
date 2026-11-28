@@ -170,8 +170,8 @@
   },
   "costCaption": {
     "notEnough": "Noch nicht genug Daten: {{have}} von {{needed}}",
-    "based": "{{bounce}} · {{sessions}}",
-    "early": "{{bounce}} · {{sessions}}, erste Schätzung"
+    "based": "{{bounce}}, {{sessions}}",
+    "early": "{{bounce}}, {{sessions}}, erste Schätzung"
   },
   "costSentence": {
     "needs": "Pulse braucht {{needed}} mit einer Recovery am nächsten Morgen, um zu messen, was sie dich kosten; bisher sind es {{have}}.",
@@ -202,8 +202,8 @@
   "detected": {
     "spoken": "Erkannte Aktivität, wahrscheinlich {{label}}, durchschnittliche Herzfrequenz {{hr}} bpm, {{start}} bis {{end}}. Kein aufgezeichnetes Workout.",
     "title": "Erkannt",
-    "line": "{{label}} · {{hr}} bpm Ø",
-    "lineSteps": "{{label}} · {{hr}} bpm Ø · {{steps}} Schritte",
+    "line": "{{label}}, {{hr}} bpm Ø",
+    "lineSteps": "{{label}}, {{hr}} bpm Ø, {{steps}} Schritte",
     "note": "Erkannte Aktivität: 12 Minuten oder mehr erhöhte Herzfrequenz ohne aufgezeichnetes Workout, anhand deiner Schritte benannt. Sie dient nur zur Orientierung und fließt nicht in deine Werte ein."
   },
   "menu": {
@@ -266,7 +266,7 @@
   },
   "target": {
     "label": "Strain Target",
-    "range": "{{low}} - {{high}}",
+    "range": "{{low}} bis {{high}}",
     "spoken": "Strain Target {{low}} bis {{high}}",
     "spokenReason": "Strain Target: {{reason}}"
   },
@@ -321,7 +321,7 @@
     "noHrBand": "Band nicht getragen, deshalb gibt es für diese Aktivität keine Herzfrequenz, Zonen oder Strain.",
     "noHrData": "Zu wenige Herzfrequenzdaten, um Herzfrequenz, Zonen oder Strain für diese Aktivität zu zeigen.",
     "hrrNone": "Nicht genug Herzfrequenzdaten nach dem Workout.",
-    "hrrNote": "Abfall in den ersten 60 Sekunden nach dem Stopp. Über 20 ist bei fitten Erwachsenen typisch."
+    "hrrNote": "Der größte Abfall innerhalb von 2 Minuten nach dem Stopp. 22 bpm oder weniger ist niedrig, darüber typisch."
   },
   "live": {
     "title": "Live-Workout",
@@ -351,11 +351,11 @@
     "belowZone1": "Unter Zone 1",
     "zone": "Zone {{zone}}",
     "waiting": "Warte auf einen Herzschlag",
-    "zoneWithBand": "{{zone}} · heutiges Band {{floor}}–{{ceiling}} bpm",
+    "zoneWithBand": "{{zone}}, heutiges Band {{floor}}–{{ceiling}} bpm",
     "today": "Heute",
     "readError": "Die heutigen Werte konnten nicht gelesen werden.",
     "reading": "Heutige Werte werden gelesen…",
-    "targetLine": "Dein Ziel heute ist {{low}} - {{high}}.",
+    "targetLine": "Dein Ziel heute ist {{low}} bis {{high}}.",
     "noTarget": "Heute noch kein Strain Target: Es braucht die heutige Recovery. Der Coach nutzt nur dein Herzfrequenzband.",
     "recoveryLine": "Die Recovery von {{value}}% bestimmt, wie hart der Coach dich gehen lässt.",
     "notSynced": "Die heutige Herzfrequenz wurde noch nicht synchronisiert, deshalb startet der Day Strain mit diesem Workout.",
@@ -364,7 +364,7 @@
     "noHeartRate": "Noch keine Herzfrequenz",
     "workoutStrain": "Workout-Strain",
     "time": "Zeit",
-    "avgMax": "{{avg}} Ø · {{max}} max",
+    "avgMax": "{{avg}} Ø, {{max}} max",
     "verdictPast": "Über dem heutigen Ziel: Schlaf heute Nacht gut.",
     "verdictInside": "Im heutigen Ziel.",
     "verdictBelow": "{{value}} unter dem heutigen Ziel.",
@@ -375,7 +375,7 @@
     "keptOnPhone": "Auf diesem Handy gespeichert; Fitbit synchronisiert das Workout selbst in deine Werte.",
     "when": "{{day}}, {{time}}",
     "recentSpoken": "{{when}}: {{duration}}, Workout-Strain {{value}} Prozent",
-    "recentLine": "{{duration}} · {{bpm}} bpm Ø",
+    "recentLine": "{{duration}}, {{bpm}} bpm Ø",
     "strain": "Strain"
   }
 }

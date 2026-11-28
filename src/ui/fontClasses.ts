@@ -8,9 +8,10 @@ export type Weight = "regular" | "medium" | "semibold" | "bold";
 export type Face = { family: Family; weight: Weight };
 
 export const FACES: Record<Family, Record<Weight, string>> = {
-  sans: { regular: "Figtree_400Regular", medium: "Figtree_500Medium", semibold: "Figtree_600SemiBold", bold: "Figtree_700Bold" },
-  // Barlow is loaded from 500 up (as on the web), so its "regular" is the medium face.
-  numeric: { regular: "Barlow_500Medium", medium: "Barlow_500Medium", semibold: "Barlow_600SemiBold", bold: "Barlow_700Bold" },
+  sans: { regular: "Inter_400Regular", medium: "Inter_500Medium", semibold: "Inter_600SemiBold", bold: "Inter_700Bold" },
+  // Numerals are Inter too, with tabular figures (Text.tsx). As Linear sets them they never go below medium, and bold
+  // numerals take the semibold face: Linear's figures are 590, not 700.
+  numeric: { regular: "Inter_500Medium", medium: "Inter_500Medium", semibold: "Inter_600SemiBold", bold: "Inter_600SemiBold" },
 };
 const WEIGHT_CLASS: Record<string, Weight> = { "font-normal": "regular", "font-medium": "medium", "font-semibold": "semibold", "font-bold": "bold" };
 const FAMILY_CLASS: Record<string, Family> = { "font-sans": "sans", "font-numeric": "numeric" };

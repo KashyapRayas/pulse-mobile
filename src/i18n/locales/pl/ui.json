@@ -94,7 +94,7 @@
     "nap": "Drzemka",
     "sleep": "Sen",
     "sleepAria": "{{name}}, {{duration}}, od {{start}} do {{end}}",
-    "distanceNoStrain": "{{distance}} · Bez Strain",
+    "distanceNoStrain": "{{distance}}, Bez Strain",
     "noStrainReason": "Bez Strain: za mało danych o tętnie",
     "spokenDistance": ", {{distance}}",
     "spokenDistancePace": ", {{distance}} w tempie {{pace}}",
@@ -109,7 +109,7 @@
     "liveFrom": "Na żywo z: {{name}}",
     "liveFromBand": "Na żywo z opaski",
     "reconnecting": "Łączenie ponowne…",
-    "pill": "Na żywo · {{name}}",
+    "pill": "Na żywo, {{name}}",
     "band": "Opaska",
     "traceAria": "Tętno na żywo z ostatnich 2 minut",
     "traceCaption": "Ostatnie 2 min",
@@ -295,8 +295,8 @@
     "strainTitle": "Jak działa Strain",
     "strainIntro": "Strain to obciążenie Twojego dnia w procentach: od 0 do 100 w większość dni, powyżej 100 w bardzo duży dzień. Rośnie z czasu spędzonego w wyższych strefach tętna i kroków wykonanych w czuwaniu, a każdy kolejny punkt jest trudniejszy do zdobycia.",
     "strainLight": "Lekki: do 40%",
-    "strainModerate": "Umiarkowany: 41 - 60%",
-    "strainStrenuous": "Intensywny: 61 - 79%",
+    "strainModerate": "Umiarkowany: 41–60%",
+    "strainStrenuous": "Intensywny: 61–79%",
     "strainAllOut": "Na maksa: 80% i więcej",
     "strainNote": "Twój Strain Target to zakres na dziś, ustalony z Twojego Recovery i niedawnego Training Load. Dzisiejszy Strain to suma bieżąca do północy.",
     "strainTargetTitle": "Strain Target",
@@ -313,10 +313,7 @@
     "energyLow": "1-33: kończy się.",
     "strainRecoveryTitle": "Strain i regeneracja",
     "strainRecovery1": "Twoje ostatnie 7 dni obok siebie: Day Strain na niebiesko na lewej skali, od 0 do 100%, i Recovery na prawej skali, od 0 do 100%.",
-    "strainRecovery2": "Wysoki Strain jednego dnia często oznacza niższe Recovery następnego ranka. Dni bez wyniku zostają jako przerwy.",
-    "addActivityTitle": "Dodaj aktywność",
-    "addActivity1": "Pulse czyta Twoje treningi z Fitbit przez Health Connect, więc nie może ich tu dodać.",
-    "addActivity2": "Rozpocznij lub zapisz trening w aplikacji Fitbit. Pojawi się w Twoich aktywnościach po następnej synchronizacji, razem ze Strain."
+    "strainRecovery2": "Wysoki Strain jednego dnia często oznacza niższe Recovery następnego ranka. Dni bez wyniku zostają jako przerwy."
   },
   "legend": {
     "todayVs": "<b>Dziś</b> vs. {{period}}"
@@ -349,17 +346,17 @@
     "topUp": "Dobierz",
     "exhaleSlowly": "Wydychaj powoli",
     "resonanceTitle": "Rezonans",
-    "resonanceSubtitle": "5,5 oddechu na minutę · równy wdech i wydech",
+    "resonanceSubtitle": "5,5 oddechu na minutę, równy wdech i wydech",
     "resonanceEdu": "Powolny, równy oddech w tempie około 5,5 oddechu na minutę, blisko rezonansu większości ludzi: serce przyspiesza przy wdechu i zwalnia przy wydechu, a w tym tempie to wahanie jest największe. Spokojny sposób na wyciszenie.",
     "boxTitle": "Box 4-4-4-4",
-    "boxSubtitle": "Oddech kwadratowy · stałe skupienie",
+    "boxSubtitle": "Oddech kwadratowy, stałe skupienie",
     "boxEdu": "Oddychanie pudełkowe (kwadratowe): wdech, zatrzymanie, wydech, zatrzymanie, każde przez 4 sekundy. Uporządkowany rytm, często używany do skupienia i uspokojenia w stresie. Usiądź wygodnie i trzymaj równe liczenie.",
     "p478Title": "4-7-8",
-    "p478Subtitle": "Wdech 4 · zatrzymanie 7 · wydech 8",
+    "p478Subtitle": "Wdech 4, zatrzymanie 7, wydech 8",
     "p478Edu": "Klasyczne 4-7-8: cichy wdech nosem przez 4, zatrzymanie przez 7, długi wydech ustami przez 8. Często używane do wyciszenia. Zacznij od kilku cykli; przerwij, jeśli poczujesz zawroty głowy.",
     "p478Caution": "Jeśli poczujesz zawroty głowy lub dyskomfort, przerwij i oddychaj normalnie.",
     "sighTitle": "Westchnienie fizjologiczne",
-    "sighSubtitle": "Dwa wdechy · jeden długi wydech",
+    "sighSubtitle": "Dwa wdechy, jeden długi wydech",
     "sighEdu": "Weź wdech nosem, dobierz drugi krótki łyk powietrza, by wypełnić płuca, a potem powoli wypuść wszystko ustami. Pięć minut takiego cyklicznego wzdychania dziennie obniżyło stres i spoczynkową częstość oddechów w badaniu Stanforda (Balban i in., 2023)."
   },
   "guidance": {
@@ -418,7 +415,7 @@
       "within": "w granicach"
     },
     "noData": "Brak danych: {{label}} {{period}}.",
-    "typical": "Twoja średnia ({{label}}) w tym 7-dniowym okresie była {{where}} typowego zakresu ({{lo}} - {{hi}}).",
+    "typical": "Twoja średnia ({{label}}) w tym 7-dniowym okresie była {{where}} typowego zakresu ({{lo}}–{{hi}}).",
     "weeklyWeek": "W tym 7-dniowym okresie Twoja suma ({{label}}: {{value}}) była {{cmp}} sumy z poprzednich 7 dni, czyli {{prior}}.",
     "weeklyWeekNoPrior": "W tym 7-dniowym okresie Twoja suma ({{label}}: {{value}}).",
     "weekly": "Twoja średnia tygodniowa ({{label}}) {{period}} ({{value}}) była {{cmp}} wartości: {{priorName}}, czyli {{prior}}.",
@@ -493,5 +490,9 @@
     "bootDatabase": "Nie udało się otworzyć bazy danych: {{error}}",
     "profileTitle": "Profil"
   },
-  "trainingLoad": "Training Load"
+  "trainingLoad": "Training Load",
+  "prose": {
+    "more": "Więcej",
+    "less": "Mniej"
+  }
 }

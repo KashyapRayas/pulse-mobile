@@ -23,7 +23,7 @@ import { categoryTone, categoryWord, ordinal } from "./format";
 import { FITNESS_INFO } from "./info";
 import { LoadChart } from "./LoadChart";
 
-const BODY = "text-[15px] leading-[22px] text-foreground-secondary";
+const BODY = "text-body text-foreground-secondary";
 // The engine's load status keys the copy: calibrates until its confidence reaches 0.35 (loadConfidence: active days in 42, recent ones).
 const STATUS_KEY = { detraining: "detraining", optimal: "optimal", pushing: "pushing", high_risk: "highRisk" } as const;
 const CATEGORIES = ["poor", "fair", "good", "excellent", "superior"];
@@ -37,7 +37,7 @@ function Hero({ vo2 }: { vo2: FitnessVM["vo2"] }) {
   if (!v) return <EmptyState body={t("fitness.noVo2")} />;
   return (
     <View className="items-center gap-2 py-4">
-      <ValueUnit value={formatValue("decimal1", v.value)} unit="ml/kg/min" className="text-center font-numeric text-[64px] font-bold leading-[64px] tracking-[-0.01em]" />
+      <ValueUnit value={formatValue("decimal1", v.value)} unit="ml/kg/min" className="text-center font-numeric text-giant font-bold leading-[64px] tracking-[-0.01em]" />
       <View className="flex-row items-center gap-3">
         <Text className={LABEL}>{i18n.t("metrics:label.vo2max")}</Text>
         <Text className={cn(LABEL, categoryTone(v.category))}>{categoryWord(v.category)}</Text>
@@ -98,7 +98,7 @@ export function FitnessScreen() {
           {tl ? (
             <View className="gap-4">
               <View className="flex-row items-center gap-3">
-                <Text className="font-numeric text-4xl font-bold leading-10 tracking-[-0.01em] tabular-nums">{formatValue("decimal2", tl.acwr)}</Text>
+                <Text className="font-numeric text-hero font-bold leading-10 tracking-[-0.01em] tabular-nums">{formatValue("decimal2", tl.acwr)}</Text>
                 <StatusChip tone={tl.tone} className="self-center">{t(`load.${STATUS_KEY[tl.status]}`)}</StatusChip>
               </View>
               <TickScale

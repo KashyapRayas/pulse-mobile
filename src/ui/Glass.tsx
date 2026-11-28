@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Platform, View, type ViewProps } from "react-native";
 import { BlurView } from "expo-blur";
-import { alpha, mix, parseColor } from "./color";
+import { mix, parseColor } from "./color";
 import { Gradient } from "./Gradient";
 import { edge, ring, useShadow } from "./shadow";
 import { useTheme } from "./theme";
@@ -21,19 +21,18 @@ const over = (color: string, under: string) => {
  * per frame, which keeps a 120 Hz screen from scrolling at 120 fps. Both have the lit top edge, a faint rim and a soft
  * lower shadow.
  */
-export function Glass({ radius, action, children, style, ...props }: ViewProps & { radius: number; /** The indigo-tinted fill of the round action. */ action?: boolean; children?: ReactNode }) {
+export function Glass({ radius, children, style, ...props }: ViewProps & { radius: number; children?: ReactNode }) {
   const { c, scheme } = useTheme();
   const shadow = useShadow();
-  const rim = action ? alpha(c["action-rim-from"], 0.25) : c["glass-rim"];
   const fill = (color: string) => (Platform.OS === "ios" ? color : over(color, c.background));
   return (
     <View style={[{ borderRadius: radius, boxShadow: shadow("glass") }, style]} {...props}>
       <View style={{ ...FILL, borderRadius: radius, overflow: "hidden" }}>
         {Platform.OS === "ios" && <BlurView intensity={50} tint={scheme} style={FILL} />}
-        <Gradient from={fill(action ? c["glass-action-top"] : c["glass-top"])} to={fill(action ? c["glass-action-bottom"] : c["glass-bottom"])} angle="y" />
+        <Gradient from={fill(c["glass-top"])} to={fill(c["glass-bottom"])} angle="y" />
       </View>
       {/* The lit top edge and the faint rim, over the fill. */}
-      <View pointerEvents="none" style={{ ...FILL, borderRadius: radius, boxShadow: shadow(edge(c["glass-edge"]), ring(rim)) }} />
+      <View pointerEvents="none" style={{ ...FILL, borderRadius: radius, boxShadow: shadow(edge(c["glass-edge"]), ring(c["glass-rim"])) }} />
       {children}
     </View>
   );

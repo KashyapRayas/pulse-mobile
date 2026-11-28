@@ -5,9 +5,11 @@ import { cn } from "../cn";
 import { Gradient } from "../Gradient";
 import { Icon } from "../Icon";
 import { SkeletonText } from "../Skeleton";
+import { Prose } from "../Prose";
 import { Text } from "../Text";
 import { useTheme } from "../theme";
 import { push } from "../navigate";
+import { LineIcon } from "../LineIcon";
 
 export type InsightCardProps = {
   title?: string;
@@ -30,18 +32,18 @@ export function InsightCard({ title, body, action, onAnchor }: InsightCardProps)
     <View className={FRAME}>
       <Gradient from={c["insight-from"]} to={c["insight-to"]} />
       <View className={INNER}>
-        {!!title && <Text className="text-base font-semibold leading-[22px]">{title}</Text>}
-        <Text className="text-[15px] leading-[22px]">{body}</Text>
+        {!!title && <Text className="text-body font-semibold">{title}</Text>}
+        <Prose className="text-foreground">{body}</Prose>
         {action && (
           <Pressable
             accessibilityRole="link"
             // An in-page anchor does not leave the screen (spec §8, journey 1).
             onPress={() => (action.href.startsWith("#") ? onAnchor?.(action.href.slice(1)) : push(action.href))}
             hitSlop={{ top: 14, bottom: 14, left: 4, right: 4 }}
-            className="mt-auto flex-row items-center gap-1.5 self-start"
+            className="mt-auto flex-row items-start gap-1.5 self-start"
           >
-            <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-coach-text">{action.label}</Text>
-            <Icon icon={ArrowRight} size={14} tone="coach-text" strokeWidth={2} />
+            <Text className="text-caption font-medium tracking-normal text-coach-text">{action.label}</Text>
+            <LineIcon step="caption"><Icon icon={ArrowRight} size={14} tone="coach-text" strokeWidth={2} /></LineIcon>
           </Pressable>
         )}
       </View>

@@ -24,7 +24,7 @@ type Ctx = { vm: MetricDetailVM; timeZone?: string };
 function Legend({ children }: { children: ReactNode }) {
   return (
     <View className={cn(INSET_ROW, "mb-3 mt-1 py-2")}>
-      <Text className="text-xs font-medium leading-4 text-foreground-secondary">{children}</Text>
+      <Text className="text-caption font-medium text-foreground-secondary">{children}</Text>
     </View>
   );
 }
@@ -110,11 +110,11 @@ export function MetricSection({ s, ...c }: Ctx & { s: Section }) {
             <Divided>
               {s.items.map((e) => (
                 <View key={e.id} className="min-h-[52px] flex-row items-center gap-3 py-2">
-                  <View className="min-w-0 flex-1">
+                  <View className="min-w-0 flex-1 gap-1">
                     <Text numberOfLines={1} className={LABEL}>{e.title}</Text>
-                    <Text numberOfLines={1} className={cn(CAPTION, "mt-0.5")}>{e.detail}</Text>
+                    <Text numberOfLines={1} className={cn(CAPTION, "mt-1")}>{e.detail}</Text>
                   </View>
-                  <Text className="shrink-0 font-numeric text-[13px] font-medium leading-4 tabular-nums text-muted-foreground">{clock(e.ts * 1000, c.timeZone)}</Text>
+                  <Text className="shrink-0 font-numeric text-meta font-medium tabular-nums text-muted-foreground">{clock(e.ts * 1000, c.timeZone)}</Text>
                 </View>
               ))}
             </Divided>
@@ -213,9 +213,9 @@ function Weekly({ s, vm }: Ctx & { s: Extract<Section, { kind: "weekly" }> }) {
   const pct = Math.min(100, (s.week.total / s.target) * 100);
   return (
     <SectionShell variant="card" {...cardOf("This week", t("section.thisWeek"))}>
-      <Text className="font-numeric text-[28px] font-bold leading-8 tabular-nums">
+      <Text className="font-numeric text-display font-bold leading-8 tabular-nums">
         {hmm(s.week.total)}
-        <Text className="text-sm font-medium leading-5 text-foreground-secondary">{t("section.ofTarget", { target: hmm(s.target) })}</Text>
+        <Text className="text-meta font-medium text-foreground-secondary">{t("section.ofTarget", { target: hmm(s.target) })}</Text>
       </Text>
       <View
         accessibilityRole="progressbar"

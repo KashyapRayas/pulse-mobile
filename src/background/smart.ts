@@ -6,7 +6,7 @@
 import { isoWeek, type Report } from "@/core/algorithms/reports";
 import type { ScoreRow } from "@/data/store";
 import { i18n } from "@/i18n/config";
-import { clock, rangeLabel } from "@/lib/format";
+import { clock, rangeLabel, valueRange } from "@/lib/format";
 import { addDays, localDay, localMidnight, localMinutes } from "@/lib/time";
 import type { SleepPlannerRow } from "@/pipeline/types";
 import { illnessRaised, VITAL_LABEL } from "@/queries/home";
@@ -86,7 +86,7 @@ const isoDow = (day: string) => (new Date(`${day}T00:00:00Z`).getUTCDay() + 6) %
 
 /** Where the day's strain sits in its target, in the Strain Coach's range wording. */
 export function strainBody(strain: number, target: { low: number; high: number }): string {
-  const range = `${Math.round(target.low)} - ${pct(target.high)}`;
+  const range = valueRange(Math.round(target.low), pct(target.high));
   return i18n.t(strain <= target.high ? "notifications:strainTarget.inside" : "notifications:strainTarget.past", { strain: pct(strain), range });
 }
 

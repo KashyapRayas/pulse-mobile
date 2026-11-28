@@ -177,8 +177,8 @@
   },
   "costCaption": {
     "notEnough": "Ainda sem dados suficientes: {{have}} de {{needed}}",
-    "based": "{{bounce}} · {{sessions}}",
-    "early": "{{bounce}} · {{sessions}}, estimativa inicial"
+    "based": "{{bounce}}, {{sessions}}",
+    "early": "{{bounce}}, {{sessions}}, estimativa inicial"
   },
   "costSentence": {
     "needs": "O Pulse precisa de {{needed}} com Recovery na manhã seguinte para medir o que custam para você; até agora tem {{have}}.",
@@ -210,8 +210,8 @@
   "detected": {
     "spoken": "Atividade detectada, provavelmente {{label}}, frequência cardíaca média de {{hr}} bpm, de {{start}} a {{end}}. Não é um treino registrado.",
     "title": "Detectada",
-    "line": "{{label}} · {{hr}} bpm méd.",
-    "lineSteps": "{{label}} · {{hr}} bpm méd. · {{steps}} passos",
+    "line": "{{label}}, {{hr}} bpm méd.",
+    "lineSteps": "{{label}}, {{hr}} bpm méd., {{steps}} passos",
     "note": "Atividade detectada: 12 minutos ou mais de frequência cardíaca elevada sem treino registrado, classificada pelos seus passos. Aparece só como referência e não soma nada aos seus scores."
   },
   "menu": {
@@ -278,7 +278,7 @@
   },
   "target": {
     "label": "Strain Target",
-    "range": "{{low}} - {{high}}",
+    "range": "{{low}} a {{high}}",
     "spoken": "Strain Target de {{low}} a {{high}}",
     "spokenReason": "Strain Target: {{reason}}"
   },
@@ -335,7 +335,7 @@
     "noHrBand": "Pulseira não usada, então não há frequência cardíaca, zonas nem Strain para esta atividade.",
     "noHrData": "Poucos dados de frequência cardíaca para mostrar frequência cardíaca, zonas ou Strain desta atividade.",
     "hrrNone": "Dados de frequência cardíaca insuficientes depois do treino.",
-    "hrrNote": "Queda nos primeiros 60 segundos depois que você parou. Acima de 20 é típico para adultos em forma."
+    "hrrNote": "A maior queda em até 2 minutos depois de parar. 22 bpm ou menos é baixa; acima de 22 é típico."
   },
   "live": {
     "title": "Treino ao vivo",
@@ -365,11 +365,11 @@
     "belowZone1": "Abaixo de Zone 1",
     "zone": "Zone {{zone}}",
     "waiting": "Aguardando um batimento",
-    "zoneWithBand": "{{zone}} · faixa de hoje {{floor}}–{{ceiling}} bpm",
+    "zoneWithBand": "{{zone}}, faixa de hoje {{floor}}–{{ceiling}} bpm",
     "today": "Hoje",
     "readError": "Não foi possível ler os scores de hoje.",
     "reading": "Lendo os scores de hoje…",
-    "targetLine": "A meta de hoje é {{low}} - {{high}}.",
+    "targetLine": "A meta de hoje é {{low}} a {{high}}.",
     "noTarget": "Ainda sem Strain Target hoje: ele precisa da Recovery de hoje. O Coach usa só a sua faixa de frequência cardíaca.",
     "recoveryLine": "Recovery de {{value}}% define até onde o Coach deixa você ir.",
     "notSynced": "A frequência cardíaca de hoje ainda não sincronizou, então o Day Strain parte deste treino.",
@@ -378,7 +378,7 @@
     "noHeartRate": "Ainda sem frequência cardíaca",
     "workoutStrain": "Strain do treino",
     "time": "Tempo",
-    "avgMax": "{{avg}} méd. · {{max}} máx.",
+    "avgMax": "{{avg}} méd., {{max}} máx.",
     "verdictPast": "Passou da meta de hoje: priorize o sono esta noite.",
     "verdictInside": "Dentro da meta de hoje.",
     "verdictBelow": "{{value}} abaixo da meta de hoje.",
@@ -389,7 +389,7 @@
     "keptOnPhone": "Guardado neste celular; o Fitbit sincroniza o treino em si com os seus scores.",
     "when": "{{day}}, {{time}}",
     "recentSpoken": "{{when}}: {{duration}}, Strain do treino {{value}} por cento",
-    "recentLine": "{{duration}} · {{bpm}} bpm méd.",
+    "recentLine": "{{duration}}, {{bpm}} bpm méd.",
     "strain": "Strain"
   }
 }

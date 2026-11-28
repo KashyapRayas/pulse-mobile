@@ -33,7 +33,7 @@ type Live = LiveControl & LiveData;
 const GOOGLE_HEALTH = "com.fitbit.FitbitMobile";
 /** How long Pulse keeps the band after leaving the foreground, in words. */
 const GRACE_SECONDS = Math.round(BACKGROUND_GRACE_MS / 1000);
-const WARN = "text-[13px] font-semibold leading-[18px] text-warning-text";
+const WARN = "text-meta font-semibold text-warning-text";
 
 /** The status in a few words. */
 function statusLabel(l: Live): string {
@@ -69,8 +69,8 @@ function Panel({ icon, title, body }: { icon: ReactNode; title: string; body?: s
   return (
     <View accessibilityRole="summary" className="flex-row items-center gap-3 rounded-xl bg-foreground/[0.04] p-4">
       <View className="size-11 shrink-0 items-center justify-center rounded-xl bg-fill-faint">{icon}</View>
-      <View className="min-w-0 flex-1">
-        <Text className="text-[15px] font-semibold leading-[22px]">{title}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className="text-body font-semibold">{title}</Text>
         {!!body && <Text className={HINT}>{body}</Text>}
       </View>
     </View>
@@ -106,7 +106,7 @@ function BandCard({ live, onFind }: { live: LiveControl; onFind: () => void }) {
         <Row rule label={t("live.band")} value={remembered ? (remembered.name ?? t("live.unnamedBand")) : t("live.none")} />
         {live.status === "live" && <HrvRow />}
         <View className={cn(ROW, ROW_RULE, !remembered && "opacity-disabled")}>
-          <View className="min-w-0 flex-1">
+          <View className="min-w-0 flex-1 gap-1">
             <Text className={ROW_LABEL}>{t("live.autoConnect")}</Text>
             <Text className={HINT}>{t("live.autoConnectHint")}</Text>
           </View>
@@ -193,16 +193,16 @@ function Steps() {
       {/* Straight to where the setting lives. */}
       <Button variant="secondary" onPress={() => setMissing(!openApp(GOOGLE_HEALTH))} accessibilityLabel={t("live.openGoogleHealth")}>
         <Icon icon={ExternalLink} size={16} tone="secondary-foreground" strokeWidth={2.25} />
-        <Text className="text-[13px] font-bold uppercase tracking-[0.1em] text-secondary-foreground">{t("live.openGoogleHealth")}</Text>
+        <Text className="text-meta font-medium tracking-normal text-secondary-foreground">{t("live.openGoogleHealth")}</Text>
       </Button>
       {missing && <Text className={WARN}>{t("live.googleHealthFailed")}</Text>}
       {STEPS.map((s, i) => (
         <View key={s.title} accessible accessibilityLabel={t("live.stepLabel", { n: i + 1, title: t(s.title), body: t(s.body) })} className="flex-row gap-3">
           <View className="size-8 items-center justify-center rounded-full bg-fill-faint">
-            <Text className="font-numeric text-base font-bold">{String(i + 1)}</Text>
+            <Text className="font-numeric text-body font-bold">{String(i + 1)}</Text>
           </View>
           <View className="min-w-0 flex-1 pt-1">
-            <Text className="text-[15px] font-semibold leading-[22px]">{t(s.title)}</Text>
+            <Text className="text-body font-semibold">{t(s.title)}</Text>
             <Text className={BODY}>{t(s.body)}</Text>
           </View>
         </View>
@@ -213,7 +213,7 @@ function Steps() {
 
 function Note({ icon, children }: { icon: LucideIcon; children: string }) {
   return (
-    <View className="flex-row gap-2.5">
+    <View className="flex-row gap-2">
       <View className="mt-0.5">
         <Icon icon={icon} size={16} tone="muted-foreground" strokeWidth={2} />
       </View>
@@ -225,7 +225,7 @@ function Note({ icon, children }: { icon: LucideIcon; children: string }) {
 function DeviceRow({ d, onPress, aside, rule }: { d: FoundDevice; onPress: () => void; aside?: string; rule?: boolean }) {
   const { t } = useTranslation("settings");
   const signal = signalWord(d.rssi);
-  const detail = [d.paired ? t("live.pairedHere") : d.likely ? t("live.likelyBand") : null, signal ? t("live.signal", { signal }) : null, aside ?? null].filter(Boolean).join(" · ");
+  const detail = [d.paired ? t("live.pairedHere") : d.likely ? t("live.likelyBand") : null, signal ? t("live.signal", { signal }) : null, aside ?? null].filter(Boolean).join(", ");
   return (
     <Press
       activeOpacity={0.6}
@@ -237,11 +237,11 @@ function DeviceRow({ d, onPress, aside, rule }: { d: FoundDevice; onPress: () =>
       <View className="size-11 shrink-0 items-center justify-center rounded-xl bg-fill-faint">
         <Icon icon={Watch} size={20} tone={d.likely ? "recovery-red-text" : "foreground-secondary"} strokeWidth={2} />
       </View>
-      <View className="min-w-0 flex-1">
-        <Text className="text-[15px] font-semibold leading-[22px]">{d.name ?? t("live.unnamedDeviceTitle")}</Text>
+      <View className="min-w-0 flex-1 gap-1">
+        <Text className="text-body font-semibold">{d.name ?? t("live.unnamedDeviceTitle")}</Text>
         {!!detail && <Text className={HINT}>{detail}</Text>}
       </View>
-      <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-foreground-secondary">{t("live.connect")}</Text>
+      <Text className="text-caption font-medium tracking-normal text-foreground-secondary">{t("live.connect")}</Text>
       <Icon icon={ChevronRight} size={16} tone="foreground-secondary" strokeWidth={2} />
     </Press>
   );
@@ -290,7 +290,7 @@ function BandState() {
           <BeatingHeart bpm={live.bpm ?? 60} live={live.status === "live"} size={26} />
         </View>
         <View className="min-w-0 flex-1 gap-1.5">
-          <ValueUnit value={live.bpm === null ? MISSING : String(live.bpm)} unit="bpm" className="font-numeric text-[34px] font-bold leading-[38px]" />
+          <ValueUnit value={live.bpm === null ? MISSING : String(live.bpm)} unit="bpm" className="font-numeric text-display font-bold leading-[38px]" />
           <LivePill name={live.device?.name ?? null} lost={live.status === "lost"} />
         </View>
       </View>
@@ -311,7 +311,7 @@ function BandState() {
   return (
     <View>
       {live.status === "scanning" && (
-        <View className="flex-row items-center gap-2.5 py-2">
+        <View className="flex-row items-center gap-2 py-2">
           <ActivityIndicator size="small" color={c["recovery-red"]} />
           <Text className={cn(BODY, "flex-1")}>{t("live.lookingFor")}</Text>
         </View>
@@ -393,12 +393,12 @@ function GoLiveCard({ live, scanOnArrival }: { live: LiveControl; scanOnArrival:
     <SectionShell variant="card" title={t("live.goLive")}>
       <Text className={cn(BODY, "mb-4")}>{t("live.goLiveIntro")}</Text>
       <Steps />
-      <Text className={cn(CAPTION, "mb-2 mt-6 uppercase tracking-[0.1em]")}>{t("live.yourBand")}</Text>
+      <Text className={cn(CAPTION, "mb-2 mt-6 tracking-normal")}>{t("live.yourBand")}</Text>
       <View className="gap-3">
         <BandState />
         <BandAction live={live} />
       </View>
-      <View className="mt-6 gap-2.5">
+      <View className="mt-6 gap-2">
         <Note icon={BatteryMedium}>
           {t("live.batteryNote", { seconds: GRACE_SECONDS })}
         </Note>

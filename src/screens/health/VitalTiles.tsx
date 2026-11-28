@@ -23,9 +23,11 @@ function Grid({ tiles }: { tiles: ReactNode[] }) {
   return (
     <View className="gap-3">
       {rows.map((row, i) => (
-        <View key={i} className="flex-row gap-3">
+        // Tiles side by side take the taller one's height (the row stretches them), so a chip that wraps in one does not
+        // leave its neighbour short; each tile's value stays at the top, level with its neighbour's.
+        <View key={i} className="flex-row items-stretch gap-3">
           {row.map((tile, j) => (
-            <View key={j} className="min-w-0 flex-1">
+            <View key={j} className="min-w-0 flex-1 flex-row">
               {tile}
             </View>
           ))}
@@ -54,10 +56,11 @@ export function VitalTiles({ vitals, day, today }: { vitals: Vital[]; day: strin
             direction="none"
             chip={x.chip ?? undefined}
             href={vitalHref(x.key, day, today)}
+            className="flex-1"
           />
         ))}
       />
-      <Text className="mt-3 text-xs font-medium leading-4 text-muted-foreground">{t("vitals.note")}</Text>
+      <Text className="mt-3 text-caption font-medium text-muted-foreground">{t("vitals.note")}</Text>
     </>
   );
 }
@@ -75,7 +78,7 @@ export function VitalTilesSkeleton() {
   return (
     <>
       <Grid tiles={skeletonLabel().map(([k, l]) => <KeyStatRowSkeleton key={k} variant="tile" label={l} icon={ICON(k)} />)} />
-      <Text className="mt-3 text-xs font-medium leading-4 text-muted-foreground">{t("vitals.note")}</Text>
+      <Text className="mt-3 text-caption font-medium text-muted-foreground">{t("vitals.note")}</Text>
     </>
   );
 }

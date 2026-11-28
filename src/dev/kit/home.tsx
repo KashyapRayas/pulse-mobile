@@ -22,8 +22,8 @@ function Banner() {
     <Pressable accessibilityRole="link" onPress={() => push("/dev/kit")} className="h-14 flex-row items-center gap-3 overflow-hidden rounded-xl px-4">
       <Gradient from={c["banner-from"]} to={c["banner-to"]} />
       <Icon icon={CalendarRange} size={20} tone="foreground" strokeWidth={1.75} />
-      <Text className="flex-1 text-base font-semibold leading-[22px]">Your week in review</Text>
-      <Text className="text-xs font-medium leading-4 text-muted-foreground">Sep 22 - Sep 28</Text>
+      <Text className="flex-1 text-body font-semibold">Your week in review</Text>
+      <Text className="text-caption font-medium text-muted-foreground">Sep 22 - Sep 28</Text>
       <Icon icon={ChevronRight} size={16} tone="foreground-secondary" strokeWidth={1.75} />
     </Pressable>
   );

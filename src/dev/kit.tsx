@@ -26,7 +26,7 @@ import { Press } from "@/ui/Press";
 
 const go = (href: string) => push(href);
 const INFO = { title: "What shaped it", body: "Each bar is one input's effect on today's Recovery, in points." };
-const BODY = "text-[15px] leading-[22px] text-foreground-secondary";
+const BODY = "text-body text-foreground-secondary";
 
 const SCREENS = [
   { href: "/dev/kit/metrics", label: "Metrics", note: "ScoreDial, KeyStatRow, MetricState states, InsightCard, DayStrip and the rest" },
@@ -59,12 +59,12 @@ function Swatches() {
     <View className="gap-4">
       {SWATCHES.map((g) => (
         <View key={g.title} className="gap-2">
-          <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em] text-muted-foreground">{g.title}</Text>
+          <Text className="text-caption font-medium tracking-normal text-muted-foreground">{g.title}</Text>
           <View className="flex-row flex-wrap gap-2">
             {g.tokens.map((t) => (
               <View key={t} className="w-[100px] gap-1">
                 <View className="h-9 rounded-lg border border-border" style={{ backgroundColor: c[t] }} />
-                <Text className="text-[10px] leading-3 text-muted-foreground">{t}</Text>
+                <Text className="text-label text-muted-foreground">{t}</Text>
               </View>
             ))}
           </View>
@@ -75,12 +75,12 @@ function Swatches() {
 }
 
 const TYPE = [
-  ["text-[28px] leading-9 font-semibold", "Screen title 28"],
-  ["text-[22px] leading-7 font-semibold", "Section title 22"],
-  ["text-[17px] leading-6 font-semibold", "Card title 17"],
-  ["text-[15px] leading-[22px]", "Body 15, the copy you read"],
-  ["text-[13px] leading-[18px] text-muted-foreground", "Caption 13, muted"],
-  ["text-xs leading-4 font-bold uppercase tracking-[0.1em]", "Label 12 caps"],
+  ["text-display leading-9 font-semibold", "Screen title 30"],
+  ["text-body font-semibold", "Section title 15"],
+  ["text-heading font-semibold", "Card title 17"],
+  ["text-body", "Body 15, the copy you read"],
+  ["text-meta text-muted-foreground", "Caption 13, muted"],
+  ["text-caption font-medium tracking-normal", "Label 12 caps"],
 ] as const;
 
 function SheetDemo() {
@@ -93,7 +93,7 @@ function SheetDemo() {
 
 function SegmentedDemo() {
   const [value, setValue] = useState("recovery");
-  return <Segmented label="Outcome" value={value} onChange={setValue} options={[{ value: "recovery", label: "RECOVERY" }, { value: "hrv", label: "HRV" }, { value: "sleep", label: "SLEEP" }]} textClassName="text-[13px] font-bold tracking-[0.06em]" />;
+  return <Segmented label="Outcome" value={value} onChange={setValue} options={[{ value: "recovery", label: "RECOVERY" }, { value: "hrv", label: "HRV" }, { value: "sleep", label: "SLEEP" }]} textClassName="text-meta font-bold tracking-[0.06em]" />;
 }
 
 export default function Kit() {
@@ -102,9 +102,9 @@ export default function Kit() {
       <View className="gap-2">
         {SCREENS.map((s) => (
           <Press activeScale={0.98} key={s.href} accessibilityRole="link" onPress={() => go(s.href)} className="flex-row items-center gap-3 rounded-xl bg-card px-4 py-3">
-            <View className="min-w-0 flex-1">
-              <Text className="text-xs font-bold uppercase leading-4 tracking-[0.1em]">{s.label}</Text>
-              <Text className="mt-0.5 text-[13px] leading-[18px] text-muted-foreground">{s.note}</Text>
+            <View className="min-w-0 flex-1 gap-1">
+              <Text className="text-caption font-medium tracking-normal">{s.label}</Text>
+              <Text className="mt-1 text-meta text-muted-foreground">{s.note}</Text>
             </View>
             <Icon icon={ChevronRight} size={20} tone="muted-foreground" />
           </Press>
@@ -115,14 +115,14 @@ export default function Kit() {
         <Entry name="Colour tokens" file="global.css, tailwind.config.js, src/ui/palette.ts" use="Every token of the web&apos;s globals.css, light and dark. Flip the toggle: each swatch follows.">
           <Frame name="swatches"><Swatches /></Frame>
         </Entry>
-        <Entry name="Type" file="app/_layout.tsx, src/ui/Text.tsx" use="Figtree for text, Barlow for numerals (the web's pairing). Numerals use font-numeric and tabular figures.">
+        <Entry name="Type" file="app/_layout.tsx, src/ui/Text.tsx" use="Inter for text and numerals, as Linear sets it. Numerals use font-numeric and tabular figures.">
           <Frame name="the scale">
             <View className="gap-3">
               {TYPE.map(([cls, text]) => (
                 <Text key={text} className={cls}>{text}</Text>
               ))}
-              <Text className="font-numeric text-[34px] font-bold leading-10 tabular-nums">124 ms · 0123456789</Text>
-              <Text className="font-numeric text-xl font-semibold leading-7 tabular-nums">7:42 · 09:05 · 12,459</Text>
+              <Text className="font-numeric text-display font-bold leading-10 tabular-nums">124 ms · 0123456789</Text>
+              <Text className="font-numeric text-value font-semibold leading-7 tabular-nums">7:42 · 09:05 · 12,459</Text>
             </View>
           </Frame>
         </Entry>
@@ -136,7 +136,7 @@ export default function Kit() {
                 <Mark size={16} />
                 <Mark size={24} />
                 <Mark size={48} />
-                <Mark size={48} color="mono" tone="foreground-secondary" />
+                <Mark size={48} tone="foreground-secondary" />
               </View>
             </View>
           </Frame>
@@ -173,9 +173,9 @@ export default function Kit() {
           </Frame>
           <Frame name="ValueUnit: word unit, symbol unit, missing">
             <View className="flex-row flex-wrap items-baseline gap-6">
-              <ValueUnit value="124" unit="ms" className="font-numeric text-xl font-bold" />
-              <ValueUnit value="97" unit="%" className="font-numeric text-xl font-bold" />
-              <ValueUnit value="--" unit="bpm" className="font-numeric text-xl font-bold text-muted-foreground" />
+              <ValueUnit value="124" unit="ms" className="font-numeric text-value font-bold" />
+              <ValueUnit value="97" unit="%" className="font-numeric text-value font-bold" />
+              <ValueUnit value="--" unit="bpm" className="font-numeric text-value font-bold text-muted-foreground" />
             </View>
           </Frame>
         </Entry>
@@ -216,7 +216,7 @@ export default function Kit() {
         <Entry name="CollapsibleSection" file="src/ui/shells/CollapsibleSection.tsx" use="A page section whose body folds away (Home's Key statistics)." props={["id, title", "defaultOpen", "action", "onToggle"]}>
           <Frame name="open, then closed">
             <View className="gap-4">
-              <CollapsibleSection id="a" title="Open section" action={<Text className="text-xs font-medium text-muted-foreground">See all</Text>}><Text className={BODY}>Folds away when you tap the title.</Text></CollapsibleSection>
+              <CollapsibleSection id="a" title="Open section" action={<Text className="text-caption font-medium text-muted-foreground">See all</Text>}><Text className={BODY}>Folds away when you tap the title.</Text></CollapsibleSection>
               <CollapsibleSection id="b" title="Closed section" defaultOpen={false}><Text className={BODY}>Hidden until opened.</Text></CollapsibleSection>
             </View>
           </Frame>
@@ -231,8 +231,8 @@ export default function Kit() {
             <View className="gap-2">
               {metricStates.map(([name, metric]) => (
                 <View key={name} className="min-h-8 flex-row items-center justify-between gap-3">
-                  <Text className="text-[15px] leading-[22px] text-muted-foreground">{name}</Text>
-                  <MetricState metric={metric} skeleton={<Skeleton className="h-4 w-12 rounded-sm" />} reasonSize="sm" empty={<Text className="text-[15px] text-muted-foreground">No history</Text>}>
+                  <Text className="text-body text-muted-foreground">{name}</Text>
+                  <MetricState metric={metric} skeleton={<Skeleton className="h-4 w-12 rounded-sm" />} reasonSize="sm" empty={<Text className="text-body text-muted-foreground">No history</Text>}>
                     {(v, meta) => (
                       <View className="flex-row items-center gap-2">
                         <Text className="font-numeric font-bold tabular-nums">{`${v}%`}</Text>
@@ -253,7 +253,7 @@ export default function Kit() {
         <Entry name="InfoButton, InfoDialog" file="src/ui/shells/InfoButton.tsx" use="Every “i”: card headers (card) and detail headers (header). Opens the centred info card over the dim, as the web." props={["info: { title, body, icon?, chip?, action? }", "label", "variant: card | header"]}>
           <Frame name="card" center><InfoButton variant="card" label="What shaped it" info={INFO} /></Frame>
           <Frame name="header, with icon, chip and action" center>
-            <InfoButton variant="header" label="Respiratory rate" info={{ title: "Respiratory rate", icon: <Icon icon={HeartPulse} size={28} tone="foreground-secondary" strokeWidth={1.5} />, chip: { tone: "optimal", text: "Within 14.1 - 16.9" }, body: <Text className="text-[15px] leading-[22px] text-foreground-body">Breaths per minute while you sleep, against your own normal range.</Text>, action: { label: "Open trend view", href: "/dev/kit/charts" } }} />
+            <InfoButton variant="header" label="Respiratory rate" info={{ title: "Respiratory rate", icon: <Icon icon={HeartPulse} size={28} tone="foreground-secondary" strokeWidth={1.5} />, chip: { tone: "optimal", text: "Within 14.1 - 16.9" }, body: <Text className="text-body text-foreground-body">Breaths per minute while you sleep, against your own normal range.</Text>, action: { label: "Open trend view", href: "/dev/kit/charts" } }} />
           </Frame>
         </Entry>
         <Entry name="LinkList" file="src/ui/shells/LinkList.tsx" use="More, Settings and the Reports archive: a caps group label over 56 px rows." props={["title", "rows: { label, href, icon?, aside?, description?, external? }[]"]}>
@@ -270,9 +270,9 @@ export default function Kit() {
             <View className="gap-3">
               {[["TabBar", "The glass tab bar and the round action", "The foot of the app's tab screens"], ["PageShell, TitleHeader", "Tab roots: header, content", "Health, Journal, More tabs"], ["HomeHeader", "Home's collapsing header and ring row", "Home demo"], ["DetailShell, DetailHeader, CollapsingHeader", "Detail screens: hero, notch, summary", "Detail demo"], ["CalendarPanel", "The month calendar behind the date pill", "Open a date pill above"]].map(([n, w, where]) => (
                 <View key={n} className="gap-0.5">
-                  <Text className="text-[13px] font-semibold leading-5">{n}</Text>
-                  <Text className="text-[13px] leading-5 text-foreground-secondary">{w}</Text>
-                  <Text className={cn("text-[13px] leading-5 text-muted-foreground")}>{where}</Text>
+                  <Text className="text-meta font-semibold">{n}</Text>
+                  <Text className="text-meta text-foreground-secondary">{w}</Text>
+                  <Text className={cn("text-meta text-muted-foreground")}>{where}</Text>
                 </View>
               ))}
             </View>

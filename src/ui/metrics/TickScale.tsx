@@ -66,8 +66,8 @@ function Scale({ p, value, provisional }: { p: TickScaleProps; value: number | n
       <ValueUnit
         value={text}
         unit={p.unit}
-        className={cn("font-numeric font-bold text-foreground", p.variant === "meter" ? "text-2xl leading-8" : "text-[22px] leading-7", value === null && "text-muted-foreground")}
-        unitClassName={p.unit === "%" || p.unit === "x" ? cn("font-bold text-foreground", p.variant === "meter" ? "text-[17px] leading-5" : "text-[15px] leading-5") : undefined}
+        className={cn("font-numeric font-bold text-foreground", p.variant === "meter" ? "text-title leading-8" : "text-title leading-7", value === null && "text-muted-foreground")}
+        unitClassName={p.unit === "%" || p.unit === "x" ? cn("font-bold text-foreground", p.variant === "meter" ? "text-heading" : "text-body") : undefined}
       />
     </View>
   );
@@ -105,7 +105,7 @@ function Scale({ p, value, provisional }: { p: TickScaleProps; value: number | n
       {p.ends && (
         <View accessibilityElementsHidden className="mt-1 flex-row justify-between">
           {p.ends.map((e) => (
-            <Text key={e} className="font-numeric text-xs font-medium leading-4 tabular-nums text-muted-foreground">
+            <Text key={e} className="font-numeric text-caption font-medium tabular-nums text-muted-foreground">
               {e}
             </Text>
           ))}

@@ -1,4 +1,4 @@
-import Svg, { Path, Rect } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 import type { TokenName } from "./palette";
 import { useTheme } from "./theme";
 
@@ -11,7 +11,7 @@ import { useTheme } from "./theme";
  * bold: for the in-app header, about 14 to 18 px cap height. black: for a splash, 32 px and up.
  */
 const CAP = 20;
-const STROKE = { bold: 3.2, black: 4.4 } as const;
+export const STROKE = { bold: 3.2, black: 4.4 } as const;
 
 function build(s: number) {
   const h = s / 2;
@@ -70,17 +70,41 @@ export function Wordmark({ height = 16, weight = "bold", tone = "foreground" }: 
   );
 }
 
-/** The Pulse mark, option 4g "Cool pair": two staggered beats, lub then dub. brand: optimal teal, then strain blue; mono: one token colour. */
-export function Mark({ size = 24, color = "brand", tone = "foreground" }: { size?: number; color?: "brand" | "mono"; tone?: TokenName }) {
+/**
+ * The Pulse mark (docs/design/brand.md "Mark"): a frame with the heartbeat running through it, drawn by the wordmark's
+ * rules. One monoline weight; the frame's corners at the wordmark's radius 5 except the top-left, square as the P's; the
+ * beat the wordmark's own (the same spike width and sharp joins, a 2.5 dip), wall to wall at 54 % of the height, its rise
+ * 6 rather than 7.5 so the spike keeps clear of the frame's top. A 24-unit box; the stroke sits inside it.
+ */
+export function markPath(s: number = STROKE.bold) {
+  const h = s / 2;
+  const r = 5;
+  const lo = h;
+  const hi = 24 - h;
+  const k = 0.8 * s + 1.3; // the spike's half-width, as the wordmark's
+  const y = 13;
+  const b = (24 - 2.5 * k) / 2; // the beat centred
+  const frame = `M${lo} ${lo}H${hi - r}A${r} ${r} 0 0 1 ${hi} ${lo + r}V${hi - r}A${r} ${r} 0 0 1 ${hi - r} ${hi}H${lo + r}A${r} ${r} 0 0 1 ${lo} ${hi - r}Z`;
+  const beat = `M${lo} ${y}H${b}L${b + k} ${y - 6}L${b + 2 * k} ${y + 2.5}L${b + 2.5 * k} ${y}H${hi}`;
+  return frame + beat;
+}
+/** The mark's square box. */
+export const MARK_VIEWBOX = "0 0 24 24";
+/** The beat's joins are sharp, as the wordmark's (its miter limit). */
+export const MARK_MITER = 8;
+
+export function Mark({ size = 24, tone = "foreground", weight = "bold" }: { size?: number; tone?: TokenName; weight?: keyof typeof STROKE }) {
   const { c } = useTheme();
-  const mono = color === "mono";
   return (
-    <Svg viewBox="4.5 4.5 15 15" width={size} height={size} accessibilityLabel="Pulse">
-      <Rect x={6.9} y={4.5} width={4.2} height={11} rx={2.1} fill={mono ? c[tone] : c.optimal} />
-      <Rect x={12.9} y={8.5} width={4.2} height={11} rx={2.1} fill={mono ? c[tone] : c["strain-text"]} />
+    <Svg viewBox={MARK_VIEWBOX} width={size} height={size} accessibilityLabel="Pulse">
+      <Path d={markPath(STROKE[weight])} fill="none" stroke={c[tone]} strokeWidth={STROKE[weight]} strokeMiterlimit={MARK_MITER} />
     </Svg>
   );
 }
+
+/** The launcher icon's colours (assets/brand/icon.svg): the mark in near-white on the near-black tile, in both schemes. */
+export const ICON_COLORS = { tile: "#0f1113", ink: "#f4f5f7" } as const;
+
 
 /**
  * The band in the reference app's battery slot (pulse src/components/brand/BandIcon.tsx): the outer edge with its notch,

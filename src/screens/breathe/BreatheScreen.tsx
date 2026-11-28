@@ -39,6 +39,7 @@ import { Switch } from "@/screens/settings/controls";
 import { useScreen } from "@/screens/useScreen";
 import type { QueryCtx } from "@/queries/ctx";
 import { BreathCircle } from "./BreathCircle";
+import { LineIcon } from "@/ui/LineIcon";
 
 /** The zone and today, for the recent sessions' day labels. */
 const dayQuery = async (ctx: QueryCtx) => ({ timeZone: ctx.timeZone, today: ctx.today });
@@ -50,8 +51,8 @@ const MIN_SAVE_MS = 30_000;
 /** A stage reached this late (the app was in the background) changes the label but does not buzz. */
 const LATE_CUE_MS = 400;
 
-const BODY = "text-[15px] leading-[22px] text-foreground-secondary";
-const ROW_TITLE = "text-[15px] font-semibold leading-5";
+const BODY = "text-body text-foreground-secondary";
+const ROW_TITLE = "text-body font-semibold";
 const NUM = "font-numeric font-bold";
 
 const info = (): InfoContent => ({ title: i18n.t("more:breathe.aboutTitle"), body: i18n.t("more:breathe.aboutBody") });
@@ -112,7 +113,7 @@ function useBreathClock(run: Run | null, haptics: boolean, onEnd: (end: number) 
 function HeroStat({ value, label }: { value: string; label: string }) {
   return (
     <View accessible accessibilityLabel={i18n.t("more:breathe.valueLabel", { label, value })} className="min-w-0 flex-1 items-center gap-1">
-      <Text className={cn(NUM, "text-[26px] leading-[30px] tabular-nums")}>{value}</Text>
+      <Text className={cn(NUM, "text-title leading-[30px] tabular-nums")}>{value}</Text>
       <Text className={cn(LABEL, "text-foreground-secondary")}>{label}</Text>
     </View>
   );
@@ -177,12 +178,15 @@ export function BreatheScreen() {
 
   const hero = (
     <View className="w-full items-center gap-4">
+      {/* Before a run the circle is the Start button too: the page's own Start sits below the pace and length choices,
+          out of sight on a phone, and the circle is what the eye lands on. */}
+      <Press disabled={!!run || !!result} accessibilityRole={run || result ? undefined : "button"} accessibilityLabel={run || result ? undefined : t("breathe.start")} onPress={start} activeScale={0.97}>
       <BreathCircle stages={(run?.protocol ?? protocol).stages} startAt={run?.start ?? null} size={CIRCLE} color={tint}>
         {stage && clockState ? (
           // Announced on each stage switch only: the label leaves out the per-second count.
           <View accessible accessibilityLiveRegion="polite" accessibilityLabel={stageLabel(stage)} className="items-center gap-0.5">
-            <Text className="text-center text-base font-semibold leading-[21px]">{stageLabel(stage)}</Text>
-            <Text className={cn(NUM, "text-center text-[48px] leading-[54px] tabular-nums")} style={{ color: tint }}>
+            <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} className="text-center text-meta font-semibold">{stageLabel(stage)}</Text>
+            <Text className={cn(NUM, "text-center text-hero leading-[54px] tabular-nums")} style={{ color: tint }}>
               {String(clockState.secs)}
             </Text>
           </View>
@@ -190,14 +194,15 @@ export function BreatheScreen() {
           <Wind size={36} color={tint} strokeWidth={1.75} />
         )}
       </BreathCircle>
+      </Press>
       {running && clockState ? (
         <View accessible accessibilityLabel={t("breathe.leftLabel", { time: clockDuration(clockState.leftMs), title: protocol.title })} className="items-center gap-0.5">
-          <ValueUnit value={clockDuration(clockState.leftMs)} unit={t("breathe.left")} className={cn(NUM, "text-[28px] leading-8")} />
+          <ValueUnit value={clockDuration(clockState.leftMs)} unit={t("breathe.left")} className={cn(NUM, "text-display leading-8")} />
           <Text className={BODY}>{protocol.title}</Text>
         </View>
       ) : (
         <View className="w-full items-center gap-3">
-          <Text accessibilityRole="header" className="text-center text-[22px] font-semibold leading-7">
+          <Text accessibilityRole="header" className="text-center text-title font-semibold leading-7">
             {protocol.title}
           </Text>
           <View className="w-full flex-row gap-3">
@@ -253,7 +258,7 @@ export function BreatheScreen() {
             options={DURATIONS.map((m) => ({ value: String(m), label: t("breathe.minutesShort", { count: m }), accessibilityLabel: t("breathe.minutesLabel", { count: m }) }))}
           />
           <View className="mt-4 min-h-14 flex-row items-center gap-3">
-            <View className="min-w-0 flex-1 gap-0.5">
+            <View className="min-w-0 flex-1 gap-1">
               <Text className={ROW_TITLE}>{t("breathe.hapticCues")}</Text>
               <Text className={CAPTION}>{t("breathe.hapticHint")}</Text>
             </View>
@@ -271,9 +276,9 @@ export function BreatheScreen() {
     <SectionShell key="about" variant="card" title={t("breathe.aboutProtocol", { title: protocol.title })} info={false}>
       <Text className={BODY}>{protocol.edu}</Text>
       {!!protocol.caution && (
-        <View className="mt-3 flex-row items-center gap-3 rounded-lg bg-warning/10 px-3 py-2.5">
-          <Icon icon={TriangleAlert} size={18} tone="warning-text" />
-          <Text className="min-w-0 flex-1 text-[13px] font-medium leading-[18px] text-warning-text">{protocol.caution}</Text>
+        <View className="mt-3 flex-row items-start gap-3 rounded-lg bg-warning/10 px-3 py-3">
+          <LineIcon step="meta"><Icon icon={TriangleAlert} size={18} tone="warning-text" /></LineIcon>
+          <Text className="min-w-0 flex-1 text-meta font-medium text-warning-text">{protocol.caution}</Text>
         </View>
       )}
     </SectionShell>,
@@ -317,9 +322,9 @@ function ProtocolRow({ p, selected, onPress }: { p: BreathProtocol; selected: bo
       accessibilityLabel={i18n.t("more:breathe.protocolSubtitle", { title: p.title, subtitle: p.subtitle })}
       className="min-h-14 flex-row items-center gap-3 py-2"
     >
-      <View className="min-w-0 flex-1">
+      <View className="min-w-0 flex-1 gap-1">
         <Text className={LABEL}>{p.title}</Text>
-        <Text className={cn(CAPTION, "mt-0.5")}>{p.subtitle}</Text>
+        <Text className={cn(CAPTION, "mt-1")}>{p.subtitle}</Text>
       </View>
       <View className="size-5 shrink-0 items-center justify-center">{selected && <Icon icon={Check} size={20} tone="foreground" strokeWidth={2.5} />}</View>
     </Press>
@@ -343,11 +348,11 @@ function LiveCard({ running }: { running: boolean }) {
     <SectionShell variant="card" title={t("breathe.heartRate")} icon={icon} info={false}>
       <View className="flex-row items-center justify-between gap-3">
         <View accessible accessibilityLabel={live.bpm === null ? t("breathe.noHeartRateYet") : t("breathe.bpmLabel", { bpm: live.bpm })}>
-          <ValueUnit value={live.bpm === null ? MISSING : String(live.bpm)} unit="bpm" className={cn(NUM, "text-[40px] leading-[44px] text-recovery-red-text")} />
+          <ValueUnit value={live.bpm === null ? MISSING : String(live.bpm)} unit="bpm" className={cn(NUM, "text-hero leading-[44px] text-recovery-red-text")} />
         </View>
         <LivePill name={live.device?.name ?? null} lost={live.status !== "live"} />
       </View>
-      <Text className={cn("mt-2 text-[13px] leading-[18px] tabular-nums", live.contact === false ? "font-semibold text-warning-text" : "text-muted-foreground")}>{note}</Text>
+      <Text className={cn("mt-2 text-meta tabular-nums", live.contact === false ? "font-semibold text-warning-text" : "text-muted-foreground")}>{note}</Text>
     </SectionShell>
   );
 }
@@ -387,13 +392,13 @@ function Summary({ rec }: { rec: BreathRecord }) {
             key={r.label}
             accessible
             accessibilityLabel={t(r.note ? "breathe.valueNote" : "breathe.valueLabel", { label: r.label, value: `${r.value}${r.unit ? ` ${r.unit}` : ""}`.replace("→", "to"), note: r.note })}
-            className="flex-row items-center gap-3 py-2.5"
+            className="flex-row items-center gap-3 py-3"
           >
             <View className="min-w-0 flex-1 gap-0.5">
               <Text className={ROW_TITLE}>{r.label}</Text>
               {!!r.note && <Text className={CAPTION}>{r.note}</Text>}
             </View>
-            <ValueUnit value={r.value} unit={r.unit} className={cn(NUM, "text-xl leading-6")} />
+            <ValueUnit value={r.value} unit={r.unit} className={cn(NUM, "text-value leading-6")} />
           </View>
         ))}
       </Divided>
@@ -410,18 +415,18 @@ function RecentRow({ rec, timeZone, today }: { rec: BreathRecord; timeZone: stri
   const hr = rec.hrStart !== null && rec.hrEnd !== null;
   const aside = hrv !== null ? t("breathe.hrvPct", { pct: signedPct(hrv) }) : hr ? `${rec.hrStart} → ${rec.hrEnd} bpm` : rec.completed ? t("breathe.complete") : t("breathe.endedEarly");
   return (
-    <View accessible accessibilityLabel={t("breathe.recentLabel", { when, title: p?.title ?? t("breathe.breathing"), duration: clockDuration(rec.ms), aside: aside.replace("→", "to") })} className="min-h-14 flex-row items-center gap-3 py-2.5">
+    <View accessible accessibilityLabel={t("breathe.recentLabel", { when, title: p?.title ?? t("breathe.breathing"), duration: clockDuration(rec.ms), aside: aside.replace("→", "to") })} className="min-h-14 flex-row items-center gap-3 py-3">
       <View className="min-w-0 flex-1 gap-0.5">
         <Text className={ROW_TITLE}>{p?.title ?? t("breathe.breathing")}</Text>
         <Text className={cn(CAPTION, "tabular-nums")}>{t("breathe.whenDuration", { when, duration: clockDuration(rec.ms) })}</Text>
       </View>
       {hrv !== null ? (
         <View className="items-end">
-          <Text className={cn(NUM, "text-lg leading-[22px] tabular-nums")}>{signedPct(hrv)}</Text>
+          <Text className={cn(NUM, "text-heading tabular-nums")}>{signedPct(hrv)}</Text>
           <Text className={CAPTION}>{t("breathe.hrvShort")}</Text>
         </View>
       ) : hr ? (
-        <ValueUnit value={`${rec.hrStart} → ${rec.hrEnd}`} unit="bpm" className={cn(NUM, "text-lg leading-[22px]")} />
+        <ValueUnit value={`${rec.hrStart} → ${rec.hrEnd}`} unit="bpm" className={cn(NUM, "text-heading")} />
       ) : (
         <Text className={CAPTION}>{rec.completed ? t("breathe.complete") : t("breathe.endedEarly")}</Text>
       )}

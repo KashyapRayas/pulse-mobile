@@ -22,7 +22,7 @@ type Group = { group: string; metrics: { key: string; label: string }[] };
 function Chip({ label, on, onPress }: { label: string; on: boolean; onPress: () => void }) {
   return (
     <Press activeScale={0.96} accessibilityRole="button" accessibilityState={{ selected: on }} onPress={() => (haptic.tap(), onPress())} className={cn("h-10 flex-row items-center rounded-full px-4", on ? "bg-foreground" : "bg-muted")}>
-      <Text className={cn("text-[14px] font-medium leading-5", on ? "text-background" : "text-foreground")}>{label}</Text>
+      <Text className={cn("text-meta font-medium", on ? "text-background" : "text-foreground")}>{label}</Text>
     </Press>
   );
 }
@@ -65,9 +65,9 @@ export function ChartMetricPage() {
           return (
             <View key={group} className={cn("border-b border-border", i === groups.length - 1 && "border-b-0")}>
               <Pressable accessibilityRole="button" accessibilityState={{ expanded: on }} onPress={() => (!on && haptic.toggle(true), setOpen(group))} className="min-h-[52px] flex-row items-center justify-between gap-3">
-                <Text className="text-[15px] font-semibold leading-[22px]">{group === "sameDay" ? t("sameDay") : groupLabel(group as GroupKey)}</Text>
+                <Text className="text-body font-semibold">{group === "sameDay" ? t("sameDay") : groupLabel(group as GroupKey)}</Text>
                 <View className="flex-row items-center gap-2">
-                  <Text className="text-[13px] font-medium text-muted-foreground">{metrics.length}</Text>
+                  <Text className="text-meta font-medium text-muted-foreground">{metrics.length}</Text>
                   <Turn on={on}>
                     <Icon icon={ChevronDown} size={20} tone="muted-foreground" strokeWidth={1.75} />
                   </Turn>

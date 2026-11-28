@@ -21,7 +21,7 @@ export function EmptyState({ icon, body, action, className }: EmptyStateProps) {
   return (
     <View className={cn("items-center gap-2 py-8", className)}>
       {icon && <Icon icon={icon} size={24} tone="muted-foreground" />}
-      <Text className="max-w-72 text-center text-[15px] leading-[22px] text-foreground-secondary">{body}</Text>
+      <Text className="max-w-72 text-center text-body text-foreground-secondary">{body}</Text>
       {action && (
         <Button
           variant="secondary"

@@ -227,7 +227,7 @@
     "title": "Journal",
     "selectBehaviours": "Gewohnheiten auswählen",
     "saved": "Gespeichert",
-    "savedBody": "Hab einen tollen Tag!",
+    "savedBody": "Deine Antworten stehen im heutigen Journal.",
     "saveFailed": "Speichern fehlgeschlagen. Prüfe deine Verbindung und versuch es noch einmal.",
     "saving": "Wird gespeichert…",
     "save": "Journal speichern",
@@ -295,7 +295,7 @@
   "insights": {
     "footer": "Effekte sind Unterschiede in Durchschnittswerten, kein Beweis für eine Ursache. Ändere eine Gewohnheit nach der anderen, um zu sehen, was sie wirklich bewirkt.",
     "outcome": "Ergebnis",
-    "unlockTitle": "Weiter erfassen zum Freischalten",
+    "unlockTitle": "Erfasse mehr Tage, um diese zu sehen",
     "unlockBody": "Erfasse eine Gewohnheit an mindestens 5 Tagen mit Ja und an mindestens 5 mit Nein, um zu sehen, wie sie deine {{word}} am nächsten Tag verändert.",
     "progress": "{{label}}: {{have}} von 10 Tagen erfasst",
     "split": "{{yes}} von 5 Tagen mit, {{no}} von 5 ohne"

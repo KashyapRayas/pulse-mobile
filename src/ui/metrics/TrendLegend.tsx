@@ -26,7 +26,7 @@ export function TrendLegend({ chart, series, typical, className }: { chart: stri
       {items.map((i) => (
         <View key={i.key} className="flex-row items-center gap-1.5">
           {i.swatch}
-          <Text className={cn(LABEL, "text-[11px] text-foreground-secondary")}>{i.label}</Text>
+          <Text className={cn(LABEL, "text-label text-foreground-secondary")}>{i.label}</Text>
         </View>
       ))}
     </View>
